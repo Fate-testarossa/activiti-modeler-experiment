@@ -1,3 +1,11 @@
-/bin
-/build
-/target
+build
+configuration/build
+editor/buildApps/bin
+editor/data/stencilsets/extensions/extensions.json
+editor/data/stencilsets/stencilsets.json
+editor/src/scripts/Plugins/version.js
+explorer/src/css/custom-style.css
+explorer/src/img/signavio/smoky/header_background_bottom.png
+platform/conf/classpath/configuration.properties
+platform/target/
+target/
