@@ -29,6 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+import com.activiti.bpmn.elements.ActivitiServiceTask;
+import com.activiti.bpmn.elements.ActivitiUserTask;
+
 import de.hpi.bpmn2_0.model.activity.type.BusinessRuleTask;
 import de.hpi.bpmn2_0.model.activity.type.ManualTask;
 import de.hpi.bpmn2_0.model.activity.type.ReceiveTask;
@@ -54,6 +57,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  * &lt;/complexType>
  * </pre>
  * 
+ * @author Sven Wagner-Boysen
+ * @author dryabkov d.v.ryabkov@gmail.com
  * 
  */
 @XmlRootElement
@@ -66,43 +71,45 @@ import de.hpi.bpmn2_0.transformation.Visitor;
     ReceiveTask.class,
     BusinessRuleTask.class,
     SendTask.class,
-    UserTask.class
+    UserTask.class,
+    ActivitiServiceTask.class,
+    ActivitiUserTask.class
 })
 public class Task
     extends Activity
 {
-    
-    /**
-     * Default constructor
-     */
-    public Task() {
-        
-    }
-    
-    /**
-     * Copy constructor
-     * 
-     * @param task
-     *         The {@link Task} to copy
-     */
-    public Task(Task task) {
-        super(task);
-    }
-    
-    
-    
-    public void acceptVisitor(Visitor v){
-        v.visitTask(this);
-    }
-    
-    public GlobalTask getAsGlobalTask() {
-        GlobalTask gt = new GlobalTask();
-        gt.getDocumentation().addAll(this.getDocumentation());
-        gt.setExtensionElements(this.getExtensionElements());
-        gt.setIoSpecification(this.getIoSpecification());
-        gt.setLane(this.getLane());
-        gt.setName(this.getName());
-        
-        return gt;
-    }
+	
+	/**
+	 * Default constructor
+	 */
+	public Task() {
+		
+	}
+	
+	/**
+	 * Copy constructor
+	 * 
+	 * @param task
+	 * 		The {@link Task} to copy
+	 */
+	public Task(Task task) {
+		super(task);
+	}
+	
+	
+	
+	public void acceptVisitor(Visitor v){
+		v.visitTask(this);
+	}
+	
+	public GlobalTask getAsGlobalTask() {
+		GlobalTask gt = new GlobalTask();
+		gt.getDocumentation().addAll(this.getDocumentation());
+		gt.setExtensionElements(this.getExtensionElements());
+		gt.setIoSpecification(this.getIoSpecification());
+		gt.setLane(this.getLane());
+		gt.setName(this.getName());
+		
+		return gt;
+	}
 }

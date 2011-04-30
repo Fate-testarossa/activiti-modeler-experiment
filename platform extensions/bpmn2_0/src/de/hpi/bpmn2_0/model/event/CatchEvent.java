@@ -66,7 +66,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 })
 @XmlSeeAlso({
     StartEvent.class,
-    IntermediateCatchEvent.class
+    IntermediateCatchEvent.class,
+    ActivitiStartEvent.class
 })
 public abstract class CatchEvent
     extends Event
@@ -189,10 +190,10 @@ public abstract class CatchEvent
         this.parallelMultiple = value;
     }
     
-    public void acceptVisitor(Visitor v){
-        v.visitCatchEvent(this);
-    }
-    
+	public void acceptVisitor(Visitor v){
+		v.visitCatchEvent(this);
+	}
+	
    
 
 }
