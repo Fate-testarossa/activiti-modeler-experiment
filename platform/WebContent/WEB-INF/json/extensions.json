@@ -12,15 +12,6 @@
 	],
 	"perspectives": [
 		{
-			"title":"BPMN (Complete)",
-			"title_de":"BPMN (Vollständig)",
-			"namespace":"http://oryx-editor.org/stencilsets/perspectives/academicbpmn2#",
-			"description":"BPMN complete. Features the whole standard and all elements from the specification.",
-			"description_de":"BPMN in dem kompletten standardisierten Umfang (sämtliche Modellierungskonstrukte).",
-			"stencilset":"http://b3mn.org/stencilset/bpmn2.0#",
-			"extensions" : []
-		},
-		{
 			"title":"BPMN (Activiti)",
 			"title_de":"BPMN (Activiti)",
 			"namespace" : "http://oryx-editor.org/stencilsets/perspectives/activitibpmn2#",
