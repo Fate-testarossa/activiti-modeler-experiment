@@ -1,0 +1,74 @@
+<project name="Activiti Model Converter" default="package">
+
+	<taskdef resource="cargo.tasks">
+	  <classpath>
+		<fileset dir="lib/cargo">
+			<include name="**/*.jar" />
+		</fileset>
+	  </classpath>
+	</taskdef>
+	
+	<target name="package" description="Build converter jar">
+		<mkdir dir="target/classes" />
+		<javac destdir="target/classes">
+			<src path="src" />
+			<src path="../platform extensions/diagram/src" />
+			<src path="../platform extensions/bpmn2_0/src" />
+			<classpath >
+				<fileset dir="lib/runtime">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		<jar destfile="target/amconverter.jar" >
+			<fileset dir="target/classes">
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="convert" description="Convert models">
+		
+		<pathconvert property="models.files" pathsep=";">
+			<fileset dir="target/models" >
+    			<include name="*.signavio.xml"/>
+			</fileset>
+			<regexpmapper to="'\1'" from="(.*)" /> 
+	    </pathconvert> 
+		
+		<java classname="com.activiti.bpmn.Converter">
+			<classpath >
+				<fileset dir="lib/runtime">
+					<include name="**/*.jar" />
+				</fileset>
+				<fileset dir="target">
+					<include name="amconverter.jar" />
+				</fileset>
+			</classpath>
+			<arg line="${models.files}"/>
+		</java>
+		
+	</target>
+	
+	<target name="war" description="Build all-in-one war">
+		<mkdir dir="${basedir}/target/models" />
+		<ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
+			<property name="fileSystemRootDirectory" value="${basedir}/target/models" />
+			
+		</ant>
+	</target>
+
+	<target name="tomcat-start" description="run war">
+		  <cargo containerId="tomcat6x" action="start" wait="true">
+		  		<configuration home="${basedir}/target/tomcat">
+		      		<deployable type="war" file="${basedir}/../target/signaviocore.war" />
+		  		</configuration>
+				  <zipUrlInstaller
+			      installUrl="http://www.sai.msu.su/apache/tomcat/tomcat-6/v6.0.32/bin/apache-tomcat-6.0.32.tar.gz"
+				  	extractDir="target/tomcat_ext"	
+			      />
+		  </cargo>	
+	</target>	
+
+	
+	
+</project>

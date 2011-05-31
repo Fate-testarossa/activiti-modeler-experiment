@@ -9,3 +9,6 @@ explorer/src/img/signavio/smoky/header_background_bottom.png
 platform/conf/classpath/configuration.properties
 platform/target/
 target/
+/.settings
+/.classpath
+/.project
