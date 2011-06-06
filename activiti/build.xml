@@ -1,5 +1,7 @@
 <project name="Activiti Model Converter" default="package">
 
+	<property file="build.properties" />
+	
 	<taskdef resource="cargo.tasks">
 	  <classpath>
 		<fileset dir="lib/cargo">
@@ -28,7 +30,7 @@
 
 	<target name="convert" description="Convert models">
 		
-		<pathconvert property="models.files" pathsep=";">
+		<pathconvert property="models.files" pathsep=" ">
 			<fileset dir="target/models" >
     			<include name="*.signavio.xml"/>
 			</fileset>
@@ -51,19 +53,21 @@
 	
 	<target name="war" description="Build all-in-one war">
 		<mkdir dir="${basedir}/target/models" />
-		<ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
-			<property name="fileSystemRootDirectory" value="${basedir}/target/models" />
-			
+		<pathconvert property="models.dir" dirsep="/">
+			<path path="${basedir}/target/models"></path>
+		</pathconvert>
+	    <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
+			<property name="fileSystemRootDirectory" value="${models.dir}" />
 		</ant>
 	</target>
 
 	<target name="tomcat-start" description="run war">
-		  <cargo containerId="tomcat6x" action="start" wait="true">
+		  <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}">
 		  		<configuration home="${basedir}/target/tomcat">
 		      		<deployable type="war" file="${basedir}/../target/signaviocore.war" />
 		  		</configuration>
 				  <zipUrlInstaller
-			      installUrl="http://www.sai.msu.su/apache/tomcat/tomcat-6/v6.0.32/bin/apache-tomcat-6.0.32.tar.gz"
+			      installUrl="${tomcat.distr.url}"
 				  	extractDir="target/tomcat_ext"	
 			      />
 		  </cargo>	

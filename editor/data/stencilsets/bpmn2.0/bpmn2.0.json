@@ -4,39 +4,6 @@
 	"description":"This is the BPMN 2.0 stencil set specification.",
     "propertyPackages": [                                                                                                                                                                                                                
                 {                                                                                                                                                                                                                            
-                        "name":"multiInstanceProperties",                                                                                                                                                                                      
-                        "properties":[                                                                                                                                                                                                         
-                            {                                                                                                                                                                                                                
-                            "id":"activiti:mi:ismultiinstance",                                                                                                                                                                              
-                            "name":"isMultiInstance",                                                                                                                                                                                        
-                            "title":"Activiti:isMultiInstance",                                                                                                                                                                              
-                            "type":"Boolean",                                                                                                                                                                                                
-                            "readonly":false,                                                                                                                                                                                                
-                            "optional":true,                                                                                                                                                                                                 
-                            "value":"",                                                                                                                                                                                                        
-                            "refToView":"",                                                                                                                                                                                                  
-                            },                                                                                                                                                                                                               
-                            {                                                                                                                                                                                                                
-                            "id":"activiti:mi:issequential",                                                                                                                                                                                   
-                            "title":"Activiti:mi:isSequential",                                                                                                                                                                              
-                            "type":"Boolean",                                                                                                                                                                                                
-                            "optional":true,                                                                                                                                                                                                 
-                            },                                                                                                                                                                                                               
-                            {                                                                                                                                                                                                                
-                            "id":"activiti:mi:collection",                                                                                                                                                                                     
-                            "title":"Activiti:mi:collection",                                                                                                                                                                                
-                            "type":"String",                                                                                                                                                                                                 
-                            "optional":true,                                                                                                                                                                                                 
-                            },                                                                                                                                                                                                               
-                            {                                                                                                                                                                                                                
-                            "id":"activiti:mi:elementVariable",                                                                                                                                                                                
-                            "title":"Activiti:mi:elementVariable",                                                                                                                                                                           
-                            "type":"String",                                                                                                                                                                                                 
-                            "optional":true,                                                                                                                                                                                                 
-                            }                                                                                                                                                                                                                
-                        ]                                                                                                                                                                                                                    
-                },  
-                {                                                                                                                                                                                                                            
                         "name":"formPropertiesAttributes",                                                                                                                                                                                   
                         "properties":[                                                                                                                                                                                                       
                                 {                                                                                                                                                                                                            
@@ -2428,9 +2395,17 @@
 			"description_de" : 	"Eine Task ist eine Arbeitseinheit. Sie repräsentiert die Aufgabe, die zu tun ist.",
 			"view" : 			"activity/task.svg",
 			"icon" : 			"activity/task.png",
+			"properties": [
+				{
+					"id":"activiti:assignee",
+					"title":"Activiti:assignee",
+					"type":"String",
+					"value":"",
+					"optional":true,
+				}					
+			],
 			"propertyPackages" :[
                 "formPropertiesAttributes",                                                                                                                                                                                  
-                "multiInstanceProperties",
 				"baseAttributes",
 				"flowElement",
 				"activity",
@@ -2451,7 +2426,7 @@
 				"messageflow_end",
 				"fromtoall",
 				"ActivitiesMorph"
-			]
+			],
 		},
 		{
 			"type" : 			"node",

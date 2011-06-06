@@ -33,7 +33,7 @@ public class Converter {
 
     public static void main(String[] obj) throws Exception {
         for (String file: obj) {
-            Matcher m = Pattern.compile(".*/(.*)\\.signavio.xml").matcher(file);
+            Matcher m = Pattern.compile(".*\\"+System.getProperty("file.separator")+"(.*)\\.signavio.xml").matcher(file);
             m.matches();
             String output = file.replace(".signavio.xml", ".bpmn20.xml");
             writeXml(convJSon(readJson(file),m.group(1)),output);
