@@ -62,9 +62,10 @@
 	</target>
 
 	<target name="tomcat-start" description="run war">
-		  <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}">
-		  		<configuration home="${basedir}/target/tomcat">
+		  <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}" >
+		  		<configuration home="${basedir}/target/tomcat" >
 		      		<deployable type="war" file="${basedir}/../target/signaviocore.war" />
+		  			<property name="cargo.servlet.port" value="${tomcat.port}"/>
 		  		</configuration>
 				  <zipUrlInstaller
 			      installUrl="${tomcat.distr.url}"
