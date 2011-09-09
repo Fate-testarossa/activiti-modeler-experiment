@@ -292,480 +292,480 @@ ORYX.Core.SVG.Label = Clazz.extend({
         this.y = y;
     },
 
-    
-    /**
-     * Returns the width of the label
-     * @return {number}
-     */
-    getWidth: function(){
-        try {
-            try {
-                var width, cn = this.node.childNodes;
-                if (cn.length == 0 || !Ext.isGecko) {
-                    width = this.node.getBBox().width;
-                } else {
-                    for (var i = 0, size = cn.length; i < size; ++i) {
-                        var w = cn[i].getComputedTextLength();
-                        if ("undefined" == typeof width || width < w) {
-                            width = w;
-                        }
-                    }
-                }
-                return width+(width%2==0?0:1);
-            } catch (ee) {
-                return this.node.getBBox().width;
-            }
-        } catch(e){
-            return 0;
-        }
-    },
-    
-    getOriginUpperLeft: function(){
-        var x = this.x, y = this.y;
-        switch (this._horizontalAlign){
-            case 'center' :
-                x -= this.getWidth()/2;
-                break;
-            case 'right' :
-                x -= this.getWidth();
-                break;
-        }
-        switch (this._verticalAlign){
-            case 'middle' :
-                y -= this.getHeight()/2;
-                break;
-            case 'bottom' :
-                y -= this.getHeight();
-                break;
-        }
-        return {x:x, y:y};
-    },
-    
-    /**
-     * Returns the height of the label
-     * @return {number}
-     */
-    getHeight: function(){
-        try {
-            return this.node.getBBox().height;
-        } catch(e){
-            return 0;
-        }
-    },
-    
-    /**
-     * Returns the relative center position of the label 
-     * to its parent shape.
-     * @return {Object}
-     */
-    getCenter: function(){
-        var up = {x: this.getX(), y: this.getY()};
-        up.x += this.getWidth()/2;
-        up.y += this.getHeight()/2;
-        return up;
-    },
-    
-    /**
-     * Sets the position of a label relative to the parent.
-     * @param {Object} position
-     */
-    setPosition: function(position){
-        if (!position || position.x === undefined || position.y === undefined) {
-            delete this.position;
-        } else {
-            this.position = position;
-        }
-        
-        if (this.position){
-            delete this._referencePoint;
-            delete this.edgePosition;
-        }
-        
-        this._isChanged = true;
-        this.update();
-    },
-    
-    /**
-     * Return the position
-     */
-    getPosition: function(){
-        return this.position;
-    },
-    
-    setReferencePoint: function(ref){
-        if (ref) {
-            this._referencePoint = ref;
-        } else {
-            delete this._referencePoint;
-        }
-        if (this._referencePoint){
-            delete this.position;
-        }
-    },
-    
-    getReferencePoint: function(){
-        return this._referencePoint || undefined;
-    },
-    
-    changed: function() {
-        this._isChanged = true;
-    },
-    
-    /**
-     * Register a callback which will be called if the label
-     * was rendered.
-     * @param {Object} fn
-     */
-    registerOnChange: function(fn){
-        if (!this.changeCallbacks){
-            this.changeCallbacks = [];
-        }
-        if (fn instanceof Function && !this.changeCallbacks.include(fn)){
-            this.changeCallbacks.push(fn);
-        }
-    },
-    
-    /**
-     * Unregister the callback for changes.
-     * @param {Object} fn
-     */
-    unregisterOnChange: function(fn){
-        if (this.changeCallbacks && fn instanceof Function && this.changeCallbacks.include(fn)){
-            this.changeCallbacks = this.changeCallbacks.without(fn);
-        }
-    },
-    
-    /**
-     * Returns TRUE if the labe is currently in
-     * the update mechanism.
-     * @return {Boolean}
-     */
-    isUpdating: function(){
-        return !!this._isUpdating;    
-    },
-    
-    
-    getOriginEdgePosition: function(){
-        return this.originEdgePosition;    
-    },
-    
-    /**
-     * Returns the edgeposition.
-     * 
-     * @return {String} "starttop", "startmiddle", "startbottom", 
-     * "midtop", "midbottom", "endtop", "endbottom" or null
-     */
-    getEdgePosition: function(){
-        return this.edgePosition || null;    
-    },
-    
-    /**
-     * Set the edge position, must be one of the valid
-     * edge positions (see getEdgePosition).
-     * Removes the reference point and the absolute position as well.
-     * 
-     * @param {Object} position
-     */
-    setEdgePosition: function(position){
-        if (["starttop", "startmiddle", "startbottom", 
-            "midtop", "midbottom", "endtop", "endbottom"].include(position)){
-            this.edgePosition = position;
-            delete this.position;
-            delete this._referencePoint;
-        } else {
-            delete this.edgePosition;
-        }
-    },
-    
-    /**
-     * Update the SVG text element.
-     */
-    update: function(force) {
-        
-        var x = this.x, y = this.y;
-        if (this.position){
-            x = this.position.x;
-            y = this.position.y;
-        }
-        x = Math.floor(x); y = Math.floor(y);
-        
-        if(this._isChanged || x !== this.oldX || y !== this.oldY || force === true) {
-            if (this.isVisible) {
-                this._isChanged = false;
-                this._isUpdating = true;
-                
-                this.node.setAttributeNS(null, 'x', x);
-                this.node.setAttributeNS(null, 'y', y);
-                this.node.removeAttributeNS(null, "fill-opacity");
-                
-                //this.node.setAttributeNS(null, 'font-size', this._fontSize);
-                //this.node.setAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'align', this._horizontalAlign + " " + this._verticalAlign);
-                
-                this.oldX = x;
-                this.oldY = y;
-                
-                //set rotation
-                if (!this.position && !this.getReferencePoint()) {
-                    if (this._rotate !== undefined) {
-                        if (this._rotationPoint) 
-                            this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(this._rotationPoint.x) + ' ' + Math.floor(this._rotationPoint.y) + ')');
-                        else 
-                            this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(x) + ' ' + Math.floor(y) + ')');
-                    }
-                } else {
-                    this.node.removeAttributeNS(null, 'transform');
-                }
-                
-                var textLines = this._text.split("\n");
-                while (textLines.last() == "") 
-                    textLines.pop();
-                
-                
-                if (this.node.ownerDocument) {
-                    // Only reset the tspans if the text 
-                    // has changed or has to be wrapped
-                    if (this.fitToElemId || this._textHasChanged){
-                        this.node.textContent = ""; // Remove content
-                        textLines.each((function(textLine, index){
-                            var tspan = this.node.ownerDocument.createElementNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
-                            tspan.textContent = textLine;
-                            if (this.fitToElemId) {
-                                tspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
-                                tspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
-                            }
-                            
-                            /*
-                             * Chrome's getBBox() method fails, if a text node contains an empty tspan element.
-                             * So, we add a whitespace to such a tspan element.
-                             */
-                            if(tspan.textContent === "") {
-                                tspan.textContent = " ";
-                            }
-                            
-                            //append tspan to text node
-                            this.node.appendChild(tspan);
-                        }).bind(this));
-                        delete this._textHasChanged;
-                        delete this.indices;
-                    }
-                    
-                    //Work around for Mozilla bug 293581
-                    if (this.isVisible && this.fitToElemId) {
-                        this.node.setAttributeNS(null, 'visibility', 'hidden');
-                    }
-                    
-                    if (this.fitToElemId) {
-                        window.setTimeout(this._checkFittingToReferencedElem.bind(this), 0);
-                    } else {
-                        //window.setTimeout(this._positionText.bind(this), 0);
-                        this._positionText();
-                    }
-                }
-            } else {
-                //this.node.textContent = "";
-                this.node.setAttributeNS(null, "fill-opacity", "0.2");
-            }
-        }
-    },
-    
-    _checkFittingToReferencedElem: function() {
-        try {
-            var tspans = $A(this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan'));
-            
-            //only do this in firefox 3. all other browsers do not support word wrapping!!!!!
-            //if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1)>=3) {
-                var newtspans = [];
-                
-                var refNode = this.node.ownerDocument.getElementById(this.fitToElemId);
-                
-                if (refNode) {
-                
-                    var refbb = refNode.getBBox();
-                    
-                    var fontSize = this.getFontSize();
-                    
-                    for (var j = 0; j < tspans.length; j++) {
-                        var tspan = tspans[j];
-                        
-                        var textLength = this._getRenderedTextLength(tspan, undefined, undefined, fontSize);
-                        
-                        var refBoxLength = (this._rotate != 0 
-                                && this._rotate % 180 != 0 
-                                && this._rotate % 90 == 0 ? 
-                                        refbb.height : refbb.width);
-                                        
-                        if (textLength > refBoxLength) {
-                        
-                            var startIndex = 0;
-                            var lastSeperatorIndex = 0;
-                            
-                            var numOfChars = this.getTrimmedTextLength(tspan.textContent);
-                            for (var i = 0; i < numOfChars; i++) {
-                                var sslength = this._getRenderedTextLength(tspan, startIndex, i-startIndex, fontSize);
-                                
-                                if (sslength > refBoxLength - 2) {
-                                    var newtspan = this.node.ownerDocument.createElementNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
-                                    if (lastSeperatorIndex <= startIndex) {
-                                        lastSeperatorIndex = (i == 0) ? i : i-1;
-                                        newtspan.textContent = tspan.textContent.slice(startIndex, lastSeperatorIndex);
-                                        //lastSeperatorIndex = i;
-                                    }
-                                    else {
-                                        newtspan.textContent = tspan.textContent.slice(startIndex, ++lastSeperatorIndex);
-                                    }
-                                    
-                                    newtspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
-                                    newtspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
-                                    
-                                    //insert tspan to text node
-                                    //this.node.insertBefore(newtspan, tspan);
-                                    newtspans.push(newtspan);
-                                    
-                                    startIndex = lastSeperatorIndex;
-                                    
-                                }
-                                else {
-                                    var curChar = tspan.textContent.charAt(i);
-                                    if (curChar == ' ' ||
-                                    curChar == '-' ||
-                                    curChar == "." ||
-                                    curChar == "," ||
-                                    curChar == ";" ||
-                                    curChar == ":") {
-                                        lastSeperatorIndex = i;
-                                    }
-                                }
-                            }
-                            
-                            tspan.textContent = tspan.textContent.slice(startIndex);
-                        }
-                        
-                        newtspans.push(tspan);
-                    }
-                    
-                    while (this.node.hasChildNodes()) 
-                        this.node.removeChild(this.node.childNodes[0]);
-                    
-                    while (newtspans.length > 0) {
-                        this.node.appendChild(newtspans.shift());
-                    }
-                }
-            //}
-        } catch (e) {
-            //console.log(e);
-        }
-        
-        window.setTimeout(this._positionText.bind(this), 0);
-    },
-    
-    /**
-     * This is a work around method for Mozilla bug 293581.
-     * Before the method getComputedTextLength works, the text has to be rendered.
-     */
-    _positionText: function() {
-        try {
-            var tspans = this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
-            
-            var fontSize = this.getFontSize(this.node); 
-            
-            var invalidTSpans = [];
-            
-            var x = this.x, y = this.y;
-            if (this.position){
-                x = this.position.x;
-                y = this.position.y;
-            }
-            x = Math.floor(x); y = Math.floor(y);
-            
-            var i = 0, indic = []; // Cache indices if the _positionText is called again, before update is called 
-            var is =(this.indices || $R(0,tspans.length-1).toArray());
-            var length = is.length;
-            is.each((function(index){
-                if ("undefined" == typeof index){
-                    return;
-                }
-                
-                var tspan = tspans[i++];
-                
-                if(tspan.textContent.trim() === "") {
-                    invalidTSpans.push(tspan);
-                } else {
-                    //set vertical position
-                    var dy = 0;
-                    switch (this._verticalAlign) {
-                        case 'bottom':
-                            dy = -(length - index - 1) * (fontSize);
-                            break;
-                        case 'middle':
-                            dy = -(length / 2.0 - index - 1) * (fontSize);
-                            dy -= ORYX.CONFIG.LABEL_LINE_DISTANCE / 2;
-                            break;
-                        case 'top':
-                            dy = index * (fontSize);
-                            dy += fontSize;
-                            break;
-                    }
-                    
-                    tspan.setAttributeNS(null, 'dy', Math.floor(dy));
-                    
-                    tspan.setAttributeNS(null, 'x', x);
-                    tspan.setAttributeNS(null, 'y', y);
-                    indic.push(index);
-                }
-                
-            }).bind(this));
-            
-            indic.length = tspans.length;
-            this.indices = this.indices || indic;
-            
-            invalidTSpans.each(function(tspan) {
-                this.node.removeChild(tspan)
-            }.bind(this));
-            
-            //set horizontal alignment
-            switch (this._horizontalAlign) {
-                case 'left':
-                    this.node.setAttributeNS(null, 'text-anchor', 'start');
-                    break;
-                case 'center':
-                    this.node.setAttributeNS(null, 'text-anchor', 'middle');
-                    break;
-                case 'right':
-                    this.node.setAttributeNS(null, 'text-anchor', 'end');
-                    break;
-            }
-            
-        } catch(e) {
-            //console.log(e);
-            this._isChanged = true;
-        }
-        
-        
-        if(this.isVisible) {
-            this.node.removeAttributeNS(null, 'visibility');
-        }        
-        
-        
-        // Finished
-        delete this._isUpdating;
-        
-        // Raise change event
-        (this.changeCallbacks||[]).each(function(fn){
-            fn.apply(fn);
-        })
-                
-    },
-    
-    /**
-     * Returns the text length of the text content of an SVG tspan element.
-     * For all browsers but Firefox 3 the values are estimated.
-     * @param {TSpanSVGElement} tspan
-     * @param {int} startIndex Optional, for sub strings
-     * @param {int} endIndex Optional, for sub strings
-     */
-    _getRenderedTextLength: function(tspan, startIndex, endIndex, fontSize) {
-        if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 3) {
-            if(startIndex === undefined) {
+	
+	/**
+	 * Returns the width of the label
+	 * @return {number}
+	 */
+	getWidth: function(){
+		try {
+			try {
+				var width, cn = this.node.childNodes;
+				if (cn.length == 0 || !Ext.isGecko) {
+					width = this.node.getBBox().width;
+				} else {
+					for (var i = 0, size = cn.length; i < size; ++i) {
+						var w = cn[i].getComputedTextLength();
+						if ("undefined" == typeof width || width < w) {
+							width = w;
+						}
+					}
+				}
+				return width+(width%2==0?0:1);
+			} catch (ee) {
+				return this.node.getBBox().width;
+			}
+		} catch(e){
+			return 0;
+		}
+	},
+	
+	getOriginUpperLeft: function(){
+		var x = this.x, y = this.y;
+		switch (this._horizontalAlign){
+			case 'center' :
+				x -= this.getWidth()/2;
+				break;
+			case 'right' :
+				x -= this.getWidth();
+				break;
+		}
+		switch (this._verticalAlign){
+			case 'middle' :
+				y -= this.getHeight()/2;
+				break;
+			case 'bottom' :
+				y -= this.getHeight();
+				break;
+		}
+		return {x:x, y:y};
+	},
+	
+	/**
+	 * Returns the height of the label
+	 * @return {number}
+	 */
+	getHeight: function(){
+		try {
+			return this.node.getBBox().height;
+		} catch(e){
+			return 0;
+		}
+	},
+	
+	/**
+	 * Returns the relative center position of the label 
+	 * to its parent shape.
+	 * @return {Object}
+	 */
+	getCenter: function(){
+		var up = {x: this.getX(), y: this.getY()};
+		up.x += this.getWidth()/2;
+		up.y += this.getHeight()/2;
+		return up;
+	},
+	
+	/**
+	 * Sets the position of a label relative to the parent.
+	 * @param {Object} position
+	 */
+	setPosition: function(position){
+		if (!position || position.x === undefined || position.y === undefined) {
+			delete this.position;
+		} else {
+			this.position = position;
+		}
+		
+		if (this.position){
+			delete this._referencePoint;
+			delete this.edgePosition;
+		}
+		
+		this._isChanged = true;
+		this.update();
+	},
+	
+	/**
+	 * Return the position
+	 */
+	getPosition: function(){
+		return this.position;
+	},
+	
+	setReferencePoint: function(ref){
+		if (ref) {
+			this._referencePoint = ref;
+		} else {
+			delete this._referencePoint;
+		}
+		if (this._referencePoint){
+			delete this.position;
+		}
+	},
+	
+	getReferencePoint: function(){
+		return this._referencePoint || undefined;
+	},
+	
+	changed: function() {
+		this._isChanged = true;
+	},
+	
+	/**
+	 * Register a callback which will be called if the label
+	 * was rendered.
+	 * @param {Object} fn
+	 */
+	registerOnChange: function(fn){
+		if (!this.changeCallbacks){
+			this.changeCallbacks = [];
+		}
+		if (fn instanceof Function && !this.changeCallbacks.include(fn)){
+			this.changeCallbacks.push(fn);
+		}
+	},
+	
+	/**
+	 * Unregister the callback for changes.
+	 * @param {Object} fn
+	 */
+	unregisterOnChange: function(fn){
+		if (this.changeCallbacks && fn instanceof Function && this.changeCallbacks.include(fn)){
+			this.changeCallbacks = this.changeCallbacks.without(fn);
+		}
+	},
+	
+	/**
+	 * Returns TRUE if the labe is currently in
+	 * the update mechanism.
+	 * @return {Boolean}
+	 */
+	isUpdating: function(){
+		return !!this._isUpdating;	
+	},
+	
+	
+	getOriginEdgePosition: function(){
+		return this.originEdgePosition;	
+	},
+	
+	/**
+	 * Returns the edgeposition.
+	 * 
+	 * @return {String} "starttop", "startmiddle", "startbottom", 
+	 * "midtop", "midbottom", "endtop", "endbottom" or null
+	 */
+	getEdgePosition: function(){
+		return this.edgePosition || null;	
+	},
+	
+	/**
+	 * Set the edge position, must be one of the valid
+	 * edge positions (see getEdgePosition).
+	 * Removes the reference point and the absolute position as well.
+	 * 
+	 * @param {Object} position
+	 */
+	setEdgePosition: function(position){
+		if (["starttop", "startmiddle", "startbottom", 
+			"midtop", "midbottom", "endtop", "endbottom"].include(position)){
+			this.edgePosition = position;
+			delete this.position;
+			delete this._referencePoint;
+		} else {
+			delete this.edgePosition;
+		}
+	},
+	
+	/**
+	 * Update the SVG text element.
+	 */
+	update: function(force) {
+		
+		var x = this.x, y = this.y;
+		if (this.position){
+			x = this.position.x;
+			y = this.position.y;
+		}
+		x = Math.floor(x); y = Math.floor(y);
+		
+		if(this._isChanged || x !== this.oldX || y !== this.oldY || force === true) {
+			if (this.isVisible) {
+				this._isChanged = false;
+				this._isUpdating = true;
+				
+				this.node.setAttributeNS(null, 'x', x);
+				this.node.setAttributeNS(null, 'y', y);
+				this.node.removeAttributeNS(null, "fill-opacity");
+				
+				//this.node.setAttributeNS(null, 'font-size', this._fontSize);
+				//this.node.setAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'align', this._horizontalAlign + " " + this._verticalAlign);
+				
+				this.oldX = x;
+				this.oldY = y;
+				
+				//set rotation
+				if (!this.position && !this.getReferencePoint()) {
+					if (this._rotate !== undefined) {
+						if (this._rotationPoint) 
+							this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(this._rotationPoint.x) + ' ' + Math.floor(this._rotationPoint.y) + ')');
+						else 
+							this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(x) + ' ' + Math.floor(y) + ')');
+					}
+				} else {
+					this.node.removeAttributeNS(null, 'transform');
+				}
+				
+				var textLines = this._text.split("\n");
+				while (textLines.last() == "") 
+					textLines.pop();
+				
+				
+				if (this.node.ownerDocument) {
+					// Only reset the tspans if the text 
+					// has changed or has to be wrapped
+					if (this.fitToElemId || this._textHasChanged){
+						this.node.textContent = ""; // Remove content
+						textLines.each((function(textLine, index){
+							var tspan = this.node.ownerDocument.createElementNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
+							tspan.textContent = textLine.trim();
+							if (this.fitToElemId) {
+								tspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
+								tspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
+							}
+							
+							/*
+							 * Chrome's getBBox() method fails, if a text node contains an empty tspan element.
+							 * So, we add a whitespace to such a tspan element.
+							 */
+							if(tspan.textContent === "") {
+								tspan.textContent = " ";
+							}
+							
+							//append tspan to text node
+							this.node.appendChild(tspan);
+						}).bind(this));
+						delete this._textHasChanged;
+						delete this.indices;
+					}
+					
+					//Work around for Mozilla bug 293581
+					if (this.isVisible && this.fitToElemId) {
+						this.node.setAttributeNS(null, 'visibility', 'hidden');
+					}
+					
+					if (this.fitToElemId) {
+						window.setTimeout(this._checkFittingToReferencedElem.bind(this), 0);
+					} else {
+						//window.setTimeout(this._positionText.bind(this), 0);
+						this._positionText();
+					}
+				}
+			} else {
+				//this.node.textContent = "";
+				this.node.setAttributeNS(null, "fill-opacity", "0.2");
+			}
+		}
+	},
+	
+	_checkFittingToReferencedElem: function() {
+		try {
+			var tspans = $A(this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan'));
+			
+			//only do this in firefox 3. all other browsers do not support word wrapping!!!!!
+			//if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1)>=3) {
+				var newtspans = [];
+				
+				var refNode = this.node.ownerDocument.getElementById(this.fitToElemId);
+				
+				if (refNode) {
+				
+					var refbb = refNode.getBBox();
+					
+					var fontSize = this.getFontSize();
+					
+					for (var j = 0; j < tspans.length; j++) {
+						var tspan = tspans[j];
+						
+						var textLength = this._getRenderedTextLength(tspan, undefined, undefined, fontSize);
+						
+						var refBoxLength = (this._rotate != 0 
+								&& this._rotate % 180 != 0 
+								&& this._rotate % 90 == 0 ? 
+										refbb.height : refbb.width);
+										
+						if (textLength > refBoxLength) {
+						
+							var startIndex = 0;
+							var lastSeperatorIndex = 0;
+							
+							var numOfChars = this.getTrimmedTextLength(tspan.textContent);
+							for (var i = 0; i < numOfChars; i++) {
+								var sslength = this._getRenderedTextLength(tspan, startIndex, i-startIndex, fontSize);
+								
+								if (sslength > refBoxLength - 2) {
+									var newtspan = this.node.ownerDocument.createElementNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
+									if (lastSeperatorIndex <= startIndex) {
+										lastSeperatorIndex = (i == 0) ? i : i-1;
+										newtspan.textContent = tspan.textContent.slice(startIndex, lastSeperatorIndex).trim();
+										//lastSeperatorIndex = i;
+									}
+									else {
+										newtspan.textContent = tspan.textContent.slice(startIndex, ++lastSeperatorIndex).trim();
+									}
+									
+									newtspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
+									newtspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
+									
+									//insert tspan to text node
+									//this.node.insertBefore(newtspan, tspan);
+									newtspans.push(newtspan);
+									
+									startIndex = lastSeperatorIndex;
+									
+								}
+								else {
+									var curChar = tspan.textContent.charAt(i);
+									if (curChar == ' ' ||
+									curChar == '-' ||
+									curChar == "." ||
+									curChar == "," ||
+									curChar == ";" ||
+									curChar == ":") {
+										lastSeperatorIndex = i;
+									}
+								}
+							}
+							
+							tspan.textContent = tspan.textContent.slice(startIndex).trim();
+						}
+						
+						newtspans.push(tspan);
+					}
+					
+					while (this.node.hasChildNodes()) 
+						this.node.removeChild(this.node.childNodes[0]);
+					
+					while (newtspans.length > 0) {
+						this.node.appendChild(newtspans.shift());
+					}
+				}
+			//}
+		} catch (e) {
+			//console.log(e);
+		}
+		
+		window.setTimeout(this._positionText.bind(this), 0);
+	},
+	
+	/**
+	 * This is a work around method for Mozilla bug 293581.
+	 * Before the method getComputedTextLength works, the text has to be rendered.
+	 */
+	_positionText: function() {
+		try {
+			var tspans = this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
+			
+			var fontSize = this.getFontSize(this.node); 
+			
+			var invalidTSpans = [];
+			
+			var x = this.x, y = this.y;
+			if (this.position){
+				x = this.position.x;
+				y = this.position.y;
+			}
+			x = Math.floor(x); y = Math.floor(y);
+			
+			var i = 0, indic = []; // Cache indices if the _positionText is called again, before update is called 
+			var is =(this.indices || $R(0,tspans.length-1).toArray());
+			var length = is.length;
+			is.each((function(index){
+				if ("undefined" == typeof index){
+					return;
+				}
+				
+				var tspan = tspans[i++];
+				
+				if(tspan.textContent.trim() === "") {
+					invalidTSpans.push(tspan);
+				} else {
+					//set vertical position
+					var dy = 0;
+					switch (this._verticalAlign) {
+						case 'bottom':
+							dy = -(length - index - 1) * (fontSize);
+							break;
+						case 'middle':
+							dy = -(length / 2.0 - index - 1) * (fontSize);
+							dy -= ORYX.CONFIG.LABEL_LINE_DISTANCE / 2;
+							break;
+						case 'top':
+							dy = index * (fontSize);
+							dy += fontSize;
+							break;
+					}
+					
+					tspan.setAttributeNS(null, 'dy', Math.floor(dy));
+					
+					tspan.setAttributeNS(null, 'x', x);
+					tspan.setAttributeNS(null, 'y', y);
+					indic.push(index);
+				}
+				
+			}).bind(this));
+			
+			indic.length = tspans.length;
+			this.indices = this.indices || indic;
+			
+			invalidTSpans.each(function(tspan) {
+				this.node.removeChild(tspan)
+			}.bind(this));
+			
+			//set horizontal alignment
+			switch (this._horizontalAlign) {
+				case 'left':
+					this.node.setAttributeNS(null, 'text-anchor', 'start');
+					break;
+				case 'center':
+					this.node.setAttributeNS(null, 'text-anchor', 'middle');
+					break;
+				case 'right':
+					this.node.setAttributeNS(null, 'text-anchor', 'end');
+					break;
+			}
+			
+		} catch(e) {
+			//console.log(e);
+			this._isChanged = true;
+		}
+		
+		
+		if(this.isVisible) {
+			this.node.removeAttributeNS(null, 'visibility');
+		}		
+		
+		
+		// Finished
+		delete this._isUpdating;
+		
+		// Raise change event
+		(this.changeCallbacks||[]).each(function(fn){
+			fn.apply(fn);
+		})
+				
+	},
+	
+	/**
+	 * Returns the text length of the text content of an SVG tspan element.
+	 * For all browsers but Firefox 3 the values are estimated.
+	 * @param {TSpanSVGElement} tspan
+	 * @param {int} startIndex Optional, for sub strings
+	 * @param {int} endIndex Optional, for sub strings
+	 */
+	_getRenderedTextLength: function(tspan, startIndex, endIndex, fontSize) {
+		if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 3) {
+			if(startIndex === undefined) {
 //test string: abcdefghijklmnopqrstuvwxyzöäü,.-#+ 1234567890ßABCDEFGHIJKLMNOPQRSTUVWXYZ;:_'*ÜÄÖ!"§$%&/()=?[]{}|<>'~´`\^°µ@€²³
 //                for(var i = 0; i < tspan.textContent.length; i++) {
 //                    console.log(tspan.textContent.charAt(i), tspan.getSubStringLength(i,1), this._estimateCharacterWidth(tspan.textContent.charAt(i))*(fontSize/14.0));
