@@ -58,7 +58,7 @@
 		</pathconvert>
 	    <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
 			<property name="fileSystemRootDirectory" value="${models.dir}" />
-	    	<property name="host" value="http://localhost:8080" />
+	    	<property name="host" value="http://localhost:${tomcat.port}" />
 		</ant>
 	</target>
 
