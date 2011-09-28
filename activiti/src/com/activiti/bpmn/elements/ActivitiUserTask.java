@@ -12,7 +12,7 @@ public class ActivitiUserTask extends UserTask{
     @XmlAttribute(name="assignee", namespace="http://activiti.org/bpmn")
     protected QName activitiAssignee;
 
-    @XmlAttribute(name="candidategroups", namespace="http://activiti.org/bpmn")
+    @XmlAttribute(name="candidateGroups", namespace="http://activiti.org/bpmn")
     protected QName activitiCandidateGroups;
 
     
