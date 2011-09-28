@@ -4,7 +4,7 @@
 	
 	<taskdef resource="cargo.tasks">
 	  <classpath>
-		<fileset dir="lib/cargo">
+		<fileset dir="lib/buildtime">
 			<include name="**/*.jar" />
 		</fileset>
 	  </classpath>
@@ -12,7 +12,7 @@
 	
 	<target name="package" description="Build converter jar">
 		<mkdir dir="target/classes" />
-		<javac destdir="target/classes">
+		<javac destdir="target/classes" >
 			<src path="src" />
 			<src path="../platform extensions/diagram/src" />
 			<src path="../platform extensions/bpmn2_0/src" />
@@ -58,13 +58,15 @@
 		</pathconvert>
 	    <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
 			<property name="fileSystemRootDirectory" value="${models.dir}" />
+	    	<property name="host" value="http://localhost:8080" />
 		</ant>
 	</target>
 
 	<target name="tomcat-start" description="run war">
+		  <property file="${basedir}/../build.properties" />	
 		  <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}" >
 		  		<configuration home="${basedir}/target/tomcat" >
-		      		<deployable type="war" file="${basedir}/../target/signaviocore.war" />
+		      		<deployable type="war" file="${basedir}/../target/${war}.war" />
 		  			<property name="cargo.servlet.port" value="${tomcat.port}"/>
 		  		</configuration>
 				  <zipUrlInstaller

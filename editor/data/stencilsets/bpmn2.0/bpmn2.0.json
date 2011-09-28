@@ -2402,6 +2402,13 @@
 					"type":"String",
 					"value":"",
 					"optional":true,
+				},					
+				{
+					"id":"activiti:candidategroups",
+					"title":"Activiti:candidategroups",
+					"type":"String",
+					"value":"",
+					"optional":true,
 				}					
 			],
 			"propertyPackages" :[

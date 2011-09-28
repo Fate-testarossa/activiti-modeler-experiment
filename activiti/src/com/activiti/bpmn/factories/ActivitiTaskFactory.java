@@ -88,6 +88,11 @@ public class ActivitiTaskFactory extends TaskFactory{
             task.setActivitiAssignee(new QName(activitiAssignee));
         }
 
+        String activitiCandidateGroups = shape.getProperty("activiti:candidategroups");
+        if (activitiCandidateGroups!=null && !activitiCandidateGroups.isEmpty()) {
+            task.setActivitiCandidateGroups(new QName(activitiCandidateGroups));
+        }
+        
         String activitFormProperty = shape.getProperty("activiti:formproperty");
         if (activitFormProperty!=null && !activitFormProperty.isEmpty() ) {
              FormPropertiesUtil.processFormProperties(task, activitFormProperty);    
