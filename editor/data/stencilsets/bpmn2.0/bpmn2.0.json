@@ -3703,7 +3703,17 @@
 					"description":"",
 					"readonly":true,
 					"optional":false
-				}
+				},
+				{
+					"id":"activiti:initiator",
+					"type":"String",
+					"title":"Activiti:initiator",
+					"value":"None",
+					"description":"",
+					"readonly":false,
+					"optional":true
+				},
+				
 			]
 		},
 		{
