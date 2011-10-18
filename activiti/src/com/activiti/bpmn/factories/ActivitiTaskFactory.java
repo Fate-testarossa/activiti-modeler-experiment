@@ -7,12 +7,16 @@ import org.json.JSONObject;
 import org.oryxeditor.server.diagram.Shape;
 
 import com.activiti.bpmn.elements.ActivitiExtensionFieldElement;
+import com.activiti.bpmn.elements.ActivitiMultiInstanceLoopCharacteristics;
 import com.activiti.bpmn.elements.ActivitiServiceTask;
 import com.activiti.bpmn.elements.ActivitiUserTask;
 
 import de.hpi.bpmn2_0.annotations.Property;
 import de.hpi.bpmn2_0.annotations.StencilId;
 import de.hpi.bpmn2_0.factory.node.TaskFactory;
+import de.hpi.bpmn2_0.model.FormalExpression;
+import de.hpi.bpmn2_0.model.activity.Activity;
+import de.hpi.bpmn2_0.model.activity.loop.LoopCharacteristics;
 import de.hpi.bpmn2_0.model.activity.misc.Operation;
 import de.hpi.bpmn2_0.model.activity.misc.ServiceImplementation;
 import de.hpi.bpmn2_0.model.activity.misc.UserTaskImplementation;
@@ -96,9 +100,86 @@ public class ActivitiTaskFactory extends TaskFactory{
         String activitFormProperty = shape.getProperty("activiti:formproperty");
         if (activitFormProperty!=null && !activitFormProperty.isEmpty() ) {
              FormPropertiesUtil.processFormProperties(task, activitFormProperty);    
-        }        
+        }      
         
         return task;
+    }
+
+    /**
+     * Entry method to create the {@link LoopCharacteristics} for a given 
+     * activity's shape.
+     * 
+     * @param activity
+     * @param shape
+     * @return
+     * 
+     */
+    @Override
+    protected void createLoopCharacteristics(Activity activity, Shape shape) {
+
+        /* Distinguish between standard and multiple instance loop types */
+        String loopType = shape.getProperty("looptype");
+        if (loopType != null && !(loopType.length() == 0)) {
+
+            if (loopType.equalsIgnoreCase("Parallel")
+                    || loopType.equalsIgnoreCase("Sequential")) {
+                activity.setLoopCharacteristics(createMultiInstanceLoopCharacteristics(shape, loopType));
+            }
+        }
+    }
+    
+    
+    /**
+     * Creates the loop characteristics for multiple instances loops.
+     * 
+     * @param shape
+     * @param loopType
+     */
+    private ActivitiMultiInstanceLoopCharacteristics createMultiInstanceLoopCharacteristics(Shape shape,
+            String loopType) {
+        ActivitiMultiInstanceLoopCharacteristics miLoop = new ActivitiMultiInstanceLoopCharacteristics();
+
+        /* Determine whether it is parallel or sequential */
+        if (loopType.equalsIgnoreCase("Parallel"))
+            miLoop.setIsSequential(false);
+        else
+            miLoop.setIsSequential(true);
+
+        /* Set loop cardinality */
+        String loopCardinalityString = shape
+                .getProperty("loopcardinality");
+        if (loopCardinalityString != null && !(loopCardinalityString.length() == 0)) {
+            FormalExpression loopCardinality = new FormalExpression(
+                    loopCardinalityString);
+            miLoop.setLoopCardinality(loopCardinality);
+        }
+
+        String loopDataInput = shape.getProperty("loopdatainput");
+        if (loopDataInput != null && !loopDataInput.isEmpty()) {
+            miLoop.setActivitiCollection(loopDataInput);
+        }
+
+        String inputDataItem = shape.getProperty("inputdataitem");
+        if (inputDataItem != null && !inputDataItem.isEmpty()) {
+            miLoop.setActivitiElementVariable(inputDataItem);
+        }
+        
+        /* Completion condition */
+        String completionCondition = shape
+                .getProperty("completioncondition");
+        if (completionCondition != null
+                && !(completionCondition.length() == 0)) {
+            FormalExpression completionConditionExpr = new FormalExpression(
+                    completionCondition);
+            miLoop.setCompletionCondition(completionConditionExpr);
+        }
+
+        /* Handle loop behavior */
+//        handleLoopBehaviorAttributes(shape, miLoop);
+        
+        System.out.println(miLoop);
+        
+        return miLoop;
     }
     
 }

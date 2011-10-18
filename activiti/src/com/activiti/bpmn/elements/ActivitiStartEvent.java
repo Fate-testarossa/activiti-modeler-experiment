@@ -1,8 +1,10 @@
-package de.hpi.bpmn2_0.model.event;
+package com.activiti.bpmn.elements;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
+
+import de.hpi.bpmn2_0.model.event.StartEvent;
 
 @XmlRootElement(name="startEvent", namespace="http://www.omg.org/spec/BPMN/20100524/MODEL")
 public class ActivitiStartEvent extends StartEvent{
