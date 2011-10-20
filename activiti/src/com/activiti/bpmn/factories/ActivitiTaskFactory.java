@@ -177,8 +177,6 @@ public class ActivitiTaskFactory extends TaskFactory{
         /* Handle loop behavior */
 //        handleLoopBehaviorAttributes(shape, miLoop);
         
-        System.out.println(miLoop);
-        
         return miLoop;
     }
     

@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+import com.activiti.bpmn.elements.ActivitiStartEvent;
+
 import de.hpi.bpmn2_0.transformation.Visitor;
 
 
