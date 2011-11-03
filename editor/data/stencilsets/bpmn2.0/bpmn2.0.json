@@ -3680,6 +3680,7 @@
 			"icon" : 			"startevent/none.png",
 			"propertyPackages":	[
 				"baseAttributes",
+				"formPropertiesAttributes",
 				"catchEventAttributes",
 				"bgColor"
 			],

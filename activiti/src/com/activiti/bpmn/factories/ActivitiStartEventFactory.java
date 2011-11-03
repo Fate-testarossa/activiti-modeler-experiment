@@ -4,10 +4,10 @@ import javax.xml.namespace.QName;
 
 import org.oryxeditor.server.diagram.Shape;
 
-import com.activiti.bpmn.elements.ActivitiStartEvent;
 
 import de.hpi.bpmn2_0.annotations.StencilId;
 import de.hpi.bpmn2_0.factory.node.StartEventFactory;
+import com.activiti.bpmn.elements.ActivitiStartEvent;
 
 @StencilId({
     "StartNoneEvent",

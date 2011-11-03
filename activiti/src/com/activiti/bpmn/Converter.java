@@ -1,21 +1,38 @@
 package com.activiti.bpmn;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.activiti.cycle.impl.connector.signavio.transform.pattern.RemedyTemporarySignavioIncompatibility;
 import org.json.JSONException;
 import org.oryxeditor.server.diagram.Diagram;
 import org.oryxeditor.server.diagram.DiagramBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.activiti.bpmn.factories.ActivitiStartEventFactory;
@@ -41,7 +58,7 @@ public class Converter {
     }
     
     public static String convJSon(String json, String procName) throws BpmnConverterException,
-            JAXBException, SAXException, ParserConfigurationException, TransformerException, JSONException {
+            JAXBException, SAXException, ParserConfigurationException, TransformerException, JSONException, XPathExpressionException, IOException {
         
         int regexpFlags = Pattern.MULTILINE | Pattern.UNIX_LINES | Pattern.UNICODE_CASE | Pattern.DOTALL;
 
@@ -71,6 +88,34 @@ public class Converter {
         Bpmn2XmlConverter xmlConverter = new Bpmn2XmlConverter(bpmnDefinitions, "classpath:/META-INF/validation/xsd/BPMN20.xsd");
         String xml = xmlConverter.getXml().toString();
 
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        javax.xml.xpath.XPathFactory xpathFactory = XPathFactory.newInstance();
+        
+        InputStream inpStr = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+        Document doc = documentBuilderFactory.newDocumentBuilder().parse(inpStr);
+        
+        Object xpe = xpathFactory.newXPath().evaluate("//textAnnotation | //association", doc, XPathConstants.NODESET);
+        NodeList nodes = (NodeList) xpe;
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            String id = node.getAttributes().getNamedItem("id").getTextContent();
+//            System.out.println("found unsupported " + node.getNodeName() +" "+ id);
+
+            node.getParentNode().removeChild(node);
+
+            Object linkedNodesSearch = xpathFactory.newXPath().evaluate("//*[@bpmnElement='"+id+"']", doc, XPathConstants.NODESET);
+            NodeList linkedNodes = (NodeList) linkedNodesSearch;
+
+            for (int j = 0; j < linkedNodes.getLength(); j++) {
+                Node linkedNode = linkedNodes.item(j);
+                linkedNode.getParentNode().removeChild(linkedNode);
+//                System.out.println("remove link to "+id);
+            }
+        }
+        
+        xml = xmlToString(doc);
+        
         // clear xml
         String result = new RemedyTemporarySignavioIncompatibility().transformBpmn20Xml(xml, procName);
         if (description!=null) {
@@ -78,6 +123,23 @@ public class Converter {
         }
         
         return result;
+    }
+    
+    public static String xmlToString(Node node) {
+        try {
+            Source source = new DOMSource(node);
+            StringWriter stringWriter = new StringWriter();
+            Result result = new StreamResult(stringWriter);
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.transform(source, result);
+            return stringWriter.getBuffer().toString();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     private static void writeXml(String result, String outPath) throws IOException {
