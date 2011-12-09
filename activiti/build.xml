@@ -12,7 +12,7 @@
 	
 	<target name="package" description="Build converter jar">
 		<mkdir dir="target/classes" />
-		<javac destdir="target/classes" >
+		<javac destdir="target/classes" debug="true">
 			<src path="src" />
 			<src path="../platform extensions/diagram/src" />
 			<src path="../platform extensions/bpmn2_0/src" />
