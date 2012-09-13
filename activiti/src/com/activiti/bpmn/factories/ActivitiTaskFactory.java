@@ -4,7 +4,7 @@ import javax.xml.namespace.QName;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.oryxeditor.server.diagram.Shape;
+import org.oryxeditor.server.diagram.generic.GenericShape;
 
 import com.activiti.bpmn.elements.ActivitiExtensionFieldElement;
 import com.activiti.bpmn.elements.ActivitiMultiInstanceLoopCharacteristics;
@@ -27,7 +27,7 @@ public class ActivitiTaskFactory extends TaskFactory{
 
     @Override
     @Property(name = "tasktype", value = "Service")
-    public ActivitiServiceTask createServiceTask(Shape shape) {
+    public ActivitiServiceTask createServiceTask(GenericShape shape) {
         ActivitiServiceTask task = new ActivitiServiceTask();
 
         task.setId(shape.getResourceId());
@@ -74,7 +74,7 @@ public class ActivitiTaskFactory extends TaskFactory{
     
     @Override
     @Property(name = "tasktype", value = "User")
-    public UserTask createUserTask(Shape shape) {
+    public UserTask createUserTask(GenericShape shape) {
         ActivitiUserTask task = new ActivitiUserTask();
 
         task.setId(shape.getResourceId());
@@ -115,7 +115,7 @@ public class ActivitiTaskFactory extends TaskFactory{
      * 
      */
     @Override
-    protected void createLoopCharacteristics(Activity activity, Shape shape) {
+    protected void createLoopCharacteristics(Activity activity, GenericShape shape) {
 
         /* Distinguish between standard and multiple instance loop types */
         String loopType = shape.getProperty("looptype");
@@ -135,7 +135,7 @@ public class ActivitiTaskFactory extends TaskFactory{
      * @param shape
      * @param loopType
      */
-    private ActivitiMultiInstanceLoopCharacteristics createMultiInstanceLoopCharacteristics(Shape shape,
+    private ActivitiMultiInstanceLoopCharacteristics createMultiInstanceLoopCharacteristics(GenericShape shape,
             String loopType) {
         ActivitiMultiInstanceLoopCharacteristics miLoop = new ActivitiMultiInstanceLoopCharacteristics();
 

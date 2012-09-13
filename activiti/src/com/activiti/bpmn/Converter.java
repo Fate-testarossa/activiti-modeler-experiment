@@ -28,8 +28,8 @@ import javax.xml.xpath.XPathFactory;
 
 import org.activiti.cycle.impl.connector.signavio.transform.pattern.RemedyTemporarySignavioIncompatibility;
 import org.json.JSONException;
-import org.oryxeditor.server.diagram.Diagram;
-import org.oryxeditor.server.diagram.DiagramBuilder;
+import org.oryxeditor.server.diagram.basic.BasicDiagram;
+import org.oryxeditor.server.diagram.basic.BasicDiagramBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -82,7 +82,7 @@ public class Converter {
         classes.add(ActivitiTaskFactory.class);
         classes.add(ActivitiStartEventFactory.class);
         
-        Diagram diagram = DiagramBuilder.parseJson(json);
+        BasicDiagram diagram = BasicDiagramBuilder.parseJson(json);
         Diagram2BpmnConverter converter = new Diagram2BpmnConverter(diagram, classes);
         Definitions bpmnDefinitions = converter.getDefinitionsFromDiagram();
         Bpmn2XmlConverter xmlConverter = new Bpmn2XmlConverter(bpmnDefinitions, "classpath:/META-INF/validation/xsd/BPMN20.xsd");

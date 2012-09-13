@@ -12,9 +12,17 @@ public class RemedyTemporarySignavioIncompatibility {
   
   // name="SequenceFlow" --> name=""
 
+  public static String adjustForXmlNCName(String name) {
+        if (name != null) {
+          name = name.replaceAll("[^a-zA-Z0-9-]", "_");
+        }
+        return name;
+  }
+    
+    
   public String transformBpmn20Xml(String xml, String processName) {
     // set process id and name
-    processName = AdjustShapeNamesForXmlNCName.adjustForXmlNCName(processName);
+    processName = adjustForXmlNCName(processName);
     
     xml = setAttributeText(xml, "process", "id", processName);
     // in DI as well
