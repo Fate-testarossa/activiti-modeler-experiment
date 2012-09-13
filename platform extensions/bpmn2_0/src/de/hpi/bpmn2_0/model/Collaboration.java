@@ -79,27 +79,27 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tCollaboration", propOrder = {
-		"participant",
-	    "messageFlow",
-	    "artifact",
-	    "association",
-	    "conversationNode",
-//	    "conversationAssociation",
-//	    "participantAssociation",
-//	    "messageFlowAssociation",
-	    "correlationKey",
-	    "choreographyRef",
-	    "conversationLink"
+        "participant",
+        "messageFlow",
+        "artifact",
+        "association",
+        "conversationNode",
+//        "conversationAssociation",
+//        "participantAssociation",
+//        "messageFlowAssociation",
+        "correlationKey",
+        "choreographyRef",
+        "conversationLink"
 })
 @XmlSeeAlso({
-	Choreography.class
+    Choreography.class
 })
 public class Collaboration
     extends RootElement
 {
-	
-	@XmlElement(type = Participant.class)
-	protected List<Participant> participant;
+    
+    @XmlElement(type = Participant.class)
+    protected List<Participant> participant;
     protected List<MessageFlow> messageFlow;
     @XmlElementRef
     protected List<Artifact> artifact;
@@ -129,37 +129,37 @@ public class Collaboration
      * Default constructor
      */
     public Collaboration() {
-    	super();
+        super();
     }
     
     public Collaboration(Collaboration collaboration) {
-    	super(collaboration);
-    	
-    	this.getParticipant().addAll(collaboration.getParticipant());
-    	this.getMessageFlow().addAll(collaboration.getMessageFlow());
-    	this.getArtifact().addAll(collaboration.getArtifact());
-    	this.getConversationNode().addAll(collaboration.getConversationNode());
-    	this.getAssociation().addAll(collaboration.getAssociation());
-    	this.getCorrelationKey().addAll(collaboration.getCorrelationKey());
-    	this.getChoreographyRef().addAll(collaboration.getChoreographyRef());
-    	
-    	this.setName(collaboration.getName());
-    	this.setIsClosed(collaboration.isIsClosed());
-    	
+        super(collaboration);
+        
+        this.getParticipant().addAll(collaboration.getParticipant());
+        this.getMessageFlow().addAll(collaboration.getMessageFlow());
+        this.getArtifact().addAll(collaboration.getArtifact());
+        this.getConversationNode().addAll(collaboration.getConversationNode());
+        this.getAssociation().addAll(collaboration.getAssociation());
+        this.getCorrelationKey().addAll(collaboration.getCorrelationKey());
+        this.getChoreographyRef().addAll(collaboration.getChoreographyRef());
+        
+        this.setName(collaboration.getName());
+        this.setIsClosed(collaboration.isIsClosed());
+        
     }
     
     public List<BaseElement> getChilds() {
-    	List<BaseElement> childs = super.getChilds();
-    	
-    	childs.addAll(this.getParticipant());
-    	childs.addAll(this.getMessageFlow());
-    	childs.addAll(this.getArtifact());
-    	childs.addAll(this.getConversationNode());
-    	childs.addAll(this.getConversationLink());
-    	childs.addAll(this.getAssociation());
-    	childs.addAll(this.getCorrelationKey());
-    	
-    	return childs;
+        List<BaseElement> childs = super.getChilds();
+        
+        childs.addAll(this.getParticipant());
+        childs.addAll(this.getMessageFlow());
+        childs.addAll(this.getArtifact());
+        childs.addAll(this.getConversationNode());
+        childs.addAll(this.getConversationLink());
+        childs.addAll(this.getAssociation());
+        childs.addAll(this.getCorrelationKey());
+        
+        return childs;
     }
     
     /* Getter & Setter */
@@ -433,31 +433,31 @@ public class Collaboration
      */
     public List<Choreography> getChoreographyRef() {
         if(choreographyRef == null)
-        	choreographyRef = new ArrayList<Choreography>();
-    	return choreographyRef;
+            choreographyRef = new ArrayList<Choreography>();
+        return choreographyRef;
     }
 
-	public List<ConversationNode> getConversationNode() {
-		if(conversationNode == null)
-			conversationNode = new ArrayList<ConversationNode>();
-		return conversationNode;
-	}
+    public List<ConversationNode> getConversationNode() {
+        if(conversationNode == null)
+            conversationNode = new ArrayList<ConversationNode>();
+        return conversationNode;
+    }
 
-	public List<CorrelationKey> getCorrelationKey() {
-		if(correlationKey == null)
-			correlationKey = new ArrayList<CorrelationKey>();
-		return correlationKey;
-	}
+    public List<CorrelationKey> getCorrelationKey() {
+        if(correlationKey == null)
+            correlationKey = new ArrayList<CorrelationKey>();
+        return correlationKey;
+    }
 
-	public List<ConversationLink> getConversationLink() {
-		if(conversationLink == null)
-			conversationLink = new ArrayList<ConversationLink>();
-		return conversationLink;
-	}
+    public List<ConversationLink> getConversationLink() {
+        if(conversationLink == null)
+            conversationLink = new ArrayList<ConversationLink>();
+        return conversationLink;
+    }
 
-	public List<Association> getAssociation() {
-		if(association == null)
-			association = new ArrayList<Association>();
-		return association;
-	}
+    public List<Association> getAssociation() {
+        if(association == null)
+            association = new ArrayList<Association>();
+        return association;
+    }
 }

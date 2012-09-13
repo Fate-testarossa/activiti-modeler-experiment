@@ -71,7 +71,7 @@ import de.hpi.bpmn2_0.model.BaseElement;
 public class ActivityResource
     extends BaseElement
 {
-	
+    
     protected ResourceAssignmentExpression resourceAssignmentExpression;
     protected List<ResourceParameterBinding> resourceParameterBinding;
     

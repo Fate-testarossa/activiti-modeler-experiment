@@ -62,20 +62,20 @@ import de.hpi.bpmn2_0.model.data_object.Message;
 public class MessageEventDefinition
     extends EventDefinition
 {
-	
-	@XmlElement
+    
+    @XmlElement
     protected Operation operationRef;
     @XmlElement
     protected Message messageRef;
     
     /* Constructors */
     public MessageEventDefinition() {
-    	super();
+        super();
     }
     
     public MessageEventDefinition(MessageEventDefinition msgEvDef) {
-    	this.setOperationRef(msgEvDef.getOperationRef());
-    	this.setMessageRef(msgEvDef.getMessageRef());
+        this.setOperationRef(msgEvDef.getOperationRef());
+        this.setMessageRef(msgEvDef.getMessageRef());
     }
     
     /* Getter & Setter */

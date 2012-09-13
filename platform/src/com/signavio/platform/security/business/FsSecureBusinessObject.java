@@ -30,66 +30,66 @@ import com.signavio.platform.tenant.business.FsTenant;
 
 public abstract class FsSecureBusinessObject {
 
-	protected static final String emptyString = "";
-	
-	@SuppressWarnings("unchecked")
-	protected static final Set emptySet = new HashSet();
-	@SuppressWarnings("unchecked")
-	protected static final List emptyList = new ArrayList();
-	
-	private boolean privilegeInheritanceBlocked = false;
-	private boolean deleted = false;
-	
-	public FsSecureBusinessObject(){
-		// empty - for now
-	}
-	
-	public abstract String getId();
+    protected static final String emptyString = "";
+    
+    @SuppressWarnings("unchecked")
+    protected static final Set emptySet = new HashSet();
+    @SuppressWarnings("unchecked")
+    protected static final List emptyList = new ArrayList();
+    
+    private boolean privilegeInheritanceBlocked = false;
+    private boolean deleted = false;
+    
+    public FsSecureBusinessObject(){
+        // empty - for now
+    }
+    
+    public abstract String getId();
 
-	
-	public FsTenant getTenant(){
-		return FsTenant.getSingleton();
-	}
-	
-	public FsAccessToken getAccessToken(){
-		return FsAccessToken.getDummy();
-	}
-	
+    
+    public FsTenant getTenant(){
+        return FsTenant.getSingleton();
+    }
+    
+    public FsAccessToken getAccessToken(){
+        return FsAccessToken.getDummy();
+    }
+    
 
-	public void	setDeleted(boolean bool){
-		deleted = bool;
-	}
+    public void    setDeleted(boolean bool){
+        deleted = bool;
+    }
 
-	public boolean isDeleted(){
-		return deleted;
-	}
-	
-	public void	setPrivilegeInheritanceBlocked(boolean bool){
-		privilegeInheritanceBlocked = bool;
-	}
-	
-	public boolean isPrivilegeInheritanceBlocked(){
-		return privilegeInheritanceBlocked;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Set<String> getGainedPrivileges(FsSecureBusinessObject object) { 
-		// ISSUE: Would full set be better?
-		return emptySet; 
-	}
+    public boolean isDeleted(){
+        return deleted;
+    }
+    
+    public void    setPrivilegeInheritanceBlocked(boolean bool){
+        privilegeInheritanceBlocked = bool;
+    }
+    
+    public boolean isPrivilegeInheritanceBlocked(){
+        return privilegeInheritanceBlocked;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Set<String> getGainedPrivileges(FsSecureBusinessObject object) { 
+        // ISSUE: Would full set be better?
+        return emptySet; 
+    }
 
-	// ISSUE: Uncomment these methods in order to get to know needed implementations..
-	public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type){
-		throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
-	}
-	public void addChild(FsSecureBusinessObject Child){
-		throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
-	}
-	public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
-		throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
-	}
-	public <T extends FsSecureBusinessObject> Set<T> removeChild(T Child){
-		throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
-	}
-	
+    // ISSUE: Uncomment these methods in order to get to know needed implementations..
+    public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type){
+        throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
+    }
+    public void addChild(FsSecureBusinessObject Child){
+        throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
+    }
+    public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
+        throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
+    }
+    public <T extends FsSecureBusinessObject> Set<T> removeChild(T Child){
+        throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
+    }
+    
 }

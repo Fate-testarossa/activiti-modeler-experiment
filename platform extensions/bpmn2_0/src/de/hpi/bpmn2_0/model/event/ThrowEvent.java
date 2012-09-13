@@ -71,13 +71,13 @@ public abstract class ThrowEvent
     extends Event
 {
 
-	/* Constructors */
-	
-	public ThrowEvent() {}
-	
-	public ThrowEvent(ThrowEvent endEvent) {
-		super(endEvent);
-	}
+    /* Constructors */
+    
+    public ThrowEvent() {}
+    
+    public ThrowEvent(ThrowEvent endEvent) {
+        super(endEvent);
+    }
 
 //    protected List<DataInput> dataInput;
 //    protected List<DataInputAssociation> dataInputAssociation;
@@ -86,10 +86,10 @@ public abstract class ThrowEvent
 //    protected List<JAXBElement<? extends EventDefinition>> eventDefinition;
 //    protected List<QName> eventDefinitionRef;
 
-	public void acceptVisitor(Visitor v){
-		v.visitThrowEvent(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitThrowEvent(this);
+    }
+    
     /**
      * Gets the value of the dataInput property.
      * 

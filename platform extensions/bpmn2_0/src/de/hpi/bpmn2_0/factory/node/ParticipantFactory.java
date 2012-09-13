@@ -46,116 +46,116 @@ import de.hpi.bpmn2_0.model.participant.ParticipantMultiplicity;
 @StencilId("ChoreographyParticipant")
 public class ParticipantFactory extends AbstractShapeFactory {
 
-	
-	@Override
-	public BPMNElement createBpmnElement(Shape shape, BPMNElement parent)
-			throws BpmnConverterException {
-		BPMNElement bpmnElement = super.createBpmnElement(shape, parent);
-		
-		/*
-		 * Check on associated messages
-		 */
-		setMessageVisibility(shape, bpmnElement);
-		
-		return bpmnElement;
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
-	 * oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected Participant createProcessElement(Shape shape)
-			throws BpmnConverterException {
-		Participant p = new Participant();
-		p._isChoreographyParticipant = true;
-		this.setCommonAttributes(p, shape);
-		p.setId(shape.getResourceId());
-		p.setName(shape.getProperty("name"));
+    
+    @Override
+    public BPMNElement createBpmnElement(Shape shape, BPMNElement parent)
+            throws BpmnConverterException {
+        BPMNElement bpmnElement = super.createBpmnElement(shape, parent);
+        
+        /*
+         * Check on associated messages
+         */
+        setMessageVisibility(shape, bpmnElement);
+        
+        return bpmnElement;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
+     * oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected Participant createProcessElement(Shape shape)
+            throws BpmnConverterException {
+        Participant p = new Participant();
+        p._isChoreographyParticipant = true;
+        this.setCommonAttributes(p, shape);
+        p.setId(shape.getResourceId());
+        p.setName(shape.getProperty("name"));
 
-		/* Handle initiating property */
-		String initiating = shape.getProperty("initiating");
-		if (initiating != null)
-			p.setInitiating(initiating.equalsIgnoreCase("true"));
-		else
-			p.setInitiating(false);
+        /* Handle initiating property */
+        String initiating = shape.getProperty("initiating");
+        if (initiating != null)
+            p.setInitiating(initiating.equalsIgnoreCase("true"));
+        else
+            p.setInitiating(false);
 
-		/* Participant Multiplicity */
-		String isMultipleParticipant = shape.getProperty("multiple_instance");
-		if (isMultipleParticipant != null
-				&& isMultipleParticipant.equals("true")) {
-			ParticipantMultiplicity multiplicit = new ParticipantMultiplicity();
+        /* Participant Multiplicity */
+        String isMultipleParticipant = shape.getProperty("multiple_instance");
+        if (isMultipleParticipant != null
+                && isMultipleParticipant.equals("true")) {
+            ParticipantMultiplicity multiplicit = new ParticipantMultiplicity();
 
-			/* Maximum */
-			String maximum = shape.getProperty("maximum");
-			if (maximum != null) {
-				multiplicit.setMaximum(Integer.valueOf(maximum));
-			}
+            /* Maximum */
+            String maximum = shape.getProperty("maximum");
+            if (maximum != null) {
+                multiplicit.setMaximum(Integer.valueOf(maximum));
+            }
 
-			/* Minimum */
-			String minimum = shape.getProperty("minimum");
-			if (minimum != null) {
-				multiplicit.setMinimum(Integer.valueOf(minimum));
-			}
+            /* Minimum */
+            String minimum = shape.getProperty("minimum");
+            if (minimum != null) {
+                multiplicit.setMinimum(Integer.valueOf(minimum));
+            }
 
-			p.setParticipantMultiplicity(multiplicit);
-		}
+            p.setParticipantMultiplicity(multiplicit);
+        }
 
-		return p;
-	}
+        return p;
+    }
 
-	// @Override
-	protected BPMNShape createDiagramElement(Shape shape) {
-		BPMNShape bpmnShape = super.createDiagramElement(shape);
-		return bpmnShape;
-	}
+    // @Override
+    protected BPMNShape createDiagramElement(Shape shape) {
+        BPMNShape bpmnShape = super.createDiagramElement(shape);
+        return bpmnShape;
+    }
 
-	/**
-	 * Checks whether the message of an participant is visible and assigns the
-	 * name tag as a {@link SignavioMessageName} to the {@link Participant}.
-	 */
-	private Shape getTheVisibleMessage(Shape shape) {
-		/* Navigate in both directions because of undirected association */
-		List<Shape> connectedElements = new ArrayList<Shape>();
-		connectedElements.addAll(shape.getOutgoings());
-		connectedElements.addAll(shape.getIncomings());
+    /**
+     * Checks whether the message of an participant is visible and assigns the
+     * name tag as a {@link SignavioMessageName} to the {@link Participant}.
+     */
+    private Shape getTheVisibleMessage(Shape shape) {
+        /* Navigate in both directions because of undirected association */
+        List<Shape> connectedElements = new ArrayList<Shape>();
+        connectedElements.addAll(shape.getOutgoings());
+        connectedElements.addAll(shape.getIncomings());
 
-		for (Shape conShape : connectedElements) {
-			if (conShape.getStencilId().equals("Association_Undirected")) {
-				List<Shape> shapeList = new ArrayList<Shape>();
-				shapeList.addAll(conShape.getIncomings());
-				shapeList.addAll(conShape.getOutgoings());
+        for (Shape conShape : connectedElements) {
+            if (conShape.getStencilId().equals("Association_Undirected")) {
+                List<Shape> shapeList = new ArrayList<Shape>();
+                shapeList.addAll(conShape.getIncomings());
+                shapeList.addAll(conShape.getOutgoings());
 
-				for (Shape msgShape : shapeList) {
-					if (msgShape.getStencilId().equals("Message")) {
+                for (Shape msgShape : shapeList) {
+                    if (msgShape.getStencilId().equals("Message")) {
 
-						return msgShape;
-					}
-				}
-			}
-		}
+                        return msgShape;
+                    }
+                }
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private void setMessageVisibility(Shape shape, BPMNElement bpmnElement) {
-		Shape visibleMessage = getTheVisibleMessage(shape);
-		if (visibleMessage != null) {
-			((BPMNShape) bpmnElement.getShape()).setIsMessageVisible(true);
+    private void setMessageVisibility(Shape shape, BPMNElement bpmnElement) {
+        Shape visibleMessage = getTheVisibleMessage(shape);
+        if (visibleMessage != null) {
+            ((BPMNShape) bpmnElement.getShape()).setIsMessageVisible(true);
 
-			/*
-			 * Set the message name tag as extension element of the participant
-			 */
-			String name = visibleMessage.getProperty("name");
-			if (name != null && name.length() > 0) {
-				bpmnElement.getNode().getOrCreateExtensionElements().add(
-						new SignavioMessageName(name));
-			}
-		} else {
-			((BPMNShape) bpmnElement.getShape()).setIsMessageVisible(false);
-		}
-	}
+            /*
+             * Set the message name tag as extension element of the participant
+             */
+            String name = visibleMessage.getProperty("name");
+            if (name != null && name.length() > 0) {
+                bpmnElement.getNode().getOrCreateExtensionElements().add(
+                        new SignavioMessageName(name));
+            }
+        } else {
+            ((BPMNShape) bpmnElement.getShape()).setIsMessageVisible(false);
+        }
+    }
 
 }

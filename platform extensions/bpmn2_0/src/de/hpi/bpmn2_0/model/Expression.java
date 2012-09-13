@@ -57,7 +57,7 @@ import de.hpi.diagram.SignavioUUID;
  */
 @XmlRootElement(/*name = "conditionExpression"*/)
 @XmlSeeAlso({
-	FormalExpression.class
+    FormalExpression.class
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tExpression", propOrder = {
@@ -65,35 +65,35 @@ import de.hpi.diagram.SignavioUUID;
 })
 public class Expression
     extends BaseElement
-{	
-	/**
-	 * Default no-arg constructor
-	 */
-	public Expression() {
-		super();
-	}
-	
-	public Expression(String text) {
-		super();
-		this.setId(SignavioUUID.generate());
-		this.getContent().add(text);
-	}
-	
-	@XmlMixed
+{    
+    /**
+     * Default no-arg constructor
+     */
+    public Expression() {
+        super();
+    }
+    
+    public Expression(String text) {
+        super();
+        this.setId(SignavioUUID.generate());
+        this.getContent().add(text);
+    }
+    
+    @XmlMixed
     @XmlAnyElement(lax = true)
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected List<String> content;
-	
-	/**
-	 * Is used for exporting the expression.
-	 * 
-	 * @return Returns a string, or null if there is no expression.
-	 */
+    
+    /**
+     * Is used for exporting the expression.
+     * 
+     * @return Returns a string, or null if there is no expression.
+     */
     public String toExportString(){
-    	return this.getContent().size() == 0? null : this.getContent().get(0);
+        return this.getContent().size() == 0? null : this.getContent().get(0);
     }
-	
-	public List<String> getContent() {
+    
+    public List<String> getContent() {
         if (content == null) {
             content = new ArrayList<String>();
         }

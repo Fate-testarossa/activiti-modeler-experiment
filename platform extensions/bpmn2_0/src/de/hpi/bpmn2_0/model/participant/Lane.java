@@ -81,43 +81,43 @@ public class Lane
     extends FlowElement
 {
 
-	protected BaseElement partitionElement;
+    protected BaseElement partitionElement;
     
-	@XmlIDREF
-//	@XmlElements({
-//		/* Events */
-//		@XmlElement(type = StartEvent.class),
-//		@XmlElement(type = EndEvent.class),
-//		
-//		/* Activities */
-//		@XmlElement(type = Task.class),
-//		
-//		/* Gateways */
-//		@XmlElement(type = ExclusiveGateway.class),
-//		@XmlElement(type = ParallelGateway.class),
-//		
-//		/* Edges */
-//		@XmlElement(type = SequenceFlow.class),
-//		
-//		/* Artifacts / Data elements */
-//		@XmlElement(type = DataObject.class),
-//		@XmlElement(type = TextAnnotation.class),
-//		
-//		/* Partner */
-//		@XmlElement(type = Participant.class)
-//	})
-	@XmlElement(type = FlowNode.class)
+    @XmlIDREF
+//    @XmlElements({
+//        /* Events */
+//        @XmlElement(type = StartEvent.class),
+//        @XmlElement(type = EndEvent.class),
+//        
+//        /* Activities */
+//        @XmlElement(type = Task.class),
+//        
+//        /* Gateways */
+//        @XmlElement(type = ExclusiveGateway.class),
+//        @XmlElement(type = ParallelGateway.class),
+//        
+//        /* Edges */
+//        @XmlElement(type = SequenceFlow.class),
+//        
+//        /* Artifacts / Data elements */
+//        @XmlElement(type = DataObject.class),
+//        @XmlElement(type = TextAnnotation.class),
+//        
+//        /* Partner */
+//        @XmlElement(type = Participant.class)
+//    })
+    @XmlElement(type = FlowNode.class)
     protected List<FlowNode> flowNodeRef;
     
-	@XmlElement(type = LaneSet.class)
-	protected LaneSet childLaneSet;
-	
-//	@XmlIDREF
-//	@XmlAttribute
-//	@XmlSchemaType(name = "IDREF")
-//	@XmlElementRef(type = LaneSet.class)
-	@XmlTransient
-	protected LaneSet laneSet;
+    @XmlElement(type = LaneSet.class)
+    protected LaneSet childLaneSet;
+    
+//    @XmlIDREF
+//    @XmlAttribute
+//    @XmlSchemaType(name = "IDREF")
+//    @XmlElementRef(type = LaneSet.class)
+    @XmlTransient
+    protected LaneSet laneSet;
     
     @XmlAttribute
     @XmlIDREF
@@ -132,24 +132,24 @@ public class Lane
      * Default constructor
      */
     public Lane() {
-    	super();
+        super();
     }
     
     /**
      * Copy constructor
      * 
      * @param l
-     * 		template {@link Lane}
+     *         template {@link Lane}
      */
     public Lane(Lane l) {
-    	super(l);
-    	
-		this.setPartitionElement(l.getPartitionElement());
-		this.getFlowNodeRef().addAll(l.getFlowNodeRef());
-		this.setChildLaneSet(l.childLaneSet);
-		this.setLaneSet(l.getLaneSet());
-		this.setPartitionElementRef(l.getPartitionElementRef());
-	}
+        super(l);
+        
+        this.setPartitionElement(l.getPartitionElement());
+        this.getFlowNodeRef().addAll(l.getFlowNodeRef());
+        this.setChildLaneSet(l.childLaneSet);
+        this.setLaneSet(l.getLaneSet());
+        this.setPartitionElementRef(l.getPartitionElementRef());
+    }
     
     /* Methods */
     
@@ -157,30 +157,30 @@ public class Lane
      * Retrieves all child lane.
      */
     public List<Lane> getLaneList() {
-    	List<Lane> laneList = new ArrayList<Lane>();
-    	if(getChildLaneSet(false) == null)
-    		return laneList;
-    	
-    	laneList.addAll(getChildLaneSet(false).getAllLanes());
-    	
-    	return laneList;
+        List<Lane> laneList = new ArrayList<Lane>();
+        if(getChildLaneSet(false) == null)
+            return laneList;
+        
+        laneList.addAll(getChildLaneSet(false).getAllLanes());
+        
+        return laneList;
     }
 
-	/**
+    /**
      * Adds the child to the lane's flow elements if possible.
      */
     public void addChild(BaseElement child) {
-    	if(child instanceof Lane) {
-    		this.getChildLaneSet(true).getLanes().add((Lane) child);
-    		((Lane) child).setLaneSet(this.getChildLaneSet(true));
-    	} else if (!(child instanceof Edge)) {
-    		this.getFlowNodeRef().add((FlowNode) child);
-    	}
+        if(child instanceof Lane) {
+            this.getChildLaneSet(true).getLanes().add((Lane) child);
+            ((Lane) child).setLaneSet(this.getChildLaneSet(true));
+        } else if (!(child instanceof Edge)) {
+            this.getFlowNodeRef().add((FlowNode) child);
+        }
     }
  
-	public void acceptVisitor(Visitor v){
-		v.visitLane(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitLane(this);
+    }
     
     /* Getter & Setter */
     
@@ -211,20 +211,20 @@ public class Lane
     /**
      * 
      * Returns a LaneSet, containing sub-Lanes (even if it is only one). Not to be confused with {@link #getLane()}, which returns the <b> containing </b> lane. 
-	 * @return the laneSet
-	 */
-	public LaneSet getLaneSet() {
-		return laneSet;
-	}
+     * @return the laneSet
+     */
+    public LaneSet getLaneSet() {
+        return laneSet;
+    }
 
-	/**
-	 * @param laneSet the laneSet to set
-	 */
-	public void setLaneSet(LaneSet laneSet) {
-		this.laneSet = laneSet;
-	}
+    /**
+     * @param laneSet the laneSet to set
+     */
+    public void setLaneSet(LaneSet laneSet) {
+        this.laneSet = laneSet;
+    }
 
-	/**
+    /**
      * Gets the value of the flowElementRef property.
      * 
      * <p>
@@ -266,11 +266,11 @@ public class Lane
      */
     @ChildElements
     public LaneSet getChildLaneSet(boolean createIfMissing) {
-    	if(childLaneSet == null && createIfMissing) {
-    		childLaneSet = new LaneSet();
-    		childLaneSet.setId(SignavioUUID.generate());
-    		childLaneSet.setParentLane(this);
-    	}
+        if(childLaneSet == null && createIfMissing) {
+            childLaneSet = new LaneSet();
+            childLaneSet.setId(SignavioUUID.generate());
+            childLaneSet.setParentLane(this);
+        }
         return childLaneSet;
     }
 

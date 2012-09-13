@@ -74,13 +74,13 @@ public class InputSet
 {
 
     @XmlIDREF
-	@XmlElement(type = DataInput.class)
+    @XmlElement(type = DataInput.class)
     protected List<DataInput> dataInputRefs;
     @XmlIDREF
-	@XmlElement(type = DataInput.class)
+    @XmlElement(type = DataInput.class)
     protected List<DataInput> optionalInputRefs;
     @XmlIDREF
-	@XmlElement(type = DataInput.class)
+    @XmlElement(type = DataInput.class)
     protected List<DataInput> whileExecutingInputRefs;
     @XmlIDREF
     @XmlElement(type = OutputSet.class)

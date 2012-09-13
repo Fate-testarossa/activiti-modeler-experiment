@@ -32,8 +32,8 @@ import com.signavio.platform.handler.BasisHandler;
 @Target(ElementType.TYPE)
 public @interface HandlerConfiguration {
 
-	String uri();
-	Class<? extends BasisHandler> context() default BasisHandler.class;   
-	String rel() default "";
-	boolean isAdminHandler() default false;
+    String uri();
+    Class<? extends BasisHandler> context() default BasisHandler.class;   
+    String rel() default "";
+    boolean isAdminHandler() default false;
 }

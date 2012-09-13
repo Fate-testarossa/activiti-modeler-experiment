@@ -68,7 +68,7 @@ public class SignalEventDefinition
      * @param definitions
      */
     public void insertSignalIntoDefinitions(Definitions definitions) {
-    	definitions.getRootElement().add(signalRef);
+        definitions.getRootElement().add(signalRef);
     }
     
     /* Getter & Setter */

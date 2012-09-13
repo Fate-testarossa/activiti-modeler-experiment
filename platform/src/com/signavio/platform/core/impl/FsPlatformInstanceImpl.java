@@ -43,62 +43,62 @@ import com.signavio.warehouse.model.business.ModelTypeManager;
 
 public class FsPlatformInstanceImpl implements PlatformInstance {
 
-	private HandlerDirectory handlerManger;
-	private ServletContext servletContext;
-	private FsPlatformPropertiesImpl platformProperties;
-	
-	public void bootInstance(Object... parameters) {
-		if (parameters.length < 1 || (parameters.length >= 1 && !(parameters[0] instanceof ServletContext))) {
-			throw new InitializationException("Boot of servlet container PlatformInstance failed, because ServletContext parameter is missing.");
-		}
-		// load configuration
-		this.servletContext = (ServletContext) parameters[0];
+    private HandlerDirectory handlerManger;
+    private ServletContext servletContext;
+    private FsPlatformPropertiesImpl platformProperties;
+    
+    public void bootInstance(Object... parameters) {
+        if (parameters.length < 1 || (parameters.length >= 1 && !(parameters[0] instanceof ServletContext))) {
+            throw new InitializationException("Boot of servlet container PlatformInstance failed, because ServletContext parameter is missing.");
+        }
+        // load configuration
+        this.servletContext = (ServletContext) parameters[0];
 
-		this.platformProperties = new FsPlatformPropertiesImpl(servletContext);
-		
-		FsRootDirectory.createInstance(this.platformProperties.getRootDirectoryPath());
-		ModelTypeManager.createInstance();
-		
-		this.handlerManger = new HandlerDirectory(servletContext);
-		this.handlerManger.start();
-	
-		FsAccessToken token = null;
-		try {
-			token = FsSecurityManager.createToken("root", "root", null);
-		} catch (Exception e) {
-			// cannot happen
-		}
-		FsRootObject root = FsRootObject.getRootObject(token);
-		@SuppressWarnings("unused")
-		FsAccountManager accountManager = root.getAccountManager();
-		FsTenantManager tenantManager = root.getTenantManager();
-		
-		FsTenant onlyTenant = tenantManager.getChildren(FsTenant.class).iterator().next();
-		@SuppressWarnings("unused")
-		FsRoleManager roleManagerForTenant = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, onlyTenant, token);
-		FsEntityManager entityManagerForTenant = FsEntityManager.getTenantManagerInstance(FsEntityManager.class, onlyTenant, token);
-		@SuppressWarnings("unused")
-		FsDirectory rootDir = entityManagerForTenant.getTenantRootDirectory();
-		
+        this.platformProperties = new FsPlatformPropertiesImpl(servletContext);
+        
+        FsRootDirectory.createInstance(this.platformProperties.getRootDirectoryPath());
+        ModelTypeManager.createInstance();
+        
+        this.handlerManger = new HandlerDirectory(servletContext);
+        this.handlerManger.start();
+    
+        FsAccessToken token = null;
+        try {
+            token = FsSecurityManager.createToken("root", "root", null);
+        } catch (Exception e) {
+            // cannot happen
+        }
+        FsRootObject root = FsRootObject.getRootObject(token);
+        @SuppressWarnings("unused")
+        FsAccountManager accountManager = root.getAccountManager();
+        FsTenantManager tenantManager = root.getTenantManager();
+        
+        FsTenant onlyTenant = tenantManager.getChildren(FsTenant.class).iterator().next();
+        @SuppressWarnings("unused")
+        FsRoleManager roleManagerForTenant = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, onlyTenant, token);
+        FsEntityManager entityManagerForTenant = FsEntityManager.getTenantManagerInstance(FsEntityManager.class, onlyTenant, token);
+        @SuppressWarnings("unused")
+        FsDirectory rootDir = entityManagerForTenant.getTenantRootDirectory();
+        
 
 
-	}
-	
-	public void shutdownInstance() {
-		
-	}
+    }
+    
+    public void shutdownInstance() {
+        
+    }
 
-	public File getFile(String path) {
-		return new File(servletContext.getRealPath(path));
-	}
+    public File getFile(String path) {
+        return new File(servletContext.getRealPath(path));
+    }
 
-	public HandlerDirectory getHandlerDirectory() {
-		return handlerManger;
-	}
+    public HandlerDirectory getHandlerDirectory() {
+        return handlerManger;
+    }
 
-	public PlatformProperties getPlatformProperties() {
-		return platformProperties;
-	}
+    public PlatformProperties getPlatformProperties() {
+        return platformProperties;
+    }
 
 
 }

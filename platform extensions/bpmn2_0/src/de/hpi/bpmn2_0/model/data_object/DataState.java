@@ -55,23 +55,23 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 public class DataState
     extends BaseElement
 {
-	/**
-	 * Default constructor
-	 */
-	public DataState() {
-		
-	}
-	
-	/**
-	 * Constructor setting the name attribute.
-	 * 
-	 * @param name
-	 * 		The name of the DataState.
-	 */
-	public DataState(String name) {
-		this.setName(name);
-	}
-	
+    /**
+     * Default constructor
+     */
+    public DataState() {
+        
+    }
+    
+    /**
+     * Constructor setting the name attribute.
+     * 
+     * @param name
+     *         The name of the DataState.
+     */
+    public DataState(String name) {
+        this.setName(name);
+    }
+    
     @XmlAttribute
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected String name;

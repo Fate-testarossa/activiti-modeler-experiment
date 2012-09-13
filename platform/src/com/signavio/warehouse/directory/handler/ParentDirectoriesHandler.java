@@ -7,8 +7,8 @@ import com.signavio.platform.annotations.HandlerConfiguration;
 @HandlerConfiguration(context=DirectoryHandler.class, uri="/parents", rel="parents")
 public class ParentDirectoriesHandler extends AbstractParentDirectoriesHandler {
 
-	public ParentDirectoriesHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
+    public ParentDirectoriesHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
 
 }

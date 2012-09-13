@@ -64,9 +64,9 @@ public class DataObject
     @XmlAttribute
     protected QName itemSubjectRef;
     
-	public void acceptVisitor(Visitor v){
-		v.visitDataObject(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitDataObject(this);
+    }
 
     /**
      * Gets the value of the itemSubjectRef property.

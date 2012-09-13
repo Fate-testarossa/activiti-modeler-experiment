@@ -62,10 +62,10 @@ ORYX.Plugins.SyntaxChecker = ORYX.Plugins.AbstractPlugin.extend({
                 onNoErrors: function(){
                     this.setActivated(button, false);
                     this.facade.raiseEvent({
-            			type:ORYX.CONFIG.EVENT_LOADING_STATUS,
-            			text:ORYX.I18N.SyntaxChecker.noErrors,
-            			timeout:10000
-            		});
+                        type:ORYX.CONFIG.EVENT_LOADING_STATUS,
+                        text:ORYX.I18N.SyntaxChecker.noErrors,
+                        timeout:10000
+                    });
                     //Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.SyntaxChecker.noErrors);
                 }.bind(this),
                 onErrors: function(){
@@ -127,18 +127,18 @@ ORYX.Plugins.SyntaxChecker = ORYX.Plugins.AbstractPlugin.extend({
             
         Ext.Msg.wait(ORYX.I18N.SyntaxChecker.checkingMessage);
 
-		var ss = this.facade.getStencilSets();
-		var data = null;
-		var includesJson = false;
-		
-		if(ss.keys().include("http://b3mn.org/stencilset/bpmn2.0#") ||
-			ss.keys().include("http://b3mn.org/stencilset/bpmn2.0choreography#") ||
-				ss.keys().include("http://b3mn.org/stencilset/bpmn2.0conversation#")) {
-			data = this.facade.getSerializedJSON();
-			includesJson = true;
-		} else {
-			data = this.getRDFFromDOM();
-		}
+        var ss = this.facade.getStencilSets();
+        var data = null;
+        var includesJson = false;
+        
+        if(ss.keys().include("http://b3mn.org/stencilset/bpmn2.0#") ||
+            ss.keys().include("http://b3mn.org/stencilset/bpmn2.0choreography#") ||
+                ss.keys().include("http://b3mn.org/stencilset/bpmn2.0conversation#")) {
+            data = this.facade.getSerializedJSON();
+            includesJson = true;
+        } else {
+            data = this.getRDFFromDOM();
+        }
         
         // Send the request to the server.
         new Ajax.Request(ORYX.CONFIG.SYNTAXCHECKER_URL, {
@@ -148,7 +148,7 @@ ORYX.Plugins.SyntaxChecker = ORYX.Plugins.AbstractPlugin.extend({
                 resource: location.href,
                 data_json: data,
                 context: options.context,
-				isJson: includesJson
+                isJson: includesJson
             },
             onSuccess: function(request){
                 var resp = (request&&request.responseText?request.responseText:"{}").evalJSON();
@@ -213,28 +213,28 @@ ORYX.Plugins.SyntaxChecker = ORYX.Plugins.AbstractPlugin.extend({
         
         //show a status message with a hint to the error messages in the tooltip
         this.facade.raiseEvent({
-			type:ORYX.CONFIG.EVENT_LOADING_STATUS,
-			text:ORYX.I18N.SyntaxChecker.notice,
-			timeout:10000
-		});
+            type:ORYX.CONFIG.EVENT_LOADING_STATUS,
+            text:ORYX.I18N.SyntaxChecker.notice,
+            timeout:10000
+        });
     },
     parseCodeToMsg: function(code){
-    	var msg = code.replace(/: /g, "<br />").replace(/, /g, "<br />");
-    	var codes = msg.split("<br />");
-    	for (var i=0; i < codes.length; i++) {
-    		var singleCode = codes[i];
-    		var replacement = this.parseSingleCodeToMsg(singleCode);
-    		if (singleCode != replacement) {
-    			msg = msg.replace(singleCode, replacement);
-    		}
-    	}
-		
-		return msg;
-	},
-	
-	parseSingleCodeToMsg: function(code){
-		return ORYX.I18N.SyntaxChecker[code]||code;
-	},
+        var msg = code.replace(/: /g, "<br />").replace(/, /g, "<br />");
+        var codes = msg.split("<br />");
+        for (var i=0; i < codes.length; i++) {
+            var singleCode = codes[i];
+            var replacement = this.parseSingleCodeToMsg(singleCode);
+            if (singleCode != replacement) {
+                msg = msg.replace(singleCode, replacement);
+            }
+        }
+        
+        return msg;
+    },
+    
+    parseSingleCodeToMsg: function(code){
+        return ORYX.I18N.SyntaxChecker[code]||code;
+    },
     /**
      * Resets all (displayed) errors
      * @methodOf ORYX.Plugins.SyntaxChecker.prototype
@@ -272,9 +272,9 @@ ORYX.Plugins.SyntaxChecker = ORYX.Plugins.AbstractPlugin.extend({
         });
         
         var tooltip = new Ext.ToolTip({
-        	showDelay:50,
-        	html:errorMsg,
-        	target:crossId
+            showDelay:50,
+            html:errorMsg,
+            target:crossId
         });
         
         this.raisedEventIds.push(id);

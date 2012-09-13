@@ -37,47 +37,47 @@ import com.signavio.usermanagement.user.business.FsUser;
  *
  */
 public class FsRoleManager extends FsBusinessObjectManager {
-	
-	private static final FsRoleManager SINGLETON;
-	public static final String ID_OF_SINGLETON = "role-mgr-object";
-	private static final Set<FsRoleManager> SINGLETON_IN_SET;
-	
+    
+    private static final FsRoleManager SINGLETON;
+    public static final String ID_OF_SINGLETON = "role-mgr-object";
+    private static final Set<FsRoleManager> SINGLETON_IN_SET;
+    
 
-	static {
-		SINGLETON = new FsRoleManager();
-		SINGLETON_IN_SET = new HashSet<FsRoleManager>(1);
-		SINGLETON_IN_SET.add(SINGLETON);
-	}
-	
-	public static FsRoleManager getSingleton() {
-		return SINGLETON;
-	}
-	public static Set<FsRoleManager> getSingletonSet() {
-		return SINGLETON_IN_SET;
-	}
+    static {
+        SINGLETON = new FsRoleManager();
+        SINGLETON_IN_SET = new HashSet<FsRoleManager>(1);
+        SINGLETON_IN_SET.add(SINGLETON);
+    }
+    
+    public static FsRoleManager getSingleton() {
+        return SINGLETON;
+    }
+    public static Set<FsRoleManager> getSingletonSet() {
+        return SINGLETON_IN_SET;
+    }
 
-	public void deleteUser(FsUser user) throws UserManagementException { return ; }
+    public void deleteUser(FsUser user) throws UserManagementException { return ; }
 
-	public FsUser createUser(FsAccount owner) {
-		throw new UnsupportedOperationException("Filesystem accessing backend cannot create users.");
-		
-	}
+    public FsUser createUser(FsAccount owner) {
+        throw new UnsupportedOperationException("Filesystem accessing backend cannot create users.");
+        
+    }
 
-	public FsUser acceptInvitation(String invitationid, String tenantid, String mail, String password) throws PrincipalException, UserManagementException {
-		return FsUser.getDummy();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
-		if (FsUser.class.isAssignableFrom(type)) {
-			return (Set<T>) FsUser.getDummySet();
-		} else {
-			return super.getChildren(type);
-		}
-	}
-	
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
+    public FsUser acceptInvitation(String invitationid, String tenantid, String mail, String password) throws PrincipalException, UserManagementException {
+        return FsUser.getDummy();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
+        if (FsUser.class.isAssignableFrom(type)) {
+            return (Set<T>) FsUser.getDummySet();
+        } else {
+            return super.getChildren(type);
+        }
+    }
+    
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
 }

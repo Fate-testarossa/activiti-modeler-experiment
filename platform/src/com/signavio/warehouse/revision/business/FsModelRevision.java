@@ -37,86 +37,86 @@ import com.signavio.warehouse.model.business.FsModel;
  *
  */
 public class FsModelRevision extends FsSecureBusinessObject {
-	
-	public static final String ID_PREFIX = "head-revision-of-";
-	FsModel parentModel;
-	
-	public FsModelRevision(FsModel parentModel) {
-		super();
-		this.parentModel = parentModel;
-	}
+    
+    public static final String ID_PREFIX = "head-revision-of-";
+    FsModel parentModel;
+    
+    public FsModelRevision(FsModel parentModel) {
+        super();
+        this.parentModel = parentModel;
+    }
 
-	public String getAuthor() {
-		return FsUser.getDummy().getFullName();
-	}
-	
-	public void setAuthor(String id) { 
-		return ; 
-	}
+    public String getAuthor() {
+        return FsUser.getDummy().getFullName();
+    }
+    
+    public void setAuthor(String id) { 
+        return ; 
+    }
 
-	public String getComment() {
-		return emptyString;
-	}
+    public String getComment() {
+        return emptyString;
+    }
 
-	public int getRevisionNumber() {
-		return 0;
-	}
+    public int getRevisionNumber() {
+        return 0;
+    }
 
-	public Date getCreationDate() {
-		return parentModel.getCreationDate();
-	}
+    public Date getCreationDate() {
+        return parentModel.getCreationDate();
+    }
 
-	public FsModelRepresentationInfo getRepresentation(RepresentationType type) {
-		return parentModel.getRepresentation(type);
-	}
-	
-	public FsModelRepresentationInfo createRepresentation(RepresentationType type, byte[] content) {
-		return parentModel.createRepresentation(type, content);
-	}
-	
-	public FsComment getCommentObj() {
-		return new FsComment(this);
-	}
+    public FsModelRepresentationInfo getRepresentation(RepresentationType type) {
+        return parentModel.getRepresentation(type);
+    }
+    
+    public FsModelRepresentationInfo createRepresentation(RepresentationType type, byte[] content) {
+        return parentModel.createRepresentation(type, content);
+    }
+    
+    public FsComment getCommentObj() {
+        return new FsComment(this);
+    }
 
 
-	/*
-	 * 
-	 * INTERFACE COMPLIANCE METHODS 
-	 * 
-	 */
+    /*
+     * 
+     * INTERFACE COMPLIANCE METHODS 
+     * 
+     */
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
-		if (FsComment.class.isAssignableFrom(type)){
-			return emptySet;
-		} else {
-			return super.getChildren(type);
-		}
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
-		if (FsModel.class.isAssignableFrom(businessObjectClass)){
-			return (Set<T>)getParents(false, FsModel.class);
-		} else {
-			return super.getParents(businessObjectClass);
-		}
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
+        if (FsComment.class.isAssignableFrom(type)){
+            return emptySet;
+        } else {
+            return super.getChildren(type);
+        }
+    }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
+        if (FsModel.class.isAssignableFrom(businessObjectClass)){
+            return (Set<T>)getParents(false, FsModel.class);
+        } else {
+            return super.getParents(businessObjectClass);
+        }
+    }
 
-	public Set<FsModel> getParents(boolean deleted, Class<FsModel> type) {
-		assert (!parentModel.isDeleted());
-		Set<FsModel> parents = new HashSet<FsModel>(1);
-		parents.add(parentModel);
-		return parents;
-	}
+    public Set<FsModel> getParents(boolean deleted, Class<FsModel> type) {
+        assert (!parentModel.isDeleted());
+        Set<FsModel> parents = new HashSet<FsModel>(1);
+        parents.add(parentModel);
+        return parents;
+    }
 
-	@Override
-	public String getId() {
-		//System.out.println("head-revision-of-" + parentModel.getId());
-		return "head-revision-of-" + parentModel.getId() ;
-	}
+    @Override
+    public String getId() {
+        //System.out.println("head-revision-of-" + parentModel.getId());
+        return "head-revision-of-" + parentModel.getId() ;
+    }
 
 
 

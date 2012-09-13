@@ -67,10 +67,10 @@ public abstract class BaseElementWithMixedContent {
 //    @XmlElement
 //    @XmlMixed
 //    //@XmlAnyElement(lax = true)
-	@XmlElementRefs({
-		@XmlElementRef(type = Task.class),
-		@XmlElementRef(type = Task.class)
-	})
+    @XmlElementRefs({
+        @XmlElementRef(type = Task.class),
+        @XmlElementRef(type = Task.class)
+    })
     protected List<Object> content;
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)

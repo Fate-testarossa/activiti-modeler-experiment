@@ -61,71 +61,71 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlType(name = "tBoundaryEvent")
 public class BoundaryEvent extends IntermediateCatchEvent {
 
-	@XmlAttribute
-	protected Boolean cancelActivity;
-	@XmlAttribute(required = true)
-	@XmlIDREF
-	@XmlSchemaType(name = "IDREF")
-	protected Activity attachedToRef;
+    @XmlAttribute
+    protected Boolean cancelActivity;
+    @XmlAttribute(required = true)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected Activity attachedToRef;
 
-	 public void afterUnmarshal(Unmarshaller u, Object parent) {
-		 if(this.getAttachedToRef() != null) {
-			 this.getAttachedToRef().getBoundaryEventRefs().add(this);
-		 }
-	 }
-	 
-	public void acceptVisitor(Visitor v){
-		v.visitBoundaryEvent(this);
-	}
-	 
+     public void afterUnmarshal(Unmarshaller u, Object parent) {
+         if(this.getAttachedToRef() != null) {
+             this.getAttachedToRef().getBoundaryEventRefs().add(this);
+         }
+     }
+     
+    public void acceptVisitor(Visitor v){
+        v.visitBoundaryEvent(this);
+    }
+     
 
-	
-	/* Getter & Setter */
-	
-	/**
-	 * Gets the value of the cancelActivity property.
-	 * 
-	 * @return possible object is {@link Boolean }
-	 * 
-	 */
-	public boolean isCancelActivity() {
-		if (cancelActivity == null) {
-			return true;
-		} else {
-			return cancelActivity;
-		}
-	}
+    
+    /* Getter & Setter */
+    
+    /**
+     * Gets the value of the cancelActivity property.
+     * 
+     * @return possible object is {@link Boolean }
+     * 
+     */
+    public boolean isCancelActivity() {
+        if (cancelActivity == null) {
+            return true;
+        } else {
+            return cancelActivity;
+        }
+    }
 
-	/**
-	 * Sets the value of the cancelActivity property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link Boolean }
-	 * 
-	 */
-	public void setCancelActivity(Boolean value) {
-		this.cancelActivity = value;
-	}
+    /**
+     * Sets the value of the cancelActivity property.
+     * 
+     * @param value
+     *            allowed object is {@link Boolean }
+     * 
+     */
+    public void setCancelActivity(Boolean value) {
+        this.cancelActivity = value;
+    }
 
-	/**
-	 * Gets the value of the attachedToRef property.
-	 * 
-	 * @return possible object is {@link Activity }
-	 * 
-	 */
-	public Activity getAttachedToRef() {
-		return attachedToRef;
-	}
+    /**
+     * Gets the value of the attachedToRef property.
+     * 
+     * @return possible object is {@link Activity }
+     * 
+     */
+    public Activity getAttachedToRef() {
+        return attachedToRef;
+    }
 
-	/**
-	 * Sets the value of the attachedToRef property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link Activity }
-	 * 
-	 */
-	public void setAttachedToRef(Activity value) {
-		this.attachedToRef = value;
-	}
+    /**
+     * Sets the value of the attachedToRef property.
+     * 
+     * @param value
+     *            allowed object is {@link Activity }
+     * 
+     */
+    public void setAttachedToRef(Activity value) {
+        this.attachedToRef = value;
+    }
 
 }

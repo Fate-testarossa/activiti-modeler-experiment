@@ -26,25 +26,25 @@ import java.io.File;
 import com.signavio.warehouse.revision.business.RepresentationType;
 
 public interface ModelType {
-	
-	public String getFileExtension();
+    
+    public String getFileExtension();
 
-	public String getDescriptionFromModelFile(String path);
-	public boolean storeDescriptionToModelFile(String description, String path);
+    public String getDescriptionFromModelFile(String path);
+    public boolean storeDescriptionToModelFile(String description, String path);
 
-	public String getTypeStringFromModelFile(String path);
-	public boolean storeTypeStringToModelFile(String typeString, String path);
-	
-	public byte[] getRepresentationInfoFromModelFile(RepresentationType type, String path);
-	public void storeRepresentationInfoToModelFile(RepresentationType type, byte[] content, String path);
+    public String getTypeStringFromModelFile(String path);
+    public boolean storeTypeStringToModelFile(String typeString, String path);
+    
+    public byte[] getRepresentationInfoFromModelFile(RepresentationType type, String path);
+    public void storeRepresentationInfoToModelFile(RepresentationType type, byte[] content, String path);
 
-	public void storeRevisionToModelFile(String jsonRep, String svgRep, String path);
+    public void storeRevisionToModelFile(String jsonRep, String svgRep, String path);
 
-	public File storeModel(String path, String id, String name, String description, String type, String jsonRep, String svgRep);
+    public File storeModel(String path, String id, String name, String description, String type, String jsonRep, String svgRep);
 
-	public boolean acceptUsageForTypeName(String typeName);
-	
-	public boolean renameFile(String parentPath, String oldName, String newName);
-	
-	public void deleteFile(String parentPath, String name);
+    public boolean acceptUsageForTypeName(String typeName);
+    
+    public boolean renameFile(String parentPath, String oldName, String newName);
+    
+    public void deleteFile(String parentPath, String name);
 }

@@ -37,28 +37,28 @@ import com.signavio.warehouse.business.FsEntityManager;
  *
  */
 public abstract class FsBusinessObjectManager extends FsSecureBusinessObject {
-	
-	
-	@SuppressWarnings("unchecked")
-	public static <T extends FsBusinessObjectManager> T getGlobalManagerInstance(Class<T> managerClass, FsAccessToken token) {		
-		if (FsAccountManager.class.isAssignableFrom(managerClass)) {
-			return (T)FsAccountManager.getSingleton();
-		} else if (FsTenantManager.class.isAssignableFrom(managerClass)) {
-			return (T)FsTenantManager.getSingleton();
-		} else if (FsRoleManager.class.isAssignableFrom(managerClass)){
-			return (T)FsRoleManager.getSingleton();
-		} else if (FsEntityManager.class.isAssignableFrom(managerClass)){
-			return (T)FsEntityManager.getSingleton();
-		}
-		return null;
-	}
-	
-	public static <T extends FsBusinessObjectManager> T getTenantManagerInstance(Class<T> managerClass, FsTenant tenant, FsAccessToken token) {		
-		return getGlobalManagerInstance(managerClass, token);
-	}
-	
-	public static <T extends FsBusinessObjectManager> T getTenantManagerInstance(Class<T> managerClass, String tenantId, FsAccessToken token) {			
-		return getGlobalManagerInstance(managerClass, token);
-	}
+    
+    
+    @SuppressWarnings("unchecked")
+    public static <T extends FsBusinessObjectManager> T getGlobalManagerInstance(Class<T> managerClass, FsAccessToken token) {        
+        if (FsAccountManager.class.isAssignableFrom(managerClass)) {
+            return (T)FsAccountManager.getSingleton();
+        } else if (FsTenantManager.class.isAssignableFrom(managerClass)) {
+            return (T)FsTenantManager.getSingleton();
+        } else if (FsRoleManager.class.isAssignableFrom(managerClass)){
+            return (T)FsRoleManager.getSingleton();
+        } else if (FsEntityManager.class.isAssignableFrom(managerClass)){
+            return (T)FsEntityManager.getSingleton();
+        }
+        return null;
+    }
+    
+    public static <T extends FsBusinessObjectManager> T getTenantManagerInstance(Class<T> managerClass, FsTenant tenant, FsAccessToken token) {        
+        return getGlobalManagerInstance(managerClass, token);
+    }
+    
+    public static <T extends FsBusinessObjectManager> T getTenantManagerInstance(Class<T> managerClass, String tenantId, FsAccessToken token) {            
+        return getGlobalManagerInstance(managerClass, token);
+    }
 
 }

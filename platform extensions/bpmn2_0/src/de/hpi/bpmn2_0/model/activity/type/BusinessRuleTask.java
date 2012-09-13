@@ -58,54 +58,54 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class BusinessRuleTask
     extends Task
 {
-	@XmlAttribute
-	BusinessRuleTaskImplementation implementation;
-	
-	/* Constructors */
-	
-	/**
-	 * Default constructor
-	 */
-	public BusinessRuleTask() {	}
-	
-	/**
-	 * Copy constructor
-	 * 
-	 * @param brTask
-	 * 		Template {@link BusinessRuleTask}
-	 */
-	public BusinessRuleTask(BusinessRuleTask brTask) {
-		super(brTask);
-		this.setImplementation(brTask.getImplementation());
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitBusinessRuleTask(this);
-	}
-	
-	public GlobalTask getAsGlobalTask() {
-		GlobalBusinessRuleTask brGt = new GlobalBusinessRuleTask(super.getAsGlobalTask());
-		brGt.setImplementation(this.getImplementation());
-		
-		return brGt;
-	}
-	
-	
+    @XmlAttribute
+    BusinessRuleTaskImplementation implementation;
+    
+    /* Constructors */
+    
+    /**
+     * Default constructor
+     */
+    public BusinessRuleTask() {    }
+    
+    /**
+     * Copy constructor
+     * 
+     * @param brTask
+     *         Template {@link BusinessRuleTask}
+     */
+    public BusinessRuleTask(BusinessRuleTask brTask) {
+        super(brTask);
+        this.setImplementation(brTask.getImplementation());
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitBusinessRuleTask(this);
+    }
+    
+    public GlobalTask getAsGlobalTask() {
+        GlobalBusinessRuleTask brGt = new GlobalBusinessRuleTask(super.getAsGlobalTask());
+        brGt.setImplementation(this.getImplementation());
+        
+        return brGt;
+    }
+    
+    
 
-	/* Getter & Setter */
-	
-	/**
-	 * @return the implementation
-	 */
-	public BusinessRuleTaskImplementation getImplementation() {
-		return implementation;
-	}
+    /* Getter & Setter */
+    
+    /**
+     * @return the implementation
+     */
+    public BusinessRuleTaskImplementation getImplementation() {
+        return implementation;
+    }
 
-	/**
-	 * @param implementation the implementation to set
-	 */
-	public void setImplementation(BusinessRuleTaskImplementation implementation) {
-		this.implementation = implementation;
-	}
+    /**
+     * @param implementation the implementation to set
+     */
+    public void setImplementation(BusinessRuleTaskImplementation implementation) {
+        this.implementation = implementation;
+    }
 
 }

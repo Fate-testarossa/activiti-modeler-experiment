@@ -29,22 +29,22 @@ import de.hpi.diagram.verification.AbstractSyntaxChecker;
 
 public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
 
-	
-	private Definitions defs;
+    
+    private Definitions defs;
 
-	public BPMN2SyntaxChecker(Definitions defs) {
-		this.defs = defs;
-		this.errors = new HashMap<String, String>();
+    public BPMN2SyntaxChecker(Definitions defs) {
+        this.defs = defs;
+        this.errors = new HashMap<String, String>();
 
-		// this.allowedNodes = new HashSet<String>();
-		// this.forbiddenNodes = new HashSet<String>();
-	}
+        // this.allowedNodes = new HashSet<String>();
+        // this.forbiddenNodes = new HashSet<String>();
+    }
 
-	// @Override
-	public boolean checkSyntax() {
+    // @Override
+    public boolean checkSyntax() {
 
-		errors.clear();
+        errors.clear();
 
-		return errors.size() == 0;
-	}
+        return errors.size() == 0;
+    }
 }

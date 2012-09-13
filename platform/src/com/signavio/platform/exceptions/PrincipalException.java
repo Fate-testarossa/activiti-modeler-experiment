@@ -30,32 +30,32 @@ package com.signavio.platform.exceptions;
  */
 public class PrincipalException extends Exception {
 
-	/**
-	 * 
-	 */
-	public PrincipalException() {
-	}
+    /**
+     * 
+     */
+    public PrincipalException() {
+    }
 
-	/**
-	 * @param arg0
-	 */
-	public PrincipalException(String message) {
-		super(message);
-	}
+    /**
+     * @param arg0
+     */
+    public PrincipalException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param arg0
-	 */
-	public PrincipalException(Throwable arg0) {
-		super(arg0);
-	}
+    /**
+     * @param arg0
+     */
+    public PrincipalException(Throwable arg0) {
+        super(arg0);
+    }
 
-	/**
-	 * @param arg0
-	 * @param arg1
-	 */
-	public PrincipalException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
+    /**
+     * @param arg0
+     * @param arg1
+     */
+    public PrincipalException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
 
 }

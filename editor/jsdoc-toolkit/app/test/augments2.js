@@ -2,16 +2,16 @@
 @constructor
 */
 function LibraryItem() {
-	this.reserve = function() {
-	}
+    this.reserve = function() {
+    }
 }
 
 /**
 @constructor
 */
 function Junkmail() {
-	this.annoy = function() {
-	}
+    this.annoy = function() {
+    }
 }
 
 /**
@@ -21,6 +21,6 @@ function Junkmail() {
 @constructor
 */
 function NewsletterPage() {
-	this.getHeadline = function() {
-	}
+    this.getHeadline = function() {
+    }
 }

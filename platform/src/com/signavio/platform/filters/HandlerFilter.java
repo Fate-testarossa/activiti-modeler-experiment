@@ -55,50 +55,50 @@ import com.signavio.platform.tenant.LicenseException;
  */
 public class HandlerFilter implements Filter {
 
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		
-		
-		if(request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest) request;
-			HttpServletResponse res = (HttpServletResponse) response;
-			
-			//check if this request is a post to the login handler
-			String[] path 	= DispatcherServlet.parseURL( req.getRequestURI() );
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        
+        
+        if(request instanceof HttpServletRequest) {
+            HttpServletRequest req = (HttpServletRequest) request;
+            HttpServletResponse res = (HttpServletResponse) response;
+            
+            //check if this request is a post to the login handler
+            String[] path     = DispatcherServlet.parseURL( req.getRequestURI() );
 
-			String context		= path[0];
-			//String identifier 	= path[1];
-			String extension 	= path[2];
-			
-			HandlerEntry handler = null;
-			
-			// If there is no extension
-			if( extension == null ){
-				// Find the BasisHandler
-				handler = Platform.getInstance().getHandlerDirectory().getBasisHandler( context );
-			} else if( context != null ) {
-				// If not, findExtension Handler
-				handler =Platform.getInstance().getHandlerDirectory().getHandlerByContextAndUri(context, extension);
-			}
-			
-			if(handler == null) {
-				throw new RequestException("handlerfilter.handlerNotFound", context);
-			} else {
-				req.setAttribute("handler", handler);
-			}
+            String context        = path[0];
+            //String identifier     = path[1];
+            String extension     = path[2];
+            
+            HandlerEntry handler = null;
+            
+            // If there is no extension
+            if( extension == null ){
+                // Find the BasisHandler
+                handler = Platform.getInstance().getHandlerDirectory().getBasisHandler( context );
+            } else if( context != null ) {
+                // If not, findExtension Handler
+                handler =Platform.getInstance().getHandlerDirectory().getHandlerByContextAndUri(context, extension);
+            }
+            
+            if(handler == null) {
+                throw new RequestException("handlerfilter.handlerNotFound", context);
+            } else {
+                req.setAttribute("handler", handler);
+            }
 
-			chain.doFilter(req, res);
-		}
-	}
+            chain.doFilter(req, res);
+        }
+    }
 
-	//@Override
-	public void destroy() {
+    //@Override
+    public void destroy() {
 
-	}
+    }
 
-	//@Override
-	public void init(FilterConfig arg0) throws ServletException {
+    //@Override
+    public void init(FilterConfig arg0) throws ServletException {
 
-	}
+    }
 
 }

@@ -28,23 +28,23 @@ if(!ORYX.CONFIG) ORYX.CONFIG = {};
  * This file contains URI constants that may be used for XMLHTTPRequests.
  */
 
-ORYX.CONFIG.ROOT_PATH =					"../editor/"; //TODO: Remove last slash!!
-ORYX.CONFIG.EXPLORER_PATH =				"../explorer";
-ORYX.CONFIG.LIBS_PATH =					"../libs";
+ORYX.CONFIG.ROOT_PATH =                    "../editor/"; //TODO: Remove last slash!!
+ORYX.CONFIG.EXPLORER_PATH =                "../explorer";
+ORYX.CONFIG.LIBS_PATH =                    "../libs";
 
 /**
  * Regular Config
- */	
-ORYX.CONFIG.SERVER_HANDLER_ROOT = 		"../p";
-ORYX.CONFIG.SERVER_EDITOR_HANDLER =		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor";
-ORYX.CONFIG.SERVER_MODEL_HANDLER =		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/model";
-ORYX.CONFIG.STENCILSET_HANDLER = 		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset?embedsvg=true&url=true&namespace=";    
-ORYX.CONFIG.STENCIL_SETS_URL = 			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset";
+ */    
+ORYX.CONFIG.SERVER_HANDLER_ROOT =         "../p";
+ORYX.CONFIG.SERVER_EDITOR_HANDLER =        ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor";
+ORYX.CONFIG.SERVER_MODEL_HANDLER =        ORYX.CONFIG.SERVER_HANDLER_ROOT + "/model";
+ORYX.CONFIG.STENCILSET_HANDLER =         ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset?embedsvg=true&url=true&namespace=";    
+ORYX.CONFIG.STENCIL_SETS_URL =             ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_stencilset";
 
-ORYX.CONFIG.PLUGINS_CONFIG =			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_plugins";
-ORYX.CONFIG.SYNTAXCHECKER_URL =			ORYX.CONFIG.SERVER_HANDLER_ROOT + "/syntaxchecker";
+ORYX.CONFIG.PLUGINS_CONFIG =            ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_plugins";
+ORYX.CONFIG.SYNTAXCHECKER_URL =            ORYX.CONFIG.SERVER_HANDLER_ROOT + "/syntaxchecker";
 
-ORYX.CONFIG.SS_EXTENSIONS_FOLDER =		ORYX.CONFIG.ROOT_PATH + "stencilsets/extensions/";
-ORYX.CONFIG.SS_EXTENSIONS_CONFIG =		ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_ssextensions";	
-ORYX.CONFIG.ORYX_NEW_URL =				"/new";	
-ORYX.CONFIG.BPMN_LAYOUTER =				ORYX.CONFIG.ROOT_PATH + "bpmnlayouter";
+ORYX.CONFIG.SS_EXTENSIONS_FOLDER =        ORYX.CONFIG.ROOT_PATH + "stencilsets/extensions/";
+ORYX.CONFIG.SS_EXTENSIONS_CONFIG =        ORYX.CONFIG.SERVER_HANDLER_ROOT + "/editor_ssextensions";    
+ORYX.CONFIG.ORYX_NEW_URL =                "/new";    
+ORYX.CONFIG.BPMN_LAYOUTER =                ORYX.CONFIG.ROOT_PATH + "bpmnlayouter";

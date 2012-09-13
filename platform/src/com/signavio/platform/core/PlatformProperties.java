@@ -25,19 +25,19 @@ import java.util.Set;
 
 public interface PlatformProperties {
 
-	public abstract String getServerName();
+    public abstract String getServerName();
 
-	public abstract String getPlatformUri();
+    public abstract String getPlatformUri();
 
-	public abstract String getExplorerUri();
+    public abstract String getExplorerUri();
 
-	public abstract String getEditorUri();
+    public abstract String getEditorUri();
 
-	public abstract String getLibsUri();
+    public abstract String getLibsUri();
 
-	public abstract String getSupportedBrowserEditorRegExp();
+    public abstract String getSupportedBrowserEditorRegExp();
 
-	public abstract Set<String> getAdmins();
+    public abstract Set<String> getAdmins();
 
-	public String getRootDirectoryPath();
+    public String getRootDirectoryPath();
 }

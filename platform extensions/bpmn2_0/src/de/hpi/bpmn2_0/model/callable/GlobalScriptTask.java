@@ -60,17 +60,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GlobalScriptTask
     extends GlobalTask
 {
-	
-	/* Constructors */
-	public GlobalScriptTask() {
-		super();
-	}
-	
-	public GlobalScriptTask(GlobalTask gt) {
-		super(gt);
-	}
-	
-	@XmlElement
+    
+    /* Constructors */
+    public GlobalScriptTask() {
+        super();
+    }
+    
+    public GlobalScriptTask(GlobalTask gt) {
+        super(gt);
+    }
+    
+    @XmlElement
     protected String script;
     @XmlAttribute(name = "scriptLanguage")
     @XmlSchemaType(name = "anyURI")

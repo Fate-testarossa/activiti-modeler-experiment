@@ -42,34 +42,34 @@ import com.signavio.warehouse.revision.business.FsModelRevision;
 @HandlerConfiguration(context=RevisionHandler.class, uri="/info", rel="info")
 public class InfoHandler extends AbstractHandler {
 
-	/**
-	 * Construct
-	 * @param servletContext
-	 */
-	public InfoHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all information out from a particular model
-	 */
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
+    /**
+     * Construct
+     * @param servletContext
+     */
+    public InfoHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all information out from a particular model
+     */
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
 
-		JSONObject jRev = new JSONObject();
-		FsModelRevision rev = (FsModelRevision) sbo;
-		
-		try {
-			
-			jRev.put("rev", rev.getRevisionNumber());
-			jRev.put("author", "/user/" + rev.getAuthor());
-			jRev.put("created", rev.getCreationDate());
-			jRev.put("comment", rev.getComment());
-			
-		} catch (JSONException e) {}
-		
-		return jRev;
-	}
+        JSONObject jRev = new JSONObject();
+        FsModelRevision rev = (FsModelRevision) sbo;
+        
+        try {
+            
+            jRev.put("rev", rev.getRevisionNumber());
+            jRev.put("author", "/user/" + rev.getAuthor());
+            jRev.put("created", rev.getCreationDate());
+            jRev.put("comment", rev.getComment());
+            
+        } catch (JSONException e) {}
+        
+        return jRev;
+    }
 
 }

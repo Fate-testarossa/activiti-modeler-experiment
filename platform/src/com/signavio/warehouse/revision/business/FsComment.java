@@ -38,49 +38,49 @@ import com.signavio.warehouse.model.business.FsModel;
  *
  */
 public class FsComment extends FsSecureBusinessObject {
-	
-	public static final String ID_PREFIX = "comment-of-";
-	
-	String revisionId;
-	
-	public static FsComment createComment(FsModelRevision revision, Object ... params) {
-		return new FsComment(revision);
-	}
-	
-	public FsComment(FsModelRevision parentRevision) {
-		revisionId = parentRevision.getId();
-	}
+    
+    public static final String ID_PREFIX = "comment-of-";
+    
+    String revisionId;
+    
+    public static FsComment createComment(FsModelRevision revision, Object ... params) {
+        return new FsComment(revision);
+    }
+    
+    public FsComment(FsModelRevision parentRevision) {
+        revisionId = parentRevision.getId();
+    }
 
-	public String getTitle() { return emptyString; }
-	public String getDescription() { return emptyString; }
-	public String getAuthorName() { return emptyString; }
-	public String getResourceId() { return emptyString; }
-	
-	public Date getCreated() { return null; }
+    public String getTitle() { return emptyString; }
+    public String getDescription() { return emptyString; }
+    public String getAuthorName() { return emptyString; }
+    public String getResourceId() { return emptyString; }
+    
+    public Date getCreated() { return null; }
 
-	public FsUser getUser() { return FsUser.getDummy(); }
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
-		if (FsModelRevision.class.isAssignableFrom(businessObjectClass)){
-			String modelId = revisionId.substring(FsModelRevision.ID_PREFIX.length());
-			FsModel foundModel = FsSecurityManager.getInstance().loadObject(FsModel.class, modelId, FsAccessToken.getDummy());
-			if (foundModel != null) {
-				Set<T> result = new HashSet<T>();
-				result.add((T)foundModel.getHeadRevision());
-				return result;
-			} else {
-				return (Set<T>)emptySet;
-			}
-		} else {
-			return super.getParents(businessObjectClass);
-		}
-	}
-	
-	@Override
-	public String getId() {
-		return ID_PREFIX + revisionId;
-	}
+    public FsUser getUser() { return FsUser.getDummy(); }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
+        if (FsModelRevision.class.isAssignableFrom(businessObjectClass)){
+            String modelId = revisionId.substring(FsModelRevision.ID_PREFIX.length());
+            FsModel foundModel = FsSecurityManager.getInstance().loadObject(FsModel.class, modelId, FsAccessToken.getDummy());
+            if (foundModel != null) {
+                Set<T> result = new HashSet<T>();
+                result.add((T)foundModel.getHeadRevision());
+                return result;
+            } else {
+                return (Set<T>)emptySet;
+            }
+        } else {
+            return super.getParents(businessObjectClass);
+        }
+    }
+    
+    @Override
+    public String getId() {
+        return ID_PREFIX + revisionId;
+    }
 
 }

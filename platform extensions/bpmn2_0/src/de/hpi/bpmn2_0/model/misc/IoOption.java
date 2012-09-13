@@ -31,36 +31,36 @@ package de.hpi.bpmn2_0.model.misc;
  *
  */
 public class IoOption {
-	private boolean optional;
-	private boolean whileExecuting;
-	
-	
-	/* Getter & Setter */
-	
-	/**
-	 * @return the optional
-	 */
-	public boolean isOptional() {
-		return optional;
-	}
-	/**
-	 * @param optional the optional to set
-	 */
-	public void setOptional(boolean optional) {
-		this.optional = optional;
-	}
-	/**
-	 * @return the whileExecuting
-	 */
-	public boolean isWhileExecuting() {
-		return whileExecuting;
-	}
-	/**
-	 * @param whileExecuting the whileExecuting to set
-	 */
-	public void setWhileExecuting(boolean whileExecuting) {
-		this.whileExecuting = whileExecuting;
-	}
-	
-	
+    private boolean optional;
+    private boolean whileExecuting;
+    
+    
+    /* Getter & Setter */
+    
+    /**
+     * @return the optional
+     */
+    public boolean isOptional() {
+        return optional;
+    }
+    /**
+     * @param optional the optional to set
+     */
+    public void setOptional(boolean optional) {
+        this.optional = optional;
+    }
+    /**
+     * @return the whileExecuting
+     */
+    public boolean isWhileExecuting() {
+        return whileExecuting;
+    }
+    /**
+     * @param whileExecuting the whileExecuting to set
+     */
+    public void setWhileExecuting(boolean whileExecuting) {
+        this.whileExecuting = whileExecuting;
+    }
+    
+    
 }

@@ -62,79 +62,79 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @StencilId("ComplexGateway")
 public class ComplexGateway extends GatewayWithDefaultFlow {
 
-	protected Expression activationCondition;
+    protected Expression activationCondition;
 
-	/**
-	 * Refers at runtime to the number of tokens that are present on an incoming
-	 * Sequence Flow of the Complex Gateway.
-	 */
-	@XmlTransient
-	private int activationCount;
+    /**
+     * Refers at runtime to the number of tokens that are present on an incoming
+     * Sequence Flow of the Complex Gateway.
+     */
+    @XmlTransient
+    private int activationCount;
 
-	/**
-	 * Refers at runtime to the number of tokens that are present on an incoming
-	 * Sequence Flow of the Complex Gateway.
-	 */
-	@XmlTransient
-	private boolean waitingForStart;
+    /**
+     * Refers at runtime to the number of tokens that are present on an incoming
+     * Sequence Flow of the Complex Gateway.
+     */
+    @XmlTransient
+    private boolean waitingForStart;
 
-	
-	public void acceptVisitor(Visitor v){
-		v.visitComplexGateway(this);
-	}
     
-	/* Getter & Setter */
-	
-	/**
-	 * Gets the value of the activationCondition property.
-	 * 
-	 * @return possible object is {@link Expression }
-	 * 
-	 */
-	public Expression getActivationCondition() {
-		return activationCondition;
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitComplexGateway(this);
+    }
+    
+    /* Getter & Setter */
+    
+    /**
+     * Gets the value of the activationCondition property.
+     * 
+     * @return possible object is {@link Expression }
+     * 
+     */
+    public Expression getActivationCondition() {
+        return activationCondition;
+    }
 
-	/**
-	 * Sets the value of the activationCondition property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link Expression }
-	 * 
-	 */
-	public void setActivationCondition(Expression value) {
-		this.activationCondition = value;
-	}
+    /**
+     * Sets the value of the activationCondition property.
+     * 
+     * @param value
+     *            allowed object is {@link Expression }
+     * 
+     */
+    public void setActivationCondition(Expression value) {
+        this.activationCondition = value;
+    }
 
-	/**
-	 * @return the activationCount
-	 */
-	public int getActivationCount() {
-		return activationCount;
-	}
+    /**
+     * @return the activationCount
+     */
+    public int getActivationCount() {
+        return activationCount;
+    }
 
-	/**
-	 * @param activationCount
-	 *            the activationCount to set
-	 */
-	public void setActivationCount(int activationCount) {
-		this.activationCount = activationCount;
-	}
+    /**
+     * @param activationCount
+     *            the activationCount to set
+     */
+    public void setActivationCount(int activationCount) {
+        this.activationCount = activationCount;
+    }
 
-	/**
-	 * @param waitingForStart the waitingForStart to set
-	 */
-	public void setWaitingForStart(boolean waitingForStart) {
-		this.waitingForStart = waitingForStart;
-	}
+    /**
+     * @param waitingForStart the waitingForStart to set
+     */
+    public void setWaitingForStart(boolean waitingForStart) {
+        this.waitingForStart = waitingForStart;
+    }
 
-	/**
-	 * @return the waitingForStart
-	 */
-	public boolean isWaitingForStart() {
-		return waitingForStart;
-	}
-	
-	
+    /**
+     * @return the waitingForStart
+     */
+    public boolean isWaitingForStart() {
+        return waitingForStart;
+    }
+    
+    
 
 }

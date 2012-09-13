@@ -39,22 +39,22 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 @HandlerExportConfiguration(name="PNG Thumbnail Export", icon="/explorer/src/img/famfamfam/picture.png", mime="image/png")
 public class ThumbnailHandler extends AbstractImageHandler {
 
-	private float HEIGHT = 55f;
-	private float WIDTH = 50f;
-	
-	public ThumbnailHandler(ServletContext servletContext) {
-		super(servletContext);
-		
-	}
+    private float HEIGHT = 55f;
+    private float WIDTH = 50f;
+    
+    public ThumbnailHandler(ServletContext servletContext) {
+        super(servletContext);
+        
+    }
 
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		Map<TranscodingHints.Key, Object> hints = new HashMap<TranscodingHints.Key, Object>();
-		
-		hints.put(PNGTranscoder.KEY_MAX_WIDTH, WIDTH);
-		hints.put(PNGTranscoder.KEY_MAX_HEIGHT, HEIGHT);
-		
-		return getImage(RepresentationType.PNG_SMALL, new PNGTranscoder(), sbo, hints);
-	}
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        Map<TranscodingHints.Key, Object> hints = new HashMap<TranscodingHints.Key, Object>();
+        
+        hints.put(PNGTranscoder.KEY_MAX_WIDTH, WIDTH);
+        hints.put(PNGTranscoder.KEY_MAX_HEIGHT, HEIGHT);
+        
+        return getImage(RepresentationType.PNG_SMALL, new PNGTranscoder(), sbo, hints);
+    }
 }

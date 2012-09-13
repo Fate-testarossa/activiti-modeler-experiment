@@ -63,15 +63,15 @@ import de.hpi.bpmn2_0.model.activity.resource.Rendering;
 public class GlobalUserTask
     extends GlobalTask
 {
-	/* Constructors */
-	public GlobalUserTask() {
-		super();
-	}
-	
-	public GlobalUserTask(GlobalTask gt) {
-		super(gt);
-	}
-	
+    /* Constructors */
+    public GlobalUserTask() {
+        super();
+    }
+    
+    public GlobalUserTask(GlobalTask gt) {
+        super(gt);
+    }
+    
     protected List<Rendering> rendering;
     @XmlAttribute(name = "implementation")
     protected UserTaskImplementation implementation;

@@ -34,16 +34,16 @@ import javax.xml.bind.annotation.XmlEnumValue;
  */
 @XmlEnum
 public enum SignavioDataObjectType {
-	@XmlEnumValue("Default")
-	DEFAULT("default"),
-	@XmlEnumValue("IT-System")
-	ITSYSTEM("it-system"),
-	@XmlEnumValue("ProcessParticipant")
-	PROCESSPARTICIPANT("processparticipant");
-	
-	private final String value;
-	
-	SignavioDataObjectType(String v) {
+    @XmlEnumValue("Default")
+    DEFAULT("default"),
+    @XmlEnumValue("IT-System")
+    ITSYSTEM("it-system"),
+    @XmlEnumValue("ProcessParticipant")
+    PROCESSPARTICIPANT("processparticipant");
+    
+    private final String value;
+    
+    SignavioDataObjectType(String v) {
         value = v;
     }
 

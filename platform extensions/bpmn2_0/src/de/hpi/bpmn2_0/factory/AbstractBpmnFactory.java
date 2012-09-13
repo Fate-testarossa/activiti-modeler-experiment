@@ -78,229 +78,229 @@ import de.hpi.bpmn2_0.model.misc.Monitoring;
  */
 public abstract class AbstractBpmnFactory {
 
-	private static List<Class<? extends AbstractBpmnFactory>> factoryClasses = new ArrayList<Class<? extends AbstractBpmnFactory>>();
-	
-	/**
-	 * Manual initialization of factory classes list. Is there a pattern for automatic initialization
-	 * except reading the jar file?
-	 */
-	static {
-		
-		/* Standard BPMN 2.0 */
-		
-		factoryClasses.add(AbstractActivityFactory.class);
-		factoryClasses.add(SubprocessFactory.class);
-		factoryClasses.add(TaskFactory.class);
-		factoryClasses.add(AbstractEdgesFactory.class);
-		factoryClasses.add(ConversationLinkFactory.class);
-		factoryClasses.add(MessageFlowFactory.class);
-		factoryClasses.add(SequenceFlowFactory.class);
-		factoryClasses.add(AssociationFactory.class);
-		factoryClasses.add(ChoreographyActivityFactory.class);
-		factoryClasses.add(ChoreographyParticipantFactory.class);
-		factoryClasses.add(ConversationFactory.class);
-		factoryClasses.add(ConversationParticipantFactory.class);
-		factoryClasses.add(DataObjectFactory.class);
-		factoryClasses.add(DataStoreFactory.class);
-		factoryClasses.add(EndEventFactory.class);
-		factoryClasses.add(GatewayFactory.class);
-		factoryClasses.add(GroupFactory.class);
-		factoryClasses.add(IntermediateCatchEventFactory.class);
-		factoryClasses.add(IntermediateThrowEventFactory.class);
-		factoryClasses.add(ITSystemFactory.class);
-		factoryClasses.add(LaneFactory.class);
-		factoryClasses.add(MessageFactory.class);
-		factoryClasses.add(ParticipantFactory.class);
-		factoryClasses.add(ProcessParticipantFactory.class);
-		factoryClasses.add(StartEventFactory.class);
-		factoryClasses.add(TextannotationFactory.class);
-	}
-	
-	public static List<Class<? extends AbstractBpmnFactory>> getFactoryClasses() {
-		return new ArrayList<Class<? extends AbstractBpmnFactory>>(factoryClasses);
-	}
-	
-	/**
-	 * Creates a process element based on a {@link Shape}.
-	 * 
-	 * @param shape
-	 *            The resource shape
-	 * @return The constructed process element.
-	 */
-	protected abstract BaseElement createProcessElement(Shape shape)
-			throws BpmnConverterException;
+    private static List<Class<? extends AbstractBpmnFactory>> factoryClasses = new ArrayList<Class<? extends AbstractBpmnFactory>>();
+    
+    /**
+     * Manual initialization of factory classes list. Is there a pattern for automatic initialization
+     * except reading the jar file?
+     */
+    static {
+        
+        /* Standard BPMN 2.0 */
+        
+        factoryClasses.add(AbstractActivityFactory.class);
+        factoryClasses.add(SubprocessFactory.class);
+        factoryClasses.add(TaskFactory.class);
+        factoryClasses.add(AbstractEdgesFactory.class);
+        factoryClasses.add(ConversationLinkFactory.class);
+        factoryClasses.add(MessageFlowFactory.class);
+        factoryClasses.add(SequenceFlowFactory.class);
+        factoryClasses.add(AssociationFactory.class);
+        factoryClasses.add(ChoreographyActivityFactory.class);
+        factoryClasses.add(ChoreographyParticipantFactory.class);
+        factoryClasses.add(ConversationFactory.class);
+        factoryClasses.add(ConversationParticipantFactory.class);
+        factoryClasses.add(DataObjectFactory.class);
+        factoryClasses.add(DataStoreFactory.class);
+        factoryClasses.add(EndEventFactory.class);
+        factoryClasses.add(GatewayFactory.class);
+        factoryClasses.add(GroupFactory.class);
+        factoryClasses.add(IntermediateCatchEventFactory.class);
+        factoryClasses.add(IntermediateThrowEventFactory.class);
+        factoryClasses.add(ITSystemFactory.class);
+        factoryClasses.add(LaneFactory.class);
+        factoryClasses.add(MessageFactory.class);
+        factoryClasses.add(ParticipantFactory.class);
+        factoryClasses.add(ProcessParticipantFactory.class);
+        factoryClasses.add(StartEventFactory.class);
+        factoryClasses.add(TextannotationFactory.class);
+    }
+    
+    public static List<Class<? extends AbstractBpmnFactory>> getFactoryClasses() {
+        return new ArrayList<Class<? extends AbstractBpmnFactory>>(factoryClasses);
+    }
+    
+    /**
+     * Creates a process element based on a {@link Shape}.
+     * 
+     * @param shape
+     *            The resource shape
+     * @return The constructed process element.
+     */
+    protected abstract BaseElement createProcessElement(Shape shape)
+            throws BpmnConverterException;
 
-	/**
-	 * Creates a diagram element based on a {@link Shape}.
-	 * 
-	 * @param shape
-	 *            The resource shape
-	 * @return The constructed diagram element.
-	 */
-	protected abstract DiagramElement createDiagramElement(Shape shape);
+    /**
+     * Creates a diagram element based on a {@link Shape}.
+     * 
+     * @param shape
+     *            The resource shape
+     * @return The constructed diagram element.
+     */
+    protected abstract DiagramElement createDiagramElement(Shape shape);
 
-	/**
-	 * Creates BPMNElement that contains DiagramElement and ProcessElement
-	 * 
-	 * @param shape
-	 *            The resource shape.
-	 * @return The constructed BPMN element.
-	 */
-	public abstract BPMNElement createBpmnElement(Shape shape,
-			BPMNElement parent) throws BpmnConverterException;
+    /**
+     * Creates BPMNElement that contains DiagramElement and ProcessElement
+     * 
+     * @param shape
+     *            The resource shape.
+     * @return The constructed BPMN element.
+     */
+    public abstract BPMNElement createBpmnElement(Shape shape,
+            BPMNElement parent) throws BpmnConverterException;
 
-	/**
-	 * Sets attributes of a {@link BaseElement} that are common for all
-	 * elements.
-	 * 
-	 * @param element
-	 *            The BPMN 2.0 element
-	 * @param shape
-	 *            The resource shape
-	 */
-	protected void setCommonAttributes(BaseElement element, Shape shape) {
-		element.setId(shape.getResourceId());
-		
-		/* Documentation */
-		String documentation = shape.getProperty("documentation");
-		if (documentation != null && !(documentation.length() == 0) && element.getDocumentation().size() == 0)
-			element.getDocumentation().add(new Documentation(documentation));
-		
-		/* Common FlowElement attributes */
-		if(element instanceof FlowElement) {
-			
-			/* Auditing */
-			String auditing = shape.getProperty("auditing");
-			if (auditing != null && !(auditing.length() == 0))
-				((FlowElement) element).setAuditing(new Auditing(auditing));
-			
-			/* Monitoring */
-			String monitoring = shape.getProperty("monitoring");
-			if (monitoring != null && !(monitoring.length() == 0))
-				((FlowElement) element).setMonitoring(new Monitoring(monitoring));
-			
-			/* Name */
-			String name = shape.getProperty("name");
-			if(name != null && !(name.length() == 0)) {
-				((FlowElement) element).setName(name);
-			}
-		}
-	}
+    /**
+     * Sets attributes of a {@link BaseElement} that are common for all
+     * elements.
+     * 
+     * @param element
+     *            The BPMN 2.0 element
+     * @param shape
+     *            The resource shape
+     */
+    protected void setCommonAttributes(BaseElement element, Shape shape) {
+        element.setId(shape.getResourceId());
+        
+        /* Documentation */
+        String documentation = shape.getProperty("documentation");
+        if (documentation != null && !(documentation.length() == 0) && element.getDocumentation().size() == 0)
+            element.getDocumentation().add(new Documentation(documentation));
+        
+        /* Common FlowElement attributes */
+        if(element instanceof FlowElement) {
+            
+            /* Auditing */
+            String auditing = shape.getProperty("auditing");
+            if (auditing != null && !(auditing.length() == 0))
+                ((FlowElement) element).setAuditing(new Auditing(auditing));
+            
+            /* Monitoring */
+            String monitoring = shape.getProperty("monitoring");
+            if (monitoring != null && !(monitoring.length() == 0))
+                ((FlowElement) element).setMonitoring(new Monitoring(monitoring));
+            
+            /* Name */
+            String name = shape.getProperty("name");
+            if(name != null && !(name.length() == 0)) {
+                ((FlowElement) element).setName(name);
+            }
+        }
+    }
 
-	/**
-	 * Sets common fields for the visual representation.
-	 * 
-	 * @param diaElement
-	 *            The BPMN 2.0 diagram element
-	 * @param shape
-	 *            The resource shape
-	 */
-	protected void setVisualAttributes(DiagramElement diaElement, Shape shape) {
-		diaElement.setId(shape.getResourceId() + "_gui");
-	}
+    /**
+     * Sets common fields for the visual representation.
+     * 
+     * @param diaElement
+     *            The BPMN 2.0 diagram element
+     * @param shape
+     *            The resource shape
+     */
+    protected void setVisualAttributes(DiagramElement diaElement, Shape shape) {
+        diaElement.setId(shape.getResourceId() + "_gui");
+    }
 
-	protected BaseElement invokeCreatorMethod(Shape shape)
-			throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException, BpmnConverterException {
+    protected BaseElement invokeCreatorMethod(Shape shape)
+            throws IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException, BpmnConverterException {
 
-		/* Retrieve the method to create the process element */
-		for (Method method : Arrays
-				.asList(this.getClass().getMethods())) {
-			StencilId stencilIdA = method.getAnnotation(StencilId.class);
-			if (stencilIdA != null
-					&& Arrays.asList(stencilIdA.value()).contains(
-							shape.getStencilId())) {
-				/* Create element with appropriate method */
-				BaseElement createdElement = (BaseElement) method.invoke(this,
-						shape);
-				/* Invoke generalized method to set common element attributes */
-				this.setCommonAttributes(createdElement, shape);
-				
-				return createdElement;
-			}
-		}
+        /* Retrieve the method to create the process element */
+        for (Method method : Arrays
+                .asList(this.getClass().getMethods())) {
+            StencilId stencilIdA = method.getAnnotation(StencilId.class);
+            if (stencilIdA != null
+                    && Arrays.asList(stencilIdA.value()).contains(
+                            shape.getStencilId())) {
+                /* Create element with appropriate method */
+                BaseElement createdElement = (BaseElement) method.invoke(this,
+                        shape);
+                /* Invoke generalized method to set common element attributes */
+                this.setCommonAttributes(createdElement, shape);
+                
+                return createdElement;
+            }
+        }
 
-		throw new BpmnConverterException("Creator method for shape with id "
-				+ shape.getStencilId() + " not found");
-	}
+        throw new BpmnConverterException("Creator method for shape with id "
+                + shape.getStencilId() + " not found");
+    }
 
-	protected BaseElement invokeCreatorMethodAfterProperty(Shape shape)
-			throws BpmnConverterException, IllegalArgumentException,
-			IllegalAccessException, InvocationTargetException {
+    protected BaseElement invokeCreatorMethodAfterProperty(Shape shape)
+            throws BpmnConverterException, IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException {
 
-		for (Method method : Arrays
-				.asList(this.getClass().getMethods())) {
-			Property property = method.getAnnotation(Property.class);
+        for (Method method : Arrays
+                .asList(this.getClass().getMethods())) {
+            Property property = method.getAnnotation(Property.class);
 
-			if (property != null
-					&& Arrays.asList(property.value()).contains(
-							shape.getProperty(property.name()))) {
-				
-				/* Create element */
-				BaseElement createdElement = (BaseElement) method.invoke(this,
-						shape);
-				/* Invoke generalized method to set common element attributes */
-				this.setCommonAttributes(createdElement, shape);
-				
-				return createdElement;
-			}
-		}
+            if (property != null
+                    && Arrays.asList(property.value()).contains(
+                            shape.getProperty(property.name()))) {
+                
+                /* Create element */
+                BaseElement createdElement = (BaseElement) method.invoke(this,
+                        shape);
+                /* Invoke generalized method to set common element attributes */
+                this.setCommonAttributes(createdElement, shape);
+                
+                return createdElement;
+            }
+        }
 
-		throw new BpmnConverterException("Creator method for shape with id "
-				+ shape.getStencilId() + " not found");
-	}
-	
-	
-	public BPMNElement createBpmnElement(Shape shape, Configuration configuration) throws BpmnConverterException {
-		BPMNElement bpmnElement = createBpmnElement(shape, new BPMNElement(null, null, null));
-		
-		if(bpmnElement != null && bpmnElement.getNode() != null) {
-			bpmnElement.getNode()._diagramElement = bpmnElement.getShape();
-			
-			setCustomAttributes(shape, bpmnElement.getNode(), configuration.getMetaData());
-		}
-		
-		return bpmnElement;
-	}
-	
-	private void setCustomAttributes(Shape shape, BaseElement node, Map<String, Set<String>> metaData) {
-		if(shape == null || node == null || metaData == null) 
-			return;
-		
-		Set<String> attributeNames = metaData.get(shape.getStencilId());
-		if(attributeNames == null) {
-			return;
-		}
-		
-		ExtensionElements extElements = node.getOrCreateExtensionElements();
-		
-		Iterator<String> iterator = attributeNames.iterator();
-		while(iterator.hasNext()) {
-			String attributeKey = iterator.next();
-			String attributeValue = shape.getProperty(attributeKey);
-			
-			/* Avoid undefined Signavio meta attributes */
-			if(attributeValue == null) {
-				continue;
-			}
-			
-			SignavioMetaData sigMetaData = new SignavioMetaData(attributeKey, attributeValue);
-			
-			extElements.getAny().add(sigMetaData);
-		}
-	}
-	
-	protected void setLabelPositionInfo(Shape shape, BaseElement node) {
-		if(shape == null || node == null || shape.getLabels().isEmpty()) {
-			return;
-		}
-		
-		ExtensionElements extElements = node.getOrCreateExtensionElements();
-		
-		for(Map<String, String> labelPosition : shape.getLabels()) {
-			SignavioLabel label = new SignavioLabel(labelPosition);
-			extElements.getAny().add(label);
-		}
-	}
-	
+        throw new BpmnConverterException("Creator method for shape with id "
+                + shape.getStencilId() + " not found");
+    }
+    
+    
+    public BPMNElement createBpmnElement(Shape shape, Configuration configuration) throws BpmnConverterException {
+        BPMNElement bpmnElement = createBpmnElement(shape, new BPMNElement(null, null, null));
+        
+        if(bpmnElement != null && bpmnElement.getNode() != null) {
+            bpmnElement.getNode()._diagramElement = bpmnElement.getShape();
+            
+            setCustomAttributes(shape, bpmnElement.getNode(), configuration.getMetaData());
+        }
+        
+        return bpmnElement;
+    }
+    
+    private void setCustomAttributes(Shape shape, BaseElement node, Map<String, Set<String>> metaData) {
+        if(shape == null || node == null || metaData == null) 
+            return;
+        
+        Set<String> attributeNames = metaData.get(shape.getStencilId());
+        if(attributeNames == null) {
+            return;
+        }
+        
+        ExtensionElements extElements = node.getOrCreateExtensionElements();
+        
+        Iterator<String> iterator = attributeNames.iterator();
+        while(iterator.hasNext()) {
+            String attributeKey = iterator.next();
+            String attributeValue = shape.getProperty(attributeKey);
+            
+            /* Avoid undefined Signavio meta attributes */
+            if(attributeValue == null) {
+                continue;
+            }
+            
+            SignavioMetaData sigMetaData = new SignavioMetaData(attributeKey, attributeValue);
+            
+            extElements.getAny().add(sigMetaData);
+        }
+    }
+    
+    protected void setLabelPositionInfo(Shape shape, BaseElement node) {
+        if(shape == null || node == null || shape.getLabels().isEmpty()) {
+            return;
+        }
+        
+        ExtensionElements extElements = node.getOrCreateExtensionElements();
+        
+        for(Map<String, String> labelPosition : shape.getLabels()) {
+            SignavioLabel label = new SignavioLabel(labelPosition);
+            extElements.getAny().add(label);
+        }
+    }
+    
 }

@@ -28,16 +28,16 @@ package com.signavio.platform.security.business;
  *
  */
 public abstract class FsSecureBusinessSubject extends FsSecureBusinessObject {
-	
-	@Override
-	public String toString() {
-		if (this.getTenant() != null) {
-			return "SBSubject: " + this.getClass().getName() + " (ID= " + this.getId() 
-				+ ", TenantName=" + this.getTenant().getName() + ") ";
-		} else {
-			return "SBSubject: " + this.getClass().getName() + " (ID= " + this.getId() 
-			+ ",  NO Tenant) ";			
-		}
-	}
+    
+    @Override
+    public String toString() {
+        if (this.getTenant() != null) {
+            return "SBSubject: " + this.getClass().getName() + " (ID= " + this.getId() 
+                + ", TenantName=" + this.getTenant().getName() + ") ";
+        } else {
+            return "SBSubject: " + this.getClass().getName() + " (ID= " + this.getId() 
+            + ",  NO Tenant) ";            
+        }
+    }
 
 }

@@ -72,9 +72,9 @@ public class BPMNDiagram
 
     /* Constructor */
     public BPMNDiagram() {
-    	super();
-    	id = SignavioUUID.generate();
-    	bpmnPlane = new BPMNPlane();
+        super();
+        id = SignavioUUID.generate();
+        bpmnPlane = new BPMNPlane();
     }
     
     /* Getter & Setter */

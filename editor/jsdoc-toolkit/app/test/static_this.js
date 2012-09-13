@@ -5,8 +5,8 @@ var box = {};
 box.holder = {}
 
 box.holder.foo = function() {
-	/** the counter */
-	this.counter = 1;
+    /** the counter */
+    this.counter = 1;
 }
 
 box.holder.foo();

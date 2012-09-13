@@ -27,10 +27,10 @@ import java.util.List;
 import de.hpi.bpmn2_0.model.BaseElement;
 
 public interface CallingElement {
-	
-	/**
-	 * @return a List of all elements called by this element and its 
-	 * children elements recursively. (deep search) 
-	 */
-	public List<BaseElement> getCalledElements();
+    
+    /**
+     * @return a List of all elements called by this element and its 
+     * children elements recursively. (deep search) 
+     */
+    public List<BaseElement> getCalledElements();
 }

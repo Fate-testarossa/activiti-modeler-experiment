@@ -25,15 +25,15 @@ import org.json.JSONObject;
 
 public class Property extends Field {
 
-	public Property(String name) {
-		super(name);
-		this.elementName = "property";
-	}
-	
-	public Property(JSONObject field) {
-		super(field);
-		this.elementName = "property";
-	}
+    public Property(String name) {
+        super(name);
+        this.elementName = "property";
+    }
+    
+    public Property(JSONObject field) {
+        super(field);
+        this.elementName = "property";
+    }
 
-	
+    
 }

@@ -28,26 +28,26 @@ package de.hpi.bpmn2_0.exceptions;
  *
  */
 public class BpmnMigrationException extends Exception {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5618184315047036425L;
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5618184315047036425L;
 
-	public BpmnMigrationException() {
-		
-	}
-	
-	public BpmnMigrationException(String message) {
-		super(message);
-	}
-	
-	public BpmnMigrationException(Throwable cause) {
-		super(cause);
-	}
-	
-	public BpmnMigrationException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
+    public BpmnMigrationException() {
+        
+    }
+    
+    public BpmnMigrationException(String message) {
+        super(message);
+    }
+    
+    public BpmnMigrationException(Throwable cause) {
+        super(cause);
+    }
+    
+    public BpmnMigrationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
 }

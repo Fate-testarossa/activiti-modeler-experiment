@@ -30,34 +30,34 @@ import java.io.File;
  *
  */
 public interface PlatformInstance {
-	/**
-	 * Returns the directory of all available handlers of the platform if available
-	 * @return Returns the instance of the HandlerDirectory or null if the handler layer isn't loaded
-	 */
-	public abstract HandlerDirectory getHandlerDirectory();
+    /**
+     * Returns the directory of all available handlers of the platform if available
+     * @return Returns the instance of the HandlerDirectory or null if the handler layer isn't loaded
+     */
+    public abstract HandlerDirectory getHandlerDirectory();
 
-	/**
-	 * Returns a all platform configuration properties defined in the web.xml of the servlet container
-	 * @return
-	 */
-	public abstract PlatformProperties getPlatformProperties();
-	
-	/**
-	 * Initializes the PlatformInstance  
-	 * @param parameters Implementation specific parameters needed to initialize the platform
-	 */
-	public abstract void bootInstance(Object ... parameters);
-	
-	/**
-	 * Returns a file object for the given path
-	 * @param path The path of the file
-	 * @return
-	 */
-	public abstract File getFile(String path);
-	
-	/**
-	 * Stop the platform and all its components
-	 */
-	public abstract void shutdownInstance();
+    /**
+     * Returns a all platform configuration properties defined in the web.xml of the servlet container
+     * @return
+     */
+    public abstract PlatformProperties getPlatformProperties();
+    
+    /**
+     * Initializes the PlatformInstance  
+     * @param parameters Implementation specific parameters needed to initialize the platform
+     */
+    public abstract void bootInstance(Object ... parameters);
+    
+    /**
+     * Returns a file object for the given path
+     * @param path The path of the file
+     * @return
+     */
+    public abstract File getFile(String path);
+    
+    /**
+     * Stop the platform and all its components
+     */
+    public abstract void shutdownInstance();
 
 }

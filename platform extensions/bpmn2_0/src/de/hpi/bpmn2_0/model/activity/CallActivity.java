@@ -66,24 +66,24 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class CallActivity
     extends Activity implements CallingElement
 {
-	/* Constructors */
-	public CallActivity() {
-		super();
-	}
-	
-	public CallActivity(Task t) {
-		super(t);
-	}
-	
-	@XmlTransient
-	private List<FlowElement> processElements;
-	
-	/*
-	 * The diagram and process element of a linked subprocess
-	 */
-	@XmlTransient
-	public BPMNDiagram _diagramElement;
-	
+    /* Constructors */
+    public CallActivity() {
+        super();
+    }
+    
+    public CallActivity(Task t) {
+        super(t);
+    }
+    
+    @XmlTransient
+    private List<FlowElement> processElements;
+    
+    /*
+     * The diagram and process element of a linked subprocess
+     */
+    @XmlTransient
+    public BPMNDiagram _diagramElement;
+    
     @XmlAttribute
     @XmlIDREF
     protected CallableElement calledElement;
@@ -112,41 +112,41 @@ public class CallActivity
         this.calledElement = value;
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitCallActivity(this);
-	}
-	
-	public List<BaseElement> getCalledElements() {
-		List<BaseElement> calledElements = new ArrayList<BaseElement>();
-		
-		if(getCalledElement() != null) {
-			calledElements.add(getCalledElement());
-		}
-		
-		return calledElements;
-	}
-	
-	/**
-	 * Overrides the general addChild method to collect elements of a call 
-	 * activity expanded sub process. 
-	 */
-	public void addChild(BaseElement el) {
-		if(el instanceof FlowElement) {
-			this._getFlowElementsOfTheGlobalProcess().add((FlowElement) el);
-		}
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitCallActivity(this);
+    }
+    
+    public List<BaseElement> getCalledElements() {
+        List<BaseElement> calledElements = new ArrayList<BaseElement>();
+        
+        if(getCalledElement() != null) {
+            calledElements.add(getCalledElement());
+        }
+        
+        return calledElements;
+    }
+    
+    /**
+     * Overrides the general addChild method to collect elements of a call 
+     * activity expanded sub process. 
+     */
+    public void addChild(BaseElement el) {
+        if(el instanceof FlowElement) {
+            this._getFlowElementsOfTheGlobalProcess().add((FlowElement) el);
+        }
+    }
 
-	/* Getter & Setter */
-	
-	/**
-	 * !!! Only for usages during the BPMN 2.0 Export process.
-	 * Returns the elements the expanded subprocess called be this call activity.
-	 */
-	public List<FlowElement> _getFlowElementsOfTheGlobalProcess() {
-		if(this.processElements == null) {
-			this.processElements = new ArrayList<FlowElement>();
-		}
-		
-		return this.processElements;
-	}
+    /* Getter & Setter */
+    
+    /**
+     * !!! Only for usages during the BPMN 2.0 Export process.
+     * Returns the elements the expanded subprocess called be this call activity.
+     */
+    public List<FlowElement> _getFlowElementsOfTheGlobalProcess() {
+        if(this.processElements == null) {
+            this.processElements = new ArrayList<FlowElement>();
+        }
+        
+        return this.processElements;
+    }
 }

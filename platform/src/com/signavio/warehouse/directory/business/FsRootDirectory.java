@@ -34,58 +34,58 @@ import com.signavio.platform.core.impl.FsPlatformPropertiesImpl;
  *
  */
 public class FsRootDirectory extends FsDirectory {
-	
-	private static FsRootDirectory SINGLETON;
-	public static final String ID_OF_SINGLETON = "root-directory";
+    
+    private static FsRootDirectory SINGLETON;
+    public static final String ID_OF_SINGLETON = "root-directory";
 
-	public static void createInstance(String path) {
+    public static void createInstance(String path) {
 
-		if (SINGLETON != null) {
-			throw new IllegalStateException("File system backend is already initialized");
-		}
-		
-		System.out.println("[INFO] Initializing Root Directory...");
-		
-		if (path != null && path.length() > 0) {
-			SINGLETON = new FsRootDirectory(path);
-			System.out.println("[INFO] Initialized Root Directory!");
-		} else {
-			throw new IllegalStateException("Could initialize file system backend");
-		}
-		
-	}
+        if (SINGLETON != null) {
+            throw new IllegalStateException("File system backend is already initialized");
+        }
+        
+        System.out.println("[INFO] Initializing Root Directory...");
+        
+        if (path != null && path.length() > 0) {
+            SINGLETON = new FsRootDirectory(path);
+            System.out.println("[INFO] Initialized Root Directory!");
+        } else {
+            throw new IllegalStateException("Could initialize file system backend");
+        }
+        
+    }
 
-	public static FsRootDirectory getSingleton() {
-		return SINGLETON;
-	}
+    public static FsRootDirectory getSingleton() {
+        return SINGLETON;
+    }
 
-	private FsRootDirectory(String path) {
-		super(path);
-	}
-	
-	@Override
-	public String getName() {
-		return "Root";
-	}
-	
-	@Override
-	public void setName(String name){
-		throw new UnsupportedOperationException("Cannot rename root directory");
-	}
-	
-	@Override
-	public void delete() {
-		throw new UnsupportedOperationException("Cannot delete root directory");
-	}
-	
-	@Override
-	public FsDirectory getParentDirectory() {
-		return null;
-	}
+    private FsRootDirectory(String path) {
+        super(path);
+    }
+    
+    @Override
+    public String getName() {
+        return "Root";
+    }
+    
+    @Override
+    public void setName(String name){
+        throw new UnsupportedOperationException("Cannot rename root directory");
+    }
+    
+    @Override
+    public void delete() {
+        throw new UnsupportedOperationException("Cannot delete root directory");
+    }
+    
+    @Override
+    public FsDirectory getParentDirectory() {
+        return null;
+    }
 
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
 
 }

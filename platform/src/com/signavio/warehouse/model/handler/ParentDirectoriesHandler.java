@@ -8,8 +8,8 @@ import com.signavio.warehouse.directory.handler.AbstractParentDirectoriesHandler
 @HandlerConfiguration(context=ModelHandler.class, uri="/parents", rel="parents")
 public class ParentDirectoriesHandler extends AbstractParentDirectoriesHandler {
 
-	public ParentDirectoriesHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
+    public ParentDirectoriesHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
 
 }

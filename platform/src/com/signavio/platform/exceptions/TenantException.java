@@ -30,36 +30,36 @@ package com.signavio.platform.exceptions;
  */
 public class TenantException extends Exception {
 
-	/**
-	 * 
-	 */
-	public TenantException() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * 
+     */
+    public TenantException() {
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 */
-	public TenantException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public TenantException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param cause
-	 */
-	public TenantException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public TenantException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public TenantException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public TenantException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
 }

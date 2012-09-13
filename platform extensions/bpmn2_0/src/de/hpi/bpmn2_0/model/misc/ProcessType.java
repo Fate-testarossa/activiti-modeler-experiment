@@ -50,29 +50,29 @@ import javax.xml.bind.annotation.XmlEnumValue;
 @XmlEnum
 public enum ProcessType {
 
-	@XmlEnumValue("None")
-	NONE("none"), 
-	@XmlEnumValue("Private")
-	PRIVATE("private"), 
-	@XmlEnumValue("Public")
-	PUBLIC("public");
-	private final String value;
+    @XmlEnumValue("None")
+    NONE("none"), 
+    @XmlEnumValue("Private")
+    PRIVATE("private"), 
+    @XmlEnumValue("Public")
+    PUBLIC("public");
+    private final String value;
 
-	ProcessType(String v) {
-		value = v;
-	}
+    ProcessType(String v) {
+        value = v;
+    }
 
-	public String value() {
-		return value;
-	}
+    public String value() {
+        return value;
+    }
 
-	public static ProcessType fromValue(String v) {
-		for (ProcessType c : ProcessType.values()) {
-			if (c.value.equalsIgnoreCase((v))) {
-				return c;
-			}
-		}
-		return null;
-	}
+    public static ProcessType fromValue(String v) {
+        for (ProcessType c : ProcessType.values()) {
+            if (c.value.equalsIgnoreCase((v))) {
+                return c;
+            }
+        }
+        return null;
+    }
 
 }

@@ -9,5 +9,5 @@ package de.hpi.bpmn2_0.model.extension;
  *
  */
 public interface CustomExtensionSpecification {
-	String[] namespacePrefixes = {};
+    String[] namespacePrefixes = {};
 }

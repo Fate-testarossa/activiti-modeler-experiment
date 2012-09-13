@@ -34,40 +34,40 @@ import com.signavio.platform.tenant.business.FsTenant;
  *
  */
 public class FsAccountManager extends FsBusinessObjectManager {
-	
-	private static final FsAccountManager SINGLETON;
-	public static final String ID_OF_SINGLETON = "account-mgr-object";
-	
-	static {
-		SINGLETON = new FsAccountManager();
-	}
+    
+    private static final FsAccountManager SINGLETON;
+    public static final String ID_OF_SINGLETON = "account-mgr-object";
+    
+    static {
+        SINGLETON = new FsAccountManager();
+    }
 
-	public static FsAccountManager getSingleton() {
-		return SINGLETON;
-	}
+    public static FsAccountManager getSingleton() {
+        return SINGLETON;
+    }
 
 
-	public FsAccount createAccount(String mail, String password) {
-		return FsAccount.getDummy();
-	}
+    public FsAccount createAccount(String mail, String password) {
+        return FsAccount.getDummy();
+    }
 
-	public void sendValidationKey(FsAccount account, FsTenant tenant,
-			String string, String property, String property2) {
-		return ;
-	}
+    public void sendValidationKey(FsAccount account, FsTenant tenant,
+            String string, String property, String property2) {
+        return ;
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
-		if (FsAccount.class.isAssignableFrom(type)){
-			return (Set<T>)FsAccount.getDummySet();
-		} else {
-			return super.getChildren(type);
-		}
-	}
-	
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
+        if (FsAccount.class.isAssignableFrom(type)){
+            return (Set<T>)FsAccount.getDummySet();
+        } else {
+            return super.getChildren(type);
+        }
+    }
+    
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
 }

@@ -5,14 +5,14 @@
     <property file="VERSION"/>
     
     <property name="target" value="target"/>
-	<property name="api" value="api"/>
+    <property name="api" value="api"/>
   
     <!-- TARGETS (alphabetized) -->
     
  
     <target name="com.signavio.api.clean">
-		<delete dir="${target}"/>
-	</target>
+        <delete dir="${target}"/>
+    </target>
     
     <target name="com.signavio.api.deploy" depends="com.signavio.api.war">
         <copy file="${target}/${file-war}.war" todir="${dir-tomcat-webapps}"/>
@@ -25,9 +25,9 @@
     
     <target name="com.signavio.api.war">
         <mkdir dir="${target}"/>
-		<war destfile="${target}/api.war"
-		webxml="web.xml"
-		 update="true">
+        <war destfile="${target}/api.war"
+        webxml="web.xml"
+         update="true">
             <fileset dir="${api}" />
         </war>
     </target>

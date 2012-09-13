@@ -30,26 +30,26 @@ package com.signavio.platform.exceptions;
  */
 public class InconsistentDataException extends LoggedRuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7493113581371643871L;
-	
-	public InconsistentDataException() {
-		super();
-	}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7493113581371643871L;
+    
+    public InconsistentDataException() {
+        super();
+    }
 
-	public InconsistentDataException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public InconsistentDataException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public InconsistentDataException(String message) {
-		super(message);
-	}
+    public InconsistentDataException(String message) {
+        super(message);
+    }
 
-	public InconsistentDataException(Throwable cause) {
-		super(cause);
-	}
-	
-	
+    public InconsistentDataException(Throwable cause) {
+        super(cause);
+    }
+    
+    
 }

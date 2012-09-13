@@ -35,6 +35,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Property {
-	String name();
-	String[] value();
+    String name();
+    String[] value();
 }

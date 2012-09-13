@@ -30,17 +30,17 @@ package com.signavio.platform.util;
  */
 public class StringUtil {
 
-	public static String formatString(String str, String ... params) {
-		if (params == null) {
-			return str;
-		}
-		for (int i = 0; i < params.length; i++) {
-			if (params[i] != null) {
-				str = str.replaceAll("\\{" + Integer.toString(i) + "\\}", params[i]);
-			} else {
-				str = str.replaceAll("\\{" + Integer.toString(i) + "\\}", "#null");
-			}
-		}
-		return str;
-	}
+    public static String formatString(String str, String ... params) {
+        if (params == null) {
+            return str;
+        }
+        for (int i = 0; i < params.length; i++) {
+            if (params[i] != null) {
+                str = str.replaceAll("\\{" + Integer.toString(i) + "\\}", params[i]);
+            } else {
+                str = str.replaceAll("\\{" + Integer.toString(i) + "\\}", "#null");
+            }
+        }
+        return str;
+    }
 }

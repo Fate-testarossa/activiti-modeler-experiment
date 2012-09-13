@@ -61,8 +61,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class Conversation
     extends ConversationNode
 {
-	public void acceptVisitor(Visitor v){
-		v.visitConversation(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitConversation(this);
+    }
+    
 }

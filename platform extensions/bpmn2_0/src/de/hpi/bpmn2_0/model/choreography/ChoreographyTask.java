@@ -65,34 +65,34 @@ public class ChoreographyTask
     extends ChoreographyActivity
 {
 
-	@XmlIDREF
+    @XmlIDREF
     @XmlElement(type = MessageFlow.class/*required = true*/)
     protected List<MessageFlow> messageFlowRef;
    
      /**
-	 * Creates a MessageFlow to create schema valid XML
-	 * 
-	 * @param choreography
-	 */
-	public void createMessageFlows(Choreography choreography) {
-		/* Insert a message flow from first to last participant */
-		if(getParticipantRef().size() >= 2) {
-			
-			/* Create message flow */
-			MessageFlow msgFlow = new MessageFlow();
-			msgFlow.setId(SignavioUUID.generate());
-			msgFlow.setSourceRef(getParticipantRef().get(0));
-			msgFlow.setTargetRef(getParticipantRef().get(1));
-			
-			/* Add references */
-			getMessageFlows().add(msgFlow);
-			choreography.getMessageFlow().add(msgFlow);
-		}
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitChoreographyTask(this);
-	}
+     * Creates a MessageFlow to create schema valid XML
+     * 
+     * @param choreography
+     */
+    public void createMessageFlows(Choreography choreography) {
+        /* Insert a message flow from first to last participant */
+        if(getParticipantRef().size() >= 2) {
+            
+            /* Create message flow */
+            MessageFlow msgFlow = new MessageFlow();
+            msgFlow.setId(SignavioUUID.generate());
+            msgFlow.setSourceRef(getParticipantRef().get(0));
+            msgFlow.setTargetRef(getParticipantRef().get(1));
+            
+            /* Add references */
+            getMessageFlows().add(msgFlow);
+            choreography.getMessageFlow().add(msgFlow);
+        }
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitChoreographyTask(this);
+    }
     
     /**
      * Gets the value of the messageFlowRef property.

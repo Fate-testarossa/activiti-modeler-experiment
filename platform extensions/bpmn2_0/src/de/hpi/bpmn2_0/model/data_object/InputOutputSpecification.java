@@ -67,7 +67,7 @@ import de.hpi.bpmn2_0.model.BaseElement;
 public class InputOutputSpecification
     extends BaseElement
 {
-	
+    
     protected List<DataInput> dataInput;
     protected List<DataOutput> dataOutput;
     protected List<InputSet> inputSet;

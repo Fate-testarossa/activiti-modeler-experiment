@@ -35,54 +35,54 @@ import com.signavio.usermanagement.user.business.FsUser;
  */
 public class FsAccessToken implements Serializable {
 
-	private static final long serialVersionUID = -8581096924234627701L;
-	private static final String emptyString = "";
-	
-	private static final FsAccessToken DUMMY;
+    private static final long serialVersionUID = -8581096924234627701L;
+    private static final String emptyString = "";
+    
+    private static final FsAccessToken DUMMY;
 
-	static {
-		DUMMY = new FsAccessToken();
-	}
-	
-	public static FsAccessToken getDummy() {
-		return DUMMY;
-	}
-	
-	
-	public FsAccessToken() {
-		super();
-	}
-	
-	public FsAccessToken(String string, String id, Object object) {
-		this();
-	}
-
-
-	public String getPrincipal() {
-		return emptyString;
-	}
-	
-	
-	public String getTenantId() {
-		return FsTenant.ID_OF_SINGLETON;
-	}
-	
-	public String getUserId() {
-		return FsUser.ID_OF_DUMMY;
-	}
-	
-	public FsAccount getAccount() {
-		return FsAccount.getDummy();
-	}
-	
-	public FsUser getUser() {
-		return FsUser.getDummy();
-	}
+    static {
+        DUMMY = new FsAccessToken();
+    }
+    
+    public static FsAccessToken getDummy() {
+        return DUMMY;
+    }
+    
+    
+    public FsAccessToken() {
+        super();
+    }
+    
+    public FsAccessToken(String string, String id, Object object) {
+        this();
+    }
 
 
-	public boolean hasLoginLicense() {
-		return true;
-	}
+    public String getPrincipal() {
+        return emptyString;
+    }
+    
+    
+    public String getTenantId() {
+        return FsTenant.ID_OF_SINGLETON;
+    }
+    
+    public String getUserId() {
+        return FsUser.ID_OF_DUMMY;
+    }
+    
+    public FsAccount getAccount() {
+        return FsAccount.getDummy();
+    }
+    
+    public FsUser getUser() {
+        return FsUser.getDummy();
+    }
+
+
+    public boolean hasLoginLicense() {
+        return true;
+    }
 
 
 }

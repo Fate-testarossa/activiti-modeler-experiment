@@ -31,9 +31,9 @@ package com.signavio.platform.core;
  */
 public interface PlatformInstaller {
 
-	/**
-	 * This method is called by the Platform instance during the first bootstrapping
-	 * @param parameters
-	 */
-	public void install(PlatformInstance platformInstance);
+    /**
+     * This method is called by the Platform instance during the first bootstrapping
+     * @param parameters
+     */
+    public void install(PlatformInstance platformInstance);
 }

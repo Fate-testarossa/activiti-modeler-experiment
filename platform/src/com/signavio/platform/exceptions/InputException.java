@@ -31,11 +31,11 @@ package com.signavio.platform.exceptions;
  */
 public class InputException extends RequestException {
 
-	public InputException() {
-		super("platform.inputException");
-	}
-	
-	public InputException(Throwable t) {
-		super("platform.inputException", t);
-	}
+    public InputException() {
+        super("platform.inputException");
+    }
+    
+    public InputException(Throwable t) {
+        super("platform.inputException", t);
+    }
 }

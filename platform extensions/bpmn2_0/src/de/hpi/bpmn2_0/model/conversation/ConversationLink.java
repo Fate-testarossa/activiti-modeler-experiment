@@ -40,41 +40,41 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ConversationLink extends Edge implements ConversationElement {
-	
-	public void acceptVisitor(Visitor v){
-		v.visitConversationLink(this);
-	}
-	
-	/**
-	 * Ensures that the target element is of the type conversation element and 
-	 * returns it.
-	 */
-	public FlowElement getTargetRef() {
-//		if(!(super.getTargetRef() instanceof ConversationElement))
-//			return null;
-		return super.getTargetRef();
-	}
-	
-	public void setTargetRef(ConversationElement targetEle) {
-		if(targetEle instanceof FlowElement) {
-			super.setTargetRef((FlowElement) targetEle);
-		}
-	}
-	
-	/**
-	 * Ensures that the source element is of the type conversation element and 
-	 * returns it.
-	 */
-	public FlowElement getSourceRef() {
-//		if(!(super.getSourceRef() instanceof ConversationElement))
-//			return null;
-		return super.getSourceRef();
-	}
-	
-	public void setSourceRef(ConversationElement sourceEle) {
-		if(sourceEle instanceof FlowElement) {
-			super.setSourceRef((FlowElement) sourceEle);
-		}
-	}
-	
+    
+    public void acceptVisitor(Visitor v){
+        v.visitConversationLink(this);
+    }
+    
+    /**
+     * Ensures that the target element is of the type conversation element and 
+     * returns it.
+     */
+    public FlowElement getTargetRef() {
+//        if(!(super.getTargetRef() instanceof ConversationElement))
+//            return null;
+        return super.getTargetRef();
+    }
+    
+    public void setTargetRef(ConversationElement targetEle) {
+        if(targetEle instanceof FlowElement) {
+            super.setTargetRef((FlowElement) targetEle);
+        }
+    }
+    
+    /**
+     * Ensures that the source element is of the type conversation element and 
+     * returns it.
+     */
+    public FlowElement getSourceRef() {
+//        if(!(super.getSourceRef() instanceof ConversationElement))
+//            return null;
+        return super.getSourceRef();
+    }
+    
+    public void setSourceRef(ConversationElement sourceEle) {
+        if(sourceEle instanceof FlowElement) {
+            super.setSourceRef((FlowElement) sourceEle);
+        }
+    }
+    
 }

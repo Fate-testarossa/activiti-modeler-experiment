@@ -40,38 +40,38 @@ import com.signavio.usermanagement.user.business.FsUser;
 @HandlerConfiguration(uri = "/editor_ssextensions", rel = "stencilset")
 public class SSExtensionsHandler extends BasisHandler {
 
-	public final String SS_EXT_CONFIGURATION_FILE = this.getRootDirectory()
-			+ "/WEB-INF/json/extensions";
+    public final String SS_EXT_CONFIGURATION_FILE = this.getRootDirectory()
+            + "/WEB-INF/json/extensions";
 
-	public final String EDITOR_URL_PREFIX;
+    public final String EDITOR_URL_PREFIX;
 
-	public SSExtensionsHandler(ServletContext servletContext) {
-		super(servletContext);
-		
-		EDITOR_URL_PREFIX = Platform.getInstance().getPlatformProperties().getEditorUri() + "/"; 
-	}
+    public SSExtensionsHandler(ServletContext servletContext) {
+        super(servletContext);
+        
+        EDITOR_URL_PREFIX = Platform.getInstance().getPlatformProperties().getEditorUri() + "/"; 
+    }
 
-	/**
-	 * Returns a JSON file that contains information about the available stencil
-	 * set extensions for the user's profile
-	 * 
-	 * @throws Exception
-	 */
-	@Override
-	public <T extends FsSecureBusinessObject> void doGet(HttpServletRequest req,
-			HttpServletResponse res, FsAccessToken token, T sbo) {
+    /**
+     * Returns a JSON file that contains information about the available stencil
+     * set extensions for the user's profile
+     * 
+     * @throws Exception
+     */
+    @Override
+    public <T extends FsSecureBusinessObject> void doGet(HttpServletRequest req,
+            HttpServletResponse res, FsAccessToken token, T sbo) {
 
-		FsUser user = token.getUser();
+        FsUser user = token.getUser();
 
-		String fileName = SS_EXT_CONFIGURATION_FILE + ".json";
+        String fileName = SS_EXT_CONFIGURATION_FILE + ".json";
 
-		try {
-			this.writeFileToResponse(new File(fileName), res);
-		} catch (IOException e) {
-			throw new RequestException("editor.ssextension.ioException", e);
-		} catch (Exception e) {
-			throw new RequestException("editor.ssextension.exception", e);
-		}
+        try {
+            this.writeFileToResponse(new File(fileName), res);
+        } catch (IOException e) {
+            throw new RequestException("editor.ssextension.ioException", e);
+        } catch (Exception e) {
+            throw new RequestException("editor.ssextension.exception", e);
+        }
 
-	}
+    }
 }

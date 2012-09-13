@@ -37,33 +37,33 @@ import de.hpi.bpmn2_0.model.bpmndi.di.DiagramElement;
  */
 public class ChoreographyParticipantFactory extends AbstractBpmnFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createBpmnElement(org.oryxeditor.server.diagram.Shape, de.hpi.bpmn2_0.factory.BPMNElement)
-	 */
-	// @Override
-	public BPMNElement createBpmnElement(Shape shape, BPMNElement parent)
-			throws BpmnConverterException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createBpmnElement(org.oryxeditor.server.diagram.Shape, de.hpi.bpmn2_0.factory.BPMNElement)
+     */
+    // @Override
+    public BPMNElement createBpmnElement(Shape shape, BPMNElement parent)
+            throws BpmnConverterException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createDiagramElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected DiagramElement createDiagramElement(Shape shape) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createDiagramElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected DiagramElement createDiagramElement(Shape shape) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected BaseElement createProcessElement(Shape shape)
-			throws BpmnConverterException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected BaseElement createProcessElement(Shape shape)
+            throws BpmnConverterException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

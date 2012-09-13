@@ -60,35 +60,35 @@ import de.hpi.diagram.SignavioUUID;
 public class DataOutputAssociation
     extends DataAssociation
 {
-	/**
-	 * Default constructor
-	 */
-	public DataOutputAssociation() {
-		super();
-	}
-	
-	/**
-	 * Constructor creates an data input association base on a data association.
-	 * @param dataAssociation
-	 */
-	public DataOutputAssociation(DataAssociation dataAssociation) {
-		this.id = SignavioUUID.generate();
-		this.assignment = dataAssociation.getAssignment();
-		this.documentation = dataAssociation.getDocumentation();
-		this.transformation = dataAssociation.getTransformation();
-		this.process = dataAssociation.getProcess();
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitDataOutputAssociation(this);
-	}
-	
-	@XmlTransient
-	public FlowElement getSourceRef() {
-		if(parent != null) {
-			return parent;
-		}
-		
-		return super.getSourceRef();
-	}
+    /**
+     * Default constructor
+     */
+    public DataOutputAssociation() {
+        super();
+    }
+    
+    /**
+     * Constructor creates an data input association base on a data association.
+     * @param dataAssociation
+     */
+    public DataOutputAssociation(DataAssociation dataAssociation) {
+        this.id = SignavioUUID.generate();
+        this.assignment = dataAssociation.getAssignment();
+        this.documentation = dataAssociation.getDocumentation();
+        this.transformation = dataAssociation.getTransformation();
+        this.process = dataAssociation.getProcess();
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitDataOutputAssociation(this);
+    }
+    
+    @XmlTransient
+    public FlowElement getSourceRef() {
+        if(parent != null) {
+            return parent;
+        }
+        
+        return super.getSourceRef();
+    }
 }

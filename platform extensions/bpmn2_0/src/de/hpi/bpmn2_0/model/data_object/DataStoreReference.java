@@ -46,64 +46,64 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlType(name = "tDataStoreReference")
 public class DataStoreReference extends AbstractDataObject {
 
-	@XmlAttribute
-	@XmlIDREF
-	@XmlSchemaType(name = "IDREF")
-	protected DataStore dataStoreRef;
+    @XmlAttribute
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected DataStore dataStoreRef;
 
-	/**
-	 * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
-	 */
-	// @Override
+    /**
+     * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
+     */
+    // @Override
     public boolean isElementWithFixedSize() {
-		return true;
-	}
-	
+        return true;
+    }
+    
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-    	return 63.001;
+        return 63.001;
     }
     
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-    	return 61.173;
+        return 61.173;
     }
     
     public void acceptVisitor(Visitor v){
-		v.visitDataStoreReference(this);
-	}
+        v.visitDataStoreReference(this);
+    }
     
-	public void setProcess(Process process) {
-		super.setProcess(process);
-		if (this.dataStoreRef != null)
-			this.dataStoreRef.setProcessRef(process);
+    public void setProcess(Process process) {
+        super.setProcess(process);
+        if (this.dataStoreRef != null)
+            this.dataStoreRef.setProcessRef(process);
 
-	}
+    }
 
-	/* Getter & Setter */
+    /* Getter & Setter */
 
-	/**
-	 * Gets the value of the dataStoreRef property.
-	 * 
-	 * @return possible object is {@link DataStore }
-	 * 
-	 */
-	public DataStore getDataStoreRef() {
-		return dataStoreRef;
-	}
+    /**
+     * Gets the value of the dataStoreRef property.
+     * 
+     * @return possible object is {@link DataStore }
+     * 
+     */
+    public DataStore getDataStoreRef() {
+        return dataStoreRef;
+    }
 
-	/**
-	 * Sets the value of the dataStoreRef property.
-	 * 
-	 * @return possible object is {@link DataStore }
-	 * 
-	 */
-	public void setDataStoreRef(DataStore dataStoreRef) {
-		this.dataStoreRef = dataStoreRef;
-	}
+    /**
+     * Sets the value of the dataStoreRef property.
+     * 
+     * @return possible object is {@link DataStore }
+     * 
+     */
+    public void setDataStoreRef(DataStore dataStoreRef) {
+        this.dataStoreRef = dataStoreRef;
+    }
 
 }

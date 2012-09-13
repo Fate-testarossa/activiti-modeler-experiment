@@ -27,69 +27,69 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class WireObjectGroup implements IWireObjectGroup {
-	
-	protected String name;
-	protected String value;
-	protected String elementName;
-	
-	protected WireObjectGroup(String name, String value, String elementName) {
-		this.name = name;
-		this.value = value;
-		this.elementName = elementName;
-	}
-	
-	public WireObjectGroup(String name, String value) {
-		throw new RuntimeException("Not allowed! Use WireObjectGroup(String name, String value, String elementName)");
-	}
-	
-	
-	public String getName() {
-		return name;
-	}
+    
+    protected String name;
+    protected String value;
+    protected String elementName;
+    
+    protected WireObjectGroup(String name, String value, String elementName) {
+        this.name = name;
+        this.value = value;
+        this.elementName = elementName;
+    }
+    
+    public WireObjectGroup(String name, String value) {
+        throw new RuntimeException("Not allowed! Use WireObjectGroup(String name, String value, String elementName)");
+    }
+    
+    
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getValue() {
-		return value;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.signavio.warehouse.business.util.jpdl4.IWireObjectGroup#toJpdl()
-	 */
-	public String toJpdl() {
-		
-		StringWriter jpdl = new StringWriter();
-		jpdl.write("<" + elementName + " ");
-		
-		if(name != null && !name.isEmpty()) {
-			jpdl.write(JsonToJpdl.transformAttribute("name", name));
-		}
-		
-		if(value != null && !value.isEmpty()) {
-			jpdl.write(JsonToJpdl.transformAttribute("value", value));
-		}
-		
-		jpdl.write(" />");
-		
-		return jpdl.toString();
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.signavio.warehouse.business.util.jpdl4.IWireObjectGroup#toJson()
-	 */
-	public JSONObject toJson() throws JSONException {
-		JSONObject string = new JSONObject();
-		if (name != null)
-			string.put("name", name);
-		if (value != null)
-			string.put("value", value);
-		string.put("type", elementName);
-		return string;
-	}
+    /* (non-Javadoc)
+     * @see com.signavio.warehouse.business.util.jpdl4.IWireObjectGroup#toJpdl()
+     */
+    public String toJpdl() {
+        
+        StringWriter jpdl = new StringWriter();
+        jpdl.write("<" + elementName + " ");
+        
+        if(name != null && !name.isEmpty()) {
+            jpdl.write(JsonToJpdl.transformAttribute("name", name));
+        }
+        
+        if(value != null && !value.isEmpty()) {
+            jpdl.write(JsonToJpdl.transformAttribute("value", value));
+        }
+        
+        jpdl.write(" />");
+        
+        return jpdl.toString();
+    }
+    
+    /* (non-Javadoc)
+     * @see com.signavio.warehouse.business.util.jpdl4.IWireObjectGroup#toJson()
+     */
+    public JSONObject toJson() throws JSONException {
+        JSONObject string = new JSONObject();
+        if (name != null)
+            string.put("name", name);
+        if (value != null)
+            string.put("value", value);
+        string.put("type", elementName);
+        return string;
+    }
 }

@@ -66,8 +66,8 @@ public class BPMNPlane extends Plane
     
     /* Constructor */
     public BPMNPlane() {
-    	super();
-    	id = SignavioUUID.generate();
+        super();
+        id = SignavioUUID.generate();
     }
     
     /* Getter & Setter */
@@ -96,10 +96,10 @@ public class BPMNPlane extends Plane
         this.bpmnElement = value;
     }
 
-	// @Override
-	public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // @Override
+    public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

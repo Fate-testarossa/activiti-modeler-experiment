@@ -2,7 +2,7 @@
 Ext.PagingToolbar.prototype.prevText = "Vorherige Seite";
 Ext.PagingToolbar.prototype.nextText = "Nächste Seite";
 Ext.PagingToolbar.prototype.lastText  = "Letzte Seite";
-	
+    
 
 ORYX.I18N.PropertyWindow.dateFormat = "d.m.y";
 
@@ -91,9 +91,9 @@ ORYX.I18N.PropertyWindow.ListView.save = "Speichern";
 ORYX.I18N.PropertyWindow.ListView.cancel = "Abbrachen";
 
 if(!Signavio.I18N.Buttons) Signavio.I18N.Buttons = {};
-Signavio.I18N.Buttons.save		= "Speichern";
-Signavio.I18N.Buttons.cancel 	= "Abbrechen";
-Signavio.I18N.Buttons.remove	= "Entfernen";
+Signavio.I18N.Buttons.save        = "Speichern";
+Signavio.I18N.Buttons.cancel     = "Abbrechen";
+Signavio.I18N.Buttons.remove    = "Entfernen";
 
 if(!Signavio.I18N.btn) {Signavio.I18N.btn = {};}
 Signavio.I18N.btn.btnEdit = "Editieren";

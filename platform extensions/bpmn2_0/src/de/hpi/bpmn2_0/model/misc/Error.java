@@ -69,8 +69,8 @@ public class Error
     
     /* Constructor */
     public Error() {
-    	super();
-    	setId(SignavioUUID.generate());
+        super();
+        setId(SignavioUUID.generate());
     }
     
     /* Getter & Setter */
@@ -99,20 +99,20 @@ public class Error
         this.structureRef = value;
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getErrorCode() {
-		return errorCode;
-	}
+    public String getErrorCode() {
+        return errorCode;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
-	}
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
 
 }

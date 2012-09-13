@@ -86,10 +86,10 @@ public class BPMNLabel
         this.labelStyle = value;
     }
 
-	// @Override
-	public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // @Override
+    public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

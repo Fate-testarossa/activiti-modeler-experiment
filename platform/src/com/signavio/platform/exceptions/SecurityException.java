@@ -31,17 +31,17 @@ package com.signavio.platform.exceptions;
  */
 public class SecurityException extends RequestException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 63324283263845758L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 63324283263845758L;
 
 
-	public SecurityException() {
-		super("platform.securityexception");
-	}
-	
-	public SecurityException(Throwable e) {
-		super("platform.securityexception", e);
-	}
+    public SecurityException() {
+        super("platform.securityexception");
+    }
+    
+    public SecurityException(Throwable e) {
+        super("platform.securityexception", e);
+    }
 }

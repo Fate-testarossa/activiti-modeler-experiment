@@ -23,27 +23,27 @@ package com.signavio.platform.security.business.exceptions;
 
 public class BusinessObjectDoesNotExistException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3503854846490543911L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3503854846490543911L;
 
-	public BusinessObjectDoesNotExistException(String id) {
-		super("Business Object with id " + id + " does not exist.");
-	}
+    public BusinessObjectDoesNotExistException(String id) {
+        super("Business Object with id " + id + " does not exist.");
+    }
 
-	public BusinessObjectDoesNotExistException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessObjectDoesNotExistException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public BusinessObjectDoesNotExistException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessObjectDoesNotExistException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	public BusinessObjectDoesNotExistException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessObjectDoesNotExistException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 }

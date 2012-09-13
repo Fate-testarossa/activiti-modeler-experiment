@@ -87,53 +87,53 @@ public class CallChoreography
      */
     
     public CallChoreography() {
-    	super();
+        super();
     }
     
     public CallChoreography(ChoreographyActivity choreoAct) {
-    	super(choreoAct);
-    	
-    	this.setStartQuantity(null);
-    	this.setCompletionQuantity(null);
-    	
-    	if(choreoAct instanceof ChoreographyTask) {
-    		this.setCalledChoreographyRef(new GlobalChoreographyTask());
-    	}
+        super(choreoAct);
+        
+        this.setStartQuantity(null);
+        this.setCompletionQuantity(null);
+        
+        if(choreoAct instanceof ChoreographyTask) {
+            this.setCalledChoreographyRef(new GlobalChoreographyTask());
+        }
     }
 
     public List<BaseElement> getCalledElements() {
-    	List<BaseElement> calledElements = new ArrayList<BaseElement>();
-    	
-    	/* Global Task */
-    	if(calledChoreographyRef instanceof GlobalChoreographyTask) {
-    		calledElements.add(calledChoreographyRef);
-    	} 
-    	
-    	/* Calling a sub choreography */
-    	else if(calledChoreographyRef instanceof Choreography) {
-    		for(FlowElement flowEl : calledChoreographyRef.getFlowElement()) {
-    			if(flowEl instanceof CallingElement) {
-    				calledElements.addAll(((CallingElement) flowEl).getCalledElements());
-    			}
-    		}
-    	}
-    	
-    	return calledElements;
+        List<BaseElement> calledElements = new ArrayList<BaseElement>();
+        
+        /* Global Task */
+        if(calledChoreographyRef instanceof GlobalChoreographyTask) {
+            calledElements.add(calledChoreographyRef);
+        } 
+        
+        /* Calling a sub choreography */
+        else if(calledChoreographyRef instanceof Choreography) {
+            for(FlowElement flowEl : calledChoreographyRef.getFlowElement()) {
+                if(flowEl instanceof CallingElement) {
+                    calledElements.addAll(((CallingElement) flowEl).getCalledElements());
+                }
+            }
+        }
+        
+        return calledElements;
     }
     
     public List<Edge> getChildEdges() {
-		List<Edge> edgeList = new ArrayList<Edge>();
-		
-		for(FlowElement fe : this.getFlowElement()) {
-			if(fe instanceof Edge) {
-				edgeList.add((Edge) fe);
-			} else if(fe instanceof ContainerElement) {
-				edgeList.addAll(((ContainerElement) fe).getChildEdges());
-			}
-		}
-		
-		return edgeList;
-	}
+        List<Edge> edgeList = new ArrayList<Edge>();
+        
+        for(FlowElement fe : this.getFlowElement()) {
+            if(fe instanceof Edge) {
+                edgeList.add((Edge) fe);
+            } else if(fe instanceof ContainerElement) {
+                edgeList.addAll(((ContainerElement) fe).getChildEdges());
+            }
+        }
+        
+        return edgeList;
+    }
     
     /* Getter & Setter */
     
@@ -191,20 +191,20 @@ public class CallChoreography
     }
     
     public void acceptVisitor(Visitor v){
-		v.visitCallChoreography(this);
-	}
+        v.visitCallChoreography(this);
+    }
 
-	public List<DiagramElement> _getDiagramElements() {
-		return _diagramElements;
-	}
+    public List<DiagramElement> _getDiagramElements() {
+        return _diagramElements;
+    }
 
-	public List<FlowElement> getFlowElement() {
-		if(this.getCalledChoreographyRef() != null) {
-			return this.getCalledChoreographyRef().getFlowElement();
-		}
-		
-		return new ArrayList<FlowElement>();
-	}
+    public List<FlowElement> getFlowElement() {
+        if(this.getCalledChoreographyRef() != null) {
+            return this.getCalledChoreographyRef().getFlowElement();
+        }
+        
+        return new ArrayList<FlowElement>();
+    }
 
 
 }

@@ -60,47 +60,47 @@ public class ServiceTask
     extends Task
 {
 
-	public ServiceTask() {
-		
-	}
-	
-	/**
-	 * Copy constructor
-	 * 
-	 * @param brTask
-	 * 		Template {@link BusinessRuleTask}
-	 */
-	public ServiceTask(ServiceTask brTask) {
-		super(brTask);
-		this.setImplementation(brTask.getImplementation());
-	}
-	
-	
+    public ServiceTask() {
+        
+    }
+    
+    /**
+     * Copy constructor
+     * 
+     * @param brTask
+     *         Template {@link BusinessRuleTask}
+     */
+    public ServiceTask(ServiceTask brTask) {
+        super(brTask);
+        this.setImplementation(brTask.getImplementation());
+    }
+    
+    
     @XmlAttribute
     protected ServiceImplementation implementation;
-	
+    
     @XmlAttribute
     protected QName operationRef;
     
-	public void acceptVisitor(Visitor v){
-		v.visitServiceTask(this);
-	}
-	
-	/* Getter & Setter */
-	
-	/**
-	 * @return the implementation
-	 */
-	public ServiceImplementation getImplementation() {
-		return implementation;
-	}
-	
-	/**
-	 * @param implementation the implementation to set
-	 */
-	public void setImplementation(ServiceImplementation implementation) {
-		this.implementation = implementation;
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitServiceTask(this);
+    }
+    
+    /* Getter & Setter */
+    
+    /**
+     * @return the implementation
+     */
+    public ServiceImplementation getImplementation() {
+        return implementation;
+    }
+    
+    /**
+     * @param implementation the implementation to set
+     */
+    public void setImplementation(ServiceImplementation implementation) {
+        this.implementation = implementation;
+    }
 
     /**
      * Gets the value of the operationRef property.

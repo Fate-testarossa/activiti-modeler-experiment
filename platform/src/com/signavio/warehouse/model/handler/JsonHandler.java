@@ -34,15 +34,15 @@ import com.signavio.warehouse.revision.handler.AbstractRevisionExportHandler;
 @HandlerExportConfiguration(name="JSON", icon="/explorer/src/img/famfamfam/page_white_code.png", mime="application/json")
 public class JsonHandler extends AbstractRevisionExportHandler {
 
-	public JsonHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		FsModel model = (FsModel) sbo;
-		return new com.signavio.warehouse.revision.handler.JsonHandler(this.getServletContext())
-				.doExport(model.getHeadRevision(), params);
-	}
+    public JsonHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        FsModel model = (FsModel) sbo;
+        return new com.signavio.warehouse.revision.handler.JsonHandler(this.getServletContext())
+                .doExport(model.getHeadRevision(), params);
+    }
 }

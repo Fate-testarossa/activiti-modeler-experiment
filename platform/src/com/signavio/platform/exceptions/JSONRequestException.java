@@ -23,7 +23,7 @@ package com.signavio.platform.exceptions;
 
 public class JSONRequestException extends RequestException {
 
-	public JSONRequestException(Throwable t) {
-		super("platform.jsonexception", t);
-	}
+    public JSONRequestException(Throwable t) {
+        super("platform.jsonexception", t);
+    }
 }

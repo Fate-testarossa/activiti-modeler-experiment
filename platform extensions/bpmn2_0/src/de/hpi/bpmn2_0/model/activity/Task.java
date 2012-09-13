@@ -71,38 +71,38 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class Task
     extends Activity
 {
-	
-	/**
-	 * Default constructor
-	 */
-	public Task() {
-		
-	}
-	
-	/**
-	 * Copy constructor
-	 * 
-	 * @param task
-	 * 		The {@link Task} to copy
-	 */
-	public Task(Task task) {
-		super(task);
-	}
-	
-	
-	
-	public void acceptVisitor(Visitor v){
-		v.visitTask(this);
-	}
-	
-	public GlobalTask getAsGlobalTask() {
-		GlobalTask gt = new GlobalTask();
-		gt.getDocumentation().addAll(this.getDocumentation());
-		gt.setExtensionElements(this.getExtensionElements());
-		gt.setIoSpecification(this.getIoSpecification());
-		gt.setLane(this.getLane());
-		gt.setName(this.getName());
-		
-		return gt;
-	}
+    
+    /**
+     * Default constructor
+     */
+    public Task() {
+        
+    }
+    
+    /**
+     * Copy constructor
+     * 
+     * @param task
+     *         The {@link Task} to copy
+     */
+    public Task(Task task) {
+        super(task);
+    }
+    
+    
+    
+    public void acceptVisitor(Visitor v){
+        v.visitTask(this);
+    }
+    
+    public GlobalTask getAsGlobalTask() {
+        GlobalTask gt = new GlobalTask();
+        gt.getDocumentation().addAll(this.getDocumentation());
+        gt.setExtensionElements(this.getExtensionElements());
+        gt.setIoSpecification(this.getIoSpecification());
+        gt.setLane(this.getLane());
+        gt.setName(this.getName());
+        
+        return gt;
+    }
 }

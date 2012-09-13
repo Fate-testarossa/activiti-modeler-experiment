@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 public class WireString extends WireObjectGroup {
 
-	public WireString(String name, String value) {
-		super(name, StringEscapeUtils.escapeXml(value), "string");
-	}
+    public WireString(String name, String value) {
+        super(name, StringEscapeUtils.escapeXml(value), "string");
+    }
 }

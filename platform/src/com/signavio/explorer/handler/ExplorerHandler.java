@@ -39,27 +39,27 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 
 @HandlerConfiguration(uri = "/explorer", rel="explorer")
 public class ExplorerHandler extends BasisHandler {
-	
-	public ExplorerHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
+    
+    public ExplorerHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
 
-	@Override
-	@HandlerMethodActivation
+    @Override
+    @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> void doGet(HttpServletRequest req, HttpServletResponse res, FsAccessToken token, T sbo) {
-		try {
+        try {
 
-			addJSPAttributes(req);
-			req.setAttribute("language", token.getUser().getAccount().getLanguageCode());
-			req.setAttribute("country", token.getUser().getAccount().getCountryCode());
-			res.setContentType("text/html");
-			getServletContext().getRequestDispatcher("/WEB-INF/jsp/explorer.jsp").include(req, res);
-			//res.sendRedirect(INDEX_PAGE_URI);
-		} catch (IOException e) {
-			throw new IORequestException(e);
-		} catch (ServletException e) {
-			//TODO exception handling
-			throw new RequestException("platform.servletexeption", e);
-		}
-	}
+            addJSPAttributes(req);
+            req.setAttribute("language", token.getUser().getAccount().getLanguageCode());
+            req.setAttribute("country", token.getUser().getAccount().getCountryCode());
+            res.setContentType("text/html");
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/explorer.jsp").include(req, res);
+            //res.sendRedirect(INDEX_PAGE_URI);
+        } catch (IOException e) {
+            throw new IORequestException(e);
+        } catch (ServletException e) {
+            //TODO exception handling
+            throw new RequestException("platform.servletexeption", e);
+        }
+    }
 }

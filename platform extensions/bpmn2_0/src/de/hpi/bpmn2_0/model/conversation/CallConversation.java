@@ -73,7 +73,7 @@ public class CallConversation
 
 //    protected List<TParticipantAssociation> participantAssociation;
     @XmlIDREF
-	@XmlAttribute
+    @XmlAttribute
     protected Collaboration calledElementRef;
     
     @XmlTransient
@@ -84,22 +84,22 @@ public class CallConversation
      */
     
     public CallConversation() {
-    	super();
+        super();
     }
     
-	public CallConversation(ConversationNode node) {
-		super(node);
-		
-		if(node instanceof Conversation) {
-			setCalledElementRef(new GlobalConversation());
-		}
-	}
+    public CallConversation(ConversationNode node) {
+        super(node);
+        
+        if(node instanceof Conversation) {
+            setCalledElementRef(new GlobalConversation());
+        }
+    }
 
 
-	public void acceptVisitor(Visitor v){
-		v.visitCallConversation(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitCallConversation(this);
+    }
+    
     
     /**
      * Gets the value of the participantAssociation property.
@@ -155,14 +155,14 @@ public class CallConversation
     }
 
 
-	public List<BaseElement> getCalledElements() {
-		List<BaseElement> calledElements = new ArrayList<BaseElement>();
-		
-		if(calledElementRef != null) {
-			calledElements.add(getCalledElementRef());
-		}
-		
-		return calledElements;
-	}
+    public List<BaseElement> getCalledElements() {
+        List<BaseElement> calledElements = new ArrayList<BaseElement>();
+        
+        if(calledElementRef != null) {
+            calledElements.add(getCalledElementRef());
+        }
+        
+        return calledElements;
+    }
 
 }

@@ -31,31 +31,31 @@ import org.apache.log4j.Logger;
 
 public abstract class LoggedRuntimeException extends RuntimeException {
 
-	private static final long serialVersionUID = 4180454029425889094L;
+    private static final long serialVersionUID = 4180454029425889094L;
 
-	private static Logger logger = Logger.getLogger(InconsistentDataException.class);
+    private static Logger logger = Logger.getLogger(InconsistentDataException.class);
 
-	protected void logException() {
-		logger.fatal(this.getMessage(), this);
-	}
-	
-	public LoggedRuntimeException() {
-		logException();
-	}
+    protected void logException() {
+        logger.fatal(this.getMessage(), this);
+    }
+    
+    public LoggedRuntimeException() {
+        logException();
+    }
 
-	public LoggedRuntimeException(String message) {
-		super(message);
-		logException();
-	}
+    public LoggedRuntimeException(String message) {
+        super(message);
+        logException();
+    }
 
-	public LoggedRuntimeException(Throwable cause) {
-		super(cause);
-		logException();
-	}
+    public LoggedRuntimeException(Throwable cause) {
+        super(cause);
+        logException();
+    }
 
-	public LoggedRuntimeException(String message, Throwable cause) {
-		super(message, cause);
-		logException();
-	}
+    public LoggedRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+        logException();
+    }
 
 }

@@ -31,132 +31,132 @@ import org.w3c.dom.NamedNodeMap;
 
 public class Task extends Node {
 
-	private String assignee;
-	private String candidateGroups;
-	private String candidateUsers;
-	private String swimlane;
-	
-	public Task(JSONObject task) {
+    private String assignee;
+    private String candidateGroups;
+    private String candidateUsers;
+    private String swimlane;
+    
+    public Task(JSONObject task) {
 
-		this.name = JsonToJpdl.getAttribute(task, "name");
-		this.assignee = JsonToJpdl.getAttribute(task, "assignee");
-		this.candidateGroups = JsonToJpdl.getAttribute(task,
-				"candidate-groups");
-		this.candidateUsers = JsonToJpdl.getAttribute(task,
-				"candidate-users");
-		this.swimlane = JsonToJpdl.getAttribute(task, "swimlane");
-		this.bounds = JsonToJpdl.getBounds(task);
-		this.outgoings = JsonToJpdl.getOutgoings(task);
+        this.name = JsonToJpdl.getAttribute(task, "name");
+        this.assignee = JsonToJpdl.getAttribute(task, "assignee");
+        this.candidateGroups = JsonToJpdl.getAttribute(task,
+                "candidate-groups");
+        this.candidateUsers = JsonToJpdl.getAttribute(task,
+                "candidate-users");
+        this.swimlane = JsonToJpdl.getAttribute(task, "swimlane");
+        this.bounds = JsonToJpdl.getBounds(task);
+        this.outgoings = JsonToJpdl.getOutgoings(task);
 
-	}
-	
-	public Task(org.w3c.dom.Node task) {
-		this.uuid = "oryx_" + UUID.randomUUID().toString();
-		NamedNodeMap attributes = task.getAttributes();
-		this.name = JpdlToJson.getAttribute(attributes, "name");
-		this.assignee = JpdlToJson.getAttribute(attributes, "assignee");
-		this.candidateGroups = JpdlToJson.getAttribute(attributes, "candidate-groups");
-		this.candidateUsers = JpdlToJson.getAttribute(attributes, "candidate-users");
-		this.swimlane = JpdlToJson.getAttribute(attributes, "swimlane");
+    }
+    
+    public Task(org.w3c.dom.Node task) {
+        this.uuid = "oryx_" + UUID.randomUUID().toString();
+        NamedNodeMap attributes = task.getAttributes();
+        this.name = JpdlToJson.getAttribute(attributes, "name");
+        this.assignee = JpdlToJson.getAttribute(attributes, "assignee");
+        this.candidateGroups = JpdlToJson.getAttribute(attributes, "candidate-groups");
+        this.candidateUsers = JpdlToJson.getAttribute(attributes, "candidate-users");
+        this.swimlane = JpdlToJson.getAttribute(attributes, "swimlane");
 
-		this.bounds = JpdlToJson.getBounds(attributes.getNamedItem("g"));
-	}
+        this.bounds = JpdlToJson.getBounds(attributes.getNamedItem("g"));
+    }
 
-	public String getSwimlane() {
-		return swimlane;
-	}
+    public String getSwimlane() {
+        return swimlane;
+    }
 
-	public void setSwimlane(String swimlane) {
-		this.swimlane = swimlane;
-	}
+    public void setSwimlane(String swimlane) {
+        this.swimlane = swimlane;
+    }
 
-	public String getCandidateGroups() {
-		return candidateGroups;
-	}
+    public String getCandidateGroups() {
+        return candidateGroups;
+    }
 
-	public void setCandidateGroups(String candidateGroups) {
-		this.candidateGroups = candidateGroups;
-	}
+    public void setCandidateGroups(String candidateGroups) {
+        this.candidateGroups = candidateGroups;
+    }
 
-	public String getCandidateUsers() {
-		return candidateUsers;
-	}
+    public String getCandidateUsers() {
+        return candidateUsers;
+    }
 
-	public void setCandidateUsers(String candidateUsers) {
-		this.candidateUsers = candidateUsers;
-	}
+    public void setCandidateUsers(String candidateUsers) {
+        this.candidateUsers = candidateUsers;
+    }
 
-	public String getAssignee() {
-		return assignee;
-	}
+    public String getAssignee() {
+        return assignee;
+    }
 
-	public void setAssignee(String assignee) {
-		this.assignee = assignee;
-	}
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
+    }
 
-	@Override
-	public String toJpdl() throws InvalidModelException {
-		StringWriter jpdl = new StringWriter();
-		jpdl.write("  <task");
+    @Override
+    public String toJpdl() throws InvalidModelException {
+        StringWriter jpdl = new StringWriter();
+        jpdl.write("  <task");
 
-		jpdl.write(JsonToJpdl.transformAttribute("name", name));
-		if (assignee != null && assignee.length() > 0)
-			jpdl.write(JsonToJpdl.transformAttribute("assignee", assignee));
-		if (candidateGroups != null && candidateGroups.length() > 0) {
-			jpdl.write(JsonToJpdl.transformAttribute("candidate-groups",
-					candidateGroups));
-		}
-		if (candidateUsers != null && candidateUsers.length() > 0) {
-			jpdl.write(JsonToJpdl.transformAttribute("candidate-users",
-					candidateUsers));
-		} 
-		if (swimlane != null) {
-			jpdl.write(JsonToJpdl.transformAttribute("swimlane", swimlane));
-		}
+        jpdl.write(JsonToJpdl.transformAttribute("name", name));
+        if (assignee != null && assignee.length() > 0)
+            jpdl.write(JsonToJpdl.transformAttribute("assignee", assignee));
+        if (candidateGroups != null && candidateGroups.length() > 0) {
+            jpdl.write(JsonToJpdl.transformAttribute("candidate-groups",
+                    candidateGroups));
+        }
+        if (candidateUsers != null && candidateUsers.length() > 0) {
+            jpdl.write(JsonToJpdl.transformAttribute("candidate-users",
+                    candidateUsers));
+        } 
+        if (swimlane != null) {
+            jpdl.write(JsonToJpdl.transformAttribute("swimlane", swimlane));
+        }
 
-		if (bounds != null) {
-			jpdl.write(bounds.toJpdl());
-		} else {
-			throw new InvalidModelException("Invalid Task. Bounds is missing.");
-		}
+        if (bounds != null) {
+            jpdl.write(bounds.toJpdl());
+        } else {
+            throw new InvalidModelException("Invalid Task. Bounds is missing.");
+        }
 
-		if (outgoings.size() > 0) {
-			jpdl.write(" >\n");
-			for (Transition t : outgoings) {
-				jpdl.write(t.toJpdl());
-			}
-			jpdl.write("  </task>\n\n");
-		} else {
-			jpdl.write(" />\n\n");
-		}
+        if (outgoings.size() > 0) {
+            jpdl.write(" >\n");
+            for (Transition t : outgoings) {
+                jpdl.write(t.toJpdl());
+            }
+            jpdl.write("  </task>\n\n");
+        } else {
+            jpdl.write(" />\n\n");
+        }
 
-		return jpdl.toString();
-	}
+        return jpdl.toString();
+    }
 
-	@Override
-	public JSONObject toJson() throws JSONException {
-		JSONObject stencil = new JSONObject();
-		stencil.put("id", "Task");
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject stencil = new JSONObject();
+        stencil.put("id", "Task");
 
-		JSONArray outgoing = JpdlToJson.getTransitions(outgoings);
+        JSONArray outgoing = JpdlToJson.getTransitions(outgoings);
 
-		JSONObject properties = new JSONObject();
-		properties.put("bgcolor", "#ffffcc");
-		if (name != null)
-			properties.put("name", name);
-		if (assignee != null)
-			properties.put("assignee", assignee);
-		if (candidateGroups != null)
-			properties.put("candidate-groups", candidateGroups);
-		if (candidateUsers != null)
-			properties.put("candidate-users", candidateUsers);
-		if (swimlane != null)
-			properties.put("swimlane", swimlane);
+        JSONObject properties = new JSONObject();
+        properties.put("bgcolor", "#ffffcc");
+        if (name != null)
+            properties.put("name", name);
+        if (assignee != null)
+            properties.put("assignee", assignee);
+        if (candidateGroups != null)
+            properties.put("candidate-groups", candidateGroups);
+        if (candidateUsers != null)
+            properties.put("candidate-users", candidateUsers);
+        if (swimlane != null)
+            properties.put("swimlane", swimlane);
 
-		JSONArray childShapes = new JSONArray();
+        JSONArray childShapes = new JSONArray();
 
-		return JpdlToJson.createJsonObject(uuid, stencil, outgoing, properties,
-				childShapes, bounds.toJson());
-	}
+        return JpdlToJson.createJsonObject(uuid, stencil, outgoing, properties,
+                childShapes, bounds.toJson());
+    }
 
 }

@@ -66,31 +66,31 @@ public class Gateway
     @XmlAttribute
     protected GatewayDirection gatewayDirection;
     
-	/**
-	 * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
-	 */
+    /**
+     * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
+     */
     // @Override
     public boolean isElementWithFixedSize() {
-		return true;
-	}
+        return true;
+    }
     
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-    	return 40.0;
+        return 40.0;
     }
     
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-    	return 40.0;
+        return 40.0;
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitGateway(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitGateway(this);
+    }
     
     
     /* Getter & Setter */
@@ -104,7 +104,7 @@ public class Gateway
      *     
      */
     public GatewayDirection getGatewayDirection() {
-    	if (gatewayDirection == null) {
+        if (gatewayDirection == null) {
             return GatewayDirection.UNSPECIFIED;
         } else {
             return gatewayDirection;

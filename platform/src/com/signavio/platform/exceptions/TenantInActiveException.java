@@ -30,36 +30,36 @@ package com.signavio.platform.exceptions;
  */
 public class TenantInActiveException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	public TenantInActiveException() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * 
+     */
+    public TenantInActiveException() {
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 */
-	public TenantInActiveException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public TenantInActiveException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param cause
-	 */
-	public TenantInActiveException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public TenantInActiveException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public TenantInActiveException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public TenantInActiveException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
 }

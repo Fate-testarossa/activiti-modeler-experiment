@@ -29,25 +29,25 @@ package de.hpi.bpmn2_0.exceptions;
  */
 public class MigrationHelperException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2779849528275571981L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2779849528275571981L;
 
-	public MigrationHelperException() {
-		
-	}
-	
-	public MigrationHelperException(String message) {
-		super(message);
-	}
-	
-	public MigrationHelperException(Throwable cause) {
-		super(cause);
-	}
-	
-	public MigrationHelperException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
+    public MigrationHelperException() {
+        
+    }
+    
+    public MigrationHelperException(String message) {
+        super(message);
+    }
+    
+    public MigrationHelperException(Throwable cause) {
+        super(cause);
+    }
+    
+    public MigrationHelperException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
 }

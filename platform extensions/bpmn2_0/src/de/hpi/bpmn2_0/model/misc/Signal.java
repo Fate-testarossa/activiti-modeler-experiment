@@ -40,19 +40,19 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Signal extends RootElement {
-	
-	/* Attributes */
-	@XmlAttribute
-	@XmlJavaTypeAdapter(EscapingStringAdapter.class)
-	protected String name;
-	
-	/* Getter & Setter */
-	
-	public String getName() {
-		return name;
-	}
+    
+    /* Attributes */
+    @XmlAttribute
+    @XmlJavaTypeAdapter(EscapingStringAdapter.class)
+    protected String name;
+    
+    /* Getter & Setter */
+    
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

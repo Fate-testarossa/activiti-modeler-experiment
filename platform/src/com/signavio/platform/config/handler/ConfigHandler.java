@@ -41,41 +41,41 @@ import com.signavio.usermanagement.user.business.FsUser;
 @HandlerConfiguration(uri="/config")
 public class ConfigHandler extends BasisHandler {
 
-	public ConfigHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public Object getRepresentation(Object params, FsAccessToken token){
-		
-		JSONObject j = new JSONObject();
-		JSONArray a = new JSONArray();
-		
-		try {
-			a.put("de");
-			a.put("en_us");
-			j.put("languages", a);
-			
-			j.put("supportedBrowserEditor", Platform.getInstance().getPlatformProperties().getSupportedBrowserEditorRegExp());
-			
-			// Write the current user
-			FsUser u = FsSecurityManager.getInstance().loadObject(FsUser.class, token.getUserId(), token);
-			FsTenant tenant = u.getTenant();
-			j.put("user", "/user/" + u.getId());
-			j.put("tenant", "/tenant/" + tenant.getId());
-			
-			// Add owner
-			FsUser owner = (FsUser) tenant.getOwner().getUserObject(tenant);
-			j.put("owner", "/user/" + owner.getId());
-		} catch (JSONException e) {
-			throw new JSONRequestException(e);
-		} catch (Exception e) {
-			throw new RequestException("config.exception", e);
-		}
-		
-		return j;
-		
-	}
+    public ConfigHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public Object getRepresentation(Object params, FsAccessToken token){
+        
+        JSONObject j = new JSONObject();
+        JSONArray a = new JSONArray();
+        
+        try {
+            a.put("de");
+            a.put("en_us");
+            j.put("languages", a);
+            
+            j.put("supportedBrowserEditor", Platform.getInstance().getPlatformProperties().getSupportedBrowserEditorRegExp());
+            
+            // Write the current user
+            FsUser u = FsSecurityManager.getInstance().loadObject(FsUser.class, token.getUserId(), token);
+            FsTenant tenant = u.getTenant();
+            j.put("user", "/user/" + u.getId());
+            j.put("tenant", "/tenant/" + tenant.getId());
+            
+            // Add owner
+            FsUser owner = (FsUser) tenant.getOwner().getUserObject(tenant);
+            j.put("owner", "/user/" + owner.getId());
+        } catch (JSONException e) {
+            throw new JSONRequestException(e);
+        } catch (Exception e) {
+            throw new RequestException("config.exception", e);
+        }
+        
+        return j;
+        
+    }
 
 }

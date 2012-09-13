@@ -56,7 +56,7 @@ public class EscalationEventDefinition
     extends EventDefinition
 {
 
-	/* Attributes */
+    /* Attributes */
     
     @XmlAttribute
     @XmlIDREF
@@ -74,9 +74,9 @@ public class EscalationEventDefinition
      * @param escEventDefinition
      */
     public EscalationEventDefinition(EscalationEventDefinition escEventDefinition) {
-    	super(escEventDefinition);
-    	
-    	this.setEscalationRef(escEventDefinition.getEscalationRef());
+        super(escEventDefinition);
+        
+        this.setEscalationRef(escEventDefinition.getEscalationRef());
     }
     
     /* Getter & Setter */

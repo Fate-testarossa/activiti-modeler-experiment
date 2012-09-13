@@ -1,7 +1,7 @@
 // /**#=+
 //  * {
-//  *	'D': 'Date.prototype',
-//  *	'$N': 'Number'
+//  *    'D': 'Date.prototype',
+//  *    '$N': 'Number'
 //  * }
 //  */
 // var D = Date.prototype,
@@ -11,7 +11,7 @@
 // };
 // 
 // /**
-// 	@return {string} The cardinal number string.
+//     @return {string} The cardinal number string.
 // */
 // $N.nth = function(n){
 // };

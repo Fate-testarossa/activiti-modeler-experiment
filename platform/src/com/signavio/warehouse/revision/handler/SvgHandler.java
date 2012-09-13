@@ -36,21 +36,21 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 @HandlerExportConfiguration(name="SVG", icon="/explorer/src/img/famfamfam/page_white_vector.png", mime="image/svg+xml")
 public class SvgHandler extends AbstractRevisionExportHandler {
 
-	public SvgHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		FsModelRevision rev = (FsModelRevision) sbo;
-		
-		FsModelRepresentationInfo rep = rev.getRepresentation(RepresentationType.SVG);
-		
-		if(rep == null) {
-			throw new RequestException("warehouse.noSVGRepresentationAvailable");
-		} else {
-			return rep.getContent();
-		}
-	}
+    public SvgHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        FsModelRevision rev = (FsModelRevision) sbo;
+        
+        FsModelRepresentationInfo rep = rev.getRepresentation(RepresentationType.SVG);
+        
+        if(rep == null) {
+            throw new RequestException("warehouse.noSVGRepresentationAvailable");
+        } else {
+            return rep.getContent();
+        }
+    }
 }

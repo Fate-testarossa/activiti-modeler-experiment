@@ -66,19 +66,19 @@ public class Point {
      * @param dockerPoint
      */
     public Point(org.oryxeditor.server.diagram.Point dockerPoint) {
-    	this.setX(dockerPoint.getX());
-    	this.setY(dockerPoint.getY());
+        this.setX(dockerPoint.getX());
+        this.setY(dockerPoint.getY());
     }
     
     public Point(int x, int y) {
-    	this.setX((new Integer(x)).doubleValue());
-    	this.setY((new Integer(y)).doubleValue());
+        this.setX((new Integer(x)).doubleValue());
+        this.setY((new Integer(y)).doubleValue());
     }
 
     /* Getter & Setter */
 
 
-	/**
+    /**
      * Gets the value of the x property.
      * 
      */
@@ -111,7 +111,7 @@ public class Point {
     }
     
     public org.oryxeditor.server.diagram.Point toDiagramPoint(){
-    	return new org.oryxeditor.server.diagram.Point(this.getX(), this.getY());
+        return new org.oryxeditor.server.diagram.Point(this.getX(), this.getY());
     }
 
 }
