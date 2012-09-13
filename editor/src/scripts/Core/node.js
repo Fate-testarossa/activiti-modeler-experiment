@@ -47,7 +47,7 @@ ORYX.Core.Node = {
         
         this.isSelectable = true;
         this.isMovable = true;
-		this._dockerUpdated = false;
+        this._dockerUpdated = false;
         
         this._oldBounds = new ORYX.Core.Bounds(); //init bounds with undefined values
         this._svgShapes = []; //array of all SVGShape objects of
@@ -72,247 +72,247 @@ ORYX.Core.Node = {
      * super class update method.
      */
     _update: function(){
-		
-		this.dockers.invoke("update");
-		if (this.isChanged) {
+        
+        this.dockers.invoke("update");
+        if (this.isChanged) {
 
-			var bounds = this.bounds;
+            var bounds = this.bounds;
             var oldBounds = this._oldBounds;
-						
-			if (this.isResized) {
-			
-				var widthDelta = bounds.width() / oldBounds.width();
-				var heightDelta = bounds.height() / oldBounds.height();
-				
-				//iterate over all relevant svg elements and resize them
-				this._svgShapes.each(function(svgShape){
-					//adjust width
-					if (svgShape.isHorizontallyResizable) {
-						svgShape.width = svgShape.oldWidth * widthDelta;
-					}
-					//adjust height
-					if (svgShape.isVerticallyResizable) {
-						svgShape.height = svgShape.oldHeight * heightDelta;
-					}
-					
-					//check, if anchors are set
-					var anchorOffset;
-					var leftIncluded = svgShape.anchorLeft;
-					var rightIncluded = svgShape.anchorRight;
-					
-					if (rightIncluded) {
-						anchorOffset = oldBounds.width() - (svgShape.oldX + svgShape.oldWidth);
-						if (leftIncluded) {
-							svgShape.width = bounds.width() - svgShape.x - anchorOffset;
-						}
-						else {
-							svgShape.x = bounds.width() - (anchorOffset + svgShape.width);
-						}
-					}
-					else 
-						if (!leftIncluded) {
-							svgShape.x = widthDelta * svgShape.oldX;
-							if (!svgShape.isHorizontallyResizable) {
-								svgShape.x = svgShape.x + svgShape.width * widthDelta / 2 - svgShape.width / 2;
-							}
-						}
-					
-					var topIncluded = svgShape.anchorTop;
-					var bottomIncluded = svgShape.anchorBottom;
-					
-					if (bottomIncluded) {
-						anchorOffset = oldBounds.height() - (svgShape.oldY + svgShape.oldHeight);
-						if (topIncluded) {
-							svgShape.height = bounds.height() - svgShape.y - anchorOffset;
-						}
-						else {
-							// Hack for choreography task layouting
-							if (!svgShape._isYLocked) {
-								svgShape.y = bounds.height() - (anchorOffset + svgShape.height);
-							}
-						}
-					}
-					else 
-						if (!topIncluded) {
-							svgShape.y = heightDelta * svgShape.oldY;
-							if (!svgShape.isVerticallyResizable) {
-								svgShape.y = svgShape.y + svgShape.height * heightDelta / 2 - svgShape.height / 2;
-							}
-						}
-				});
-				
-				//check, if the current bounds is unallowed horizontally or vertically resized
-				var p = {
-					x: 0,
-					y: 0
-				};
-				if (!this.isHorizontallyResizable && bounds.width() !== oldBounds.width()) {
-					p.x = oldBounds.width() - bounds.width();
-				}
-				if (!this.isVerticallyResizable && bounds.height() !== oldBounds.height()) {
-					p.y = oldBounds.height() - bounds.height();
-				}
-				if (p.x !== 0 || p.y !== 0) {
-					bounds.extend(p);
-				}
-				
-				//check, if the current bounds are between maximum and minimum bounds
-				p = {
-					x: 0,
-					y: 0
-				};
-				var widthDifference, heightDifference;
-				if (this.minimumSize) {
-				
-					ORYX.Log.debug("Shape (%0)'s min size: (%1x%2)", this, this.minimumSize.width, this.minimumSize.height);
-					widthDifference = this.minimumSize.width - bounds.width();
-					if (widthDifference > 0) {
-						p.x += widthDifference;
-					}
-					heightDifference = this.minimumSize.height - bounds.height();
-					if (heightDifference > 0) {
-						p.y += heightDifference;
-					}
-				}
-				if (this.maximumSize) {
-				
-					ORYX.Log.debug("Shape (%0)'s max size: (%1x%2)", this, this.maximumSize.width, this.maximumSize.height);
-					widthDifference = bounds.width() - this.maximumSize.width;
-					if (widthDifference > 0) {
-						p.x -= widthDifference;
-					}
-					heightDifference = bounds.height() - this.maximumSize.height;
-					if (heightDifference > 0) {
-						p.y -= heightDifference;
-					}
-				}
-				if (p.x !== 0 || p.y !== 0) {
-					bounds.extend(p);
-				}
-				
-				//update magnets
-				
-				var widthDelta = bounds.width() / oldBounds.width();
-				var heightDelta = bounds.height() / oldBounds.height();
-				
-				var leftIncluded, rightIncluded, topIncluded, bottomIncluded, center, newX, newY;
-				
-				this.magnets.each(function(magnet){
-					leftIncluded = magnet.anchorLeft;
-					rightIncluded = magnet.anchorRight;
-					topIncluded = magnet.anchorTop;
-					bottomIncluded = magnet.anchorBottom;
-					
-					center = magnet.bounds.center();
-					
-					if (leftIncluded) {
-						newX = center.x;
-					}
-					else 
-						if (rightIncluded) {
-							newX = bounds.width() - (oldBounds.width() - center.x)
-						}
-						else {
-							newX = center.x * widthDelta;
-						}
-					
-					if (topIncluded) {
-						newY = center.y;
-					}
-					else 
-						if (bottomIncluded) {
-							newY = bounds.height() - (oldBounds.height() - center.y);
-						}
-						else {
-							newY = center.y * heightDelta;
-						}
-					
-					if (center.x !== newX || center.y !== newY) {
-						magnet.bounds.centerMoveTo(newX, newY);
-					}
-				});
-				
-				//set new position of labels
-				this.getLabels().each(function(label){
-					// Set the position dependings on it anchor
-					if (!label.isAnchorLeft()) {
-						if (label.isAnchorRight()) {
-							label.setX(bounds.width() - (oldBounds.width() - label.oldX))
-						} else {
-							label.setX((label.position?label.position.x:label.x) * widthDelta);
-						}
-					}
-					if (!label.isAnchorTop()) {
-						if (label.isAnchorBottom()) {
-							label.setY(bounds.height() - (oldBounds.height() - label.oldY));
-						} else {
-							label.setY((label.position?label.position.y:label.y) * heightDelta);
-						}
-					}
-					
-					// If there is an position,
-					// set the origin position as well
-					if (label.position){
-						if (!label.isOriginAnchorLeft()) {
-							if (label.isOriginAnchorRight()) {
-								label.setOriginX(bounds.width() - (oldBounds.width() - label.oldX))
-							} else {
-								label.setOriginX(label.x * widthDelta);
-							}
-						}
-						if (!label.isOriginAnchorTop()) {
-							if (label.isOriginAnchorBottom()) {
-								label.setOriginY(bounds.height() - (oldBounds.height() - label.oldY));
-							} else {
-								label.setOriginY(label.y * heightDelta);
-							}
-						}
-					}
-				});
-				
-				//update docker
-				var docker = this.dockers[0];
-				if (docker) {
-					docker.bounds.unregisterCallback(this._dockerChangedCallback);
-					if (!this._dockerUpdated) {
-						docker.bounds.centerMoveTo(this.bounds.center());
-						this._dockerUpdated = false;
-					}
-					
-					docker.update();
-					docker.bounds.registerCallback(this._dockerChangedCallback);
-				}
-				this.isResized = false;
-			}
+                        
+            if (this.isResized) {
+            
+                var widthDelta = bounds.width() / oldBounds.width();
+                var heightDelta = bounds.height() / oldBounds.height();
+                
+                //iterate over all relevant svg elements and resize them
+                this._svgShapes.each(function(svgShape){
+                    //adjust width
+                    if (svgShape.isHorizontallyResizable) {
+                        svgShape.width = svgShape.oldWidth * widthDelta;
+                    }
+                    //adjust height
+                    if (svgShape.isVerticallyResizable) {
+                        svgShape.height = svgShape.oldHeight * heightDelta;
+                    }
+                    
+                    //check, if anchors are set
+                    var anchorOffset;
+                    var leftIncluded = svgShape.anchorLeft;
+                    var rightIncluded = svgShape.anchorRight;
+                    
+                    if (rightIncluded) {
+                        anchorOffset = oldBounds.width() - (svgShape.oldX + svgShape.oldWidth);
+                        if (leftIncluded) {
+                            svgShape.width = bounds.width() - svgShape.x - anchorOffset;
+                        }
+                        else {
+                            svgShape.x = bounds.width() - (anchorOffset + svgShape.width);
+                        }
+                    }
+                    else 
+                        if (!leftIncluded) {
+                            svgShape.x = widthDelta * svgShape.oldX;
+                            if (!svgShape.isHorizontallyResizable) {
+                                svgShape.x = svgShape.x + svgShape.width * widthDelta / 2 - svgShape.width / 2;
+                            }
+                        }
+                    
+                    var topIncluded = svgShape.anchorTop;
+                    var bottomIncluded = svgShape.anchorBottom;
+                    
+                    if (bottomIncluded) {
+                        anchorOffset = oldBounds.height() - (svgShape.oldY + svgShape.oldHeight);
+                        if (topIncluded) {
+                            svgShape.height = bounds.height() - svgShape.y - anchorOffset;
+                        }
+                        else {
+                            // Hack for choreography task layouting
+                            if (!svgShape._isYLocked) {
+                                svgShape.y = bounds.height() - (anchorOffset + svgShape.height);
+                            }
+                        }
+                    }
+                    else 
+                        if (!topIncluded) {
+                            svgShape.y = heightDelta * svgShape.oldY;
+                            if (!svgShape.isVerticallyResizable) {
+                                svgShape.y = svgShape.y + svgShape.height * heightDelta / 2 - svgShape.height / 2;
+                            }
+                        }
+                });
+                
+                //check, if the current bounds is unallowed horizontally or vertically resized
+                var p = {
+                    x: 0,
+                    y: 0
+                };
+                if (!this.isHorizontallyResizable && bounds.width() !== oldBounds.width()) {
+                    p.x = oldBounds.width() - bounds.width();
+                }
+                if (!this.isVerticallyResizable && bounds.height() !== oldBounds.height()) {
+                    p.y = oldBounds.height() - bounds.height();
+                }
+                if (p.x !== 0 || p.y !== 0) {
+                    bounds.extend(p);
+                }
+                
+                //check, if the current bounds are between maximum and minimum bounds
+                p = {
+                    x: 0,
+                    y: 0
+                };
+                var widthDifference, heightDifference;
+                if (this.minimumSize) {
+                
+                    ORYX.Log.debug("Shape (%0)'s min size: (%1x%2)", this, this.minimumSize.width, this.minimumSize.height);
+                    widthDifference = this.minimumSize.width - bounds.width();
+                    if (widthDifference > 0) {
+                        p.x += widthDifference;
+                    }
+                    heightDifference = this.minimumSize.height - bounds.height();
+                    if (heightDifference > 0) {
+                        p.y += heightDifference;
+                    }
+                }
+                if (this.maximumSize) {
+                
+                    ORYX.Log.debug("Shape (%0)'s max size: (%1x%2)", this, this.maximumSize.width, this.maximumSize.height);
+                    widthDifference = bounds.width() - this.maximumSize.width;
+                    if (widthDifference > 0) {
+                        p.x -= widthDifference;
+                    }
+                    heightDifference = bounds.height() - this.maximumSize.height;
+                    if (heightDifference > 0) {
+                        p.y -= heightDifference;
+                    }
+                }
+                if (p.x !== 0 || p.y !== 0) {
+                    bounds.extend(p);
+                }
+                
+                //update magnets
+                
+                var widthDelta = bounds.width() / oldBounds.width();
+                var heightDelta = bounds.height() / oldBounds.height();
+                
+                var leftIncluded, rightIncluded, topIncluded, bottomIncluded, center, newX, newY;
+                
+                this.magnets.each(function(magnet){
+                    leftIncluded = magnet.anchorLeft;
+                    rightIncluded = magnet.anchorRight;
+                    topIncluded = magnet.anchorTop;
+                    bottomIncluded = magnet.anchorBottom;
+                    
+                    center = magnet.bounds.center();
+                    
+                    if (leftIncluded) {
+                        newX = center.x;
+                    }
+                    else 
+                        if (rightIncluded) {
+                            newX = bounds.width() - (oldBounds.width() - center.x)
+                        }
+                        else {
+                            newX = center.x * widthDelta;
+                        }
+                    
+                    if (topIncluded) {
+                        newY = center.y;
+                    }
+                    else 
+                        if (bottomIncluded) {
+                            newY = bounds.height() - (oldBounds.height() - center.y);
+                        }
+                        else {
+                            newY = center.y * heightDelta;
+                        }
+                    
+                    if (center.x !== newX || center.y !== newY) {
+                        magnet.bounds.centerMoveTo(newX, newY);
+                    }
+                });
+                
+                //set new position of labels
+                this.getLabels().each(function(label){
+                    // Set the position dependings on it anchor
+                    if (!label.isAnchorLeft()) {
+                        if (label.isAnchorRight()) {
+                            label.setX(bounds.width() - (oldBounds.width() - label.oldX))
+                        } else {
+                            label.setX((label.position?label.position.x:label.x) * widthDelta);
+                        }
+                    }
+                    if (!label.isAnchorTop()) {
+                        if (label.isAnchorBottom()) {
+                            label.setY(bounds.height() - (oldBounds.height() - label.oldY));
+                        } else {
+                            label.setY((label.position?label.position.y:label.y) * heightDelta);
+                        }
+                    }
+                    
+                    // If there is an position,
+                    // set the origin position as well
+                    if (label.position){
+                        if (!label.isOriginAnchorLeft()) {
+                            if (label.isOriginAnchorRight()) {
+                                label.setOriginX(bounds.width() - (oldBounds.width() - label.oldX))
+                            } else {
+                                label.setOriginX(label.x * widthDelta);
+                            }
+                        }
+                        if (!label.isOriginAnchorTop()) {
+                            if (label.isOriginAnchorBottom()) {
+                                label.setOriginY(bounds.height() - (oldBounds.height() - label.oldY));
+                            } else {
+                                label.setOriginY(label.y * heightDelta);
+                            }
+                        }
+                    }
+                });
+                
+                //update docker
+                var docker = this.dockers[0];
+                if (docker) {
+                    docker.bounds.unregisterCallback(this._dockerChangedCallback);
+                    if (!this._dockerUpdated) {
+                        docker.bounds.centerMoveTo(this.bounds.center());
+                        this._dockerUpdated = false;
+                    }
+                    
+                    docker.update();
+                    docker.bounds.registerCallback(this._dockerChangedCallback);
+                }
+                this.isResized = false;
+            }
             
             this.refresh();
-			
-			this.isChanged = false;
-			
-			this._oldBounds = this.bounds.clone();
+            
+            this.isChanged = false;
+            
+            this._oldBounds = this.bounds.clone();
         }
-		
-		this.children.each(function(value) {
-			if(!(value instanceof ORYX.Core.Controls.Docker)) {
-				value._update();
-			}
-		});
-		
-		if (this.dockers.length > 0&&!this.dockers.first().getDockedShape()) {
-			this.dockers.each(function(docker){
-				docker.bounds.centerMoveTo(this.bounds.center())
-			}.bind(this))
-		}
-		
-		/*this.incoming.each((function(edge) {
-			if(!(this.dockers[0] && this.dockers[0].getDockedShape() instanceof ORYX.Core.Node))
-				edge._update(true);
-		}).bind(this));
-		
-		this.outgoing.each((function(edge) {
-			if(!(this.dockers[0] && this.dockers[0].getDockedShape() instanceof ORYX.Core.Node))
-				edge._update(true);
-		}).bind(this)); */
+        
+        this.children.each(function(value) {
+            if(!(value instanceof ORYX.Core.Controls.Docker)) {
+                value._update();
+            }
+        });
+        
+        if (this.dockers.length > 0&&!this.dockers.first().getDockedShape()) {
+            this.dockers.each(function(docker){
+                docker.bounds.centerMoveTo(this.bounds.center())
+            }.bind(this))
+        }
+        
+        /*this.incoming.each((function(edge) {
+            if(!(this.dockers[0] && this.dockers[0].getDockedShape() instanceof ORYX.Core.Node))
+                edge._update(true);
+        }).bind(this));
+        
+        this.outgoing.each((function(edge) {
+            if(!(this.dockers[0] && this.dockers[0].getDockedShape() instanceof ORYX.Core.Node))
+                edge._update(true);
+        }).bind(this)); */
     },
     
     /**
@@ -330,10 +330,10 @@ ORYX.Core.Node = {
         /*var attributeTransform = document.createAttributeNS(ORYX.CONFIG.NAMESPACE_SVG, "transform");
         attributeTransform.nodeValue = "translate(" + x + ", " + y + ")";
         this.node.firstChild.setAttributeNode(attributeTransform);*/
-		// Move owner element
-		this.node.firstChild.setAttributeNS(null, "transform", "translate(" + x + ", " + y + ")");
-		// Move magnets
-		this.node.childNodes[1].childNodes[1].setAttributeNS(null, "transform", "translate(" + x + ", " + y + ")");
+        // Move owner element
+        this.node.firstChild.setAttributeNS(null, "transform", "translate(" + x + ", " + y + ")");
+        // Move magnets
+        this.node.childNodes[1].childNodes[1].setAttributeNS(null, "transform", "translate(" + x + ", " + y + ")");
         
         /** Resize */
         
@@ -344,12 +344,12 @@ ORYX.Core.Node = {
     },
     
     _dockerChanged: function(){
-		var docker = this.dockers[0];
+        var docker = this.dockers[0];
         
         //set the bounds of the the association
         this.bounds.centerMoveTo(docker.bounds.center());
         
-		this._dockerUpdated = true;
+        this._dockerUpdated = true;
         //this._update(true);
     },
     
@@ -391,23 +391,23 @@ ORYX.Core.Node = {
         var absBounds = absoluteBounds && absoluteBounds instanceof ORYX.Core.Bounds ? absoluteBounds : this.absoluteBounds();
         
         if (!absBounds.isIncluded(pointX, pointY)) {
-			return false;
-		} else {
-			
-		}
-			
+            return false;
+        } else {
+            
+        }
+            
         
         //point = Object.clone(point);
         var ul = absBounds.upperLeft();
         var x = pointX - ul.x;
-        var y = pointY - ul.y;		
-	
-		var i=0;
-		do {
-			var isPointIncluded = this._svgShapes[i++].isPointIncluded( x, y );
-		} while( !isPointIncluded && i < this._svgShapes.length)
-		
-		return isPointIncluded;
+        var y = pointY - ul.y;        
+    
+        var i=0;
+        do {
+            var isPointIncluded = this._svgShapes[i++].isPointIncluded( x, y );
+        } while( !isPointIncluded && i < this._svgShapes.length)
+        
+        return isPointIncluded;
 
         /*return this._svgShapes.any(function(svgShape){
             return svgShape.isPointIncluded(point);
@@ -420,63 +420,63 @@ ORYX.Core.Node = {
      * @param {Point}
      */
     isPointOverOffset: function( pointX, pointY ){       
-		var isOverEl = arguments.callee.$.isPointOverOffset.apply( this , arguments );
-		
-		if (isOverEl) {
-						
-	        // If there is an arguments with the absoluteBounds
-	        var absBounds = this.absoluteBounds();
-	        absBounds.widen( - ORYX.CONFIG.BORDER_OFFSET );
-			
-	        if ( !absBounds.isIncluded( pointX, pointY )) {
-	            return true;
-	        }		
-		}
-		
-		return false;
-		
-	},
-	   
+        var isOverEl = arguments.callee.$.isPointOverOffset.apply( this , arguments );
+        
+        if (isOverEl) {
+                        
+            // If there is an arguments with the absoluteBounds
+            var absBounds = this.absoluteBounds();
+            absBounds.widen( - ORYX.CONFIG.BORDER_OFFSET );
+            
+            if ( !absBounds.isIncluded( pointX, pointY )) {
+                return true;
+            }        
+        }
+        
+        return false;
+        
+    },
+       
     serialize: function(){
         var result = arguments.callee.$.serialize.apply(this);
         
         // Add the docker's bounds
         // nodes only have at most one docker!
         this.dockers.each((function(docker){
-			if (docker.getDockedShape()) {
-				var center = docker.referencePoint;
-				center = center ? center : docker.bounds.center();
-				result.push({
-					name: 'docker',
-					prefix: 'oryx',
-					value: $H(center).values().join(','),
-					type: 'literal'
-				});
-			}
+            if (docker.getDockedShape()) {
+                var center = docker.referencePoint;
+                center = center ? center : docker.bounds.center();
+                result.push({
+                    name: 'docker',
+                    prefix: 'oryx',
+                    value: $H(center).values().join(','),
+                    type: 'literal'
+                });
+            }
         }).bind(this));
         
         // Get the spezific serialized object from the stencil
         try {
             //result = this.getStencil().serialize(this, result);
 
-			var serializeEvent = this.getStencil().serialize();
-			
-			/*
-			 * call serialize callback by reference, result should be found
-			 * in serializeEvent.result
-			 */
-			if(serializeEvent.type) {
-				serializeEvent.shape = this;
-				serializeEvent.data = result;
-				serializeEvent.result = undefined;
-				serializeEvent.forceExecution = true;
-				
-				this._delegateEvent(serializeEvent);
-				
-				if(serializeEvent.result) {
-					result = serializeEvent.result;
-				}
-			}
+            var serializeEvent = this.getStencil().serialize();
+            
+            /*
+             * call serialize callback by reference, result should be found
+             * in serializeEvent.result
+             */
+            if(serializeEvent.type) {
+                serializeEvent.shape = this;
+                serializeEvent.data = result;
+                serializeEvent.result = undefined;
+                serializeEvent.forceExecution = true;
+                
+                this._delegateEvent(serializeEvent);
+                
+                if(serializeEvent.result) {
+                    result = serializeEvent.result;
+                }
+            }
         } 
         catch (e) {
         }
@@ -484,53 +484,53 @@ ORYX.Core.Node = {
     },
     
     deserialize: function(data){
-    	arguments.callee.$.deserialize.apply(this, arguments);
-		
-	    try {
+        arguments.callee.$.deserialize.apply(this, arguments);
+        
+        try {
             //data = this.getStencil().deserialize(this, data);
 
-			var deserializeEvent = this.getStencil().deserialize();
-			
-			/*
-			 * call serialize callback by reference, result should be found
-			 * in serializeEventInfo.result
-			 */
-			if(deserializeEvent.type) {
-				deserializeEvent.shape = this;
-				deserializeEvent.data = data;
-				deserializeEvent.result = undefined;
-				deserializeEvent.forceExecution = true;
-				
-				this._delegateEvent(deserializeEvent);
-				if(deserializeEvent.result) {
-					data = deserializeEvent.result;
-				}
-			}
+            var deserializeEvent = this.getStencil().deserialize();
+            
+            /*
+             * call serialize callback by reference, result should be found
+             * in serializeEventInfo.result
+             */
+            if(deserializeEvent.type) {
+                deserializeEvent.shape = this;
+                deserializeEvent.data = data;
+                deserializeEvent.result = undefined;
+                deserializeEvent.forceExecution = true;
+                
+                this._delegateEvent(deserializeEvent);
+                if(deserializeEvent.result) {
+                    data = deserializeEvent.result;
+                }
+            }
         } 
         catch (e) {
         }
-		
-		// Set the outgoing shapes
-		var outgoing = data.findAll(function(ser){ return (ser.prefix+"-"+ser.name) == 'raziel-outgoing'});
-		outgoing.each((function(obj){
-			// TODO: Look at Canvas
-			if(!this.parent) {return};
-								
-			// Set outgoing Shape
-			var next = this.getCanvas().getChildShapeByResourceId(obj.value);
-																	
-			if(next){
-				if(next instanceof ORYX.Core.Edge) {
-					//Set the first docker of the next shape
-					next.dockers.first().setDockedShape(this);
-					next.dockers.first().setReferencePoint(next.dockers.first().bounds.center());
-				} else if(next.dockers.length > 0) { //next is a node and next has a docker
-					next.dockers.first().setDockedShape(this);
-					//next.dockers.first().setReferencePoint({x: this.bounds.width() / 2.0, y: this.bounds.height() / 2.0});
-				}
-			}	
-			
-		}).bind(this));
+        
+        // Set the outgoing shapes
+        var outgoing = data.findAll(function(ser){ return (ser.prefix+"-"+ser.name) == 'raziel-outgoing'});
+        outgoing.each((function(obj){
+            // TODO: Look at Canvas
+            if(!this.parent) {return};
+                                
+            // Set outgoing Shape
+            var next = this.getCanvas().getChildShapeByResourceId(obj.value);
+                                                                    
+            if(next){
+                if(next instanceof ORYX.Core.Edge) {
+                    //Set the first docker of the next shape
+                    next.dockers.first().setDockedShape(this);
+                    next.dockers.first().setReferencePoint(next.dockers.first().bounds.center());
+                } else if(next.dockers.length > 0) { //next is a node and next has a docker
+                    next.dockers.first().setDockedShape(this);
+                    //next.dockers.first().setReferencePoint({x: this.bounds.width() / 2.0, y: this.bounds.height() / 2.0});
+                }
+            }    
+            
+        }).bind(this));
         
         if (this.dockers.length === 1) {
             var dockerPos;
@@ -540,7 +540,7 @@ ORYX.Core.Node = {
             
             if (dockerPos) {
                 var points = dockerPos.value.replace(/,/g, " ").split(" ").without("").without("#");
-				if (points.length === 2 && this.dockers[0].getDockedShape()) {
+                if (points.length === 2 && this.dockers[0].getDockedShape()) {
                     this.dockers[0].setReferencePoint({
                         x: parseFloat(points[0]),
                         y: parseFloat(points[1])
@@ -563,7 +563,7 @@ ORYX.Core.Node = {
      */
     _init: function(svgDocument){
         arguments.callee.$._init.apply(this, arguments);
-		
+        
         var svgNode = svgDocument.getElementsByTagName("g")[0]; //outer most g node
         // set all required attributes
         var attributeTitle = svgDocument.ownerDocument.createAttributeNS(null, "title");
@@ -719,21 +719,21 @@ ORYX.Core.Node = {
                     anchors = anchors.replace("/,/g", " ");
                     anchors = anchors.split(" ").without("");
                     for(var i = 0; i < anchors.length; i++) {
-						switch(anchors[i].toLowerCase()) {
-							case "left":
-								magnet.anchorLeft = true;
-								break;
-							case "right":
-								magnet.anchorRight = true;
-								break;
-							case "top":
-								magnet.anchorTop = true;
-								break;
-							case "bottom":
-								magnet.anchorBottom = true;
-								break;
-						}
-					}
+                        switch(anchors[i].toLowerCase()) {
+                            case "left":
+                                magnet.anchorLeft = true;
+                                break;
+                            case "right":
+                                magnet.anchorRight = true;
+                                break;
+                            case "top":
+                                magnet.anchorTop = true;
+                                break;
+                            case "bottom":
+                                magnet.anchorBottom = true;
+                                break;
+                        }
+                    }
                 }
                 
                 me.add(magnet);
@@ -748,7 +748,7 @@ ORYX.Core.Node = {
             });
         }
         else {
-            // Add a Magnet in the Center of Shape			
+            // Add a Magnet in the Center of Shape            
             var magnet = new ORYX.Core.Controls.Magnet();
             magnet.bounds.centerMoveTo(this.bounds.width() / 2, this.bounds.height() / 2);
             this.add(magnet);
@@ -773,22 +773,22 @@ ORYX.Core.Node = {
                 anchors = anchors.replace("/,/g", " ");
                 anchors = anchors.split(" ").without("");
                 
-				for(var i = 0; i < anchors.length; i++) {
-					switch(anchors[i].toLowerCase()) {
-						case "left":
-							docker.anchorLeft = true;
-							break;
-						case "right":
-							docker.anchorRight = true;
-							break;
-						case "top":
-							docker.anchorTop = true;
-							break;
-						case "bottom":
-							docker.anchorBottom = true;
-							break;
-					}
-				}
+                for(var i = 0; i < anchors.length; i++) {
+                    switch(anchors[i].toLowerCase()) {
+                        case "left":
+                            docker.anchorLeft = true;
+                            break;
+                        case "right":
+                            docker.anchorRight = true;
+                            break;
+                        case "top":
+                            docker.anchorTop = true;
+                            break;
+                        case "bottom":
+                            docker.anchorBottom = true;
+                            break;
+                    }
+                }
             }
         }
         
@@ -797,31 +797,31 @@ ORYX.Core.Node = {
         $A(textElems).each((function(textElem){
             var label = new ORYX.Core.SVG.Label({
                 textElement: textElem,
-				shapeId: this.id
+                shapeId: this.id
             });
             label.x -= offsetX;
             label.y -= offsetY;
             this._labels[label.id] = label;
-			
-			label.registerOnChange(this.layout.bind(this));
-			
+            
+            label.registerOnChange(this.layout.bind(this));
+            
         }).bind(this));
     },
-	
-	/**
-	 * Override the Method, that a docker is not shown
-	 *
-	 */
-	createDocker: function() {
-		var docker = new ORYX.Core.Controls.Docker({eventHandlerCallback: this.eventHandlerCallback});
-		docker.bounds.registerCallback(this._dockerChangedCallback);
-		
-		this.dockers.push( docker );
-		docker.parent = this;
-		docker.bounds.registerCallback(this._changedCallback);		
-		
-		return docker		
-	},	
+    
+    /**
+     * Override the Method, that a docker is not shown
+     *
+     */
+    createDocker: function() {
+        var docker = new ORYX.Core.Controls.Docker({eventHandlerCallback: this.eventHandlerCallback});
+        docker.bounds.registerCallback(this._dockerChangedCallback);
+        
+        this.dockers.push( docker );
+        docker.parent = this;
+        docker.bounds.registerCallback(this._changedCallback);        
+        
+        return docker        
+    },    
     
     toString: function(){
         return this._stencil.title() + " " + this.id

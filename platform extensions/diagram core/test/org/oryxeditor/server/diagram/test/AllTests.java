@@ -6,11 +6,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	BasicDiagramTest.class,
-	BasicNodeTest.class,
-	BasicEdgeTest.class,
-	BasicDiagramBuilderTest.class,
-	BasicJSONBuilderTest.class
+    BasicDiagramTest.class,
+    BasicNodeTest.class,
+    BasicEdgeTest.class,
+    BasicDiagramBuilderTest.class,
+    BasicJSONBuilderTest.class
 })
 public class AllTests {
 

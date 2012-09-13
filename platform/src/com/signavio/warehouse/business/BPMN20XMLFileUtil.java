@@ -20,13 +20,13 @@ import de.hpi.bpmn2_0.transformation.Diagram2XmlConverter;
 
 public class BPMN20XMLFileUtil {
 
-	public static void storeBPMN20XMLFile(String path, String jsonRep) throws IOException, JSONException, BpmnConverterException, JAXBException, SAXException, ParserConfigurationException, TransformerException {
-		PlatformProperties props = Platform.getInstance().getPlatformProperties();
-		Diagram2XmlConverter converter = new Diagram2XmlConverter(BasicDiagramBuilder.parseJson(jsonRep), Platform.getInstance().getFile("/WEB-INF/xsd/BPMN20.xsd").getAbsolutePath());
-		
-		StringWriter xml = converter.getXml();
-		
-		FileSystemUtil.deleteFileOrDirectory(path);
-		FileSystemUtil.createFile(path, xml.toString());
-	}
+    public static void storeBPMN20XMLFile(String path, String jsonRep) throws IOException, JSONException, BpmnConverterException, JAXBException, SAXException, ParserConfigurationException, TransformerException {
+        PlatformProperties props = Platform.getInstance().getPlatformProperties();
+        Diagram2XmlConverter converter = new Diagram2XmlConverter(BasicDiagramBuilder.parseJson(jsonRep), Platform.getInstance().getFile("/WEB-INF/xsd/BPMN20.xsd").getAbsolutePath());
+        
+        StringWriter xml = converter.getXml();
+        
+        FileSystemUtil.deleteFileOrDirectory(path);
+        FileSystemUtil.createFile(path, xml.toString());
+    }
 }

@@ -70,10 +70,10 @@ public enum BusinessRuleTaskImplementation {
             if (c.value.equalsIgnoreCase(v)) {
                 return c;
             } else {
-            	/* Return default value otherwise */
-            	return OTHER;
+                /* Return default value otherwise */
+                return OTHER;
             }
-            	
+                
         }
         throw new IllegalArgumentException(v);
     }

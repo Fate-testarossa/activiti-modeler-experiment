@@ -22,51 +22,51 @@
  **/
 
 if(!ORYX.Plugins)
-	ORYX.Plugins = new Object();
+    ORYX.Plugins = new Object();
 
 ORYX.Plugins.AddDocker = Clazz.extend({
 
-	/**
-	 *	Constructor
-	 *	@param {Object} Facade: The Facade of the Editor
-	 */
-	construct: function(facade) {
-		this.facade = facade;
+    /**
+     *    Constructor
+     *    @param {Object} Facade: The Facade of the Editor
+     */
+    construct: function(facade) {
+        this.facade = facade;
 
-		this.facade.offer({
-			'name':ORYX.I18N.AddDocker.add,
-			'functionality': this.enableAddDocker.bind(this),
-			'group': ORYX.I18N.AddDocker.group,
-			'icon': ORYX.PATH + "images/vector_add.png",
-			'description': ORYX.I18N.AddDocker.addDesc,
-			'index': 1,
+        this.facade.offer({
+            'name':ORYX.I18N.AddDocker.add,
+            'functionality': this.enableAddDocker.bind(this),
+            'group': ORYX.I18N.AddDocker.group,
+            'icon': ORYX.PATH + "images/vector_add.png",
+            'description': ORYX.I18N.AddDocker.addDesc,
+            'index': 1,
             'toggle': true,
-			'minShape': 0,
-			'maxShape': 0});
+            'minShape': 0,
+            'maxShape': 0});
 
 
-		this.facade.offer({
-			'name':ORYX.I18N.AddDocker.del,
-			'functionality': this.enableDeleteDocker.bind(this),
-			'group': ORYX.I18N.AddDocker.group,
-			'icon': ORYX.PATH + "images/vector_delete.png",
-			'description': ORYX.I18N.AddDocker.delDesc,
-			'index': 2,
+        this.facade.offer({
+            'name':ORYX.I18N.AddDocker.del,
+            'functionality': this.enableDeleteDocker.bind(this),
+            'group': ORYX.I18N.AddDocker.group,
+            'icon': ORYX.PATH + "images/vector_delete.png",
+            'description': ORYX.I18N.AddDocker.delDesc,
+            'index': 2,
             'toggle': true,
-			'minShape': 0,
-			'maxShape': 0});
-		
-		this.facade.registerOnEvent(ORYX.CONFIG.EVENT_MOUSEDOWN, this.handleMouseDown.bind(this));
-	},
-	
-	enableAddDocker: function(button, pressed) {
+            'minShape': 0,
+            'maxShape': 0});
+        
+        this.facade.registerOnEvent(ORYX.CONFIG.EVENT_MOUSEDOWN, this.handleMouseDown.bind(this));
+    },
+    
+    enableAddDocker: function(button, pressed) {
         //FIXME This should be done while construct, but this isn't possible right now!
         this.addDockerButton = button;
         
         // Unpress deleteDockerButton
         if(pressed && this.deleteDockerButton)
             this.deleteDockerButton.toggle(false);
-	},
+    },
     enableDeleteDocker: function(button, pressed) {
         //FIXME This should be done while construct, but this isn't possible right now!
         this.deleteDockerButton = button;
@@ -82,30 +82,30 @@ ORYX.Plugins.AddDocker = Clazz.extend({
     enabledDelete: function(){
         return this.deleteDockerButton ? this.deleteDockerButton.pressed : false;
     },
-	
-	/**
-	 * MouseDown Handler
-	 *
-	 */	
-	handleMouseDown: function(event, uiObj) {
-		if (this.enabledAdd() && uiObj instanceof ORYX.Core.Edge) {
+    
+    /**
+     * MouseDown Handler
+     *
+     */    
+    handleMouseDown: function(event, uiObj) {
+        if (this.enabledAdd() && uiObj instanceof ORYX.Core.Edge) {
             this.newDockerCommand({
                 edge: uiObj,
                 position: this.facade.eventCoordinates(event)
             });
-		} else if (this.enabledDelete() &&
-				   uiObj instanceof ORYX.Core.Controls.Docker &&
-				   uiObj.parent instanceof ORYX.Core.Edge) {
+        } else if (this.enabledDelete() &&
+                   uiObj instanceof ORYX.Core.Controls.Docker &&
+                   uiObj.parent instanceof ORYX.Core.Edge) {
             this.newDockerCommand({
                 edge: uiObj.parent,
                 docker: uiObj
             });
-		} else if ( this.enabledAdd() ){
+        } else if ( this.enabledAdd() ){
             this.addDockerButton.toggle(false);
         } else if ( this.enabledDelete() ) {
             this.deleteDockerButton.toggle(false);
         }
-	},
+    },
     
     // Options: edge (required), position (required if add), docker (required if delete)
     newDockerCommand: function(options){
@@ -120,19 +120,19 @@ ORYX.Plugins.AddDocker = Clazz.extend({
                 this.docker = docker;
                 this.pos = pos;
                 this.facade = facade;
-				//this.index = docker.parent.dockers.indexOf(docker);
+                //this.index = docker.parent.dockers.indexOf(docker);
             },
             execute: function(){
                 if (this.addEnabled) {
-					if (!this.docker){
-                    	this.docker = this.edge.addDocker(this.pos);
-						this.index = this.edge.dockers.indexOf(this.docker);
-					} else {
-                    	this.edge.add(this.docker, this.index);
-					}
+                    if (!this.docker){
+                        this.docker = this.edge.addDocker(this.pos);
+                        this.index = this.edge.dockers.indexOf(this.docker);
+                    } else {
+                        this.edge.add(this.docker, this.index);
+                    }
                 }
                 else if (this.deleteEnabled) {
-					this.index = this.edge.dockers.indexOf(this.docker);
+                    this.index = this.edge.dockers.indexOf(this.docker);
                     this.pos = this.docker.bounds.center();
                     this.edge.removeDocker(this.docker);
                 }

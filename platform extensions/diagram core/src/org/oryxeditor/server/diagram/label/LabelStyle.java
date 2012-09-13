@@ -8,52 +8,52 @@ import java.awt.Color;
  *
  */
 public class LabelStyle {
-	
-	private String fontFamily; //TODO make as enum?
-	private Double fontSize;
-	private boolean bold;
-	private boolean italic;
-	private Color fill;
-	
-	
-	public String getFontFamily() {
-		return fontFamily;
-	}
-	
-	public void setFontFamily(String fontFamily) {
-		this.fontFamily = fontFamily;
-	}
-	
-	public Double getFontSize() {
-		return fontSize;
-	}
-	
-	public void setFontSize(Double fontSize) {
-		this.fontSize = fontSize;
-	}
-	
-	public Color getFill() {
-		return fill;
-	}
-	
-	public void setFill(Color fill) {
-		this.fill = fill;
-	}
+    
+    private String fontFamily; //TODO make as enum?
+    private Double fontSize;
+    private boolean bold;
+    private boolean italic;
+    private Color fill;
+    
+    
+    public String getFontFamily() {
+        return fontFamily;
+    }
+    
+    public void setFontFamily(String fontFamily) {
+        this.fontFamily = fontFamily;
+    }
+    
+    public Double getFontSize() {
+        return fontSize;
+    }
+    
+    public void setFontSize(Double fontSize) {
+        this.fontSize = fontSize;
+    }
+    
+    public Color getFill() {
+        return fill;
+    }
+    
+    public void setFill(Color fill) {
+        this.fill = fill;
+    }
 
-	
-	public boolean isBold() {
-		return bold;
-	}
-	public void setBold(boolean bold) {
-		this.bold = bold;
-	}
+    
+    public boolean isBold() {
+        return bold;
+    }
+    public void setBold(boolean bold) {
+        this.bold = bold;
+    }
 
-	
-	public boolean isItalic() {
-		return italic;
-	}
-	public void setItalic(boolean italic) {
-		this.italic = italic;
-	}
-	
+    
+    public boolean isItalic() {
+        return italic;
+    }
+    public void setItalic(boolean italic) {
+        this.italic = italic;
+    }
+    
 }
