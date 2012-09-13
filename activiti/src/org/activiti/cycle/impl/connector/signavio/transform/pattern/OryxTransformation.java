@@ -13,12 +13,12 @@ public abstract class OryxTransformation implements JsonTransformation {
 
   protected Logger log = Logger.getLogger(this.getClass().getName());
   
-	public JSONObject transform(JSONObject json) throws JSONException {
-		Diagram diagram = DiagramBuilder.parseJson(json);
-		diagram = transform(diagram);
-		return JSONBuilder.parseModel(diagram);
-	}
+    public JSONObject transform(JSONObject json) throws JSONException {
+        Diagram diagram = DiagramBuilder.parseJson(json);
+        diagram = transform(diagram);
+        return JSONBuilder.parseModel(diagram);
+    }
 
-	public abstract Diagram transform(Diagram diagram);
+    public abstract Diagram transform(Diagram diagram);
 
 }

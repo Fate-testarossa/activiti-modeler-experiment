@@ -21,17 +21,17 @@ import java.util.regex.Pattern;
  */
 public enum CustomProperty {
 
-	ORIGINAL_NAME("Original Name"),
-	ORIGINAL_ID("Original ID"),
-	ORIGINAL_TYPE("Original Type");
+    ORIGINAL_NAME("Original Name"),
+    ORIGINAL_ID("Original ID"),
+    ORIGINAL_TYPE("Original Type");
 
-	private final String name;
-	private final Pattern pattern;
+    private final String name;
+    private final Pattern pattern;
 
-	private CustomProperty(String name) {
-		this.name = name;
-		this.pattern = Pattern.compile("(.*)(" + name + ":\\s+\"((?:[^\"]|\"\")*)\")(.*)", Pattern.DOTALL);
-	}
+    private CustomProperty(String name) {
+        this.name = name;
+        this.pattern = Pattern.compile("(.*)(" + name + ":\\s+\"((?:[^\"]|\"\")*)\")(.*)", Pattern.DOTALL);
+    }
 
   public String getValue(String propertyContainer) {
     String propertyValue = null;
@@ -78,14 +78,14 @@ public enum CustomProperty {
   }
 
   public String toString() {
-		return name;
-	}
-	
-	public Pattern getPattern() {
-		return pattern;
-	}
-	
-	public Matcher getPatternMatcher(String input) {
-		return pattern.matcher(input);
-	}
+        return name;
+    }
+    
+    public Pattern getPattern() {
+        return pattern;
+    }
+    
+    public Matcher getPatternMatcher(String input) {
+        return pattern.matcher(input);
+    }
 }

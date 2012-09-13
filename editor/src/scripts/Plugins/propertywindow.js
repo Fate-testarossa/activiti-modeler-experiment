@@ -1071,40 +1071,40 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
                 
             var cm = this.buildColumnModel();
 
-			
-									
-			//var gridHead = this.grid.getView().getHeaderPanel(true);
-			var toolbar = new Ext.Toolbar(
-			[{
-				text: ORYX.I18N.PropertyWindow.add,					
-				icon: '../explorer/src/img/famfamfam/add.png',
-				iconCls: "x-dummy",
-				handler: function(){
-					var ds = this.grid.getStore();
-					var index = ds.getCount();
-					this.grid.stopEditing();
-					var p = this.buildInitial(recordType, this.items);
-					ds.insert(index, p);
-					ds.commitChanges();
-					this.grid.startEditing(index, 0);
-				}.bind(this)
-			},{
-				text: ORYX.I18N.PropertyWindow.rem,					
-				icon: '../explorer/src/img/famfamfam/delete.png',
-				iconCls: "x-dummy",
-		        handler : function(){
-					var ds = this.grid.getStore();
-					var selection = this.grid.getSelectionModel().getSelectedCell();
-					if (selection == undefined) {
-						return;
-					}
-					this.grid.getSelectionModel().clearSelections();
-		            this.grid.stopEditing();					
-					var record = ds.getAt(selection[0]);
-					ds.remove(record);
-					ds.commitChanges();           
-				}.bind(this)
-			},{                                                                                                                                                                                                                  
+            
+                                    
+            //var gridHead = this.grid.getView().getHeaderPanel(true);
+            var toolbar = new Ext.Toolbar(
+            [{
+                text: ORYX.I18N.PropertyWindow.add,                    
+                icon: '../explorer/src/img/famfamfam/add.png',
+                iconCls: "x-dummy",
+                handler: function(){
+                    var ds = this.grid.getStore();
+                    var index = ds.getCount();
+                    this.grid.stopEditing();
+                    var p = this.buildInitial(recordType, this.items);
+                    ds.insert(index, p);
+                    ds.commitChanges();
+                    this.grid.startEditing(index, 0);
+                }.bind(this)
+            },{
+                text: ORYX.I18N.PropertyWindow.rem,                    
+                icon: '../explorer/src/img/famfamfam/delete.png',
+                iconCls: "x-dummy",
+                handler : function(){
+                    var ds = this.grid.getStore();
+                    var selection = this.grid.getSelectionModel().getSelectedCell();
+                    if (selection == undefined) {
+                        return;
+                    }
+                    this.grid.getSelectionModel().clearSelections();
+                    this.grid.stopEditing();                    
+                    var record = ds.getAt(selection[0]);
+                    ds.remove(record);
+                    ds.commitChanges();           
+                }.bind(this)
+            },{                                                                                                                                                                                                                  
                 text: "Show as json",                                                                                                                                                                                                        
                 icon: '../explorer/src/img/famfamfam/table.png',                                                                                                                                                                             
                 iconCls: "x-dummy",                                                                                                                                                                                                          
@@ -1128,75 +1128,75 @@ Ext.extend(Ext.form.ComplexListField, Ext.form.TriggerField,  {
                             }}                                                                                                                                                                                                               
                     });                                                                                                                                                                                                                      
                 }.bind(this)                                                                                                                                                                                                                 
-            }]);			
-					
-			this.grid = new Ext.grid.EditorGridPanel({
-				store:		ds,
-		        cm:			cm,
-				stripeRows: true,
-				clicksToEdit: 1,
-				autoScroll: true,
-				stateId: "x-editor-complex-grid",
-				anchor: "100% 100%", 
-				enableHdMenu: false, // Disable header menu
-				selModel: new Ext.grid.CellSelectionModel(),
-				tbar:toolbar
-				
-		    });	
-			
-			// Basic Dialog
-			this.dialog = new Ext.Window({ 
-				autoCreate: true, 
-				layout: "anchor",
-				title: ORYX.I18N.PropertyWindow.complex, 
-				height: 350, 
-				width: dialogWidth, 
-				modal:true,
-				collapsible:false,
-				fixedcenter: true, 
-				shadow:true, 
-				proxyDrag: true,
-				keys:[{
-					key: 27,
-					fn: function(){
-						this.dialog.hide
-					}.bind(this)
-				}],
-				items:[this.grid],
-				bodyStyle:"background-color:#FFFFFF",
-				buttons: [{
-	                text: ORYX.I18N.PropertyWindow.ok,
-	                handler: function(){
-	                    this.grid.stopEditing();	
-						// store dialog input
-						this.data = this.buildValue();
-						this.dialog.hide()
-	                }.bind(this)
-	            }, {
-	                text: ORYX.I18N.PropertyWindow.cancel,
-	                handler: function(){
-	                	this.dialog.hide()
-	                }.bind(this)
-	            }]
-			});		
-				
-			this.dialog.on(Ext.apply({}, this.dialogListeners, {
-	       		scope:this
-	        }));
-		
-			this.dialog.show();	
-		
-	
-			this.grid.on('beforeedit', 	this.beforeEdit, 	this, true);
-			this.grid.on('afteredit', 	this.afterEdit, 	this, true);
-			
-			this.grid.render();			
-	    
-		/*} else {
-			this.dialog.show();		
-		}*/
-		
-	}
+            }]);            
+                    
+            this.grid = new Ext.grid.EditorGridPanel({
+                store:        ds,
+                cm:            cm,
+                stripeRows: true,
+                clicksToEdit: 1,
+                autoScroll: true,
+                stateId: "x-editor-complex-grid",
+                anchor: "100% 100%", 
+                enableHdMenu: false, // Disable header menu
+                selModel: new Ext.grid.CellSelectionModel(),
+                tbar:toolbar
+                
+            });    
+            
+            // Basic Dialog
+            this.dialog = new Ext.Window({ 
+                autoCreate: true, 
+                layout: "anchor",
+                title: ORYX.I18N.PropertyWindow.complex, 
+                height: 350, 
+                width: dialogWidth, 
+                modal:true,
+                collapsible:false,
+                fixedcenter: true, 
+                shadow:true, 
+                proxyDrag: true,
+                keys:[{
+                    key: 27,
+                    fn: function(){
+                        this.dialog.hide
+                    }.bind(this)
+                }],
+                items:[this.grid],
+                bodyStyle:"background-color:#FFFFFF",
+                buttons: [{
+                    text: ORYX.I18N.PropertyWindow.ok,
+                    handler: function(){
+                        this.grid.stopEditing();    
+                        // store dialog input
+                        this.data = this.buildValue();
+                        this.dialog.hide()
+                    }.bind(this)
+                }, {
+                    text: ORYX.I18N.PropertyWindow.cancel,
+                    handler: function(){
+                        this.dialog.hide()
+                    }.bind(this)
+                }]
+            });        
+                
+            this.dialog.on(Ext.apply({}, this.dialogListeners, {
+                   scope:this
+            }));
+        
+            this.dialog.show();    
+        
+    
+            this.grid.on('beforeedit',     this.beforeEdit,     this, true);
+            this.grid.on('afteredit',     this.afterEdit,     this, true);
+            
+            this.grid.render();            
+        
+        /*} else {
+            this.dialog.show();        
+        }*/
+        
+    }
 });
 
 

@@ -1,5 +1,5 @@
 [
-		{
+        {
             "title":"Business Process Diagram (BPMN 2.0)",
             "title_de":"Prozessdiagramm (BPMN 2.0)",
             "namespace":"http://b3mn.org/stencilset/bpmn2.0#",
@@ -7,6 +7,6 @@
             "uri":"/bpmn2.0/bpmn2.0.json",
             "icon_url":"/diagrams/bpmn-22x22.png",
             "visible":true,
-			"extensions":["http://oryx-editor.org/stencilsets/extensions/bpmn2.0basicsubset#"]
+            "extensions":["http://oryx-editor.org/stencilsets/extensions/bpmn2.0basicsubset#"]
         }
 ]

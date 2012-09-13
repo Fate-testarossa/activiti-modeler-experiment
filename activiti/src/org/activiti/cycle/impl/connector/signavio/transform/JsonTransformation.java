@@ -5,6 +5,6 @@ import org.json.JSONObject;
 
 public interface JsonTransformation {
 
-	public JSONObject transform(JSONObject json) throws JSONException;
-	
+    public JSONObject transform(JSONObject json) throws JSONException;
+    
 }

@@ -1,81 +1,81 @@
 <project name="Activiti Model Converter" default="package">
 
-	<property file="build.properties" />
-	
-	<taskdef resource="cargo.tasks">
-	  <classpath>
-		<fileset dir="lib/buildtime">
-			<include name="**/*.jar" />
-		</fileset>
-	  </classpath>
-	</taskdef>
-	
-	<target name="package" description="Build converter jar">
-		<mkdir dir="target/classes" />
-		<javac destdir="target/classes" debug="true">
-			<src path="src" />
-			<src path="../platform extensions/diagram/src" />
-			<src path="../platform extensions/bpmn2_0/src" />
-			<classpath >
-				<fileset dir="lib/runtime">
-					<include name="**/*.jar" />
-				</fileset>
-			</classpath>
-		</javac>
-		<jar destfile="target/amconverter.jar" >
-			<fileset dir="target/classes">
-			</fileset>
-		</jar>
-	</target>
+    <property file="build.properties" />
+    
+    <taskdef resource="cargo.tasks">
+      <classpath>
+        <fileset dir="lib/buildtime">
+            <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </taskdef>
+    
+    <target name="package" description="Build converter jar">
+        <mkdir dir="target/classes" />
+        <javac destdir="target/classes" debug="true">
+            <src path="src" />
+            <src path="../platform extensions/diagram/src" />
+            <src path="../platform extensions/bpmn2_0/src" />
+            <classpath >
+                <fileset dir="lib/runtime">
+                    <include name="**/*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <jar destfile="target/amconverter.jar" >
+            <fileset dir="target/classes">
+            </fileset>
+        </jar>
+    </target>
 
-	<target name="convert" description="Convert models">
-		
-		<pathconvert property="models.files" pathsep=" ">
-			<fileset dir="target/models" >
-    			<include name="*.signavio.xml"/>
-			</fileset>
-			<regexpmapper to="'\1'" from="(.*)" /> 
-	    </pathconvert> 
-		
-		<java classname="com.activiti.bpmn.Converter">
-			<classpath >
-				<fileset dir="lib/runtime">
-					<include name="**/*.jar" />
-				</fileset>
-				<fileset dir="target">
-					<include name="amconverter.jar" />
-				</fileset>
-			</classpath>
-			<arg line="${models.files}"/>
-		</java>
-		
-	</target>
-	
-	<target name="war" description="Build all-in-one war">
-		<mkdir dir="${basedir}/target/models" />
-		<pathconvert property="models.dir" dirsep="/">
-			<path path="${basedir}/target/models"></path>
-		</pathconvert>
-	    <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
-			<property name="fileSystemRootDirectory" value="${models.dir}" />
-	    	<property name="host" value="http://localhost:${tomcat.port}" />
-		</ant>
-	</target>
+    <target name="convert" description="Convert models">
+        
+        <pathconvert property="models.files" pathsep=" ">
+            <fileset dir="target/models" >
+                <include name="*.signavio.xml"/>
+            </fileset>
+            <regexpmapper to="'\1'" from="(.*)" /> 
+        </pathconvert> 
+        
+        <java classname="com.activiti.bpmn.Converter">
+            <classpath >
+                <fileset dir="lib/runtime">
+                    <include name="**/*.jar" />
+                </fileset>
+                <fileset dir="target">
+                    <include name="amconverter.jar" />
+                </fileset>
+            </classpath>
+            <arg line="${models.files}"/>
+        </java>
+        
+    </target>
+    
+    <target name="war" description="Build all-in-one war">
+        <mkdir dir="${basedir}/target/models" />
+        <pathconvert property="models.dir" dirsep="/">
+            <path path="${basedir}/target/models"></path>
+        </pathconvert>
+        <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
+            <property name="fileSystemRootDirectory" value="${models.dir}" />
+            <property name="host" value="http://localhost:${tomcat.port}" />
+        </ant>
+    </target>
 
-	<target name="tomcat-start" description="run war">
-		  <property file="${basedir}/../build.properties" />	
-		  <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}" >
-		  		<configuration home="${basedir}/target/tomcat" >
-		      		<deployable type="war" file="${basedir}/../target/${war}.war" />
-		  			<property name="cargo.servlet.port" value="${tomcat.port}"/>
-		  		</configuration>
-				  <zipUrlInstaller
-			      installUrl="${tomcat.distr.url}"
-				  	extractDir="target/tomcat_ext"	
-			      />
-		  </cargo>	
-	</target>	
+    <target name="tomcat-start" description="run war">
+          <property file="${basedir}/../build.properties" />    
+          <cargo containerId="tomcat6x" action="start" wait="true" timeout="${tomcat.start.timeout}" >
+                  <configuration home="${basedir}/target/tomcat" >
+                      <deployable type="war" file="${basedir}/../target/${war}.war" />
+                      <property name="cargo.servlet.port" value="${tomcat.port}"/>
+                  </configuration>
+                  <zipUrlInstaller
+                  installUrl="${tomcat.distr.url}"
+                      extractDir="target/tomcat_ext"    
+                  />
+          </cargo>    
+    </target>    
 
-	
-	
+    
+    
 </project>
