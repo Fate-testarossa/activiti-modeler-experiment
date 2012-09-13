@@ -2934,7 +2934,6 @@ El.prototype = {
         if(pc.bottom == "auto"){
             this.dom.style.bottom = "";
         }
-        return this;
     },
 
         fixDisplay : function(){
@@ -4083,6 +4082,16 @@ El.fly = function(el, named){
     return El._flyweights[named];
 };
 
+        onExpand : function(doAnim, animArg){
+        if(doAnim){
+            this[this.collapseEl].slideIn(this.slideAnchor,
+                    Ext.apply(this.createEffect(animArg||true, this.afterExpand, this),
+                        this.expandDefaults));
+        }else{
+            this[this.collapseEl].show();
+            this.afterExpand();
+        }
+    },
 
 Ext.get = El.get;
 
@@ -4097,6 +4106,12 @@ if(Ext.isIE || Ext.isGecko){
     noBoxAdjust['button'] = 1;
 }
 
+        onEnable : function(){
+        if(this.rendered && this.maskDisabled){
+            this.el.unmask();
+        }
+        Ext.Panel.superclass.onEnable.call(this);
+    },
 
 Ext.EventManager.on(window, 'unload', function(){
     delete El.cache;
@@ -4682,6 +4697,7 @@ Ext.Fx = {
         }
         return this;
     },
+    b4Drag : Ext.emptyFn,
 
     
     fxWrap : function(pos, o, vis){
@@ -5252,13 +5268,89 @@ Ext.extend(Ext.data.Connection, Ext.util.Observable, {
 
 Ext.Ajax = new Ext.data.Connection({
     
+    get : function(name, defaultValue){
+        return typeof this.state[name] == "undefined" ?
+            defaultValue : this.state[name];
+    },
     
     
+    clear : function(name){
+        delete this.state[name];
+        this.fireEvent("statechange", this, name, null);
+    },
     
     
+    set : function(name, value){
+        this.state[name] = value;
+        
+        this.fireEvent("statechange", this, name, value);
+    },
     
 
     
+    decodeValue : function(cookie){
+        var re = /^(a|n|d|b|s|o)\:(.*)$/;
+        var matches = re.exec(unescape(cookie));
+        if(!matches || !matches[1]) return; 
+        var type = matches[1];
+        var v = matches[2];
+        switch(type){
+            case "n":
+                return parseFloat(v);
+            case "d":
+                return new Date(Date.parse(v));
+            case "b":
+                return (v == "1");
+            case "a":
+                var all = [];
+                var values = v.split("^");
+                for(var i = 0, len = values.length; i < len; i++){
+                    all.push(this.decodeValue(values[i]));
+                }
+                return all;
+           case "o":
+                var all = {};
+                var values = v.split("^");
+                for(var i = 0, len = values.length; i < len; i++){
+                    var kv = values[i].split("=");
+                    all[kv[0]] = this.decodeValue(kv[1]);
+                }
+                return all;
+           default:
+                return v;
+        }
+    },
+    
+    
+    encodeValue : function(v){
+        var enc;
+        if(typeof v == "number"){
+            enc = "n:" + v;
+        }else if(typeof v == "boolean"){
+            enc = "b:" + (v ? "1" : "0");
+        }else if(Ext.isDate(v)){
+            enc = "d:" + v.toGMTString();
+        }else if(Ext.isArray(v)){
+            var flat = "";
+            for(var i = 0, len = v.length; i < len; i++){
+                flat += this.encodeValue(v[i]);
+                if(i != len-1) flat += "^";
+            }
+            enc = "a:" + flat;
+        }else if(typeof v == "object"){
+            var flat = "";
+            for(var key in v){
+                if(typeof v[key] != "function" && v[key] !== undefined){
+                    flat += key + "=" + this.encodeValue(v[key]) + "^";
+                }
+            }
+            enc = "o:" + flat.substring(0, flat.length-1);
+        }else{
+            enc = "s:" + v;
+        }
+        return escape(enc);        
+    }
+});
 
     
     
@@ -5475,6 +5567,27 @@ Ext.extend(Ext.Updater, Ext.util.Observable, {
             this.renderer.render(this.el, response, this);
             this.updateComplete(response);
         }
+
+        this.addEvents(
+            
+            "beforeclick",
+            
+            "click",
+            
+            "containerclick",
+            
+            "dblclick",
+            
+            "contextmenu",
+            
+            "selectionchange",
+
+            
+            "beforeselect"
+        );
+
+        this.all = new Ext.CompositeElementLite();
+        this.selected = new Ext.CompositeElementLite();
     },
 
     updateComplete : function(response){
@@ -5482,6 +5595,7 @@ Ext.extend(Ext.Updater, Ext.util.Observable, {
         if(typeof response.argument.callback == "function"){
             response.argument.callback.call(response.argument.scope, this.el, true, response, response.argument.options);
         }
+        Ext.DataView.superclass.onRender.apply(this, arguments);
     },
 
     
@@ -5491,6 +5605,9 @@ Ext.extend(Ext.Updater, Ext.util.Observable, {
         if(typeof response.argument.callback == "function"){
             response.argument.callback.call(response.argument.scope, this.el, false, response, response.argument.options);
         }
+        this.tpl.overwrite(this.el, this.collectData(records, 0));
+        this.all.fill(Ext.query(this.itemSelector, this.el.dom));
+        this.updateIndexes(0);
     },
 
     
@@ -17111,6 +17228,7 @@ Ext.dd.PanelProxy.prototype = {
             }
             this.panel.el.dom.style.display = 'none';
         }
+        return nodes;
     },
 
     
@@ -17119,6 +17237,7 @@ Ext.dd.PanelProxy.prototype = {
         if(typeof callback == "function"){
             callback.call(scope || this);
         }
+        return this.all.indexOf(node);
     },
 
     
@@ -17127,7 +17246,29 @@ Ext.dd.PanelProxy.prototype = {
             parentNode.insertBefore(this.proxy.dom, before);
         }
     }
+});
+
+Ext.reg('dataview', Ext.DataView);
+
+Ext.ColorPalette = function(config){
+    Ext.ColorPalette.superclass.constructor.call(this, config);
+    this.addEvents(
+        
+        'select'
+    );
+
+    if(this.handler){
+        this.on("select", this.handler, this.scope, true);
+    }
 };
+Ext.extend(Ext.ColorPalette, Ext.Component, {
+ 
+    
+    itemCls : "x-color-palette",
+    
+    value : null,
+    clickEvent:'click',
+        ctype: "Ext.ColorPalette",
 
 
 Ext.Panel.DD = function(panel, cfg){
@@ -17359,10 +17500,15 @@ Ext.extend(Ext.state.CookieProvider, Ext.state.Provider, {
 Ext.DataView = Ext.extend(Ext.BoxComponent, {
     
     
+    monitorResize : true,
     
+    deferredRender : true,
     
+    tabWidth: 120,
     
+    minTabWidth: 30,
     
+    resizeTabs:false,
     
     
     
@@ -17743,6 +17889,7 @@ Ext.DataView = Ext.extend(Ext.BoxComponent, {
                 }
             }
         }
+        return w;
     },
 
     
@@ -18423,6 +18570,7 @@ Ext.reg('datepicker', Ext.DatePicker);
 
 Ext.TabPanel = Ext.extend(Ext.Panel,  {
     
+    disabled : false,
     
     monitorResize : true,
     
@@ -18559,6 +18707,7 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
         if(this.enableTabScroll){
             this.strip.on('mousewheel', this.onWheel, this);
         }
+        Ext.ButtonToggleMgr.register(this);
     },
 
         findTargets : function(e){
@@ -18601,7 +18750,6 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
         if(!t.close && t.item && t.item != this.activeTab){
             this.setActiveTab(t.item);
         }
-    },
 
         onStripContextMenu : function(e){
         e.preventDefault();
@@ -18799,6 +18947,9 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
             inner.style.width = (each - (tw-iw)) + 'px';
         }
     },
+        onBlur : function(e){
+        this.el.removeClass("x-btn-focus");
+    },
 
         adjustBodyWidth : function(w){
         if(this.header){
@@ -18844,6 +18995,16 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
             item.fireEvent('activate', item);
             this.fireEvent('tabchange', this, item);
         }
+    },
+        onMenuShow : function(e){
+        this.ignoreNextClick = 0;
+        this.el.addClass("x-btn-menu-active");
+        this.fireEvent('menushow', this, this.menu);
+    },
+        onMenuHide : function(e){
+        this.el.removeClass("x-btn-menu-active");
+        this.ignoreNextClick = this.restoreClick.defer(250, this);
+        this.fireEvent('menuhide', this, this.menu);
     },
 
     
@@ -18906,7 +19067,7 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
             }
             this.updateScrollButtons();
         }
-    },
+        var btnEl = btn.child(this.buttonSelector);
 
         createScrollers : function(){
         var h = this.stripWrap.dom.offsetHeight;
@@ -18990,6 +19151,7 @@ Ext.TabPanel = Ext.extend(Ext.Panel,  {
         if(s != pos){
             this.scrollTo(s, false);
         }
+        this.disabled = false;
     },
 
         onScrollRight : function(){
@@ -19233,6 +19395,7 @@ Ext.Button = Ext.extend(Ext.Component, {
             if(btn){
                 btn.removeAllListeners();
             }
+            return buttons;
         }
         if(this.menu){
             Ext.destroy(this.menu);
@@ -19261,6 +19424,15 @@ Ext.Button = Ext.extend(Ext.Component, {
                 }
             }
         }
+        if (!(item instanceof T.Button)){
+           item = new T.Button(item);
+        }
+        var td = document.createElement("td");
+        this.tr.insertBefore(td, this.tr.childNodes[index]);
+        this.initMenuTracking(item);
+        item.render(td);
+        this.items.insert(index, item);
+        return item;
     },
 
     
@@ -19603,6 +19775,10 @@ Ext.SplitButton = Ext.extend(Ext.Button, {
         this.disabled = true;
     },
 
+Ext.Resizable.Handle.prototype = {
+    afterResize : function(rz){
+        
+    },
     
     onEnable : function(){
         if(this.el){
@@ -19614,6 +19790,11 @@ Ext.SplitButton = Ext.extend(Ext.Button, {
         }
         this.disabled = false;
     },
+    
+    onMouseOut : function(e){
+        this.rz.handleOut(this, e);
+    }  
+};
 
     
     isMenuTriggerOver : function(e){
@@ -19685,6 +19866,12 @@ Ext.CycleButton = Ext.extend(Ext.SplitButton, {
                 this.fireEvent('change', this, item);
             }
         }
+        this.startValue = v;
+        this.field.setValue(v);
+        this.doAutoSize();
+        this.el.alignTo(this.boundEl, this.alignment);
+        this.editing = true;
+        this.show();
     },
 
     
@@ -21117,6 +21304,7 @@ Ext.extend(Ext.Editor, Ext.Component, {
         if(this.allowBlur !== true && this.editing){
             this.completeEdit();
         }
+        return node;
     },
 
         onHide : function(){
@@ -21550,6 +21738,8 @@ Ext.Tip = Ext.extend(Ext.Panel, {
         if(this.closable && !this.title){
             this.elements += ',header';
         }
+        startNode.cascade(f);
+        return r;
     },
 
     
@@ -22129,6 +22319,17 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
             }
             p.expandedChild = node;
         }
+        return n;
+    },
+    
+    
+    getSelectedNode : function(){
+        return this.selNode;    
+    },
+    
+    
+    isSelected : function(node){
+        return this.selNode == node;  
     },
 
     
@@ -22234,6 +22435,21 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
                 callback(true, this.root);
             }
         }
+        var ps = s.previousSibling;
+        if(ps){
+            if(!ps.isExpanded() || ps.childNodes.length < 1){
+                return this.select(ps);
+            } else{
+                var lc = ps.lastChild;
+                while(lc && lc.isExpanded() && lc.childNodes.length > 0){
+                    lc = lc.lastChild;
+                }
+                return this.select(lc);
+            }
+        } else if(s.parentNode && (this.tree.rootVisible || !s.parentNode.isRoot)){
+            return this.select(s.parentNode);
+        }
+        return null;
     },
 
     
@@ -22299,6 +22515,9 @@ Ext.tree.TreePanel = Ext.extend(Ext.Panel, {
     }
     
     
+    onNodeClick : function(node, e){
+        this.select(node, e, e.ctrlKey);
+    },
     
     
     
@@ -23005,6 +23224,20 @@ Ext.extend(Ext.tree.TreeNode, Ext.data.Node, {
         for(var i = 0, len = cs.length; i < len; i++) {
             cs[i].collapse(deep);
         }
+        
+        this.elNode = this.wrap.childNodes[0];
+        this.ctNode = this.wrap.childNodes[1];
+        var cs = this.elNode.childNodes;
+        this.indentNode = cs[0];
+        this.ecNode = cs[1];
+        this.iconNode = cs[2];
+        var index = 3;
+        if(cb){
+            this.checkbox = cs[3];
+            index++;
+        }
+        this.anchor = cs[index];
+        this.textNode = cs[index].firstChild;
     },
 
     
@@ -23148,6 +23381,7 @@ Ext.extend(Ext.tree.AsyncTreeNode, Ext.tree.TreeNode, {
         this.expand(deep, anim, callback);
     },
     
+    this.allowParentInsert = false;
     
     isLoaded : function(){
         return this.loaded;
@@ -23198,6 +23432,7 @@ Ext.tree.TreeNodeUI.prototype = {
          this.addClass("x-tree-node-loading");
     },
 
+Ext.extend(Ext.tree.TreeDropZone, Ext.dd.DropZone, {
     
     afterLoad : function(){
          this.removeClass("x-tree-node-loading");
@@ -23362,6 +23597,7 @@ Ext.tree.TreeNodeUI.prototype = {
         }else{
             e.stopEvent();
         }
+        return true;
     },
 
     
@@ -23399,6 +23635,7 @@ Ext.tree.TreeNodeUI.prototype = {
         if(!this.animating && (this.node.hasChildNodes() || this.node.attributes.expandable)){
             this.node.toggle();
         }
+        this.tree.fireEvent("nodedrop", this.tree, targetNode, data, dd, e);
     },
 
     
@@ -23472,6 +23709,9 @@ Ext.tree.TreeNodeUI.prototype = {
         });
     },
 
+if(Ext.dd.DragZone){
+Ext.tree.TreeDragZone = function(tree, config){
+    Ext.tree.TreeDragZone.superclass.constructor.call(this, tree.getTreeEl(), config);
     
     highlight : function(){
         var tree = this.node.getOwnerTree();
@@ -23567,6 +23807,10 @@ Ext.tree.TreeNodeUI.prototype = {
                 targetNode.appendChild(this.wrap);
             }
         }
+        var w = Math.min(
+                this.maxWidth,
+                (td.clientWidth > 20 ? td.clientWidth : td.offsetWidth) - Math.max(0, nd.offsetLeft-td.scrollLeft) - 5);
+        this.setSize(w, '');
     },
 
     
@@ -23799,6 +24043,21 @@ Ext.extend(Ext.tree.TreeLoader, Ext.util.Observable, {
         }else {
             return false;
         }
+                this.focusEl = el.createChild({
+            tag: "a", cls: "x-menu-focus", href: "#", onclick: "return false;", tabIndex:"-1"
+        });
+        var ul = el.createChild({tag: "ul", cls: "x-menu-list"});
+        ul.on("click", this.onClick, this);
+        ul.on("mouseover", this.onMouseOver, this);
+        ul.on("mouseout", this.onMouseOut, this);
+        this.items.each(function(item){
+            var li = document.createElement("li");
+            li.className = "x-menu-list-item";
+            ul.dom.appendChild(li);
+            item.render(li, this);
+        }, this);
+        this.ul = ul;
+        this.autoWidth();
     },
 
     getParams: function(node){
@@ -24356,54 +24615,94 @@ Ext.extend(Ext.tree.TreeDragZone, Ext.dd.DragZone, {
 });
 }
 
-Ext.tree.TreeEditor = function(tree, config){
-    config = config || {};
-    var field = config.events ? config : new Ext.form.TextField(config);
-    Ext.tree.TreeEditor.superclass.constructor.call(this, field);
+Ext.menu.MenuMgr = function(){
+   var menus, active, groups = {}, attached = false, lastShow = new Date();
 
-    this.tree = tree;
+      function init(){
+       menus = {};
+       active = new Ext.util.MixedCollection();
+       Ext.getDoc().addKeyListener(27, function(){
+           if(active.length > 0){
+               hideAll();
+           }
+       });
+   }
 
-    if(!tree.rendered){
-        tree.on('render', this.initEditor, this);
-    }else{
-        this.initEditor(tree);
-    }
-};
+      function hideAll(){
+       if(active && active.length > 0){
+           var c = active.clone();
+           c.each(function(m){
+               m.hide();
+           });
+       }
+   }
 
-Ext.extend(Ext.tree.TreeEditor, Ext.Editor, {
-    
-    alignment: "l-l",
-        autoSize: false,
-    
-    hideEl : false,
-    
-    cls: "x-small-editor x-tree-editor",
-    
-    shim:false,
-        shadow:"frame",
-    
-    maxWidth: 250,
-    
-    editDelay : 350,
+      function onHide(m){
+       active.remove(m);
+       if(active.length < 1){
+           Ext.getDoc().un("mousedown", onMouseDown);
+           attached = false;
+       }
+   }
 
-    initEditor : function(tree){
-        tree.on('beforeclick', this.beforeNodeClick, this);
-        tree.on('dblclick', this.onNodeDblClick, this);
-        this.on('complete', this.updateNode, this);
-        this.on('beforestartedit', this.fitToTree, this);
-        this.on('startedit', this.bindScroll, this, {delay:10});
-        this.on('specialkey', this.onSpecialKey, this);
-    },
+      function onShow(m){
+       var last = active.last();
+       lastShow = new Date();
+       active.add(m);
+       if(!attached){
+           Ext.getDoc().on("mousedown", onMouseDown);
+           attached = true;
+       }
+       if(m.parentMenu){
+          m.getEl().setZIndex(parseInt(m.parentMenu.getEl().getStyle("z-index"), 10) + 3);
+          m.parentMenu.activeChild = m;
+       }else if(last && last.isVisible()){
+          m.getEl().setZIndex(parseInt(last.getEl().getStyle("z-index"), 10) + 3);
+       }
+   }
 
-        fitToTree : function(ed, el){
-        var td = this.tree.getTreeEl().dom, nd = el.dom;
-        if(td.scrollLeft >  nd.offsetLeft){             td.scrollLeft = nd.offsetLeft;
-        }
-        var w = Math.min(
-                this.maxWidth,
-                (td.clientWidth > 20 ? td.clientWidth : td.offsetWidth) - Math.max(0, nd.offsetLeft-td.scrollLeft) - 5);
-        this.setSize(w, '');
-    },
+      function onBeforeHide(m){
+       if(m.activeChild){
+           m.activeChild.hide();
+       }
+       if(m.autoHideTimer){
+           clearTimeout(m.autoHideTimer);
+           delete m.autoHideTimer;
+       }
+   }
+
+      function onBeforeShow(m){
+       var pm = m.parentMenu;
+       if(!pm && !m.allowOtherMenus){
+           hideAll();
+       }else if(pm && pm.activeChild){
+           pm.activeChild.hide();
+       }
+   }
+
+      function onMouseDown(e){
+       if(lastShow.getElapsed() > 50 && active.length > 0 && !e.getTarget(".x-menu")){
+           hideAll();
+       }
+   }
+
+      function onBeforeCheck(mi, state){
+       if(state){
+           var g = groups[mi.group];
+           for(var i = 0, l = g.length; i < l; i++){
+               if(g[i] != mi){
+                   g[i].setChecked(false);
+               }
+           }
+       }
+   }
+
+   return {
+
+       
+       hideAll : function(){
+            hideAll();  
+       },
 
         triggerEdit : function(node, defer){
         this.completeEdit();
@@ -24414,160 +24713,118 @@ Ext.extend(Ext.tree.TreeEditor, Ext.Editor, {
         }
     },
 
-        bindScroll : function(){
-        this.tree.getTreeEl().on('scroll', this.cancelEdit, this);
-    },
+        
+       get : function(menu){
+           if(typeof menu == "string"){                if(!menus){                     return null;
+               }
+               return menus[menu];
+           }else if(menu.events){                 return menu;
+           }else if(typeof menu.length == 'number'){                return new Ext.menu.Menu({items:menu});
+           }else{                return new Ext.menu.Menu(menu);
+           }
+       },
 
-        beforeNodeClick : function(node, e){
-        clearTimeout(this.autoEditTimer);
-        if(this.tree.getSelectionModel().isSelected(node)){
-            e.stopEvent();
-            return this.triggerEdit(node);
-        }
-    },
+              unregister : function(menu){
+           delete menus[menu.id];
+           menu.un("beforehide", onBeforeHide);
+           menu.un("hide", onHide);
+           menu.un("beforeshow", onBeforeShow);
+           menu.un("show", onShow);
+           var g = menu.group;
+           if(g && menu.events["checkchange"]){
+               groups[g].remove(menu);
+               menu.un("checkchange", onCheck);
+           }
+       },
 
-    onNodeDblClick : function(node, e){
-        clearTimeout(this.autoEditTimer);
-    },
+              registerCheckable : function(menuItem){
+           var g = menuItem.group;
+           if(g){
+               if(!groups[g]){
+                   groups[g] = [];
+               }
+               groups[g].push(menuItem);
+               menuItem.on("beforecheckchange", onBeforeCheck);
+           }
+       },
 
-        updateNode : function(ed, value){
-        this.tree.getTreeEl().un('scroll', this.cancelEdit, this);
-        this.editNode.setText(value);
-    },
+              unregisterCheckable : function(menuItem){
+           var g = menuItem.group;
+           if(g){
+               groups[g].remove(menuItem);
+               menuItem.un("beforecheckchange", onBeforeCheck);
+           }
+       },
 
-        onHide : function(){
-        Ext.tree.TreeEditor.superclass.onHide.call(this);
-        if(this.editNode){
-            this.editNode.ui.focus.defer(50, this.editNode.ui);
-        }
-    },
+       getCheckedItem : function(groupId){
+           var g = groups[groupId];
+           if(g){
+               for(var i = 0, l = g.length; i < l; i++){
+                   if(g[i].checked){
+                       return g[i];
+                   }
+               }
+           }
+           return null;
+       },
 
-        onSpecialKey : function(field, e){
-        var k = e.getKey();
-        if(k == e.ESC){
-            e.stopEvent();
-            this.cancelEdit();
-        }else if(k == e.ENTER && !e.hasModifier()){
-            e.stopEvent();
-            this.completeEdit();
-        }
-    }
-});
+       setCheckedItem : function(groupId, itemId){
+           var g = groups[groupId];
+           if(g){
+               for(var i = 0, l = g.length; i < l; i++){
+                   if(g[i].id == itemId){
+                       g[i].setChecked(true);
+                   }
+               }
+           }
+           return null;
+       }
+   };
+}();
 
-Ext.menu.Menu = function(config){
-    if(Ext.isArray(config)){
-        config = {items:config};
-    }
-    Ext.apply(this, config);
-    this.id = this.id || Ext.id();
+
+Ext.menu.BaseItem = function(config){
+    Ext.menu.BaseItem.superclass.constructor.call(this, config);
+
     this.addEvents(
-        
-        'beforeshow',
-        
-        'beforehide',
-        
-        'show',
-        
-        'hide',
         
         'click',
         
-        'mouseover',
+        'activate',
         
-        'mouseout',
-        
-        'itemclick'
+        'deactivate'
     );
-    Ext.menu.MenuMgr.register(this);
-    Ext.menu.Menu.superclass.constructor.call(this);
-    var mis = this.items;
-    
 
-    this.items = new Ext.util.MixedCollection();
-    if(mis){
-        this.add.apply(this, mis);
+    if(this.handler){
+        this.on("click", this.handler, this.scope);
     }
 };
 
-Ext.extend(Ext.menu.Menu, Ext.util.Observable, {
+Ext.extend(Ext.menu.BaseItem, Ext.Component, {
     
     
     
-    minWidth : 120,
+    canActivate : false,
     
-    shadow : "sides",
+    activeClass : "x-menu-item-active",
     
-    subMenuAlign : "tl-tr?",
+    hideOnClick : true,
     
-    defaultAlign : "tl-bl?",
-    
-    allowOtherMenus : false,
+    hideDelay : 100,
 
-    hidden:true,
+        ctype: "Ext.menu.BaseItem",
 
-    createEl : function(){
-        return new Ext.Layer({
-            cls: "x-menu",
-            shadow:this.shadow,
-            constrain: false,
-            parentEl: this.parentEl || document.body,
-            zindex:15000
-        });
+        actionMode : "container",
+
+        render : function(container, parentMenu){
+        this.parentMenu = parentMenu;
+        Ext.menu.BaseItem.superclass.render.call(this, container);
+        this.container.menuItemId = this.id;
     },
 
-        render : function(){
-        if(this.el){
-            return;
-        }
-        var el = this.el = this.createEl();
-
-        if(!this.keyNav){
-            this.keyNav = new Ext.menu.MenuNav(this);
-        }
-        if(this.plain){
-            el.addClass("x-menu-plain");
-        }
-        if(this.cls){
-            el.addClass(this.cls);
-        }
-                this.focusEl = el.createChild({
-            tag: "a", cls: "x-menu-focus", href: "#", onclick: "return false;", tabIndex:"-1"
-        });
-        var ul = el.createChild({tag: "ul", cls: "x-menu-list"});
-        ul.on("click", this.onClick, this);
-        ul.on("mouseover", this.onMouseOver, this);
-        ul.on("mouseout", this.onMouseOut, this);
-        this.items.each(function(item){
-            var li = document.createElement("li");
-            li.className = "x-menu-list-item";
-            ul.dom.appendChild(li);
-            item.render(li, this);
-        }, this);
-        this.ul = ul;
-        this.autoWidth();
-    },
-
-        autoWidth : function(){
-        var el = this.el, ul = this.ul;
-        if(!el){
-            return;
-        }
-        var w = this.width;
-        if(w){
-            el.setWidth(w);
-        }else if(Ext.isIE){
-            el.setWidth(this.minWidth);
-            var t = el.dom.offsetWidth;             el.setWidth(ul.getWidth()+el.getFrameWidth("lr"));
-        }
-    },
-
-        delayAutoWidth : function(){
-        if(this.el){
-            if(!this.awTask){
-                this.awTask = new Ext.util.DelayedTask(this.autoWidth, this);
-            }
-            this.awTask.delay(20);
-        }
+        onRender : function(container, position){
+        this.el = Ext.get(this.el);
+        container.dom.appendChild(this.el.dom);
     },
 
         findTargetItem : function(e){
@@ -24831,6 +25088,11 @@ Ext.extend(Ext.menu.MenuNav, Ext.KeyNav, {
         if(!m.tryActivate(m.items.indexOf(m.activeItem)+1, 1)){
             m.tryActivate(0, 1);
         }
+        var li = this.container;
+        li.addClass(this.activeClass);
+        this.region = li.getRegion().adjust(2, 2, -2, -2);
+        this.fireEvent("activate", this);
+        return true;
     },
 
     right : function(e, m){
@@ -25078,6 +25340,7 @@ Ext.extend(Ext.menu.BaseItem, Ext.Component, {
         container.dom.appendChild(this.el.dom);
     },
 
+Ext.extend(Ext.menu.Separator, Ext.menu.BaseItem, {
     
     setHandler : function(handler, scope){
         if(this.handler){
@@ -25216,6 +25479,7 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
                 this.icon || Ext.BLANK_IMAGE_URL, this.text, this.iconCls || ''));
             this.parentMenu.autoWidth();
         }
+        Ext.menu.Item.superclass.handleClick.apply(this, arguments);
     },
 
     
@@ -25225,6 +25489,7 @@ Ext.extend(Ext.menu.Item, Ext.menu.BaseItem, {
         if(this.rendered){
             this.el.child('img.x-menu-item-icon').replaceClass(oldCls, this.iconCls);
         }
+        return true;
     },
 
         handleClick : function(e){
@@ -26213,7 +26478,14 @@ Ext.form.TriggerField = Ext.extend(Ext.form.TextField,  {
     
     onTriggerClick : Ext.emptyFn
 
+    onTrigger1Click : Ext.emptyFn,
+    onTrigger2Click : Ext.emptyFn
+});
+Ext.reg('trigger', Ext.form.TriggerField);
+
+Ext.form.TextArea = Ext.extend(Ext.form.TextField,  {
     
+    growMin : 60,
     
     
 });
@@ -27415,6 +27687,7 @@ Ext.form.Checkbox = Ext.extend(Ext.form.Field,  {
         if(this.el.dom.checked != this.checked){
             this.setValue(this.el.dom.checked);
         }
+        return false;
     },
 
     
@@ -27913,6 +28186,12 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
             Ext.destroy(c.container.up('.x-form-item'));
             this.form.remove(c);
         }
+        this.form.initEl(this.body.createChild(o));
+    },
+    
+        beforeDestroy: function(){
+        Ext.FormPanel.superclass.beforeDestroy.call(this);
+        Ext.destroy(this.form);
     },
 
     
@@ -27926,6 +28205,19 @@ Ext.FormPanel = Ext.extend(Ext.Panel, {
             });
         }
     },
+    
+     onAdd : function(ct, c) {
+  if (c.isFormField) {
+   this.form.add(c);
+  }
+ },
+ 
+  onRemove : function(c) {
+  if (c.isFormField) {
+   Ext.destroy(c.container.up('.x-form-item'));
+   this.form.remove(c);
+  }
+ },
 
     
     stopMonitoring : function(){
@@ -28505,6 +28797,10 @@ Ext.form.HtmlEditor = Ext.extend(Ext.form.Field, {
                 this.el.dom.value = html;
                 this.fireEvent('sync', this, html);
             }
+            try{
+                this.execCmd('useCSS', true);
+                this.execCmd('styleWithCSS', false);
+            }catch(e){}
         }
     },
 
@@ -28519,8 +28815,14 @@ Ext.form.HtmlEditor = Ext.extend(Ext.form.Field, {
                 this.getEditorBody().innerHTML = v;
                 this.fireEvent('push', this, v);
             }
+            v = Math.max(1, v+adjust) + (Ext.isSafari ? 'px' : 0);
         }
     },
+
+    onEditorEvent : function(e){
+        this.updateToolbar();
+    },
+
 
     
     deferFocus : function(){
@@ -28721,6 +29023,7 @@ Ext.form.HtmlEditor = Ext.extend(Ext.form.Field, {
         }
     },
 
+Ext.form.TimeField = Ext.extend(Ext.form.ComboBox, {
     
     insertAtCursor : function(text){
         if(!this.activated){
@@ -31013,6 +31316,560 @@ Ext.extend(Ext.grid.GridView.SplitDragZone, Ext.dd.DDProxy, {
                 this.view.columnDrag.callHandleMouseDown(e);
             }
         }
+    },
+
+    endDrag : function(e){
+        this.marker.hide();
+        var v = this.view;
+        var endX = Math.max(this.minX, e.getPageX());
+        var diff = endX - this.startPos;
+        v.onColumnSplitterMoved(this.cellIndex, this.cm.getColumnWidth(this.cellIndex)+diff);
+        setTimeout(function(){
+            v.headersDisabled = false;
+        }, 50);
+    },
+
+    autoOffset : function(){
+        this.setDelta(0,0);
+    }
+});
+
+
+Ext.grid.GroupingView = Ext.extend(Ext.grid.GridView, {
+    
+    hideGroupedColumn:false,
+    
+    showGroupName:true,
+    
+    startCollapsed:false,
+    
+    enableGrouping:true,
+    
+    enableGroupingMenu:true,
+    
+    enableNoGroups:true,
+    
+    emptyGroupText : '(None)',
+    
+    ignoreAdd: false,
+    
+    groupTextTpl : '{text}',
+    
+    
+
+    
+    gidSeed : 1000,
+
+    
+    initTemplates : function(){
+        Ext.grid.GroupingView.superclass.initTemplates.call(this);
+        this.state = {};
+
+        var sm = this.grid.getSelectionModel();
+        sm.on(sm.selectRow ? 'beforerowselect' : 'beforecellselect',
+                this.onBeforeRowSelect, this);
+
+        if(!this.startGroup){
+            this.startGroup = new Ext.XTemplate(
+                '<div id="{groupId}" class="x-grid-group {cls}">',
+                    '<div id="{groupId}-hd" class="x-grid-group-hd" style="{style}"><div>', this.groupTextTpl ,'</div></div>',
+                    '<div id="{groupId}-bd" class="x-grid-group-body">'
+            );
+        }
+        this.startGroup.compile();
+        this.endGroup = '</div></div>';
+    },
+
+    
+    findGroup : function(el){
+        return Ext.fly(el).up('.x-grid-group', this.mainBody.dom);
+    },
+
+    
+    getGroups : function(){
+        return this.hasRows() ? this.mainBody.dom.childNodes : [];
+    },
+
+    
+    onAdd : function(){
+        if(this.enableGrouping && !this.ignoreAdd){
+            var ss = this.getScrollState();
+            this.refresh();
+            this.restoreScroll(ss);
+        }else if(!this.enableGrouping){
+            Ext.grid.GroupingView.superclass.onAdd.apply(this, arguments);
+        }
+    },
+
+    
+    onRemove : function(ds, record, index, isUpdate){
+        Ext.grid.GroupingView.superclass.onRemove.apply(this, arguments);
+        var g = document.getElementById(record._groupId);
+        if(g && g.childNodes[1].childNodes.length < 1){
+            Ext.removeNode(g);
+        }
+        this.applyEmptyText();
+    },
+
+    
+    refreshRow : function(record){
+        if(this.ds.getCount()==1){
+            this.refresh();
+        }else{
+            this.isUpdating = true;
+            Ext.grid.GroupingView.superclass.refreshRow.apply(this, arguments);
+            this.isUpdating = false;
+        }
+    },
+
+    
+    beforeMenuShow : function(){
+        var field = this.getGroupField();
+        var g = this.hmenu.items.get('groupBy');
+        if(g){
+            g.setDisabled(this.cm.config[this.hdCtxIndex].groupable === false);
+        }
+        var s = this.hmenu.items.get('showGroups');
+        if(s){
+            if (!!field){ 
+                s.setDisabled(this.cm.config[this.hdCtxIndex].groupable === false)
+            }
+            s.setChecked(!!field);
+        }
+    },
+
+    
+    renderUI : function(){
+        Ext.grid.GroupingView.superclass.renderUI.call(this);
+        this.mainBody.on('mousedown', this.interceptMouse, this);
+
+        if(this.enableGroupingMenu && this.hmenu){
+            this.hmenu.add('-',{
+                id:'groupBy',
+                text: this.groupByText,
+                handler: this.onGroupByClick,
+                scope: this,
+                iconCls:'x-group-by-icon'
+            });
+            if(this.enableNoGroups){
+                this.hmenu.add({
+                    id:'showGroups',
+                    text: this.showGroupsText,
+                    checked: true,
+                    checkHandler: this.onShowGroupsClick,
+                    scope: this
+                });
+            }
+            this.hmenu.on('beforeshow', this.beforeMenuShow, this);
+        }
+    },
+
+    
+    onGroupByClick : function(){
+        this.grid.store.groupBy(this.cm.getDataIndex(this.hdCtxIndex));
+        this.beforeMenuShow(); 
+    },
+
+    
+    onShowGroupsClick : function(mi, checked){
+        if(checked){
+            this.onGroupByClick();
+        }else{
+            this.grid.store.clearGrouping();
+        }
+    },
+
+    
+    toggleGroup : function(group, expanded){
+        this.grid.stopEditing(true);
+        group = Ext.getDom(group);
+        var gel = Ext.fly(group);
+        expanded = expanded !== undefined ?
+                expanded : gel.hasClass('x-grid-group-collapsed');
+
+        this.state[gel.dom.id] = expanded;
+        gel[expanded ? 'removeClass' : 'addClass']('x-grid-group-collapsed');
+    },
+
+    
+    toggleAllGroups : function(expanded){
+        var groups = this.getGroups();
+        for(var i = 0, len = groups.length; i < len; i++){
+            this.toggleGroup(groups[i], expanded);
+        }
+    },
+
+    
+    expandAllGroups : function(){
+        this.toggleAllGroups(true);
+    },
+
+    
+    collapseAllGroups : function(){
+        this.toggleAllGroups(false);
+    },
+
+    
+    interceptMouse : function(e){
+        var hd = e.getTarget('.x-grid-group-hd', this.mainBody);
+        if(hd){
+            e.stopEvent();
+            this.toggleGroup(hd.parentNode);
+        }
+    },
+
+    
+    getGroup : function(v, r, groupRenderer, rowIndex, colIndex, ds){
+        var g = groupRenderer ? groupRenderer(v, {}, r, rowIndex, colIndex, ds) : String(v);
+        if(g === ''){
+            g = this.cm.config[colIndex].emptyGroupText || this.emptyGroupText;
+        }
+        return g;
+    },
+
+    
+    getGroupField : function(){
+        return this.grid.store.getGroupState();
+    },
+
+    
+    renderRows : function(){
+        var groupField = this.getGroupField();
+        var eg = !!groupField;
+        
+        if(this.hideGroupedColumn) {
+            var colIndex = this.cm.findColumnIndex(groupField);
+            if(!eg && this.lastGroupField !== undefined) {
+                this.mainBody.update('');
+                this.cm.setHidden(this.cm.findColumnIndex(this.lastGroupField), false);
+                delete this.lastGroupField;
+            }else if (eg && this.lastGroupField === undefined) {
+                this.lastGroupField = groupField;
+                this.cm.setHidden(colIndex, true);
+            }else if (eg && this.lastGroupField !== undefined && groupField !== this.lastGroupField) {
+                this.mainBody.update('');
+                var oldIndex = this.cm.findColumnIndex(this.lastGroupField);
+                this.cm.setHidden(oldIndex, false);
+                this.lastGroupField = groupField;
+                this.cm.setHidden(colIndex, true);
+            }
+        }
+        return Ext.grid.GroupingView.superclass.renderRows.apply(
+                    this, arguments);
+    },
+
+    
+    doRender : function(cs, rs, ds, startRow, colCount, stripe){
+        if(rs.length < 1){
+            return '';
+        }
+        var groupField = this.getGroupField();
+        var colIndex = this.cm.findColumnIndex(groupField);
+
+        this.enableGrouping = !!groupField;
+
+        if(!this.enableGrouping || this.isUpdating){
+            return Ext.grid.GroupingView.superclass.doRender.apply(
+                    this, arguments);
+        }
+        var gstyle = 'width:'+this.getTotalWidth()+';';
+
+        var gidPrefix = this.grid.getGridEl().id;
+        var cfg = this.cm.config[colIndex];
+        var groupRenderer = cfg.groupRenderer || cfg.renderer;
+        var prefix = this.showGroupName ?
+                     (cfg.groupName || cfg.header)+': ' : '';
+
+        var groups = [], curGroup, i, len, gid;
+        for(i = 0, len = rs.length; i < len; i++){
+            var rowIndex = startRow + i;
+            var r = rs[i],
+                gvalue = r.data[groupField],
+                g = this.getGroup(gvalue, r, groupRenderer, rowIndex, colIndex, ds);
+            if(!curGroup || curGroup.group != g){
+                gid = gidPrefix + '-gp-' + groupField + '-' + Ext.util.Format.htmlEncode(g);
+                
+    
+    var isCollapsed  = typeof this.state[gid] !== 'undefined' ? !this.state[gid] : this.startCollapsed;
+    var gcls = isCollapsed ? 'x-grid-group-collapsed' : ''; 
+                curGroup = {
+                    group: g,
+                    gvalue: gvalue,
+                    text: prefix + g,
+                    groupId: gid,
+                    startRow: rowIndex,
+                    rs: [r],
+                    cls: gcls,
+                    style: gstyle
+                };
+                groups.push(curGroup);
+            }else{
+                curGroup.rs.push(r);
+            }
+            r._groupId = gid;
+        }
+
+        var buf = [];
+        for(i = 0, len = groups.length; i < len; i++){
+            var g = groups[i];
+            this.doGroupStart(buf, g, cs, ds, colCount);
+            buf[buf.length] = Ext.grid.GroupingView.superclass.doRender.call(
+                    this, cs, g.rs, ds, g.startRow, colCount, stripe);
+
+            this.doGroupEnd(buf, g, cs, ds, colCount);
+        }
+        return buf.join('');
+    },
+
+    
+    getGroupId : function(value){
+        var gidPrefix = this.grid.getGridEl().id;
+        var groupField = this.getGroupField();
+        var colIndex = this.cm.findColumnIndex(groupField);
+        var cfg = this.cm.config[colIndex];
+        var groupRenderer = cfg.groupRenderer || cfg.renderer;
+        var gtext = this.getGroup(value, {data:{}}, groupRenderer, 0, colIndex, this.ds);
+        return gidPrefix + '-gp-' + groupField + '-' + Ext.util.Format.htmlEncode(value);
+    },
+
+    
+    doGroupStart : function(buf, g, cs, ds, colCount){
+        buf[buf.length] = this.startGroup.apply(g);
+    },
+
+    
+    doGroupEnd : function(buf, g, cs, ds, colCount){
+        buf[buf.length] = this.endGroup;
+    },
+
+    
+    getRows : function(){
+        if(!this.enableGrouping){
+            return Ext.grid.GroupingView.superclass.getRows.call(this);
+        }
+        var r = [];
+        var g, gs = this.getGroups();
+        for(var i = 0, len = gs.length; i < len; i++){
+            g = gs[i].childNodes[1].childNodes;
+            for(var j = 0, jlen = g.length; j < jlen; j++){
+                r[r.length] = g[j];
+            }
+        }
+        return r;
+    },
+
+    
+    updateGroupWidths : function(){
+        if(!this.enableGrouping || !this.hasRows()){
+            return;
+        }
+        var tw = Math.max(this.cm.getTotalWidth(), this.el.dom.offsetWidth-this.scrollOffset) +'px';
+        var gs = this.getGroups();
+        for(var i = 0, len = gs.length; i < len; i++){
+            gs[i].firstChild.style.width = tw;
+        }
+    },
+
+    
+    onColumnWidthUpdated : function(col, w, tw){
+        this.updateGroupWidths();
+    },
+
+    
+    onAllColumnWidthsUpdated : function(ws, tw){
+        this.updateGroupWidths();
+    },
+
+    
+    onColumnHiddenUpdated : function(col, hidden, tw){
+        this.updateGroupWidths();
+    },
+
+    
+    onLayout : function(){
+        this.updateGroupWidths();
+    },
+
+    
+    onBeforeRowSelect : function(sm, rowIndex){
+        if(!this.enableGrouping){
+            return;
+        }
+        var row = this.getRow(rowIndex);
+        if(row && !row.offsetParent){
+            var g = this.findGroup(row);
+            this.toggleGroup(g, true);
+        }
+    },
+
+    
+    groupByText: 'Group By This Field',
+    
+    showGroupsText: 'Show in Groups'
+});
+
+Ext.grid.GroupingView.GROUP_ID = 1000;
+
+
+Ext.grid.HeaderDragZone = function(grid, hd, hd2){
+    this.grid = grid;
+    this.view = grid.getView();
+    this.ddGroup = "gridHeader" + this.grid.getGridEl().id;
+    Ext.grid.HeaderDragZone.superclass.constructor.call(this, hd);
+    if(hd2){
+        this.setHandleElId(Ext.id(hd));
+        this.setOuterHandleElId(Ext.id(hd2));
+    }
+    this.scroll = false;
+};
+Ext.extend(Ext.grid.HeaderDragZone, Ext.dd.DragZone, {
+    maxDragWidth: 120,
+    getDragData : function(e){
+        var t = Ext.lib.Event.getTarget(e);
+        var h = this.view.findHeaderCell(t);
+        if(h){
+            return {ddel: h.firstChild, header:h};
+        }
+        return false;
+    },
+
+    onInitDrag : function(e){
+        this.view.headersDisabled = true;
+        var clone = this.dragData.ddel.cloneNode(true);
+        clone.id = Ext.id();
+        clone.style.width = Math.min(this.dragData.header.offsetWidth,this.maxDragWidth) + "px";
+        this.proxy.update(clone);
+        return true;
+    },
+
+    afterValidDrop : function(){
+        var v = this.view;
+        setTimeout(function(){
+            v.headersDisabled = false;
+        }, 50);
+    },
+
+    afterInvalidDrop : function(){
+        var v = this.view;
+        setTimeout(function(){
+            v.headersDisabled = false;
+        }, 50);
+    }
+});
+
+
+
+Ext.grid.HeaderDropZone = function(grid, hd, hd2){
+    this.grid = grid;
+    this.view = grid.getView();
+    
+    this.proxyTop = Ext.DomHelper.append(document.body, {
+        cls:"col-move-top", html:"&#160;"
+    }, true);
+    this.proxyBottom = Ext.DomHelper.append(document.body, {
+        cls:"col-move-bottom", html:"&#160;"
+    }, true);
+    this.proxyTop.hide = this.proxyBottom.hide = function(){
+        this.setLeftTop(-100,-100);
+        this.setStyle("visibility", "hidden");
+    };
+    this.ddGroup = "gridHeader" + this.grid.getGridEl().id;
+    
+    
+    Ext.grid.HeaderDropZone.superclass.constructor.call(this, grid.getGridEl().dom);
+};
+Ext.extend(Ext.grid.HeaderDropZone, Ext.dd.DropZone, {
+    proxyOffsets : [-4, -9],
+    fly: Ext.Element.fly,
+
+    getTargetFromEvent : function(e){
+        var t = Ext.lib.Event.getTarget(e);
+        var cindex = this.view.findCellIndex(t);
+        if(cindex !== false){
+            return this.view.getHeaderCell(cindex);
+        }
+    },
+
+    nextVisible : function(h){
+        var v = this.view, cm = this.grid.colModel;
+        h = h.nextSibling;
+        while(h){
+            if(!cm.isHidden(v.getCellIndex(h))){
+                return h;
+            }
+            h = h.nextSibling;
+        }
+        return null;
+    },
+
+    prevVisible : function(h){
+        var v = this.view, cm = this.grid.colModel;
+        h = h.prevSibling;
+        while(h){
+            if(!cm.isHidden(v.getCellIndex(h))){
+                return h;
+            }
+            h = h.prevSibling;
+        }
+        return null;
+    },
+
+    positionIndicator : function(h, n, e){
+        var x = Ext.lib.Event.getPageX(e);
+        var r = Ext.lib.Dom.getRegion(n.firstChild);
+        var px, pt, py = r.top + this.proxyOffsets[1];
+        if((r.right - x) <= (r.right-r.left)/2){
+            px = r.right+this.view.borderWidth;
+            pt = "after";
+        }else{
+            px = r.left;
+            pt = "before";
+        }
+        var oldIndex = this.view.getCellIndex(h);
+        var newIndex = this.view.getCellIndex(n);
+
+        if(this.grid.colModel.isFixed(newIndex)){
+            return false;
+        }
+
+        var locked = this.grid.colModel.isLocked(newIndex);
+
+        if(pt == "after"){
+            newIndex++;
+        }
+        if(oldIndex < newIndex){
+            newIndex--;
+        }
+        if(oldIndex == newIndex && (locked == this.grid.colModel.isLocked(oldIndex))){
+            return false;
+        }
+        px +=  this.proxyOffsets[0];
+        this.proxyTop.setLeftTop(px, py);
+        this.proxyTop.show();
+        if(!this.bottomOffset){
+            this.bottomOffset = this.view.mainHd.getHeight();
+        }
+        this.proxyBottom.setLeftTop(px, py+this.proxyTop.dom.offsetHeight+this.bottomOffset);
+        this.proxyBottom.show();
+        return pt;
+    },
+
+    onNodeEnter : function(n, dd, e, data){
+        if(data.header != n){
+            this.positionIndicator(data.header, n, e);
+        }
+    },
+
+    onNodeOver : function(n, dd, e, data){
+        var result = false;
+        if(data.header != n){
+            result = this.positionIndicator(data.header, n, e);
+        }
+        if(!result){
+            this.proxyTop.hide();
+            this.proxyBottom.hide();
+        }
+        return result ? this.dropAllowed : this.dropNotAllowed;
     },
 
     endDrag : function(e){
