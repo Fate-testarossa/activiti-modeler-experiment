@@ -91,173 +91,173 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tSequenceFlow", propOrder = { "conditionExpression" })
 public class SequenceFlow extends Edge {
- 
- /* Attributes */
- 
- @XmlElement(name = "conditionExpression")
- protected Expression conditionExpression;
- @XmlAttribute
- protected Boolean isImmediate;
+	
+	/* Attributes */
+	
+	@XmlElement(name = "conditionExpression")
+	protected Expression conditionExpression;
+	@XmlAttribute
+	protected Boolean isImmediate;
 
- @XmlTransient
- private boolean isDefaultSequenceFlow;
+	@XmlTransient
+	private boolean isDefaultSequenceFlow;
 
- /* Constructors */
- 
- /**
-  * Default constructor
-  */
- public SequenceFlow() {}
- 
- /**
-  * Copy constructor
-  * 
-  * @param seqFlow
-  */
- public SequenceFlow(SequenceFlow seqFlow) {
-  super(seqFlow);
-  
-  this.setConditionExpression(seqFlow.getConditionExpression());
-  this.setIsImmediate(seqFlow.isImmediate);
-  this.setDefaultSequenceFlow(seqFlow.isDefaultSequenceFlow());
- }
+	/* Constructors */
+	
+	/**
+	 * Default constructor
+	 */
+	public SequenceFlow() {}
+	
+	/**
+	 * Copy constructor
+	 * 
+	 * @param seqFlow
+	 */
+	public SequenceFlow(SequenceFlow seqFlow) {
+		super(seqFlow);
+		
+		this.setConditionExpression(seqFlow.getConditionExpression());
+		this.setIsImmediate(seqFlow.isImmediate);
+		this.setDefaultSequenceFlow(seqFlow.isDefaultSequenceFlow());
+	}
 
- /**
-  * Transform undirected data associations into input and output
-  * associations.
-  */
- public void processUndirectedDataAssociations() {
-  List<DataAssociation> dataAssociations = this
-    .getUndirectedDataAssociations();
+	/**
+	 * Transform undirected data associations into input and output
+	 * associations.
+	 */
+	public void processUndirectedDataAssociations() {
+		List<DataAssociation> dataAssociations = this
+				.getUndirectedDataAssociations();
 
-  for (DataAssociation dataAssociation : dataAssociations) {
-   AbstractDataObject dataObject = null;
-   if (dataAssociation.getSourceRef() instanceof AbstractDataObject) {
-    dataObject = (AbstractDataObject) dataAssociation
-      .getSourceRef();
-   } else if (dataAssociation.getTargetRef() instanceof AbstractDataObject) {
-    dataObject = (AbstractDataObject) dataAssociation
-      .getTargetRef();
-   } else
-    continue;
+		for (DataAssociation dataAssociation : dataAssociations) {
+			AbstractDataObject dataObject = null;
+			if (dataAssociation.getSourceRef() instanceof AbstractDataObject) {
+				dataObject = (AbstractDataObject) dataAssociation
+						.getSourceRef();
+			} else if (dataAssociation.getTargetRef() instanceof AbstractDataObject) {
+				dataObject = (AbstractDataObject) dataAssociation
+						.getTargetRef();
+			} else
+				continue;
 
-   /* Prepare data input association */
-   DataInputAssociation dataInputAssociation = new DataInputAssociation(
-     dataAssociation);
-   dataInputAssociation.setSourceRef(dataObject);
-   if (this.getTargetRef() != null
-     && this.getTargetRef() instanceof Activity) {
-    dataInputAssociation.setTargetRef(this.getTargetRef());
-    ((Activity) this.getTargetRef()).getDataInputAssociation().add(
-      dataInputAssociation);
-   }
+			/* Prepare data input association */
+			DataInputAssociation dataInputAssociation = new DataInputAssociation(
+					dataAssociation);
+			dataInputAssociation.setSourceRef(dataObject);
+			if (this.getTargetRef() != null
+					&& this.getTargetRef() instanceof Activity) {
+				dataInputAssociation.setTargetRef(this.getTargetRef());
+				((Activity) this.getTargetRef()).getDataInputAssociation().add(
+						dataInputAssociation);
+			}
 
-   /* Prepare data output association */
-   DataOutputAssociation dataOutputAssociation = new DataOutputAssociation(
-     dataAssociation);
-   dataOutputAssociation.setTargetRef(dataObject);
-   if (this.getSourceRef() != null
-     && this.getSourceRef() instanceof Activity) {
-    dataOutputAssociation.setSourceRef(this.getSourceRef());
-    ((Activity) this.getSourceRef()).getDataOutputAssociation().add(
-      dataOutputAssociation);
-   }
-  }
- }
+			/* Prepare data output association */
+			DataOutputAssociation dataOutputAssociation = new DataOutputAssociation(
+					dataAssociation);
+			dataOutputAssociation.setTargetRef(dataObject);
+			if (this.getSourceRef() != null
+					&& this.getSourceRef() instanceof Activity) {
+				dataOutputAssociation.setSourceRef(this.getSourceRef());
+				((Activity) this.getSourceRef()).getDataOutputAssociation().add(
+						dataOutputAssociation);
+			}
+		}
+	}
 
- /**
-  * Retrieves the undirected data associations connected to the sequence
-  * flow.
-  * 
-  * @return List of {@link DataAssociation}
-  */
- private List<DataAssociation> getUndirectedDataAssociations() {
-  ArrayList<DataAssociation> dataAssociations = new ArrayList<DataAssociation>();
+	/**
+	 * Retrieves the undirected data associations connected to the sequence
+	 * flow.
+	 * 
+	 * @return List of {@link DataAssociation}
+	 */
+	private List<DataAssociation> getUndirectedDataAssociations() {
+		ArrayList<DataAssociation> dataAssociations = new ArrayList<DataAssociation>();
 
-  /* Handle outgoing associations */
-  for (Edge edge : this.getOutgoing()) {
-   if (edge instanceof DataAssociation
-     && !(edge instanceof DataInputAssociation)
-     && !(edge instanceof DataOutputAssociation))
-    dataAssociations.add((DataAssociation) edge);
-  }
+		/* Handle outgoing associations */
+		for (Edge edge : this.getOutgoing()) {
+			if (edge instanceof DataAssociation
+					&& !(edge instanceof DataInputAssociation)
+					&& !(edge instanceof DataOutputAssociation))
+				dataAssociations.add((DataAssociation) edge);
+		}
 
-  /* Handle incoming associations */
-  for (Edge edge : this.getIncoming()) {
-   if (edge instanceof DataAssociation
-     && !(edge instanceof DataInputAssociation)
-     && !(edge instanceof DataOutputAssociation))
-    dataAssociations.add((DataAssociation) edge);
-  }
+		/* Handle incoming associations */
+		for (Edge edge : this.getIncoming()) {
+			if (edge instanceof DataAssociation
+					&& !(edge instanceof DataInputAssociation)
+					&& !(edge instanceof DataOutputAssociation))
+				dataAssociations.add((DataAssociation) edge);
+		}
 
-  return dataAssociations;
- }
+		return dataAssociations;
+	}
 
- public void acceptVisitor(Visitor v){
-  v.visitSequenceFlow(this);
- }
- 
- /* Getter & Setter */
+	public void acceptVisitor(Visitor v){
+		v.visitSequenceFlow(this);
+	}
+	
+	/* Getter & Setter */
 
- /**
-  * Gets the value of the conditionExpression property.
-  * 
-  * @return possible object is {@link Expression }
-  * 
-  */
- public Expression getConditionExpression() {
-  return conditionExpression;
- }
+	/**
+	 * Gets the value of the conditionExpression property.
+	 * 
+	 * @return possible object is {@link Expression }
+	 * 
+	 */
+	public Expression getConditionExpression() {
+		return conditionExpression;
+	}
 
- /**
-  * Sets the value of the conditionExpression property.
-  * 
-  * @param value
-  *            allowed object is {@link Expression }
-  * 
-  */
- public void setConditionExpression(Expression value) {
-  this.conditionExpression = value;
- }
+	/**
+	 * Sets the value of the conditionExpression property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link Expression }
+	 * 
+	 */
+	public void setConditionExpression(Expression value) {
+		this.conditionExpression = value;
+	}
 
- /**
-  * Gets the value of the isImmediate property.
-  * 
-  * @return possible object is {@link Boolean }
-  * 
-  */
- public boolean isIsImmediate() {
-  if (isImmediate == null) {
-   return true;
-  } else {
-   return isImmediate;
-  }
- }
+	/**
+	 * Gets the value of the isImmediate property.
+	 * 
+	 * @return possible object is {@link Boolean }
+	 * 
+	 */
+	public boolean isIsImmediate() {
+		if (isImmediate == null) {
+			return true;
+		} else {
+			return isImmediate;
+		}
+	}
 
- /**
-  * Sets the value of the isImmediate property.
-  * 
-  * @param value
-  *            allowed object is {@link Boolean }
-  * 
-  */
- public void setIsImmediate(Boolean value) {
-  this.isImmediate = value;
- }
+	/**
+	 * Sets the value of the isImmediate property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link Boolean }
+	 * 
+	 */
+	public void setIsImmediate(Boolean value) {
+		this.isImmediate = value;
+	}
 
- /**
-  * @return the isDefaultSequenceFlow
-  */
- public boolean isDefaultSequenceFlow() {
-  return isDefaultSequenceFlow;
- }
+	/**
+	 * @return the isDefaultSequenceFlow
+	 */
+	public boolean isDefaultSequenceFlow() {
+		return isDefaultSequenceFlow;
+	}
 
- /**
-  * @param isDefaultSequenceFlow
-  *            the isDefaultSequenceFlow to set
-  */
- public void setDefaultSequenceFlow(boolean isDefaultSequenceFlow) {
-  this.isDefaultSequenceFlow = isDefaultSequenceFlow;
- }
+	/**
+	 * @param isDefaultSequenceFlow
+	 *            the isDefaultSequenceFlow to set
+	 */
+	public void setDefaultSequenceFlow(boolean isDefaultSequenceFlow) {
+		this.isDefaultSequenceFlow = isDefaultSequenceFlow;
+	}
 
 }

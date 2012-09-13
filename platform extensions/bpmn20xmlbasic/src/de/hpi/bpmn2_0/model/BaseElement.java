@@ -109,7 +109,7 @@ import de.hpi.diagram.SignavioUUID;
 // TCorrelationPropertyBinding.class,
  ActivityResource.class,
  Expression.class,
-// Lane.class,
+//	Lane.class,
 // TCorrelationPropertyRetrievalExpression.class,
 // TDataState.class,
 // LaneSet.class,
@@ -126,109 +126,109 @@ import de.hpi.diagram.SignavioUUID;
 DataOutput.class
 })
 public abstract class BaseElement {
- 
- @XmlElement
- protected List<Documentation> documentation;
- @XmlAnyElement(lax = true)
- protected List<Object> any;
- @XmlAttribute
- @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
- @XmlID
- @XmlSchemaType(name = "ID")
- protected String id;
- 
- @XmlAnyAttribute
- private Map<QName, String> otherAttributes = new HashMap<QName, String>();
- 
- @XmlElement
- private ExtensionElements extensionElements;
- 
- @XmlTransient
- private Lane lane;
+	
+	@XmlElement
+	protected List<Documentation> documentation;
+	@XmlAnyElement(lax = true)
+	protected List<Object> any;
+	@XmlAttribute
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	@XmlID
+	@XmlSchemaType(name = "ID")
+	protected String id;
+	
+	@XmlAnyAttribute
+	private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+	
+	@XmlElement
+	private ExtensionElements extensionElements;
+	
+	@XmlTransient
+	private Lane lane;
     
- @XmlTransient
+	@XmlTransient
     private Process processRef;
- 
- @XmlTransient
- public DiagramElement _diagramElement;
- 
- 
- /**
-  * Default constructor
-  */
- public BaseElement() {
-  super();
-  setId(SignavioUUID.generate());
- }
- 
- /**
-  * Copy constructor
-  * 
-  * @param base
-  *   The {@link BaseElement} to copy.
-  */
- public BaseElement(BaseElement base) {
-  if(base.getDocumentation().size() > 0)
-   this.getDocumentation().addAll(base.getDocumentation());
-  
-  if(base.getAny().size() > 0)
-   this.getAny().addAll(base.getAny());
-  
-  if(base.getOtherAttributes().size() > 0)
-   this.getOtherAttributes().putAll(base.getOtherAttributes());
-  
-  this.setId(base.getId());
-  this.setLane(base.getLane());
-  this.setProcessRef(base.getProcessRef());
-  
-  if(base.getExtensionElements() != null && !base.getExtensionElements().getAny().isEmpty()) {
-   this.setExtensionElements(base.getExtensionElements());
-  }
- }
- 
- public Map<String, String> getExternalNamespaceDefinitions() {
-  Map<String, String> result = new HashMap<String, String>();
-  
-  for(QName qn : this.getOtherAttributes().keySet()) {
-   if(qn.getPrefix() != null && qn.getNamespaceURI() != null) {
-    result.put(qn.getNamespaceURI(), qn.getPrefix());
-   }
-  }
-  
-  return result;
- }
+	
+	@XmlTransient
+	public DiagramElement _diagramElement;
+	
+	
+	/**
+	 * Default constructor
+	 */
+	public BaseElement() {
+		super();
+		setId(SignavioUUID.generate());
+	}
+	
+	/**
+	 * Copy constructor
+	 * 
+	 * @param base
+	 * 		The {@link BaseElement} to copy.
+	 */
+	public BaseElement(BaseElement base) {
+		if(base.getDocumentation().size() > 0)
+			this.getDocumentation().addAll(base.getDocumentation());
+		
+		if(base.getAny().size() > 0)
+			this.getAny().addAll(base.getAny());
+		
+		if(base.getOtherAttributes().size() > 0)
+			this.getOtherAttributes().putAll(base.getOtherAttributes());
+		
+		this.setId(base.getId());
+		this.setLane(base.getLane());
+		this.setProcessRef(base.getProcessRef());
+		
+		if(base.getExtensionElements() != null && !base.getExtensionElements().getAny().isEmpty()) {
+			this.setExtensionElements(base.getExtensionElements());
+		}
+	}
+	
+	public Map<String, String> getExternalNamespaceDefinitions() {
+		Map<String, String> result = new HashMap<String, String>();
+		
+		for(QName qn : this.getOtherAttributes().keySet()) {
+			if(qn.getPrefix() != null && qn.getNamespaceURI() != null) {
+				result.put(qn.getNamespaceURI(), qn.getPrefix());
+			}
+		}
+		
+		return result;
+	}
     
- /**
-  * Adds a child element to the current BPMN element if possible. This method
-  * should be implemented by the concrete sub class, if it can contain child
-  * elements.
-  * 
-  * @param child
-  *            The child element to add
-  */
- public void addChild(BaseElement child) {
- }
+	/**
+	 * Adds a child element to the current BPMN element if possible. This method
+	 * should be implemented by the concrete sub class, if it can contain child
+	 * elements.
+	 * 
+	 * @param child
+	 *            The child element to add
+	 */
+	public void addChild(BaseElement child) {
+	}
 
- /**
-  * Another helper for the import. If the element is of fixed size, then it
-  * may have to be adjusted after import from other tools.
-  */
- public boolean isElementWithFixedSize(){
-  return false;
- }
+	/**
+	 * Another helper for the import. If the element is of fixed size, then it
+	 * may have to be adjusted after import from other tools.
+	 */
+	public boolean isElementWithFixedSize(){
+		return false;
+	}
 
    /**
      * For a fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-     return 0;
+    	return 0;
     }
     
     /**
      * For a fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-     return 0;
+    	return 0;
     }
     
     /**
@@ -237,185 +237,185 @@ public abstract class BaseElement {
      * @return
      */
     public List<BaseElement> getChilds() {
-  return new ArrayList<BaseElement>();
- }
+		return new ArrayList<BaseElement>();
+	}
 
- /**
-  * @return The pool of the element, if available. Wrapper for
-  *         {@link #getHighestParentLane()}
-  */
- public Lane getPool() {
-  return this.getHighestParentLane();
- }
+	/**
+	 * @return The pool of the element, if available. Wrapper for
+	 *         {@link #getHighestParentLane()}
+	 */
+	public Lane getPool() {
+		return this.getHighestParentLane();
+	}
 
- /**
-  * Retrieves the highest lane in the elements tree
-  * 
-  * @return
-  */
- public Lane getHighestParentLane() {
-  if(this.getLane() == null) 
-   return null;
-  
-  Lane lane = (Lane) this.getLane();
-  while(lane != null && lane != lane.getLane()) {
-   lane = lane.getLane();
-  }
-  
-  return lane;
- }
+	/**
+	 * Retrieves the highest lane in the elements tree
+	 * 
+	 * @return
+	 */
+	public Lane getHighestParentLane() {
+		if(this.getLane() == null) 
+			return null;
+		
+		Lane lane = (Lane) this.getLane();
+		while(lane != null && lane != lane.getLane()) {
+			lane = lane.getLane();
+		}
+		
+		return lane;
+	}
 
- public void acceptVisitor(Visitor v){
-  v.visitBaseElement(this);
- }
- 
- public ExtensionElements getOrCreateExtensionElements() {
-  if(extensionElements == null) {
-   extensionElements = new ExtensionElements();
-  }
-  
-  return extensionElements;
- }
- 
- 
- /* Getter & Setter */
+	public void acceptVisitor(Visitor v){
+		v.visitBaseElement(this);
+	}
+	
+	public ExtensionElements getOrCreateExtensionElements() {
+		if(extensionElements == null) {
+			extensionElements = new ExtensionElements();
+		}
+		
+		return extensionElements;
+	}
+	
+	
+	/* Getter & Setter */
 
- /**
-  * Gets the value of the documentation property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the documentation property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getDocumentation().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list
-  * {@link Documentation }
-  * 
-  * 
-  */
-  public List<Documentation> getDocumentation() {
-  if (documentation == null) {
-  documentation = new ArrayList<Documentation>();
-  }
-  return this.documentation;
-  }
- /**
-  * Gets the value of the any property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the any property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getAny().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list {@link Object }
-  * {@link Element }
-  * 
-  * 
-  */
- public List<Object> getAny() {
-  if (any == null) {
-   any = new ArrayList<Object>();
-  }
-  return this.any;
- }
- 
+	/**
+	 * Gets the value of the documentation property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the documentation property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getDocumentation().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link Documentation }
+	 * 
+	 * 
+	 */
+	 public List<Documentation> getDocumentation() {
+	 if (documentation == null) {
+	 documentation = new ArrayList<Documentation>();
+	 }
+	 return this.documentation;
+	 }
+	/**
+	 * Gets the value of the any property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the any property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAny().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Object }
+	 * {@link Element }
+	 * 
+	 * 
+	 */
+	public List<Object> getAny() {
+		if (any == null) {
+			any = new ArrayList<Object>();
+		}
+		return this.any;
+	}
+	
     /**
-  * @return the processRef
-  */
- public Process getProcessRef() {
-  return processRef;
- }
+	 * @return the processRef
+	 */
+	public Process getProcessRef() {
+		return processRef;
+	}
 
- /**
-  * @param processRef the processRef to set
-  */
- public void setProcessRef(Process processRef) {
-  this.processRef = processRef;
- }
+	/**
+	 * @param processRef the processRef to set
+	 */
+	public void setProcessRef(Process processRef) {
+		this.processRef = processRef;
+	}
 
- /**
-  * Gets the value of the id property.
-  * 
-  * @return possible object is {@link String }
-  * 
-  */
- public String getId() {
-  return id;
- }
+	/**
+	 * Gets the value of the id property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getId() {
+		return id;
+	}
 
- /**
-  * Sets the value of the id property.
-  * 
-  * @param value
-  *            allowed object is {@link String }
-  * 
-  */
- public void setId(String value) {
-  this.id = value;
- }
+	/**
+	 * Sets the value of the id property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setId(String value) {
+		this.id = value;
+	}
 
- /**
-  * Gets a map that contains attributes that aren't bound to any typed
-  * property on this class.
-  * 
-  * <p>
-  * the map is keyed by the name of the attribute and the value is the string
-  * value of the attribute.
-  * 
-  * the map returned by this method is live, and you can add new attribute by
-  * updating the map directly. Because of this design, there's no setter.
-  * 
-  * 
-  * @return always non-null
-  */
- public Map<QName, String> getOtherAttributes() {
-  return otherAttributes;
- }
+	/**
+	 * Gets a map that contains attributes that aren't bound to any typed
+	 * property on this class.
+	 * 
+	 * <p>
+	 * the map is keyed by the name of the attribute and the value is the string
+	 * value of the attribute.
+	 * 
+	 * the map returned by this method is live, and you can add new attribute by
+	 * updating the map directly. Because of this design, there's no setter.
+	 * 
+	 * 
+	 * @return always non-null
+	 */
+	public Map<QName, String> getOtherAttributes() {
+		return otherAttributes;
+	}
 
- /**
-  * @param lane
-  *            the lane to set
-  */
- public void setLane(Lane lane) {
-  this.lane = lane;
- }
+	/**
+	 * @param lane
+	 *            the lane to set
+	 */
+	public void setLane(Lane lane) {
+		this.lane = lane;
+	}
 
- /**
-  * 
-  * Returns the lane that contains this element.
-  * 
-  * @return the lane
-  */
- public Lane getLane() {
-  return lane;
- }
+	/**
+	 * 
+	 * Returns the lane that contains this element.
+	 * 
+	 * @return the lane
+	 */
+	public Lane getLane() {
+		return lane;
+	}
 
- public void setExtensionElements(ExtensionElements extensionElements) {
-  this.extensionElements = extensionElements;
- }
+	public void setExtensionElements(ExtensionElements extensionElements) {
+		this.extensionElements = extensionElements;
+	}
 
- public ExtensionElements getExtensionElements() {
-  return extensionElements;
- }
+	public ExtensionElements getExtensionElements() {
+		return extensionElements;
+	}
 
 }

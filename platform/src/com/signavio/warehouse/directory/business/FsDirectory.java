@@ -183,27 +183,28 @@ public class FsDirectory extends FsSecureBusinessObject {
         return createModel(UUID.getUUID().toString(), name, description, type, jsonRep, svgRep, comment);
     }
 
-    public FsModel createModel(String id, String name, String description, String type, String jsonRep, String svgRep, String comment) {
-        
-        name = FileSystemUtil.getCleanFileName(name);
-        
-        String namespace;
-        try {
-            Diagram diagram = new DiagramBuilder().parseJson(jsonRep);
-            namespace = diagram.getStencilset().getNamespace();
-        } catch (JSONException e) {
-            throw new IllegalStateException("Could not create new model", e);
-        }
-        
-        ModelType modelType = ModelTypeManager.getInstance().getModelType(namespace);
-        
-        String path = getPath() + File.separator + name + modelType.getFileExtension();
-        File f = new File (path);
-        if (f.exists()) {
-            throw new IllegalArgumentException("Name already exists.");
-        }
-        
-        modelType.storeModel(path, id, namespace, description, type, jsonRep, svgRep);
+	public FsModel createModel(String id, String name, String description, String type, String jsonRep, String svgRep, String comment) {
+		
+		name = FileSystemUtil.getCleanFileName(name);
+		
+		String namespace;
+		try {
+			GenericDiagram diagram = BasicDiagramBuilder.parseJson(jsonRep);
+			
+			namespace = diagram.getStencilsetRef().getNamespace();
+		} catch (JSONException e) {
+			throw new IllegalStateException("Could not create new model", e);
+		}
+		
+		ModelType modelType = ModelTypeManager.getInstance().getModelType(namespace);
+		
+		String path = getPath() + File.separator + name + modelType.getFileExtension();
+		File f = new File (path);
+		if (f.exists()) {
+			throw new IllegalArgumentException("Name already exists.");
+		}
+		
+		modelType.storeModel(path, id, namespace, description, type, jsonRep, svgRep);
 
         return new FsModel(getPath(), name, modelType.getFileExtension());
     }

@@ -63,8 +63,8 @@ public class BPMNPlane extends Plane
     
     /* Constructor */
     public BPMNPlane() {
-     super();
-     id = SignavioUUID.generate();
+    	super();
+    	id = SignavioUUID.generate();
     }
     
     /* Getter & Setter */

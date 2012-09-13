@@ -33,6 +33,6 @@ if(!ORYX.Core.Controls) {ORYX.Core.Controls = {};}
  * @classDescription Abstract base class for all Controls.
  */
 ORYX.Core.Controls.Control = ORYX.Core.UIObject.extend({
-    
-    toString: function() { return "Control " + this.id; }
+	
+	toString: function() { return "Control " + this.id; }
  });

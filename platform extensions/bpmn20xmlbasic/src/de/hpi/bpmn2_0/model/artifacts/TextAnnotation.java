@@ -65,31 +65,31 @@ public class TextAnnotation
     extends Artifact
 {
 
- @XmlElement
- @XmlJavaTypeAdapter(EscapingStringAdapter.class)
+	@XmlElement
+	@XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected String text;
     @XmlAttribute
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
- protected String textFormat;
+	protected String textFormat;
 
- public void acceptVisitor(Visitor v){
-  v.visitTextAnnotation(this);
- }
- 
- /**
-  * The {@link Marshaller} invokes this method right before marshaling to
-  * XML. It secures that the name attribute is removed from the text annotation
-  * element.
-  * 
-  * @param marshaller
-  *            The marshaling context
-  */
- public void beforeMarshal(Marshaller marshaller) {
-  /*
-   * empty the name element
-   */
-  this.name = null;
- }
+	public void acceptVisitor(Visitor v){
+		v.visitTextAnnotation(this);
+	}
+	
+	/**
+	 * The {@link Marshaller} invokes this method right before marshaling to
+	 * XML. It secures that the name attribute is removed from the text annotation
+	 * element.
+	 * 
+	 * @param marshaller
+	 *            The marshaling context
+	 */
+	public void beforeMarshal(Marshaller marshaller) {
+		/*
+		 * empty the name element
+		 */
+		this.name = null;
+	}
 
     /* Getter & Setter */
     
@@ -106,14 +106,14 @@ public class TextAnnotation
     }
 
     public String getTextFormat() {
-  return textFormat;
- }
+		return textFormat;
+	}
 
- public void setTextFormat(String textFormat) {
-  this.textFormat = textFormat;
- }
+	public void setTextFormat(String textFormat) {
+		this.textFormat = textFormat;
+	}
 
- /**
+	/**
      * Sets the value of the text property.
      * 
      * @param value

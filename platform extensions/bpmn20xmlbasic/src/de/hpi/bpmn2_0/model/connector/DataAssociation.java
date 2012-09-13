@@ -67,144 +67,144 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tDataAssociation", propOrder = { "transformation",
-  "assignment", "sourceRefList", "targetRefList" })
+		"assignment", "sourceRefList", "targetRefList" })
 @XmlSeeAlso({ DataInputAssociation.class, DataOutputAssociation.class })
 public class DataAssociation extends Edge {
- @XmlIDREF
- @XmlSchemaType(name = "IDREF")
- @XmlElement(type = FlowElement.class, name = "sourceRef")
- public List<FlowElement> sourceRefList;
+	@XmlIDREF
+	@XmlSchemaType(name = "IDREF")
+	@XmlElement(type = FlowElement.class, name = "sourceRef")
+	public List<FlowElement> sourceRefList;
 
- @XmlIDREF
- @XmlSchemaType(name = "IDREF")
- @XmlElement(type = FlowElement.class, name = "targetRef")
- public List<FlowElement> targetRefList;
+	@XmlIDREF
+	@XmlSchemaType(name = "IDREF")
+	@XmlElement(type = FlowElement.class, name = "targetRef")
+	public List<FlowElement> targetRefList;
 
- @XmlTransient
- protected FlowElement parent;
+	@XmlTransient
+	protected FlowElement parent;
 
- @XmlElement
- protected FormalExpression transformation;
- @XmlElement
- protected List<Assignment> assignment;
+	@XmlElement
+	protected FormalExpression transformation;
+	@XmlElement
+	protected List<Assignment> assignment;
 
- public void afterUnmarshal(Unmarshaller u, Object parent) {
-  if (parent != null && parent instanceof FlowElement) {
-   this.parent = (FlowElement) parent;
-  }
- }
+	public void afterUnmarshal(Unmarshaller u, Object parent) {
+		if (parent != null && parent instanceof FlowElement) {
+			this.parent = (FlowElement) parent;
+		}
+	}
 
- /**
-  * The {@link Marshaller} invokes this method right before marshaling to
-  * XML. It secures that sourceRefList and targetRefList only contains a
-  * maximum of one element.
-  * 
-  * @param marshaller
-  *            The marshaling context
-  */
- public void beforeMarshal(Marshaller marshaller) {
-  /*
-   * Check sourceRef
-   */
-  if (sourceRefList != null && sourceRefList.size() > 1) {
-   FlowElement firstEle = sourceRefList.get(0);
-   sourceRefList = new ArrayList<FlowElement>();
-   sourceRefList.add(firstEle);
-  }
+	/**
+	 * The {@link Marshaller} invokes this method right before marshaling to
+	 * XML. It secures that sourceRefList and targetRefList only contains a
+	 * maximum of one element.
+	 * 
+	 * @param marshaller
+	 *            The marshaling context
+	 */
+	public void beforeMarshal(Marshaller marshaller) {
+		/*
+		 * Check sourceRef
+		 */
+		if (sourceRefList != null && sourceRefList.size() > 1) {
+			FlowElement firstEle = sourceRefList.get(0);
+			sourceRefList = new ArrayList<FlowElement>();
+			sourceRefList.add(firstEle);
+		}
 
-  /*
-   * Check targetRef
-   */
-  if (targetRefList != null && targetRefList.size() > 1) {
-   FlowElement firstEle = targetRefList.get(0);
-   targetRefList = new ArrayList<FlowElement>();
-   targetRefList.add(firstEle);
-  }
- }
- 
- public void acceptVisitor(Visitor v){
-  v.visitDataAssociation(this);
- }
+		/*
+		 * Check targetRef
+		 */
+		if (targetRefList != null && targetRefList.size() > 1) {
+			FlowElement firstEle = targetRefList.get(0);
+			targetRefList = new ArrayList<FlowElement>();
+			targetRefList.add(firstEle);
+		}
+	}
+	
+	public void acceptVisitor(Visitor v){
+		v.visitDataAssociation(this);
+	}
 
 
- /* Getter & Setter */
+	/* Getter & Setter */
 
- /**
-  * Gets the value of the transformation property.
-  * 
-  * @return possible object is {@link TFormalExpression }
-  * 
-  */
- public FormalExpression getTransformation() {
-  return transformation;
- }
+	/**
+	 * Gets the value of the transformation property.
+	 * 
+	 * @return possible object is {@link TFormalExpression }
+	 * 
+	 */
+	public FormalExpression getTransformation() {
+		return transformation;
+	}
 
- /**
-  * Sets the value of the transformation property.
-  * 
-  * @param value
-  *            allowed object is {@link FormalExpression }
-  * 
-  */
- public void setTransformation(FormalExpression value) {
-  this.transformation = value;
- }
+	/**
+	 * Sets the value of the transformation property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link FormalExpression }
+	 * 
+	 */
+	public void setTransformation(FormalExpression value) {
+		this.transformation = value;
+	}
 
- /**
-  * Gets the value of the assignment property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the assignment property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getAssignment().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list
-  * {@link TAssignment }
-  * 
-  * 
-  */
- public List<Assignment> getAssignment() {
-  if (assignment == null) {
-   assignment = new ArrayList<Assignment>();
-  }
-  return this.assignment;
- }
+	/**
+	 * Gets the value of the assignment property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the assignment property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAssignment().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link TAssignment }
+	 * 
+	 * 
+	 */
+	public List<Assignment> getAssignment() {
+		if (assignment == null) {
+			assignment = new ArrayList<Assignment>();
+		}
+		return this.assignment;
+	}
 
- public FlowElement getSourceRef() {
-  if (sourceRefList != null && sourceRefList.size() > 0) {
-   return sourceRefList.get(0);
-  }
-  return null;
- }
+	public FlowElement getSourceRef() {
+		if (sourceRefList != null && sourceRefList.size() > 0) {
+			return sourceRefList.get(0);
+		}
+		return null;
+	}
 
- public void setSourceRef(FlowElement sourceRef) {
-  if (sourceRefList == null) {
-   sourceRefList = new ArrayList<FlowElement>();
-  }
-  sourceRefList.add(0, sourceRef);
- }
+	public void setSourceRef(FlowElement sourceRef) {
+		if (sourceRefList == null) {
+			sourceRefList = new ArrayList<FlowElement>();
+		}
+		sourceRefList.add(0, sourceRef);
+	}
 
- public FlowElement getTargetRef() {
-  if (targetRefList != null && targetRefList.size() > 0) {
-   return targetRefList.get(0);
-  }
-  return null;
- }
+	public FlowElement getTargetRef() {
+		if (targetRefList != null && targetRefList.size() > 0) {
+			return targetRefList.get(0);
+		}
+		return null;
+	}
 
- public void setTargetRef(FlowElement targetRef) {
-  if (targetRefList == null) {
-   targetRefList = new ArrayList<FlowElement>();
-  }
-  targetRefList.add(0, targetRef);
- }
+	public void setTargetRef(FlowElement targetRef) {
+		if (targetRefList == null) {
+			targetRefList = new ArrayList<FlowElement>();
+		}
+		targetRefList.add(0, targetRef);
+	}
 }
