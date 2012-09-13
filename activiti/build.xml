@@ -13,7 +13,7 @@
     <target name="package" description="Build converter jar">
         <mkdir dir="target/classes" />
         <javac destdir="target/classes" debug="true" includeantruntime="false">
-            <src path="src" />
+            <src path="../platform/src-activiti" />
             <src path="../platform extensions/diagram core/src" />
             <src path="../platform extensions/bpmn20xmlbasic/src" />
             <classpath >
@@ -56,9 +56,11 @@
         <pathconvert property="models.dir" dirsep="/">
             <path path="${basedir}/target/models"></path>
         </pathconvert>
-    	<copy file="${basedir}/target/amconverter.jar" todir="${basedir}/../platform extensions/bpmn20xmlbasic/lib/" />
-        <ant antfile="${basedir}/../platform extensions/bpmn20xmlbasic/build.xml"  dir="${basedir}/../platform extensions/bpmn20xmlbasic/">
-        </ant>
+        <ant antfile="${basedir}/../platform extensions/diagram core/build.xml"  dir="${basedir}/../platform extensions/diagram core/" />
+       	<ant antfile="${basedir}/../platform extensions/bpmn20xmlbasic/build.xml"  dir="${basedir}/../platform extensions/bpmn20xmlbasic/" />
+        <ant antfile="${basedir}/../platform extensions/syntaxchecker/build.xml"  dir="${basedir}/../platform extensions/syntaxchecker/" />
+        <ant antfile="${basedir}/../platform extensions/jpdl/build.xml"  dir="${basedir}/../platform extensions/jpdl/" />
+    	
         <ant antfile="${basedir}/../build.xml" target="build-all-in-one-war" dir="${basedir}/../">
             <property name="fileSystemRootDirectory" value="${models.dir}" />
             <property name="host" value="http://localhost:${tomcat.port}" />

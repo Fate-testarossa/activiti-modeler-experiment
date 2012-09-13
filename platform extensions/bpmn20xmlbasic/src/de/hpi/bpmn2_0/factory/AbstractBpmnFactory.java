@@ -48,6 +48,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.activiti.bpmn.factories.ActivitiStartEventFactory;
+import com.activiti.bpmn.factories.ActivitiTaskFactory;
 import com.sun.xml.bind.StringInputStream;
 
 import de.hpi.bpmn2_0.annotations.Property;
@@ -108,7 +110,8 @@ public abstract class AbstractBpmnFactory {
         
         factoryClasses.add(AbstractActivityFactory.class);
         factoryClasses.add(SubprocessFactory.class);
-        factoryClasses.add(TaskFactory.class);
+//        factoryClasses.add(TaskFactory.class); delete @dryabkov
+        factoryClasses.add(ActivitiTaskFactory.class); //insert @dryabkov
         factoryClasses.add(AbstractEdgesFactory.class);
         factoryClasses.add(ConversationLinkFactory.class);
         factoryClasses.add(MessageFlowFactory.class);
@@ -130,8 +133,10 @@ public abstract class AbstractBpmnFactory {
         factoryClasses.add(MessageFactory.class);
         factoryClasses.add(ParticipantFactory.class);
         factoryClasses.add(ProcessParticipantFactory.class);
-        factoryClasses.add(StartEventFactory.class);
+//        factoryClasses.add(StartEventFactory.class); delete @dryabkov
+        factoryClasses.add(ActivitiStartEventFactory.class); //insert @dryabkov
         factoryClasses.add(TextannotationFactory.class);
+        
     }
     
     public static List<Class<? extends AbstractBpmnFactory>> getFactoryClasses() {

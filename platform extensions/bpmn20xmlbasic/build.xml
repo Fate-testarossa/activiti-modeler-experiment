@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Platform Extension - BPMN2.0" default="com.signavio.extension.copy2Platform">
+	<property file="build.properties" />
+	
     <!-- PROPERTIES -->
     <property name="target" value="target" />
     <property name="src" value="src" />
     <property name="build" value="build" />
     <property name="lib" value="lib" />
-    <property name="platform-lib" value="../../platform/WebContent/WEB-INF/lib" />
-
-    <!-- SPECIFY A UNIQUE NAME FOR YOUR EXTENSION -->
-    <property name="jar-file" value="platform-extension-bpmn2_0" />
+	<property name="extension-syntaxchecker-lib" value="../../platform extensions/syntaxchecker/lib" /> 
 
     <!-- Clean up project (remove temporary folders) -->
     <target name="com.signavio.extension.clean">
@@ -21,10 +20,7 @@
         <mkdir dir="${build}" />
         <javac srcdir="${src}" destdir="${build}" debug="on" target="1.5" includeantruntime="false">
             <classpath id="libs">
-                <fileset dir="${platform-lib}">
-                    <include name="**/*.jar" />
-                </fileset>
-                <fileset dir=".">
+                <fileset dir="${lib}">
                     <include name="**/*.jar" />
                 </fileset>
             </classpath>
@@ -34,7 +30,7 @@
     <!-- Generate the JAR file -->
     <target name="com.signavio.extension.jar" depends="com.signavio.extension.compile">
         <mkdir dir="${target}" />
-        <jar destfile="${target}/${jar-file}.jar" update="false">
+        <jar destfile="${target}/${jar-file}" update="false">
 
             <fileset dir="${build}">
             </fileset>
@@ -52,6 +48,6 @@
 
     <!-- Copy the JAR file into the Platform's lib folder -->
     <target name="com.signavio.extension.copy2Platform" depends="com.signavio.extension.jar, com.signavio.extension.copy2Platform.lib">
-        <copy file="${target}/${jar-file}.jar" todir="${platform-lib}" />
+        <copy file="${target}/${jar-file}" todir="${extension-syntaxchecker-lib}" />
     </target>
 </project>
