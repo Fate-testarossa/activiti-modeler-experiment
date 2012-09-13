@@ -38,8 +38,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  * 
  */
 public abstract class GatewayWithDefaultFlow extends Gateway {
-	
-	@XmlAttribute(name = "default")
+ 
+ @XmlAttribute(name = "default")
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SequenceFlow defaultSequenceFlow;
@@ -50,20 +50,20 @@ public abstract class GatewayWithDefaultFlow extends Gateway {
      * @return The default {@link SequenceFlow} or null
      */
     public SequenceFlow findDefaultSequenceFlow() {
-		for(SequenceFlow seqFlow : this.getOutgoingSequenceFlows()) {
-			/* A default sequence flow should not have an condition expression. */
-			if(seqFlow.isDefaultSequenceFlow()) {
-				this.setDefault(seqFlow);
-				return seqFlow;
-			}
-		}
-		
-		return null;
-	}
+  for(SequenceFlow seqFlow : this.getOutgoingSequenceFlows()) {
+   /* A default sequence flow should not have an condition expression. */
+   if(seqFlow.isDefaultSequenceFlow()) {
+    this.setDefault(seqFlow);
+    return seqFlow;
+   }
+  }
+  
+  return null;
+ }
     
-	public void acceptVisitor(Visitor v){
-		v.visitGatewayWithDefaultFlow(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitGatewayWithDefaultFlow(this);
+ }
     
     /* Getter & Setter */
     

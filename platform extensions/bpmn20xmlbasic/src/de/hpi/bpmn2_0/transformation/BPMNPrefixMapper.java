@@ -37,71 +37,71 @@ import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
  *
  */
 public class BPMNPrefixMapper extends NamespacePrefixMapper {
-	
-	private Map<String,String> nsDefs;
-	
-	private static Map<String, String> customExtensions = new HashMap<String, String>();
+ 
+ private Map<String,String> nsDefs;
+ 
+ private static Map<String, String> customExtensions = new HashMap<String, String>();
 
-	/* (non-Javadoc)
-	 * @see com.sun.xml.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.lang.String, java.lang.String, boolean)
-	 */
-	// @Override
-	public String getPreferredPrefix(String namespace, String suggestion, boolean isRequired) {
-		
-		/* BPMN 2.0 Standard Namespaces */
-		if(namespace.equals("http://www.omg.org/spec/BPMN/20100524/MODEL")) 
-			return "";
-		else if(namespace.equals("http://www.omg.org/spec/BPMN/20100524/DI"))
-			return "bpmndi";
-		else if(namespace.equals("http://www.w3.org/2001/XMLSchema-instance"))
-			return "xsi";
-		else if(namespace.equals("http://www.omg.org/spec/DD/20100524/DI"))
-			return "omgdi";
-		else if(namespace.equals("http://www.omg.org/spec/DD/20100524/DC"))
-			return "omgdc";
-		
-		/* Signavio */
-		else if(namespace.equals("http://www.signavio.com"))
-			return "signavio";
-		
-		/* Check custom extension */
-		else if(getCustomExtensions().get(namespace) != null) {
-			return getCustomExtensions().get(namespace);
-		}
-		
-		/* Check namespace definitions from external XML elements */
-		return getNsDefs().get(namespace);
-		
-	}
-	
-	public String[] getPreDeclaredNamespaceUris() {
-		super.getPreDeclaredNamespaceUris();
-		String[] s = {};
-		return this.getNsDefs().keySet().toArray(s);
-	}
-	
-	public static Map<String, String> getCustomExtensions() {
-		
-		Constants c = Diagram2BpmnConverter.getConstants();
-		if(c == null) {
-			return new HashMap<String, String>();
-		}
-		
-		return new HashMap<String, String>(c.getCustomNamespacePrefixMappings());
-	}
+ /* (non-Javadoc)
+  * @see com.sun.xml.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.lang.String, java.lang.String, boolean)
+  */
+ // @Override
+ public String getPreferredPrefix(String namespace, String suggestion, boolean isRequired) {
+  
+  /* BPMN 2.0 Standard Namespaces */
+  if(namespace.equals("http://www.omg.org/spec/BPMN/20100524/MODEL")) 
+   return "";
+  else if(namespace.equals("http://www.omg.org/spec/BPMN/20100524/DI"))
+   return "bpmndi";
+  else if(namespace.equals("http://www.w3.org/2001/XMLSchema-instance"))
+   return "xsi";
+  else if(namespace.equals("http://www.omg.org/spec/DD/20100524/DI"))
+   return "omgdi";
+  else if(namespace.equals("http://www.omg.org/spec/DD/20100524/DC"))
+   return "omgdc";
+  
+  /* Signavio */
+  else if(namespace.equals("http://www.signavio.com"))
+   return "signavio";
+  
+  /* Check custom extension */
+  else if(getCustomExtensions().get(namespace) != null) {
+   return getCustomExtensions().get(namespace);
+  }
+  
+  /* Check namespace definitions from external XML elements */
+  return getNsDefs().get(namespace);
+  
+ }
+ 
+ public String[] getPreDeclaredNamespaceUris() {
+  super.getPreDeclaredNamespaceUris();
+  String[] s = {};
+  return this.getNsDefs().keySet().toArray(s);
+ }
+ 
+ public static Map<String, String> getCustomExtensions() {
+  
+  Constants c = Diagram2BpmnConverter.getConstants();
+  if(c == null) {
+   return new HashMap<String, String>();
+  }
+  
+  return new HashMap<String, String>(c.getCustomNamespacePrefixMappings());
+ }
 
-	/* Getter & Setter */
-	
-	public Map<String, String> getNsDefs() {
-		if(nsDefs == null) {
-			nsDefs = new HashMap<String, String>();
-		}
-		
-		return nsDefs;
-	}
+ /* Getter & Setter */
+ 
+ public Map<String, String> getNsDefs() {
+  if(nsDefs == null) {
+   nsDefs = new HashMap<String, String>();
+  }
+  
+  return nsDefs;
+ }
 
-	public void setNsDefs(Map<String, String> nsDefs) {
-		this.nsDefs = nsDefs;
-	}
+ public void setNsDefs(Map<String, String> nsDefs) {
+  this.nsDefs = nsDefs;
+ }
 
 }

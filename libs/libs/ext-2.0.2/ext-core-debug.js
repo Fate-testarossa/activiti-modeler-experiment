@@ -2099,6 +2099,7 @@ El.prototype = {
         return this;
     },
 
+El.prototype = {
     
     findParent : function(simpleSelector, maxDepth, returnEl){
         var p = this.dom, b = document.body, depth = 0, dq = Ext.DomQuery, stopEl;
@@ -2128,6 +2129,8 @@ El.prototype = {
     up : function(simpleSelector, maxDepth){
         return this.findParentNode(simpleSelector, maxDepth, true);
     },
+
+
 
 
 
@@ -2402,6 +2405,8 @@ El.prototype = {
         this.addClass(className);
         return this;
     },
+
+        classReCache: {},
 
     
     removeClass : function(className){
@@ -2940,6 +2945,7 @@ El.prototype = {
             this.setStyle("display", this.originalDisplay);             if(this.getStyle("display") == "none"){                 this.setStyle("display", "block");
             }
         }
+        return this;
     },
 
         setOverflow : function(v){
@@ -2983,6 +2989,7 @@ El.prototype = {
         }
         return this;
     },
+
 
     
     clip : function(){

@@ -17,26 +17,26 @@ import de.hpi.bpmn2_0.model.extension.AbstractExtensionElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SignavioType extends AbstractExtensionElement {
-	
-	@XmlAttribute
-	private SignavioDataObjectType dataObjectType;
+ 
+ @XmlAttribute
+ private SignavioDataObjectType dataObjectType;
 
-	public SignavioType() {
-		super();
-	}
-	
-	public SignavioType(SignavioDataObjectType type) {
-		super();
-		setDataObjectType(type);
-	}
-	
-	/* Getter & Setter */
-	
-	public void setDataObjectType(SignavioDataObjectType dataObjectType) {
-		this.dataObjectType = dataObjectType;
-	}
+ public SignavioType() {
+  super();
+ }
+ 
+ public SignavioType(SignavioDataObjectType type) {
+  super();
+  setDataObjectType(type);
+ }
+ 
+ /* Getter & Setter */
+ 
+ public void setDataObjectType(SignavioDataObjectType dataObjectType) {
+  this.dataObjectType = dataObjectType;
+ }
 
-	public SignavioDataObjectType getDataObjectType() {
-		return dataObjectType;
-	}
+ public SignavioDataObjectType getDataObjectType() {
+  return dataObjectType;
+ }
 }

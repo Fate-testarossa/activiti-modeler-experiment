@@ -69,8 +69,8 @@ public class MessageFlow
     protected Message messageRef;
     
     public void acceptVisitor(Visitor v){
-		v.visitMessageFlow(this);
-	}
+  v.visitMessageFlow(this);
+ }
     
     /* Getter & Setter */
     

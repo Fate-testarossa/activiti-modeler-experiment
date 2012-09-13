@@ -61,19 +61,19 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class SendTask
     extends Task
 {
-	@XmlIDREF
+ @XmlIDREF
     @XmlAttribute
     protected Message messageRef;
-	@XmlIDREF
-	@XmlAttribute
+ @XmlIDREF
+ @XmlAttribute
     protected Operation operationRef;
     
     @XmlAttribute
     protected ServiceImplementation implementation;
 
-	public void acceptVisitor(Visitor v){
-		v.visitSendTask(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitSendTask(this);
+ }
     
     /* Getter & Setter */
     
@@ -125,18 +125,18 @@ public class SendTask
         this.operationRef = value;
     }
 
-	/**
-	 * @return the implementation
-	 */
-	public ServiceImplementation getImplementation() {
-		return implementation;
-	}
+ /**
+  * @return the implementation
+  */
+ public ServiceImplementation getImplementation() {
+  return implementation;
+ }
 
-	/**
-	 * @param implementation the implementation to set
-	 */
-	public void setImplementation(ServiceImplementation implementation) {
-		this.implementation = implementation;
-	}
+ /**
+  * @param implementation the implementation to set
+  */
+ public void setImplementation(ServiceImplementation implementation) {
+  this.implementation = implementation;
+ }
 
 }

@@ -65,46 +65,46 @@ import de.hpi.diagram.SignavioUUID;
 public abstract class EventDefinition
     extends RootElement
 {
-	
-	/* Constructors */
-	
-	/**
-	 * Default constructor
-	 */
-	public EventDefinition() {}
-	
-	/**
-	 * Copy constructor
-	 * 
-	 * @param timerEventDefinition
-	 */
-	public EventDefinition(EventDefinition eventDefinition) {
-		super(eventDefinition);
-	}
+ 
+ /* Constructors */
+ 
+ /**
+  * Default constructor
+  */
+ public EventDefinition() {}
+ 
+ /**
+  * Copy constructor
+  * 
+  * @param timerEventDefinition
+  */
+ public EventDefinition(EventDefinition eventDefinition) {
+  super(eventDefinition);
+ }
 
-	public static EventDefinition createEventDefinition(String eventIdentifier){
-		if(eventIdentifier == null)
-			return null;
-		
-		EventDefinition evDef = null;
-		if(eventIdentifier.equalsIgnoreCase("Message")) 
-			evDef = new MessageEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Escalation"))
-			evDef = new EscalationEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Error"))
-			evDef = new ErrorEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Cancel"))
-			evDef = new CancelEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Compensation"))
-			evDef = new CompensateEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Signal"))
-			evDef = new SignalEventDefinition();
-		else if(eventIdentifier.equalsIgnoreCase("Terminate"))
-			evDef = new TerminateEventDefinition();
-		
-		if(evDef != null)
-			evDef.setId(SignavioUUID.generate());
-		
-		return evDef;
-	}
+ public static EventDefinition createEventDefinition(String eventIdentifier){
+  if(eventIdentifier == null)
+   return null;
+  
+  EventDefinition evDef = null;
+  if(eventIdentifier.equalsIgnoreCase("Message")) 
+   evDef = new MessageEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Escalation"))
+   evDef = new EscalationEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Error"))
+   evDef = new ErrorEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Cancel"))
+   evDef = new CancelEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Compensation"))
+   evDef = new CompensateEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Signal"))
+   evDef = new SignalEventDefinition();
+  else if(eventIdentifier.equalsIgnoreCase("Terminate"))
+   evDef = new TerminateEventDefinition();
+  
+  if(evDef != null)
+   evDef.setId(SignavioUUID.generate());
+  
+  return evDef;
+ }
 }

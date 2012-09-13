@@ -100,25 +100,25 @@ public class SubChoreography
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
     
     public void addChild(BaseElement child) {
-    	if(child instanceof Participant) {
-    		this.getParticipantRef().add((Participant) child);
-    		if(((Participant) child).isInitiating()) {
-    			this.setInitiatingParticipantRef((Participant) child);
-    		}
-    	} else if(child instanceof Artifact) {
-    		this.getArtifact().add((Artifact) child);
-    		((Artifact) child).setSubChoreography(this);
-    	} else if(child instanceof FlowElement) {
-    		this.getFlowElement().add((FlowElement) child);
-    	}
-    	
-    	/* Set parent relation */
-    	if(child instanceof FlowElement) {
-    		((FlowElement) child).setSubChoreography(this);
-    	}
+     if(child instanceof Participant) {
+      this.getParticipantRef().add((Participant) child);
+      if(((Participant) child).isInitiating()) {
+       this.setInitiatingParticipantRef((Participant) child);
+      }
+     } else if(child instanceof Artifact) {
+      this.getArtifact().add((Artifact) child);
+      ((Artifact) child).setSubChoreography(this);
+     } else if(child instanceof FlowElement) {
+      this.getFlowElement().add((FlowElement) child);
+     }
+     
+     /* Set parent relation */
+     if(child instanceof FlowElement) {
+      ((FlowElement) child).setSubChoreography(this);
+     }
     }
     
-	
+ 
     
     /**
      * Copies all participant references of sub-choreographies recursively to
@@ -127,85 +127,85 @@ public class SubChoreography
      * @param choreography
      */
     public void setParticipantsAndMessageFlows(Choreography choreography, Map<String,BPMNElement> bpmnElements, Diagram2BpmnConverter converter) {
-    	
-    	List<Message> messagesToRemove = new ArrayList<Message>();
-    	List<Association> associationsToRemove = new ArrayList<Association>();
-    	
-    	/* Handle child subchoreographies and tasks */
-    	for(FlowElement flowEl : this.getFlowElement()) {
-    		if(flowEl instanceof Association) {
-				Association association = (Association) flowEl;
-				
-				/* Check whether the association depicts a message to the
-				 * choreography activity */
-				if((association.getSourceRef() instanceof ChoreographyActivity 
-						&& association.getTargetRef() instanceof Message)
-						|| (association.getSourceRef() instanceof Message 
-								&& association.getTargetRef() instanceof ChoreographyActivity)) {
-					converter.handleMessageAssociationOnChoreographyActivity(association);
-				}
-			}
-    		
-    		/* Remove message objects */
-    		if(flowEl instanceof Message) {
-    			messagesToRemove.add((Message) flowEl);
-    			Association msgAssociation = ((Message) flowEl).getDataConnectingAssociation();
-    			if(msgAssociation != null) {
-    				associationsToRemove.add(msgAssociation);
-    			}
-    		}
-    		
-    		/* Add participants of child elements */
-    		if(flowEl instanceof ChoreographyActivity) {
-    			choreography.getParticipant().addAll(((ChoreographyActivity) flowEl).getParticipantRef());
-    		}
-    		
-    		/* MessageFlows of choreography task */
-    		if(flowEl instanceof ChoreographyTask) {
-    			((ChoreographyTask) flowEl).createMessageFlows(choreography);
-    		} 
-    		
-    		/* Subchoreography */
-    		else if(flowEl instanceof SubChoreography) {
-    			((SubChoreography) flowEl).setParticipantsAndMessageFlows(choreography, bpmnElements, converter);
-    		}
-    	}
-    	
-    	this.getFlowElement().removeAll(messagesToRemove);
-    	for(Association msgAssociation : associationsToRemove) {
-    		bpmnElements.remove(msgAssociation.getId());
-    	}
-    	this.getFlowElement().removeAll(associationsToRemove);
+     
+     List<Message> messagesToRemove = new ArrayList<Message>();
+     List<Association> associationsToRemove = new ArrayList<Association>();
+     
+     /* Handle child subchoreographies and tasks */
+     for(FlowElement flowEl : this.getFlowElement()) {
+      if(flowEl instanceof Association) {
+    Association association = (Association) flowEl;
+    
+    /* Check whether the association depicts a message to the
+     * choreography activity */
+    if((association.getSourceRef() instanceof ChoreographyActivity 
+      && association.getTargetRef() instanceof Message)
+      || (association.getSourceRef() instanceof Message 
+        && association.getTargetRef() instanceof ChoreographyActivity)) {
+     converter.handleMessageAssociationOnChoreographyActivity(association);
+    }
+   }
+      
+      /* Remove message objects */
+      if(flowEl instanceof Message) {
+       messagesToRemove.add((Message) flowEl);
+       Association msgAssociation = ((Message) flowEl).getDataConnectingAssociation();
+       if(msgAssociation != null) {
+        associationsToRemove.add(msgAssociation);
+       }
+      }
+      
+      /* Add participants of child elements */
+      if(flowEl instanceof ChoreographyActivity) {
+       choreography.getParticipant().addAll(((ChoreographyActivity) flowEl).getParticipantRef());
+      }
+      
+      /* MessageFlows of choreography task */
+      if(flowEl instanceof ChoreographyTask) {
+       ((ChoreographyTask) flowEl).createMessageFlows(choreography);
+      } 
+      
+      /* Subchoreography */
+      else if(flowEl instanceof SubChoreography) {
+       ((SubChoreography) flowEl).setParticipantsAndMessageFlows(choreography, bpmnElements, converter);
+      }
+     }
+     
+     this.getFlowElement().removeAll(messagesToRemove);
+     for(Association msgAssociation : associationsToRemove) {
+      bpmnElements.remove(msgAssociation.getId());
+     }
+     this.getFlowElement().removeAll(associationsToRemove);
     }
     
     public List<String> getIdsOfDiagramElements() {
-    	List<String> idList = new ArrayList<String>();
-    	
-    	/* FlowElements except edges */
-    	for(FlowElement flowEl : this.getFlowElement()) {
-    		if(!(flowEl instanceof Edge)) {
-    			idList.add(flowEl.getId());
-    		}
-    		
-    		/* Insert participant band elements */
-    		if(flowEl instanceof ChoreographyActivity) {
-    			for(Participant participant : ((ChoreographyActivity) flowEl).getParticipantRef()) {
-    				idList.add(participant.getId());
-    			}
-    		}
-    		
-    		/* Child SubChoreographis */
-    		if(flowEl instanceof SubChoreography) {
-    			idList.addAll(((SubChoreography) flowEl).getIdsOfDiagramElements());
-    		}
-    	}
-    	
-    	/* Artifacts */
-    	for(Artifact artifact : getArtifact()) {
-    		idList.add(artifact.getId());
-    	}
-    	
-    	return idList;
+     List<String> idList = new ArrayList<String>();
+     
+     /* FlowElements except edges */
+     for(FlowElement flowEl : this.getFlowElement()) {
+      if(!(flowEl instanceof Edge)) {
+       idList.add(flowEl.getId());
+      }
+      
+      /* Insert participant band elements */
+      if(flowEl instanceof ChoreographyActivity) {
+       for(Participant participant : ((ChoreographyActivity) flowEl).getParticipantRef()) {
+        idList.add(participant.getId());
+       }
+      }
+      
+      /* Child SubChoreographis */
+      if(flowEl instanceof SubChoreography) {
+       idList.addAll(((SubChoreography) flowEl).getIdsOfDiagramElements());
+      }
+     }
+     
+     /* Artifacts */
+     for(Artifact artifact : getArtifact()) {
+      idList.add(artifact.getId());
+     }
+     
+     return idList;
     }
     
     /**
@@ -214,36 +214,36 @@ public class SubChoreography
      * @return
      */
     public List<SubChoreography> getSubChoreographies() {
-    	List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
-    	
-    	for(FlowElement flowEle : getFlowElement()) {
-    		/* Subchoreography */
-    		if(flowEle instanceof SubChoreography) {
-    			subchoreographies.add((SubChoreography) flowEle);
-    			subchoreographies.addAll(((SubChoreography) flowEle).getSubChoreographies());
-    		}
-    	}
-    	
-    	return subchoreographies;
+     List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
+     
+     for(FlowElement flowEle : getFlowElement()) {
+      /* Subchoreography */
+      if(flowEle instanceof SubChoreography) {
+       subchoreographies.add((SubChoreography) flowEle);
+       subchoreographies.addAll(((SubChoreography) flowEle).getSubChoreographies());
+      }
+     }
+     
+     return subchoreographies;
     }
     
     public List<Edge> getChildEdges() {
-		List<Edge> edgeList = new ArrayList<Edge>();
-		
-		for(FlowElement fe : this.getFlowElement()) {
-			if(fe instanceof Edge) {
-				edgeList.add((Edge) fe);
-			} else if(fe instanceof ContainerElement) {
-				edgeList.addAll(((ContainerElement) fe).getChildEdges());
-			}
-		}
-		
-		return edgeList;
-	}
+  List<Edge> edgeList = new ArrayList<Edge>();
+  
+  for(FlowElement fe : this.getFlowElement()) {
+   if(fe instanceof Edge) {
+    edgeList.add((Edge) fe);
+   } else if(fe instanceof ContainerElement) {
+    edgeList.addAll(((ContainerElement) fe).getChildEdges());
+   }
+  }
+  
+  return edgeList;
+ }
     
-	public void acceptVisitor(Visitor v){
-		v.visitSubChoreography(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitSubChoreography(this);
+ }
     
     /* Getter & Setter */
     
@@ -340,22 +340,22 @@ public class SubChoreography
 
 
 
-	public List<DiagramElement> _getDiagramElements() {
-		return _diagramElements;
-	}
+ public List<DiagramElement> _getDiagramElements() {
+  return _diagramElements;
+ }
 
 
 
-	public List<BaseElement> getCalledElements() {
-		List<BaseElement> calledElements = new ArrayList<BaseElement>();
-		
-		for(FlowElement flowEl : getFlowElement()) {
-			if(flowEl instanceof CallingElement) {
-				calledElements.addAll(((CallingElement) flowEl).getCalledElements());
-			}
-		}
-		
-		return calledElements;
-	}
+ public List<BaseElement> getCalledElements() {
+  List<BaseElement> calledElements = new ArrayList<BaseElement>();
+  
+  for(FlowElement flowEl : getFlowElement()) {
+   if(flowEl instanceof CallingElement) {
+    calledElements.addAll(((CallingElement) flowEl).getCalledElements());
+   }
+  }
+  
+  return calledElements;
+ }
 
 }

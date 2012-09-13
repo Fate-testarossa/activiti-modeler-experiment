@@ -54,23 +54,23 @@ import de.hpi.diagram.SignavioUUID;
 public class Monitoring
     extends BaseElement
 {
-	/* Constructors */
-	
-	public Monitoring() {}
-	
-	/**
-	 * 
-	 * @param value
-	 */
-	public Monitoring(String value) {
-		this.setId(SignavioUUID.generate());
-		this.getDocumentation().add(new Documentation(value));
-	}
-	
-	public String toExportString() {
-		if(this.getDocumentation().size() == 0)	return null;
-		if(this.getDocumentation().get(0) != null)
-			return this.getDocumentation().get(0).getText();
-		else return null;
-	}
+ /* Constructors */
+ 
+ public Monitoring() {}
+ 
+ /**
+  * 
+  * @param value
+  */
+ public Monitoring(String value) {
+  this.setId(SignavioUUID.generate());
+  this.getDocumentation().add(new Documentation(value));
+ }
+ 
+ public String toExportString() {
+  if(this.getDocumentation().size() == 0) return null;
+  if(this.getDocumentation().get(0) != null)
+   return this.getDocumentation().get(0).getText();
+  else return null;
+ }
 }

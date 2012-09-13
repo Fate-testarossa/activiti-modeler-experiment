@@ -38,18 +38,18 @@ import de.hpi.bpmn2_0.model.data_object.Message;
 @StencilId("Message")
 public class MessageFactory extends AbstractShapeFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected Message createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		Message msg = new Message();
-		this.setCommonAttributes(msg, shape);
-		msg.setId(shape.getResourceId());
-		msg.setName(shape.getProperty("name"));
-		msg.setInitiating(shape.getProperty("initiating").equalsIgnoreCase("true"));
-		return msg;
-	}
+ /* (non-Javadoc)
+  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+  */
+ // @Override
+ protected Message createProcessElement(GenericShape shape)
+   throws BpmnConverterException {
+  Message msg = new Message();
+  this.setCommonAttributes(msg, shape);
+  msg.setId(shape.getResourceId());
+  msg.setName(shape.getProperty("name"));
+  msg.setInitiating(shape.getProperty("initiating").equalsIgnoreCase("true"));
+  return msg;
+ }
 
 }

@@ -222,8 +222,8 @@ public abstract class DiagramElement {
 
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitDiagramElement(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitDiagramElement(this);
+ }
 
 }

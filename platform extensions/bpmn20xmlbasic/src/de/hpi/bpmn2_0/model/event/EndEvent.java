@@ -55,20 +55,20 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlType(name = "tEndEvent")
 public class EndEvent extends ThrowEvent {
 
-	/* Constructors */
-	
-	public EndEvent() {}
-	
-	public EndEvent(EndEvent endEvent) {
-		super(endEvent);
-	}
+ /* Constructors */
+ 
+ public EndEvent() {}
+ 
+ public EndEvent(EndEvent endEvent) {
+  super(endEvent);
+ }
 
-	/* Transformation Methods */
-	
-	public void acceptVisitor(Visitor v){
-		v.visitEndEvent(this);
-	}
-	
-	
+ /* Transformation Methods */
+ 
+ public void acceptVisitor(Visitor v){
+  v.visitEndEvent(this);
+ }
+ 
+ 
 
 }

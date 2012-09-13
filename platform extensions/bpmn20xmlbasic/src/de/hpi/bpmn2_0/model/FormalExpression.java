@@ -62,11 +62,11 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 public class FormalExpression extends Expression {
 
     public FormalExpression() {
-    	super();
+     super();
     }
     
     public FormalExpression(String expressionString) {
-    	super(expressionString);
+     super(expressionString);
     }
     
     @XmlAttribute

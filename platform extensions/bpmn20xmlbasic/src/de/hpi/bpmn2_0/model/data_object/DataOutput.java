@@ -66,8 +66,8 @@ public class DataOutput
     protected QName itemSubjectRef;
 
     public void acceptVisitor(Visitor v){
-		v.visitDataOutput(this);
-	}
+  v.visitDataOutput(this);
+ }
     
     /**
      * Gets the value of the itemSubjectRef property.

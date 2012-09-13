@@ -59,7 +59,7 @@ import javax.xml.bind.annotation.XmlType;
 public class LinkEventDefinition
     extends EventDefinition
 {
-	
+ 
     protected List<String> source;
     protected String target;
     @XmlAttribute(name = "name", required = true)

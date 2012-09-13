@@ -93,20 +93,20 @@ public class Escalation
         this.structureRef = value;
     }
 
-	public String getName() {
-		return name;
-	}
+ public String getName() {
+  return name;
+ }
 
-	public String getEscalationCode() {
-		return escalationCode;
-	}
+ public String getEscalationCode() {
+  return escalationCode;
+ }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+ public void setName(String name) {
+  this.name = name;
+ }
 
-	public void setEscalationCode(String escalationCode) {
-		this.escalationCode = escalationCode;
-	}
+ public void setEscalationCode(String escalationCode) {
+  this.escalationCode = escalationCode;
+ }
 
 }

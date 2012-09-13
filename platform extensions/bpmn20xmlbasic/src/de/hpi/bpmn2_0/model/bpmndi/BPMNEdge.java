@@ -69,132 +69,132 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlType(name = "BPMNEdge", propOrder = { "bpmnLabel" })
 public class BPMNEdge extends LabeledEdge {
 
-	@XmlElement(name = "BPMNLabel")
-	protected BPMNLabel bpmnLabel;
+ @XmlElement(name = "BPMNLabel")
+ protected BPMNLabel bpmnLabel;
 
-	@XmlIDREF
-	@XmlAttribute(name = "bpmnElement")
-	protected BaseElement bpmnElement;
+ @XmlIDREF
+ @XmlAttribute(name = "bpmnElement")
+ protected BaseElement bpmnElement;
 
-	@XmlIDREF
-	@XmlAttribute(name = "sourceElement")
-	protected DiagramElement sourceElement;
+ @XmlIDREF
+ @XmlAttribute(name = "sourceElement")
+ protected DiagramElement sourceElement;
 
-	@XmlIDREF
-	@XmlAttribute(name = "targetElement")
-	protected DiagramElement targetElement;
+ @XmlIDREF
+ @XmlAttribute(name = "targetElement")
+ protected DiagramElement targetElement;
 
-	@XmlAttribute(name = "messageVisibleKind")
-	protected MessageVisibleKind messageVisibleKind;
+ @XmlAttribute(name = "messageVisibleKind")
+ protected MessageVisibleKind messageVisibleKind;
 
-	public void acceptVisitor(Visitor v){
-		v.visitBpmnEdge(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitBpmnEdge(this);
+ }
 
-	/* Getter & Setter */
+ /* Getter & Setter */
 
-	/**
-	 * Gets the value of the bpmnLabel property.
-	 * 
-	 * @return possible object is {@link BPMNLabel }
-	 * 
-	 */
-	public BPMNLabel getBPMNLabel() {
-		return bpmnLabel;
-	}
+ /**
+  * Gets the value of the bpmnLabel property.
+  * 
+  * @return possible object is {@link BPMNLabel }
+  * 
+  */
+ public BPMNLabel getBPMNLabel() {
+  return bpmnLabel;
+ }
 
-	/**
-	 * Sets the value of the bpmnLabel property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link BPMNLabel }
-	 * 
-	 */
-	public void setBPMNLabel(BPMNLabel value) {
-		this.bpmnLabel = value;
-	}
+ /**
+  * Sets the value of the bpmnLabel property.
+  * 
+  * @param value
+  *            allowed object is {@link BPMNLabel }
+  * 
+  */
+ public void setBPMNLabel(BPMNLabel value) {
+  this.bpmnLabel = value;
+ }
 
-	/**
-	 * Gets the value of the bpmnElement property.
-	 * 
-	 * @return possible object is {@link BaseElement }
-	 * 
-	 */
-	public BaseElement getBpmnElement() {
-		return bpmnElement;
-	}
+ /**
+  * Gets the value of the bpmnElement property.
+  * 
+  * @return possible object is {@link BaseElement }
+  * 
+  */
+ public BaseElement getBpmnElement() {
+  return bpmnElement;
+ }
 
-	/**
-	 * Sets the value of the bpmnElement property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link BaseElement }
-	 * 
-	 */
-	public void setBpmnElement(BaseElement value) {
-		this.bpmnElement = value;
-	}
+ /**
+  * Sets the value of the bpmnElement property.
+  * 
+  * @param value
+  *            allowed object is {@link BaseElement }
+  * 
+  */
+ public void setBpmnElement(BaseElement value) {
+  this.bpmnElement = value;
+ }
 
-	/**
-	 * Gets the value of the sourceElement property.
-	 * 
-	 * @return possible object is {@link DiagramElement }
-	 * 
-	 */
-	public DiagramElement getSourceElement() {
-		return sourceElement;
-	}
+ /**
+  * Gets the value of the sourceElement property.
+  * 
+  * @return possible object is {@link DiagramElement }
+  * 
+  */
+ public DiagramElement getSourceElement() {
+  return sourceElement;
+ }
 
-	/**
-	 * Sets the value of the sourceElement property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link DiagramElement }
-	 * 
-	 */
-	public void setSourceElement(DiagramElement value) {
-		this.sourceElement = value;
-	}
+ /**
+  * Sets the value of the sourceElement property.
+  * 
+  * @param value
+  *            allowed object is {@link DiagramElement }
+  * 
+  */
+ public void setSourceElement(DiagramElement value) {
+  this.sourceElement = value;
+ }
 
-	/**
-	 * Gets the value of the targetElement property.
-	 * 
-	 * @return possible object is {@link DiagramElement }
-	 * 
-	 */
-	public DiagramElement getTargetElement() {
-		return targetElement;
-	}
+ /**
+  * Gets the value of the targetElement property.
+  * 
+  * @return possible object is {@link DiagramElement }
+  * 
+  */
+ public DiagramElement getTargetElement() {
+  return targetElement;
+ }
 
-	/**
-	 * Sets the value of the targetElement property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link DiagramElement }
-	 * 
-	 */
-	public void setTargetElement(DiagramElement value) {
-		this.targetElement = value;
-	}
+ /**
+  * Sets the value of the targetElement property.
+  * 
+  * @param value
+  *            allowed object is {@link DiagramElement }
+  * 
+  */
+ public void setTargetElement(DiagramElement value) {
+  this.targetElement = value;
+ }
 
-	/**
-	 * Gets the value of the messageVisibleKind property.
-	 * 
-	 * @return possible object is {@link MessageVisibleKind }
-	 * 
-	 */
-	public MessageVisibleKind getMessageVisibleKind() {
-		return messageVisibleKind;
-	}
+ /**
+  * Gets the value of the messageVisibleKind property.
+  * 
+  * @return possible object is {@link MessageVisibleKind }
+  * 
+  */
+ public MessageVisibleKind getMessageVisibleKind() {
+  return messageVisibleKind;
+ }
 
-	/**
-	 * Sets the value of the messageVisibleKind property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link MessageVisibleKind }
-	 * 
-	 */
-	public void setMessageVisibleKind(MessageVisibleKind value) {
-		this.messageVisibleKind = value;
-	}
+ /**
+  * Sets the value of the messageVisibleKind property.
+  * 
+  * @param value
+  *            allowed object is {@link MessageVisibleKind }
+  * 
+  */
+ public void setMessageVisibleKind(MessageVisibleKind value) {
+  this.messageVisibleKind = value;
+ }
 }

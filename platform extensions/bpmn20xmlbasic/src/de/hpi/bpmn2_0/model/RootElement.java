@@ -53,12 +53,12 @@ import de.hpi.bpmn2_0.model.misc.Signal;
 public abstract class RootElement
     extends BaseElement
 {
-	
-	public RootElement() {}
-	
-	public RootElement(RootElement rootElement) {
-		super(rootElement);
-	}
+ 
+ public RootElement() {}
+ 
+ public RootElement(RootElement rootElement) {
+  super(rootElement);
+ }
 
 
 }

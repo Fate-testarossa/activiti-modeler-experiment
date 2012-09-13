@@ -68,43 +68,43 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class UserTask
     extends Task
 {
-	
-	/* Constructors */
-	
-	/**
-	 * Default constructor
-	 */
-	public UserTask() {	}
-	
-	
-	/**
-	 * Copy constructor based on a {@link UserTask}
-	 * @param task
-	 */
-	public UserTask(UserTask task) {
-		super(task);
-		
-		this.getRendering().addAll(task.getRendering());
-		this.setImplementation(task.getImplementation());
-	}
-	
+ 
+ /* Constructors */
+ 
+ /**
+  * Default constructor
+  */
+ public UserTask() { }
+ 
+ 
+ /**
+  * Copy constructor based on a {@link UserTask}
+  * @param task
+  */
+ public UserTask(UserTask task) {
+  super(task);
+  
+  this.getRendering().addAll(task.getRendering());
+  this.setImplementation(task.getImplementation());
+ }
+ 
     protected List<Rendering> rendering;
     @XmlAttribute
     protected UserTaskImplementation implementation;
     
-	public void acceptVisitor(Visitor v){
-		v.visitUserTask(this);
-	}
-	
-	public GlobalTask getAsGlobalTask() {
-		GlobalUserTask gut = new GlobalUserTask(super.getAsGlobalTask());
-		gut.getRendering().addAll(this.getRendering());
-		gut.setImplementation(this.getImplementation());
-		return gut;
-	}
-	
-	/* Getter & Setter */
-	
+ public void acceptVisitor(Visitor v){
+  v.visitUserTask(this);
+ }
+ 
+ public GlobalTask getAsGlobalTask() {
+  GlobalUserTask gut = new GlobalUserTask(super.getAsGlobalTask());
+  gut.getRendering().addAll(this.getRendering());
+  gut.setImplementation(this.getImplementation());
+  return gut;
+ }
+ 
+ /* Getter & Setter */
+ 
     /**
      * Gets the value of the rendering property.
      * 

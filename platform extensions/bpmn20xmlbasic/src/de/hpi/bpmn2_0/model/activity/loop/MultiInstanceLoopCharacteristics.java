@@ -86,11 +86,11 @@ import de.hpi.bpmn2_0.model.misc.Property;
 public class MultiInstanceLoopCharacteristics
     extends LoopCharacteristics
 {
-	
-	@XmlElements({
-		@XmlElement(type = FormalExpression.class),
-		@XmlElement(type = Expression.class)
-	})
+ 
+ @XmlElements({
+  @XmlElement(type = FormalExpression.class),
+  @XmlElement(type = Expression.class)
+ })
     protected Expression loopCardinality;
     
     protected DataInput loopDataInput;
@@ -100,9 +100,9 @@ public class MultiInstanceLoopCharacteristics
     protected List<ComplexBehaviorDefinition> complexBehaviorDefinition;
     
     @XmlElements({
-		@XmlElement(type = FormalExpression.class),
-		@XmlElement(type = Expression.class)
-	})
+  @XmlElement(type = FormalExpression.class),
+  @XmlElement(type = Expression.class)
+ })
     protected Expression completionCondition;
     @XmlAttribute
     protected Boolean isSequential;

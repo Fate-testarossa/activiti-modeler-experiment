@@ -32,34 +32,34 @@ package de.hpi.bpmn2_0.exceptions;
  */
 public class BpmnConverterException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8385535771020951694L;
+ /**
+  * 
+  */
+ private static final long serialVersionUID = 8385535771020951694L;
 
-	public BpmnConverterException() {
-	}
+ public BpmnConverterException() {
+ }
 
-	/**
-	 * @param message
-	 */
-	public BpmnConverterException(String message) {
-		super(message);
-	}
+ /**
+  * @param message
+  */
+ public BpmnConverterException(String message) {
+  super(message);
+ }
 
-	/**
-	 * @param cause
-	 */
-	public BpmnConverterException(Throwable cause) {
-		super(cause);
-	}
+ /**
+  * @param cause
+  */
+ public BpmnConverterException(Throwable cause) {
+  super(cause);
+ }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public BpmnConverterException(String message, Throwable cause) {
-		super(message, cause);
-	}
+ /**
+  * @param message
+  * @param cause
+  */
+ public BpmnConverterException(String message, Throwable cause) {
+  super(message, cause);
+ }
 
 }

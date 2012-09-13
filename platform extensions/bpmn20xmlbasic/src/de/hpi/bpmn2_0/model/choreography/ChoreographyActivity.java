@@ -92,39 +92,39 @@ public abstract class ChoreographyActivity
     protected ChoreographyLoopType loopType;
     
     public ChoreographyActivity(ChoreographyActivity choreoAct) {
-		super(choreoAct);
-		
-    	if(!choreoAct.getParticipantRef().isEmpty()) {
-			this.getParticipantRef().addAll(choreoAct.getParticipantRef());
-		}
-		if(!choreoAct.getCorrelationKey().isEmpty()) {
-			this.getCorrelationKey().addAll(choreoAct.getCorrelationKey());
-		}
-		
-		this.setInitiatingParticipantRef(choreoAct.getInitiatingParticipant());
-		this.setLoopType(choreoAct.getLoopType());
-	}
+  super(choreoAct);
+  
+     if(!choreoAct.getParticipantRef().isEmpty()) {
+   this.getParticipantRef().addAll(choreoAct.getParticipantRef());
+  }
+  if(!choreoAct.getCorrelationKey().isEmpty()) {
+   this.getCorrelationKey().addAll(choreoAct.getCorrelationKey());
+  }
+  
+  this.setInitiatingParticipantRef(choreoAct.getInitiatingParticipant());
+  this.setLoopType(choreoAct.getLoopType());
+ }
 
 
-	public ChoreographyActivity() {
-		super();
-	}
+ public ChoreographyActivity() {
+  super();
+ }
 
 
-	public void addChild(BaseElement child) {
-    	if(child instanceof Participant) {
-    		this.getParticipantRef().add((Participant) child);
-    		if(((Participant) child).isInitiating()) {
-    			this.setInitiatingParticipantRef((Participant) child);
-    		}
-    	}
+ public void addChild(BaseElement child) {
+     if(child instanceof Participant) {
+      this.getParticipantRef().add((Participant) child);
+      if(((Participant) child).isInitiating()) {
+       this.setInitiatingParticipantRef((Participant) child);
+      }
+     }
     }
     
-	    
-	public void acceptVisitor(Visitor v){
-		v.visitChoreographyActivity(this);
-	}
-	
+     
+ public void acceptVisitor(Visitor v){
+  v.visitChoreographyActivity(this);
+ }
+ 
     /* Getter & Setter */
     
     /**
@@ -180,19 +180,19 @@ public abstract class ChoreographyActivity
         this.initiatingParticipantRef = value;
     }
 
-	public ChoreographyLoopType getLoopType() {
-		return loopType;
-	}
+ public ChoreographyLoopType getLoopType() {
+  return loopType;
+ }
 
-	public void setLoopType(ChoreographyLoopType loopType) {
-		this.loopType = loopType;
-	}
+ public void setLoopType(ChoreographyLoopType loopType) {
+  this.loopType = loopType;
+ }
 
-	public List<CorrelationKey> getCorrelationKey() {
-		if(correlationKey == null) {
-			correlationKey = new ArrayList<CorrelationKey>();
-		}
-		return correlationKey;
-	}
+ public List<CorrelationKey> getCorrelationKey() {
+  if(correlationKey == null) {
+   correlationKey = new ArrayList<CorrelationKey>();
+  }
+  return correlationKey;
+ }
 
 }

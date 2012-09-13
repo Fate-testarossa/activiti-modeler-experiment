@@ -73,16 +73,16 @@ public class OutputSet
 {
 
     @XmlIDREF
-	@XmlElement(type = DataOutput.class)
+ @XmlElement(type = DataOutput.class)
     protected List<DataOutput> dataOutputRefs;
     @XmlIDREF
-	@XmlElement(type = DataOutput.class)
+ @XmlElement(type = DataOutput.class)
     protected List<DataOutput> optionalOutputRefs;
     @XmlIDREF
-	@XmlElement(type = DataOutput.class)
+ @XmlElement(type = DataOutput.class)
     protected List<DataOutput> whileExecutingOutputRefs;
     @XmlIDREF
-	@XmlElement(type = InputSet.class)
+ @XmlElement(type = InputSet.class)
     protected List<InputSet> inputSetRefs;
     @XmlAttribute
     protected String name;

@@ -64,87 +64,87 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tConversationNode", propOrder = { "participantRef",
-		"messageFlowRef", "correlationKey" })
+  "messageFlowRef", "correlationKey" })
 @XmlSeeAlso({ CallConversation.class, SubConversation.class, Conversation.class })
 public abstract class ConversationNode extends FlowNode implements
-		ConversationElement {
+  ConversationElement {
 
-	@XmlIDREF
-	protected List<MessageFlow> messageFlowRef;
-	protected List<CorrelationKey> correlationKey;
+ @XmlIDREF
+ protected List<MessageFlow> messageFlowRef;
+ protected List<CorrelationKey> correlationKey;
 
-	@XmlIDREF
-	protected List<Participant> participantRef;
+ @XmlIDREF
+ protected List<Participant> participantRef;
 
-	@XmlTransient
-	public List<String> participantsIds;
-	
-	/*
-	 * Constructors
-	 */
+ @XmlTransient
+ public List<String> participantsIds;
+ 
+ /*
+  * Constructors
+  */
 
-	public ConversationNode() {
-		super();
-	}
-	
-	public ConversationNode(ConversationNode node) {
-		super(node);
-		
-	}
+ public ConversationNode() {
+  super();
+ }
+ 
+ public ConversationNode(ConversationNode node) {
+  super(node);
+  
+ }
 
-	/**
-	 * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
-	 */
+ /**
+  * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
+  */
     // @Override
     public boolean isElementWithFixedSize() {
-		return true;
-	}
+  return true;
+ }
     
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-    	return 33.5;
+     return 33.5;
     }
     
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-    	return 29.0;
+     return 29.0;
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitConversationNode(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitConversationNode(this);
+ }
 
-	/**
-	 * Gets the value of the participantRef property.
-	 * 
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a
-	 * snapshot. Therefore any modification you make to the returned list will
-	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the participantRef property.
-	 * 
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getParticipantRef().add(newItem);
-	 * </pre>
-	 * 
-	 * 
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link Participant }
-	 * 
-	 * 
-	 */
-	public List<Participant> getParticipantRef() {
-		if (participantRef == null) {
-			participantRef = new ArrayList<Participant>();
-		}
-		return this.participantRef;
-	}
+ /**
+  * Gets the value of the participantRef property.
+  * 
+  * <p>
+  * This accessor method returns a reference to the live list, not a
+  * snapshot. Therefore any modification you make to the returned list will
+  * be present inside the JAXB object. This is why there is not a
+  * <CODE>set</CODE> method for the participantRef property.
+  * 
+  * <p>
+  * For example, to add a new item, do as follows:
+  * 
+  * <pre>
+  * getParticipantRef().add(newItem);
+  * </pre>
+  * 
+  * 
+  * <p>
+  * Objects of the following type(s) are allowed in the list
+  * {@link Participant }
+  * 
+  * 
+  */
+ public List<Participant> getParticipantRef() {
+  if (participantRef == null) {
+   participantRef = new ArrayList<Participant>();
+  }
+  return this.participantRef;
+ }
 }

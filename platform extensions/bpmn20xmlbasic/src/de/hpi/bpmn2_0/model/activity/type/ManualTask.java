@@ -56,15 +56,15 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class ManualTask
     extends Task
 {
-		
-	public void acceptVisitor(Visitor v){
-		v.visitManualTask(this);
-	}
-	
-	public GlobalTask getAsGlobalTask() {
-		GlobalManualTask gmt = new GlobalManualTask(super.getAsGlobalTask());
-		return gmt;
-	}
-	
+  
+ public void acceptVisitor(Visitor v){
+  v.visitManualTask(this);
+ }
+ 
+ public GlobalTask getAsGlobalTask() {
+  GlobalManualTask gmt = new GlobalManualTask(super.getAsGlobalTask());
+  return gmt;
+ }
+ 
 
 }

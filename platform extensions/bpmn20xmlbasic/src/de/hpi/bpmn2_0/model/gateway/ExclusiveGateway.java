@@ -54,8 +54,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class ExclusiveGateway
     extends GatewayWithDefaultFlow
 {
-	public void acceptVisitor(Visitor v){
-		v.visitExclusiveGateway(this);
-	}
+ public void acceptVisitor(Visitor v){
+  v.visitExclusiveGateway(this);
+ }
 
 }

@@ -76,9 +76,9 @@ public class BPMNDiagram
 
     /* Constructor */
     public BPMNDiagram() {
-    	super();
-    	id = SignavioUUID.generate();
-    	bpmnPlane = new BPMNPlane();
+     super();
+     id = SignavioUUID.generate();
+     bpmnPlane = new BPMNPlane();
     }
     
     /* Public methods */
@@ -87,24 +87,24 @@ public class BPMNDiagram
      * elements included.
      */
     public String getOrientation() {
-    	int countH = 0;
-    	int countV = 0;
-    	
-    	for(DiagramElement de : this.getBPMNPlane().getDiagramElement()) {
-    		if(de instanceof BPMNShape) {
-    			BPMNShape s = (BPMNShape) de;
-    			
-    			if(((s.getBpmnElement() instanceof Lane) 
-    					|| (s.getBpmnElement() instanceof Participant)) 
-    				&& s.isIsHorizontalNoNull()) {
-    					countH++;
-    			} else {
-    				countV++;
-    			}
-    		}
-    	}
-    	
-    	return (countV > countH ? "vertical" : "horizontal");
+     int countH = 0;
+     int countV = 0;
+     
+     for(DiagramElement de : this.getBPMNPlane().getDiagramElement()) {
+      if(de instanceof BPMNShape) {
+       BPMNShape s = (BPMNShape) de;
+       
+       if(((s.getBpmnElement() instanceof Lane) 
+         || (s.getBpmnElement() instanceof Participant)) 
+        && s.isIsHorizontalNoNull()) {
+         countH++;
+       } else {
+        countV++;
+       }
+      }
+     }
+     
+     return (countV > countH ? "vertical" : "horizontal");
     }
     
     /* Getter & Setter */

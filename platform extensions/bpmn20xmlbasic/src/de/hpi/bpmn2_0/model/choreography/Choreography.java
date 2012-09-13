@@ -59,44 +59,44 @@ import de.hpi.bpmn2_0.model.connector.SequenceFlow;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso({
-	GlobalChoreographyTask.class
+ GlobalChoreographyTask.class
 })
 @XmlType(name = "tChoreography", propOrder = {
-		"flowElement"
+  "flowElement"
 })
 public class Choreography
     extends Collaboration
 {
-	/* Constructors */
-	
-	/**
-	 * Default constructor
-	 */
-	public Choreography() {
-		super();
-	}
-	
-	public Choreography(Collaboration collaboration) {
-		
-	}
-	
+ /* Constructors */
+ 
+ /**
+  * Default constructor
+  */
+ public Choreography() {
+  super();
+ }
+ 
+ public Choreography(Collaboration collaboration) {
+  
+ }
+ 
     @XmlElementRefs({
-    	
-    	/* Activities */
-    	@XmlElementRef(type = ChoreographyTask.class),
-    	@XmlElementRef(type = SubChoreography.class),
-    	
-    	/* Edges */
-    	@XmlElementRef(type = SequenceFlow.class)
+     
+     /* Activities */
+     @XmlElementRef(type = ChoreographyTask.class),
+     @XmlElementRef(type = SubChoreography.class),
+     
+     /* Edges */
+     @XmlElementRef(type = SequenceFlow.class)
     })
     protected List<FlowElement> flowElement;
     
     public List<BaseElement> getChilds() {
-    	List<BaseElement> childs = super.getChilds();
-    	
-    	childs.addAll(this.getFlowElement());
-    	
-    	return childs;
+     List<BaseElement> childs = super.getChilds();
+     
+     childs.addAll(this.getFlowElement());
+     
+     return childs;
     }
     
     /* Getter & Setter */

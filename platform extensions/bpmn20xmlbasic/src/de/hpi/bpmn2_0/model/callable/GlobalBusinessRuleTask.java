@@ -55,37 +55,37 @@ import de.hpi.bpmn2_0.model.activity.misc.BusinessRuleTaskImplementation;
 @XmlType(name = "tGlobalBusinessRuleTask")
 public class GlobalBusinessRuleTask extends GlobalTask {
 
-	/* Constructors */
-	public GlobalBusinessRuleTask() {
-		super();
-	}
+ /* Constructors */
+ public GlobalBusinessRuleTask() {
+  super();
+ }
 
-	public GlobalBusinessRuleTask(GlobalTask gt) {
-		super(gt);
-	}
+ public GlobalBusinessRuleTask(GlobalTask gt) {
+  super(gt);
+ }
 
-	@XmlAttribute(name = "implementation")
-	protected BusinessRuleTaskImplementation implementation;
+ @XmlAttribute(name = "implementation")
+ protected BusinessRuleTaskImplementation implementation;
 
-	/**
-	 * Gets the value of the implementation property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public BusinessRuleTaskImplementation getImplementation() {
-		return implementation;
-	}
+ /**
+  * Gets the value of the implementation property.
+  * 
+  * @return possible object is {@link String }
+  * 
+  */
+ public BusinessRuleTaskImplementation getImplementation() {
+  return implementation;
+ }
 
-	/**
-	 * Sets the value of the implementation property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link BusinessRuleTaskImplementation }
-	 * 
-	 */
-	public void setImplementation(BusinessRuleTaskImplementation value) {
-		this.implementation = value;
-	}
+ /**
+  * Sets the value of the implementation property.
+  * 
+  * @param value
+  *            allowed object is {@link BusinessRuleTaskImplementation }
+  * 
+  */
+ public void setImplementation(BusinessRuleTaskImplementation value) {
+  this.implementation = value;
+ }
 
 }

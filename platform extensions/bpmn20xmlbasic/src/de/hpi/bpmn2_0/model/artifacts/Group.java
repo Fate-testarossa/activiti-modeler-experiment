@@ -57,38 +57,38 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class Group
     extends Artifact
 {
-	
-	 @XmlAttribute(name = "categoryValueRef")
-	 @XmlIDREF
-	    protected CategoryValue categoryValueRef;
+ 
+  @XmlAttribute(name = "categoryValueRef")
+  @XmlIDREF
+     protected CategoryValue categoryValueRef;
 
-	    /**
-	     * Gets the value of the categoryValueRef property.
-	     * 
-	     * @return
-	     *     possible object is
-	     *     {@link CategoryValue }
-	     *     
-	     */
-	    public CategoryValue getCategoryValueRef() {
-	        return categoryValueRef;
-	    }
+     /**
+      * Gets the value of the categoryValueRef property.
+      * 
+      * @return
+      *     possible object is
+      *     {@link CategoryValue }
+      *     
+      */
+     public CategoryValue getCategoryValueRef() {
+         return categoryValueRef;
+     }
 
-	    /**
-	     * Sets the value of the categoryValueRef property.
-	     * 
-	     * @param value
-	     *     allowed object is
-	     *     {@link CategoryValue }
-	     *     
-	     */
-	    public void setCategoryValueRef(CategoryValue value) {
-	        this.categoryValueRef = value;
-	    }
-	
-		public void acceptVisitor(Visitor v){
-			v.visitGroup(this);
-		}
+     /**
+      * Sets the value of the categoryValueRef property.
+      * 
+      * @param value
+      *     allowed object is
+      *     {@link CategoryValue }
+      *     
+      */
+     public void setCategoryValueRef(CategoryValue value) {
+         this.categoryValueRef = value;
+     }
+ 
+  public void acceptVisitor(Visitor v){
+   v.visitGroup(this);
+  }
 
 
 

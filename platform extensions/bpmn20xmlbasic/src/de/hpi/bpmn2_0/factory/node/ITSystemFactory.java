@@ -40,22 +40,22 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioType;
 @StencilId("ITSystem")
 public class ITSystemFactory extends AbstractShapeFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected BaseElement createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		DataObject itsystem = new DataObject();
-		this.setCommonAttributes(itsystem, shape);
-		
-		/* Set IT-System flag */
-		itsystem.getOrCreateExtensionElements().getAny().add(new SignavioType(SignavioDataObjectType.ITSYSTEM));
-		
-		itsystem.setName(shape.getProperty("name"));
-		itsystem.setId(shape.getResourceId());
-		
-		return itsystem;
-	}
+ /* (non-Javadoc)
+  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+  */
+ // @Override
+ protected BaseElement createProcessElement(GenericShape shape)
+   throws BpmnConverterException {
+  DataObject itsystem = new DataObject();
+  this.setCommonAttributes(itsystem, shape);
+  
+  /* Set IT-System flag */
+  itsystem.getOrCreateExtensionElements().getAny().add(new SignavioType(SignavioDataObjectType.ITSYSTEM));
+  
+  itsystem.setName(shape.getProperty("name"));
+  itsystem.setId(shape.getResourceId());
+  
+  return itsystem;
+ }
 
 }

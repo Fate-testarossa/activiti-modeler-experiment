@@ -60,56 +60,56 @@ import de.hpi.diagram.SignavioUUID;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tDocumentation", propOrder = {
-		"text"
-//		"content"
+  "text"
+//  "content"
 })
 public class Documentation extends BaseElement {
-	
-	/**
-	 * Default constructor
-	 */
-	public Documentation() {
-		
-	}
-	
-	/**
-	 * Constructor including documentation's text parameter
-	 * @param text
-	 */
-	public Documentation(String text) {
-		this.setText(text);
-		this.setId(SignavioUUID.generate());
-	}
-	
-	@XmlMixed
-	@XmlJavaTypeAdapter(EscapingStringAdapter.class)
+ 
+ /**
+  * Default constructor
+  */
+ public Documentation() {
+  
+ }
+ 
+ /**
+  * Constructor including documentation's text parameter
+  * @param text
+  */
+ public Documentation(String text) {
+  this.setText(text);
+  this.setId(SignavioUUID.generate());
+ }
+ 
+ @XmlMixed
+ @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected List<String> text;
     
     /* Getter & Setter */
     
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		if(this.text == null)
-			return "";
-		if(text.size() > 0)
-			return text.get(0);
-		
-		return "";
-	}
+ /**
+  * @return the text
+  */
+ public String getText() {
+  if(this.text == null)
+   return "";
+  if(text.size() > 0)
+   return text.get(0);
+  
+  return "";
+ }
 
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-//		this.text = text;
-		
-		this.text = new ArrayList<String>();
-		this.text.add(text);
-	}
+ /**
+  * @param text the text to set
+  */
+ public void setText(String text) {
+//  this.text = text;
+  
+  this.text = new ArrayList<String>();
+  this.text.add(text);
+ }
     
-//	@XmlMixed
+// @XmlMixed
 //    @XmlAnyElement(lax = true)
 //    protected List<Object> content;
 //

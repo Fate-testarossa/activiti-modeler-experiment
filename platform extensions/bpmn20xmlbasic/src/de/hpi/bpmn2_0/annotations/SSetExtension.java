@@ -35,9 +35,9 @@ import java.lang.annotation.Target;
  */
 
 @Target({
-	ElementType.TYPE
+ ElementType.TYPE
 })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SSetExtension {
-	String[] value();
+ String[] value();
 }

@@ -55,8 +55,8 @@ public class ParallelGateway
 {
     
     public void acceptVisitor(Visitor v){
-		v.visitParallelGateway(this);
-	}
+  v.visitParallelGateway(this);
+ }
 
 
 }

@@ -59,10 +59,10 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tDataStore", propOrder = {
-	"dataState",
-	"name",
-	"capacity",
-	"isUnlimited"
+ "dataState",
+ "name",
+ "capacity",
+ "isUnlimited"
 })
 public class DataStore
     extends RootElement
@@ -78,49 +78,49 @@ public class DataStore
     @XmlAttribute
     protected boolean isUnlimited;
     
-//	/**
-//	 * 
-//	 * Basic method for the conversion of BPMN2.0 to the editor's internal format. 
-//	 * {@see BaseElement#toShape(BPMN2DiagramConverter)}
-//	 * @param converterForShapeCoordinateLookup an instance of {@link BPMN2DiagramConverter}, offering several lookup methods needed for the conversion.
-//	 */
+// /**
+//  * 
+//  * Basic method for the conversion of BPMN2.0 to the editor's internal format. 
+//  * {@see BaseElement#toShape(BPMN2DiagramConverter)}
+//  * @param converterForShapeCoordinateLookup an instance of {@link BPMN2DiagramConverter}, offering several lookup methods needed for the conversion.
+//  */
 //    public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup)  {
-//		Shape shape = super.toShape(converterForShapeCoordinateLookup);
+//  Shape shape = super.toShape(converterForShapeCoordinateLookup);
 //
-//		shape.setStencil(new StencilType("DataStore"));
+//  shape.setStencil(new StencilType("DataStore"));
 //        
 //        //shape.putProperty("", );
 //        
-//		return shape;
-//	}	
+//  return shape;
+// } 
     
     /* Getter & Setter */
     
     public String getName() {
-		return name;
-	}
+  return name;
+ }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+ public void setName(String name) {
+  this.name = name;
+ }
 
-	public int getCapacity() {
-		return capacity;
-	}
+ public int getCapacity() {
+  return capacity;
+ }
 
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
+ public void setCapacity(int capacity) {
+  this.capacity = capacity;
+ }
 
-	public boolean isUnlimited() {
-		return isUnlimited;
-	}
+ public boolean isUnlimited() {
+  return isUnlimited;
+ }
 
-	public void setUnlimited(boolean isUnlimited) {
-		this.isUnlimited = isUnlimited;
-	}
+ public void setUnlimited(boolean isUnlimited) {
+  this.isUnlimited = isUnlimited;
+ }
 
-	@XmlAttribute
+ @XmlAttribute
     protected QName itemSubjectRef;
 
     /**

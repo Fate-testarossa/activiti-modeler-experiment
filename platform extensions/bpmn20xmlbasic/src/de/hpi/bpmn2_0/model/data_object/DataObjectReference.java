@@ -44,27 +44,27 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tDataObjectReference")
 public class DataObjectReference extends AbstractDataObject {
-	
-	
-	@XmlAttribute
+ 
+ 
+ @XmlAttribute
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
-	protected DataObject dataObjectRef;
-	
-	public void setProcess(Process process) {
-		super.setProcess(process);
-		if(this.dataObjectRef != null)
-			this.dataObjectRef.setProcessRef(process);
-		
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitDataObjectReference(this);
-	}
+ protected DataObject dataObjectRef;
+ 
+ public void setProcess(Process process) {
+  super.setProcess(process);
+  if(this.dataObjectRef != null)
+   this.dataObjectRef.setProcessRef(process);
+  
+ }
+ 
+ public void acceptVisitor(Visitor v){
+  v.visitDataObjectReference(this);
+ }
     
-	/* Getter & Setter */
-	
-	/**
+ /* Getter & Setter */
+ 
+ /**
      * Gets the value of the dataObjectRef property.
      * 
      * @return
@@ -72,11 +72,11 @@ public class DataObjectReference extends AbstractDataObject {
      *     {@link DataObject }
      *     
      */
-	public DataObject getDataObjectRef() {
-		return dataObjectRef;
-	}
+ public DataObject getDataObjectRef() {
+  return dataObjectRef;
+ }
 
-	/**
+ /**
      * Sets the value of the dataObjectRef property.
      * 
      * @return
@@ -84,9 +84,9 @@ public class DataObjectReference extends AbstractDataObject {
      *     {@link DataObject }
      *     
      */
-	public void setDataObjectRef(DataObject dataObjectRef) {
-		this.dataObjectRef = dataObjectRef;
-	}
+ public void setDataObjectRef(DataObject dataObjectRef) {
+  this.dataObjectRef = dataObjectRef;
+ }
 
-	
+ 
 }

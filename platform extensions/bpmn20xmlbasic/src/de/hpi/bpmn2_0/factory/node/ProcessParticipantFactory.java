@@ -40,22 +40,22 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioType;
 @StencilId("processparticipant")
 public class ProcessParticipantFactory extends AbstractShapeFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected BaseElement createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		DataObject processParticipant = new DataObject();
-		this.setCommonAttributes(processParticipant, shape);
-		
-		/* Set Process Participant flag */
-		processParticipant.getOrCreateExtensionElements().getAny().add(new SignavioType(SignavioDataObjectType.PROCESSPARTICIPANT));
-		
-		processParticipant.setName(shape.getProperty("name"));
-		processParticipant.setId(shape.getResourceId());
-		
-		return processParticipant;
-	}
+ /* (non-Javadoc)
+  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+  */
+ // @Override
+ protected BaseElement createProcessElement(GenericShape shape)
+   throws BpmnConverterException {
+  DataObject processParticipant = new DataObject();
+  this.setCommonAttributes(processParticipant, shape);
+  
+  /* Set Process Participant flag */
+  processParticipant.getOrCreateExtensionElements().getAny().add(new SignavioType(SignavioDataObjectType.PROCESSPARTICIPANT));
+  
+  processParticipant.setName(shape.getProperty("name"));
+  processParticipant.setId(shape.getResourceId());
+  
+  return processParticipant;
+ }
 
 }

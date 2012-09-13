@@ -39,17 +39,17 @@ import de.hpi.bpmn2_0.model.conversation.ConversationLink;
 @StencilId("ConversationLink")
 public class ConversationLinkFactory extends AbstractEdgesFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected ConversationLink createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		ConversationLink link = new ConversationLink();
-		this.setCommonAttributes(link, shape);
-		link.setId(shape.getResourceId());
-		link.setName(shape.getProperty("name"));
-		
-		return link;
-	}
+ /* (non-Javadoc)
+  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+  */
+ // @Override
+ protected ConversationLink createProcessElement(GenericShape shape)
+   throws BpmnConverterException {
+  ConversationLink link = new ConversationLink();
+  this.setCommonAttributes(link, shape);
+  link.setId(shape.getResourceId());
+  link.setName(shape.getProperty("name"));
+  
+  return link;
+ }
 }
