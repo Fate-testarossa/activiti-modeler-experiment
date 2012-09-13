@@ -40,78 +40,78 @@ import de.hpi.bpmn2_0.util.DiagramHelper;
  */
 public abstract class AbstractShapeFactory extends AbstractBpmnFactory {
 
- /* (non-Javadoc)
-  * @see de.hpi.bpmn2_0.factory.common.AbstractBpmnFactory#createBpmnElement(org.oryxeditor.server.diagram.Shape, de.hpi.bpmn2_0.factory.BPMNElement)
-  */
- // @Override
- public BPMNElement createBpmnElement(GenericShape shape, BPMNElement parent)
-   throws BpmnConverterException {
-  
-  BPMNShape diaElement = this.createDiagramElement(shape);
-  BaseElement processElement = this.createProcessElement(shape);
-  diaElement.setBpmnElement(processElement);
-  
-  super.setLabelPositionInfo(shape, processElement);
-  
-  setBgColor(shape, processElement);
-  
-  BPMNElement bpmnElement = new BPMNElement(diaElement, processElement, shape.getResourceId());
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.common.AbstractBpmnFactory#createBpmnElement(org.oryxeditor.server.diagram.Shape, de.hpi.bpmn2_0.factory.BPMNElement)
+     */
+    // @Override
+    public BPMNElement createBpmnElement(GenericShape shape, BPMNElement parent)
+            throws BpmnConverterException {
+        
+        BPMNShape diaElement = this.createDiagramElement(shape);
+        BaseElement processElement = this.createProcessElement(shape);
+        diaElement.setBpmnElement(processElement);
+        
+        super.setLabelPositionInfo(shape, processElement);
+        
+        setBgColor(shape, processElement);
+        
+        BPMNElement bpmnElement = new BPMNElement(diaElement, processElement, shape.getResourceId());
 
-  // handle external extension elements like from Activiti
-  try {
-   super.reinsertExternalExtensionElements(shape, bpmnElement);
-  } catch (Exception e) {
-   
-  } 
-  
-  return bpmnElement;
- }
+        // handle external extension elements like from Activiti
+        try {
+            super.reinsertExternalExtensionElements(shape, bpmnElement);
+        } catch (Exception e) {
+            
+        } 
+        
+        return bpmnElement;
+    }
 
- /* (non-Javadoc)
-  * @see de.hpi.bpmn2_0.factory.common.AbstractBpmnFactory#createDiagramElement(org.oryxeditor.server.diagram.Shape)
-  */
- // @Override
- protected BPMNShape createDiagramElement(GenericShape shape) {
-  BPMNShape bpmnShape = new BPMNShape();
-  super.setVisualAttributes(bpmnShape, shape);
-  
-  /* Bounds */
-  bpmnShape.setBounds(createBounds(shape));
-  
-  return bpmnShape;
- }
- 
- /* Helper methods */
- 
- /**
-  * Generates the BPMN Bounds out of a Shape.
-  */
- private de.hpi.bpmn2_0.model.bpmndi.dc.Bounds createBounds(GenericShape shape) {
-  Bounds absBounds = shape.getAbsoluteBounds();
-  
-  de.hpi.bpmn2_0.model.bpmndi.dc.Bounds bpmnBounds = new de.hpi.bpmn2_0.model.bpmndi.dc.Bounds();
-  bpmnBounds.setX(absBounds.getUpperLeft().getX());
-  bpmnBounds.setY(absBounds.getUpperLeft().getY());
-  bpmnBounds.setHeight(shape.getHeight());
-  bpmnBounds.setWidth(shape.getWidth());
-  
-  return bpmnBounds;
- }
- 
- /**
-  * Sets the bgcolor property as a {@link SignavioMetaData} extension
-  * element.
-  * 
-  * @param node
-  * @param element
-  */
- private void setBgColor(GenericShape node, BaseElement element) {
-  String bgColor = node.getProperty("bgcolor");
-  if(bgColor != null) {
-   ExtensionElements extElements = element.getOrCreateExtensionElements();
-   extElements.add(new SignavioMetaData("bgcolor", bgColor));
-  }
- }
- 
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.common.AbstractBpmnFactory#createDiagramElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected BPMNShape createDiagramElement(GenericShape shape) {
+        BPMNShape bpmnShape = new BPMNShape();
+        super.setVisualAttributes(bpmnShape, shape);
+        
+        /* Bounds */
+        bpmnShape.setBounds(createBounds(shape));
+        
+        return bpmnShape;
+    }
+    
+    /* Helper methods */
+    
+    /**
+     * Generates the BPMN Bounds out of a Shape.
+     */
+    private de.hpi.bpmn2_0.model.bpmndi.dc.Bounds createBounds(GenericShape shape) {
+        Bounds absBounds = shape.getAbsoluteBounds();
+        
+        de.hpi.bpmn2_0.model.bpmndi.dc.Bounds bpmnBounds = new de.hpi.bpmn2_0.model.bpmndi.dc.Bounds();
+        bpmnBounds.setX(absBounds.getUpperLeft().getX());
+        bpmnBounds.setY(absBounds.getUpperLeft().getY());
+        bpmnBounds.setHeight(shape.getHeight());
+        bpmnBounds.setWidth(shape.getWidth());
+        
+        return bpmnBounds;
+    }
+    
+    /**
+     * Sets the bgcolor property as a {@link SignavioMetaData} extension
+     * element.
+     * 
+     * @param node
+     * @param element
+     */
+    private void setBgColor(GenericShape node, BaseElement element) {
+        String bgColor = node.getProperty("bgcolor");
+        if(bgColor != null) {
+            ExtensionElements extElements = element.getOrCreateExtensionElements();
+            extElements.add(new SignavioMetaData("bgcolor", bgColor));
+        }
+    }
+    
 
 }

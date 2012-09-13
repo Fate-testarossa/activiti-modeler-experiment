@@ -67,98 +67,98 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public abstract class Event
     extends FlowNode
 {
- @XmlElementRefs({
-  @XmlElementRef(type = MessageEventDefinition.class),
-  @XmlElementRef(type = TimerEventDefinition.class),
-  @XmlElementRef(type = CancelEventDefinition.class),
-  @XmlElementRef(type = CompensateEventDefinition.class),
-  @XmlElementRef(type = ConditionalEventDefinition.class),
-  @XmlElementRef(type = ErrorEventDefinition.class),
-  @XmlElementRef(type = EscalationEventDefinition.class),
-  @XmlElementRef(type = LinkEventDefinition.class),
-  @XmlElementRef(type = SignalEventDefinition.class),
-  @XmlElementRef(type = TerminateEventDefinition.class)
- })
- List<EventDefinition> eventDefinition;
- 
- @XmlElement
- @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
- String eventDefinitionRef;
- 
- @XmlElementRef
- protected List<PropertyListItem> additionalProperties;
- 
- /* Constructors */
- 
- public Event() {}
- 
- public Event(Event event) {
-  super(event);
-  this.getEventDefinition().addAll(event.getEventDefinition());
-  this.setEventDefinitionRef(event.getEventDefinitionRef());
-  
-  if(event.getAdditionalProperties().size() > 0) {
-   this.getAdditionalProperties().addAll(event.getAdditionalProperties());
-  }
- }
- 
- public void acceptVisitor(Visitor v){
-  v.visitEvent(this);
- }
- 
- 
- /**
-  * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
-  */
+    @XmlElementRefs({
+        @XmlElementRef(type = MessageEventDefinition.class),
+        @XmlElementRef(type = TimerEventDefinition.class),
+        @XmlElementRef(type = CancelEventDefinition.class),
+        @XmlElementRef(type = CompensateEventDefinition.class),
+        @XmlElementRef(type = ConditionalEventDefinition.class),
+        @XmlElementRef(type = ErrorEventDefinition.class),
+        @XmlElementRef(type = EscalationEventDefinition.class),
+        @XmlElementRef(type = LinkEventDefinition.class),
+        @XmlElementRef(type = SignalEventDefinition.class),
+        @XmlElementRef(type = TerminateEventDefinition.class)
+    })
+    List<EventDefinition> eventDefinition;
+    
+    @XmlElement
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    String eventDefinitionRef;
+    
+    @XmlElementRef
+    protected List<PropertyListItem> additionalProperties;
+    
+    /* Constructors */
+    
+    public Event() {}
+    
+    public Event(Event event) {
+        super(event);
+        this.getEventDefinition().addAll(event.getEventDefinition());
+        this.setEventDefinitionRef(event.getEventDefinitionRef());
+        
+        if(event.getAdditionalProperties().size() > 0) {
+            this.getAdditionalProperties().addAll(event.getAdditionalProperties());
+        }
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitEvent(this);
+    }
+    
+    
+    /**
+     * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
+     */
     // @Override
     public boolean isElementWithFixedSize() {
-  return true;
- }
+        return true;
+    }
     
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-     return 28.0;
+        return 28.0;
     }
     
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-     return 28.0;
+        return 28.0;
     }
- 
- /**
-  * 
-  * @param type
-  *   The {@link EventDefinition} type.
-  * @return
-  *   The first occurrence of an {@link EventDefinition} where the type fits.
-  *   Or null if no {@link EventDefinition} of this type exists.
-  */
- public EventDefinition getEventDefinitionOfType(Class<? extends EventDefinition> type) {
-  for(EventDefinition evDef : this.getEventDefinition()) {
-   if(evDef.getClass().equals(type))
-    return evDef;
-  }
-  return null;
- }
- 
- public boolean isSignalEvent() {
-  return getEventDefinitionOfType(SignalEventDefinition.class) != null;
- }
- 
- /* Getter & Setter */
- 
- public List<PropertyListItem> getAdditionalProperties() {
-  if(additionalProperties == null) {
-   additionalProperties = new ArrayList<PropertyListItem>();
-  }
-  return additionalProperties;
- }
- 
- /**
+    
+    /**
+     * 
+     * @param type
+     *         The {@link EventDefinition} type.
+     * @return
+     *         The first occurrence of an {@link EventDefinition} where the type fits.
+     *         Or null if no {@link EventDefinition} of this type exists.
+     */
+    public EventDefinition getEventDefinitionOfType(Class<? extends EventDefinition> type) {
+        for(EventDefinition evDef : this.getEventDefinition()) {
+            if(evDef.getClass().equals(type))
+                return evDef;
+        }
+        return null;
+    }
+    
+    public boolean isSignalEvent() {
+        return getEventDefinitionOfType(SignalEventDefinition.class) != null;
+    }
+    
+    /* Getter & Setter */
+    
+    public List<PropertyListItem> getAdditionalProperties() {
+        if(additionalProperties == null) {
+            additionalProperties = new ArrayList<PropertyListItem>();
+        }
+        return additionalProperties;
+    }
+    
+    /**
      * Gets the value of the eventDefinition property.
      * 
      * <p>
@@ -188,27 +188,27 @@ public abstract class Event
      * {@link SignalEventDefinition }
      * {@link TTerminateEventDefinition }
      * 
-  * @return the eventDefinition
-  */
- public List<EventDefinition> getEventDefinition() {
-  if(this.eventDefinition == null) {
-   this.eventDefinition = new ArrayList<EventDefinition>();
-  }
-  return this.eventDefinition;
- }
+     * @return the eventDefinition
+     */
+    public List<EventDefinition> getEventDefinition() {
+        if(this.eventDefinition == null) {
+            this.eventDefinition = new ArrayList<EventDefinition>();
+        }
+        return this.eventDefinition;
+    }
 
- /**
-  * @return the eventDefinitionRef
-  */
- public String getEventDefinitionRef() {
-  return eventDefinitionRef;
- }
+    /**
+     * @return the eventDefinitionRef
+     */
+    public String getEventDefinitionRef() {
+        return eventDefinitionRef;
+    }
 
- /**
-  * @param eventDefinitionRef the eventDefinitionRef to set
-  */
- public void setEventDefinitionRef(String eventDefinitionRef) {
-  this.eventDefinitionRef = eventDefinitionRef;
- }
+    /**
+     * @param eventDefinitionRef the eventDefinitionRef to set
+     */
+    public void setEventDefinitionRef(String eventDefinitionRef) {
+        this.eventDefinitionRef = eventDefinitionRef;
+    }
 
 }

@@ -73,7 +73,7 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tFlowElement", propOrder = { "auditing", "monitoring",
-  "categoryValue"
+        "categoryValue"
 // "incoming",
 // "outgoing"
 // "process"
@@ -82,294 +82,294 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 // SequenceFlow.class,
 // DataObject.class,
 // DataStore.class,
-  Lane.class, FlowNode.class, DataStoreReference.class })
+        Lane.class, FlowNode.class, DataStoreReference.class })
 public abstract class FlowElement extends BaseElement {
 
- protected Auditing auditing;
- protected Monitoring monitoring;
- protected List<QName> categoryValue;
+    protected Auditing auditing;
+    protected Monitoring monitoring;
+    protected List<QName> categoryValue;
 
- @XmlAttribute
- @XmlJavaTypeAdapter(EscapingStringAdapter.class)
- protected String name;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(EscapingStringAdapter.class)
+    protected String name;
 
- // @XmlIDREF
- // @XmlSchemaType(name = "IDREF")
- // @XmlElement(name = "incoming", type = Edge.class)
- @XmlTransient
- protected List<Edge> incoming;
+    // @XmlIDREF
+    // @XmlSchemaType(name = "IDREF")
+    // @XmlElement(name = "incoming", type = Edge.class)
+    @XmlTransient
+    protected List<Edge> incoming;
 
- // @XmlIDREF
- // @XmlSchemaType(name = "IDREF")
- // @XmlElement(name = "outgoing", type = Edge.class)
- @XmlTransient
- protected List<Edge> outgoing;
+    // @XmlIDREF
+    // @XmlSchemaType(name = "IDREF")
+    // @XmlElement(name = "outgoing", type = Edge.class)
+    @XmlTransient
+    protected List<Edge> outgoing;
 
- /* The process the element belongs to */
- // @XmlIDREF
- // @XmlAttribute
- // @XmlSchemaType(name = "IDREF")
- @XmlTransient
- protected Process process;
+    /* The process the element belongs to */
+    // @XmlIDREF
+    // @XmlAttribute
+    // @XmlSchemaType(name = "IDREF")
+    @XmlTransient
+    protected Process process;
 
- @XmlTransient
- protected SubProcess subProcess;
- @XmlTransient
- protected SubChoreography subChoreography;
- @XmlTransient
- protected String processid;
+    @XmlTransient
+    protected SubProcess subProcess;
+    @XmlTransient
+    protected SubChoreography subChoreography;
+    @XmlTransient
+    protected String processid;
 
- /**
-  * Default constructor
-  */
- public FlowElement() {
+    /**
+     * Default constructor
+     */
+    public FlowElement() {
 
- }
+    }
 
- /**
-  * Copy constructor
-  */
- public FlowElement(FlowElement flowEl) {
-  super(flowEl);
+    /**
+     * Copy constructor
+     */
+    public FlowElement(FlowElement flowEl) {
+        super(flowEl);
 
-  if (flowEl.getCategoryValue().size() > 0)
-   this.getCategoryValue().addAll(flowEl.getCategoryValue());
+        if (flowEl.getCategoryValue().size() > 0)
+            this.getCategoryValue().addAll(flowEl.getCategoryValue());
 
-  if (flowEl.getIncoming().size() > 0)
-   this.getIncoming().addAll(flowEl.getIncoming());
+        if (flowEl.getIncoming().size() > 0)
+            this.getIncoming().addAll(flowEl.getIncoming());
 
-  if (flowEl.getOutgoing().size() > 0)
-   this.getOutgoing().addAll(flowEl.getOutgoing());
+        if (flowEl.getOutgoing().size() > 0)
+            this.getOutgoing().addAll(flowEl.getOutgoing());
 
-  this.setAuditing(flowEl.getAuditing());
-  this.setMonitoring(flowEl.getMonitoring());
+        this.setAuditing(flowEl.getAuditing());
+        this.setMonitoring(flowEl.getMonitoring());
 
-  this.setProcess(flowEl.getProcess());
-  this.setName(flowEl.getName());
- }
+        this.setProcess(flowEl.getProcess());
+        this.setName(flowEl.getName());
+    }
 
- //TODO move to visitor?
- /**
-  * Another helper for the import. If the element is of fixed size, then it
-  * may have to be adjusted after import from other tools.
-  */
- public boolean isElementWithFixedSize() {
-  return false;
- }
+    //TODO move to visitor?
+    /**
+     * Another helper for the import. If the element is of fixed size, then it
+     * may have to be adjusted after import from other tools.
+     */
+    public boolean isElementWithFixedSize() {
+        return false;
+    }
 
- public void acceptVisitor(Visitor v){
-  v.visitFlowElement(this);
- }
- 
- public void afterUnmarshal(Unmarshaller u, Object parent) {
-  if (parent != null && parent instanceof SubProcess) {
-   this.subProcess = (SubProcess) parent;
-  }
+    public void acceptVisitor(Visitor v){
+        v.visitFlowElement(this);
+    }
+    
+    public void afterUnmarshal(Unmarshaller u, Object parent) {
+        if (parent != null && parent instanceof SubProcess) {
+            this.subProcess = (SubProcess) parent;
+        }
 
-  if (parent != null && parent instanceof SubChoreography) {
-   this.subChoreography = (SubChoreography) parent;
-  }
-  
-  if (parent != null && parent instanceof Process) {
-   this.process = (Process) parent;
-  }
- }
+        if (parent != null && parent instanceof SubChoreography) {
+            this.subChoreography = (SubChoreography) parent;
+        }
+        
+        if (parent != null && parent instanceof Process) {
+            this.process = (Process) parent;
+        }
+    }
 
- /* Getter & Setter */
+    /* Getter & Setter */
 
- /**
-  * Gets the value of the incoming property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the incoming property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getIncoming().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list {@link QName }
-  * 
-  * 
-  */
- public List<Edge> getIncoming() {
-  if (incoming == null) {
-   incoming = new ArrayList<Edge>();
-  }
-  return this.incoming;
- }
+    /**
+     * Gets the value of the incoming property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the incoming property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getIncoming().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list {@link QName }
+     * 
+     * 
+     */
+    public List<Edge> getIncoming() {
+        if (incoming == null) {
+            incoming = new ArrayList<Edge>();
+        }
+        return this.incoming;
+    }
 
- /**
-  * Gets the value of the outgoing property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the outgoing property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getOutgoing().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list {@link QName }
-  * 
-  * 
-  */
- public List<Edge> getOutgoing() {
-  if (outgoing == null) {
-   outgoing = new ArrayList<Edge>();
-  }
-  return this.outgoing;
- }
+    /**
+     * Gets the value of the outgoing property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the outgoing property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getOutgoing().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list {@link QName }
+     * 
+     * 
+     */
+    public List<Edge> getOutgoing() {
+        if (outgoing == null) {
+            outgoing = new ArrayList<Edge>();
+        }
+        return this.outgoing;
+    }
 
- /**
-  * Gets the value of the auditing property.
-  * 
-  * @return possible object is {@link Auditing }
-  * 
-  */
- public Auditing getAuditing() {
-  return auditing;
- }
+    /**
+     * Gets the value of the auditing property.
+     * 
+     * @return possible object is {@link Auditing }
+     * 
+     */
+    public Auditing getAuditing() {
+        return auditing;
+    }
 
- /**
-  * Sets the value of the auditing property.
-  * 
-  * @param value
-  *            allowed object is {@link Auditing }
-  * 
-  */
- public void setAuditing(Auditing value) {
-  this.auditing = value;
- }
+    /**
+     * Sets the value of the auditing property.
+     * 
+     * @param value
+     *            allowed object is {@link Auditing }
+     * 
+     */
+    public void setAuditing(Auditing value) {
+        this.auditing = value;
+    }
 
- /**
-  * Gets the value of the monitoring property.
-  * 
-  * @return possible object is {@link Monitoring }
-  * 
-  */
- public Monitoring getMonitoring() {
-  return monitoring;
- }
+    /**
+     * Gets the value of the monitoring property.
+     * 
+     * @return possible object is {@link Monitoring }
+     * 
+     */
+    public Monitoring getMonitoring() {
+        return monitoring;
+    }
 
- /**
-  * Sets the value of the monitoring property.
-  * 
-  * @param value
-  *            allowed object is {@link Monitoring }
-  * 
-  */
- public void setMonitoring(Monitoring value) {
-  this.monitoring = value;
- }
+    /**
+     * Sets the value of the monitoring property.
+     * 
+     * @param value
+     *            allowed object is {@link Monitoring }
+     * 
+     */
+    public void setMonitoring(Monitoring value) {
+        this.monitoring = value;
+    }
 
- /**
-  * Gets the value of the categoryValue property.
-  * 
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the categoryValue property.
-  * 
-  * <p>
-  * For example, to add a new item, do as follows:
-  * 
-  * <pre>
-  * getCategoryValue().add(newItem);
-  * </pre>
-  * 
-  * 
-  * <p>
-  * Objects of the following type(s) are allowed in the list {@link QName }
-  * 
-  * 
-  */
- public List<QName> getCategoryValue() {
-  if (categoryValue == null) {
-   categoryValue = new ArrayList<QName>();
-  }
-  return this.categoryValue;
- }
+    /**
+     * Gets the value of the categoryValue property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the categoryValue property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getCategoryValue().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list {@link QName }
+     * 
+     * 
+     */
+    public List<QName> getCategoryValue() {
+        if (categoryValue == null) {
+            categoryValue = new ArrayList<QName>();
+        }
+        return this.categoryValue;
+    }
 
- /**
-  * Gets the value of the name property.
-  * 
-  * @return possible object is {@link String }
-  * 
-  */
- public String getName() {
-  return name;
- }
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getName() {
+        return name;
+    }
 
- /**
-  * @return the process
-  */
- public Process getProcess() {
-  return process;
- }
+    /**
+     * @return the process
+     */
+    public Process getProcess() {
+        return process;
+    }
 
- /**
-  * @param process
-  *            the process to set
-  */
- public void setProcess(Process process) {
-  this.process = process;
- }
+    /**
+     * @param process
+     *            the process to set
+     */
+    public void setProcess(Process process) {
+        this.process = process;
+    }
 
- /**
-  * Sets the value of the name property.
-  * 
-  * @param value
-  *            allowed object is {@link String }
-  * 
-  */
- public void setName(String value) {
-  this.name = value;
- }
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setName(String value) {
+        this.name = value;
+    }
 
- public SubProcess getSubProcess() {
-  return subProcess;
- }
+    public SubProcess getSubProcess() {
+        return subProcess;
+    }
 
- public void setSubProcess(SubProcess subProcess) {
-  this.subProcess = subProcess;
- }
+    public void setSubProcess(SubProcess subProcess) {
+        this.subProcess = subProcess;
+    }
 
- public SubChoreography getSubChoreography() {
-  return subChoreography;
- }
+    public SubChoreography getSubChoreography() {
+        return subChoreography;
+    }
 
- public void setSubChoreography(SubChoreography subChoreography) {
-  this.subChoreography = subChoreography;
- }
+    public void setSubChoreography(SubChoreography subChoreography) {
+        this.subChoreography = subChoreography;
+    }
 
- public String getProcessid() {
-  return processid;
- }
+    public String getProcessid() {
+        return processid;
+    }
 
- public void setProcessid(String processid) {
-  this.processid = processid;
- }
- 
- public boolean hasValidRoundTripProcessId() {
-  String processId = this.getProcessid();
-  
-  return processId != null && processId.length() > 0 
-    && processId.matches("^\\D([^\\s])*");
- }
+    public void setProcessid(String processid) {
+        this.processid = processid;
+    }
+    
+    public boolean hasValidRoundTripProcessId() {
+        String processId = this.getProcessid();
+        
+        return processId != null && processId.length() > 0 
+                && processId.matches("^\\D([^\\s])*");
+    }
 }

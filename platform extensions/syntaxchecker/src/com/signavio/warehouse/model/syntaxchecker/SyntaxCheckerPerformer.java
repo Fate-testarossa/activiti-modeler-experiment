@@ -1,19 +1,16 @@
 package com.signavio.warehouse.model.syntaxchecker;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.oryxeditor.server.diagram.Diagram;
-import org.oryxeditor.server.diagram.DiagramBuilder;
-import org.oryxeditor.server.diagram.Shape;
+import org.oryxeditor.server.diagram.generic.GenericDiagram;
 
 import de.hpi.bpmn2_0.exceptions.BpmnConverterException;
 import de.hpi.bpmn2_0.factory.AbstractBpmnFactory;
 import de.hpi.bpmn2_0.model.Definitions;
 import de.hpi.bpmn2_0.transformation.Diagram2BpmnConverter;
+import de.hpi.bpmn2_0.validation.BPMN2SyntaxChecker;
 import de.hpi.diagram.verification.SyntaxChecker;
 
 public class SyntaxCheckerPerformer {
@@ -54,13 +51,13 @@ public class SyntaxCheckerPerformer {
 //        }
 //    }
     
-    public JSONObject processDocument(String jsonDocument, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws JSONException, BpmnConverterException {
-        Diagram diagram = DiagramBuilder.parseJson(jsonDocument);
+    public JSONObject processDocument(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws JSONException, BpmnConverterException {
+//        GenericDiagram diagram = BasicDiagramBuilder.parseJson(jsonDocument);
         
         //TODO: validate edges that are not in the java object model
-        ArrayList<Shape> edges = this.getEdgesFromDiagram(diagram.getChildShapes());
+//        ArrayList<Shape> edges = this.getEdgesFromDiagram(diagram.getChildShapes());
         
-        String type = diagram.getStencilset().getNamespace();
+        String type = diagram.getStencilsetRef().getNamespace();
         SyntaxChecker checker = null;
         
         if(type != null && (type.equals("http://b3mn.org/stencilset/bpmn2.0#") ||
@@ -77,31 +74,31 @@ public class SyntaxCheckerPerformer {
         }
     }
     
-    private ArrayList<Shape> getEdgesFromDiagram(ArrayList<Shape> shapes) {
-        ArrayList<Shape> edges = new ArrayList<Shape>();
-        
-        for(Shape shape : shapes) {
-            String sid = shape.getStencilId();
-            
-            if(sid.equals("SequenceFlow")
-                    || sid.equals("MessageFlow")
-                    || sid.equals("Association_Undirected")
-                    || sid.equals("Association_Unidirectional")
-                    || sid.equals("Association_Bidirectional")) {
-                edges.add(shape);
-            } else if(shape.getChildShapes().size() > 0) {
-                edges.addAll(this.getEdgesFromDiagram(shape.getChildShapes()));
-            }
-            
-        }
-        
-        return edges;
-    }
+//    private ArrayList<Shape> getEdgesFromDiagram(ArrayList<Shape> shapes) {
+//        ArrayList<Shape> edges = new ArrayList<Shape>();
+//        
+//        for(Shape shape : shapes) {
+//            String sid = shape.getStencilId();
+//            
+//            if(sid.equals("SequenceFlow")
+//                    || sid.equals("MessageFlow")
+//                    || sid.equals("Association_Undirected")
+//                    || sid.equals("Association_Unidirectional")
+//                    || sid.equals("Association_Bidirectional")) {
+//                edges.add(shape);
+//            } else if(shape.getChildShapes().size() > 0) {
+//                edges.addAll(this.getEdgesFromDiagram(shape.getChildShapes()));
+//            }
+//            
+//        }
+//        
+//        return edges;
+//    }
     
-    protected SyntaxChecker getCheckerBPMN2(Diagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws BpmnConverterException {
+    protected SyntaxChecker getCheckerBPMN2(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws BpmnConverterException {
         Diagram2BpmnConverter converter = new Diagram2BpmnConverter(diagram, factoryClasses);
         
         Definitions defs = converter.getDefinitionsFromDiagram();
-        return defs.getSyntaxChecker();
+        return new BPMN2SyntaxChecker(defs);
     }
 }

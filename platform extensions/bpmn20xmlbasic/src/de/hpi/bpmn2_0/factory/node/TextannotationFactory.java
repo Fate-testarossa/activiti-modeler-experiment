@@ -40,29 +40,29 @@ import de.hpi.bpmn2_0.model.artifacts.TextAnnotation;
 @StencilId("TextAnnotation")
 public class TextannotationFactory extends AbstractShapeFactory {
 
- /* (non-Javadoc)
-  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-  */
- // @Override
- protected TextAnnotation createProcessElement(GenericShape shape)
-   throws BpmnConverterException {
-  TextAnnotation text = new TextAnnotation();
-  this.setCommonAttributes(text, shape);
-  text.setId(shape.getResourceId());
-  
-  /* Text */
-  String textAttr = shape.getProperty("text");
-  if(textAttr != null && !(textAttr.length() == 0)) {
-   text.setText(textAttr);
-  }
-  
-  /* Text Format */
-  String textFormat = shape.getProperty("textformat");
-  if(textFormat != null && !(textFormat.length() == 0)) {
-   text.setTextFormat(textFormat);
-  }
-  
-  return text;
- }
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected TextAnnotation createProcessElement(GenericShape shape)
+            throws BpmnConverterException {
+        TextAnnotation text = new TextAnnotation();
+        this.setCommonAttributes(text, shape);
+        text.setId(shape.getResourceId());
+        
+        /* Text */
+        String textAttr = shape.getProperty("text");
+        if(textAttr != null && !(textAttr.length() == 0)) {
+            text.setText(textAttr);
+        }
+        
+        /* Text Format */
+        String textFormat = shape.getProperty("textformat");
+        if(textFormat != null && !(textFormat.length() == 0)) {
+            text.setTextFormat(textFormat);
+        }
+        
+        return text;
+    }
 
 }

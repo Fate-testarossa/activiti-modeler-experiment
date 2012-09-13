@@ -12,18 +12,18 @@ import org.oryxeditor.server.diagram.generic.GenericDiagram;
  */
 public class BasicDiagram extends GenericDiagram<BasicShape, BasicDiagram> implements BasicShape {
 
- public BasicDiagram(String resourceId, String stencilId, StencilSetReference stencilsetRef) {
-  super(resourceId, stencilId, stencilsetRef);
- }
+    public BasicDiagram(String resourceId, String stencilId, StencilSetReference stencilsetRef) {
+        super(resourceId, stencilId, stencilsetRef);
+    }
 
 
- public BasicDiagram(String resourceId) {
-  super(resourceId);
- }
+    public BasicDiagram(String resourceId) {
+        super(resourceId);
+    }
 
 
- public BasicDiagram(String resourceId, String stencilId) {
-  super(resourceId, stencilId);
- }
+    public BasicDiagram(String resourceId, String stencilId) {
+        super(resourceId, stencilId);
+    }
 
 }

@@ -12,13 +12,13 @@ import org.oryxeditor.server.diagram.generic.GenericEdge;
  */
 public class BasicEdge extends GenericEdge<BasicShape, BasicDiagram> implements BasicShape {
 
- public BasicEdge(String resourceId) {
-  super(resourceId);
- }
+    public BasicEdge(String resourceId) {
+        super(resourceId);
+    }
 
 
- public BasicEdge(String resourceId, String stencilId) {
-  super(resourceId, stencilId);
- }
+    public BasicEdge(String resourceId, String stencilId) {
+        super(resourceId, stencilId);
+    }
 
 }

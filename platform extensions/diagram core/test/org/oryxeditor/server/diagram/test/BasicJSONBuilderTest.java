@@ -7,9 +7,9 @@ import org.junit.Test;
 
 public class BasicJSONBuilderTest {
 
- @Test
- public final void testParseModel() {
-  fail("Not yet implemented"); // TODO
- }
+    @Test
+    public final void testParseModel() {
+        fail("Not yet implemented"); // TODO
+    }
 
 }

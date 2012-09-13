@@ -43,61 +43,61 @@ import de.hpi.diagram.SignavioUUID;
 @StencilId("DataStore")
 public class DataStoreFactory extends AbstractShapeFactory {
 
- /* (non-Javadoc)
-  * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-  */
- // @Override
- protected BaseElement createProcessElement(GenericShape shape)
-   throws BpmnConverterException {
-  DataStoreReference dataStoreRef = new DataStoreReference();
-  this.setCommonAttributes(dataStoreRef, shape);
-  dataStoreRef.setDataStoreRef(new DataStore());
-  this.setDataStoreRefAttributes(dataStoreRef, shape);
-  
-  return dataStoreRef;
- }
- 
- /**
-  * Sets the attributes related to a data store element.
-  * 
-  * @param dataStoreRef
-  *   The @link {@link DataStoreReference}.
-  * @param shape
-  *   The data store {@link GenericShape}
-  */
- private void setDataStoreRefAttributes(DataStoreReference dataStoreRef, GenericShape shape) {
-  DataStore dataStore = dataStoreRef.getDataStoreRef();
-  String dataStateName = shape.getProperty("state");
-  /* Set attributes of the global data store */
-  if(dataStore != null) {
-   dataStore.setId(SignavioUUID.generate());
-   dataStore.setName(shape.getProperty("name"));
-   if(shape.getProperty("capacity") != null && !(shape.getProperty("capacity").length() == 0))
-    dataStore.setCapacity(Integer.valueOf(shape.getProperty("capacity")).intValue());
-   
-   /* Set isUnlimited attribute */
-   String isUnlimited = shape.getProperty("isunlimited");
-   if(isUnlimited != null && isUnlimited.equalsIgnoreCase("true")) 
-    dataStore.setUnlimited(true);
-   else
-    dataStore.setUnlimited(false);
-   
-   /* Define DataState element */
-   if(dataStateName != null && !(dataStateName.length() == 0)) {
-    DataState dataState = new DataState(dataStateName);
-    dataStore.setDataState(dataState);
-   }
-  }
-  
-  /* Set attributes of the data store reference */
-  dataStoreRef.setName(shape.getProperty("name"));
-  dataStoreRef.setId(shape.getResourceId());
-  
-  /* Define DataState element */
-  if(dataStateName != null && !(dataStateName.length() == 0)) {
-   DataState dataState = new DataState(dataStateName);
-   dataStoreRef.setDataState(dataState);
-  }
- }
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected BaseElement createProcessElement(GenericShape shape)
+            throws BpmnConverterException {
+        DataStoreReference dataStoreRef = new DataStoreReference();
+        this.setCommonAttributes(dataStoreRef, shape);
+        dataStoreRef.setDataStoreRef(new DataStore());
+        this.setDataStoreRefAttributes(dataStoreRef, shape);
+        
+        return dataStoreRef;
+    }
+    
+    /**
+     * Sets the attributes related to a data store element.
+     * 
+     * @param dataStoreRef
+     *         The @link {@link DataStoreReference}.
+     * @param shape
+     *         The data store {@link GenericShape}
+     */
+    private void setDataStoreRefAttributes(DataStoreReference dataStoreRef, GenericShape shape) {
+        DataStore dataStore = dataStoreRef.getDataStoreRef();
+        String dataStateName = shape.getProperty("state");
+        /* Set attributes of the global data store */
+        if(dataStore != null) {
+            dataStore.setId(SignavioUUID.generate());
+            dataStore.setName(shape.getProperty("name"));
+            if(shape.getProperty("capacity") != null && !(shape.getProperty("capacity").length() == 0))
+                dataStore.setCapacity(Integer.valueOf(shape.getProperty("capacity")).intValue());
+            
+            /* Set isUnlimited attribute */
+            String isUnlimited = shape.getProperty("isunlimited");
+            if(isUnlimited != null && isUnlimited.equalsIgnoreCase("true")) 
+                dataStore.setUnlimited(true);
+            else
+                dataStore.setUnlimited(false);
+            
+            /* Define DataState element */
+            if(dataStateName != null && !(dataStateName.length() == 0)) {
+                DataState dataState = new DataState(dataStateName);
+                dataStore.setDataState(dataState);
+            }
+        }
+        
+        /* Set attributes of the data store reference */
+        dataStoreRef.setName(shape.getProperty("name"));
+        dataStoreRef.setId(shape.getResourceId());
+        
+        /* Define DataState element */
+        if(dataStateName != null && !(dataStateName.length() == 0)) {
+            DataState dataState = new DataState(dataStateName);
+            dataStoreRef.setDataState(dataState);
+        }
+    }
 
 }
