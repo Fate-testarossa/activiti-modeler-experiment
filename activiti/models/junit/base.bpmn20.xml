@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns6="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-baf82cd3-e9db-47b6-b8a6-bd57464c9d5c" name="ProcessName" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="sid-7edaa8f2-2ccd-4300-a087-4361ae11eb0f" isExecutable="false" name="ProcessName">
+      <ns8:startEvent xmlns:ns8="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="" id="sid-63400549-4716-4886-9367-DFD642DD4B0A" name="" ns6:initiator="None">
+         <ns8:extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </ns8:extensionElements>
+         <ns8:outgoing>sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA</ns8:outgoing>
+      </ns8:startEvent>
+      <endEvent id="sid-DC7B0F52-1402-4134-A105-147097E642B4" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA</incoming>
+      </endEvent>
+      <sequenceFlow id="sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA" name="" sourceRef="sid-63400549-4716-4886-9367-DFD642DD4B0A" targetRef="sid-DC7B0F52-1402-4134-A105-147097E642B4"/>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-c66852ec-88ca-4614-b1ba-ff73b9dfb765">
+      <bpmndi:BPMNPlane bpmnElement="sid-7edaa8f2-2ccd-4300-a087-4361ae11eb0f" id="sid-b2947e7f-be71-4959-8f01-9fc47c398821">
+         <bpmndi:BPMNShape bpmnElement="sid-63400549-4716-4886-9367-DFD642DD4B0A" id="sid-63400549-4716-4886-9367-DFD642DD4B0A_gui">
+            <omgdc:Bounds height="30.0" width="30.0" x="433.0" y="79.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="sid-DC7B0F52-1402-4134-A105-147097E642B4" id="sid-DC7B0F52-1402-4134-A105-147097E642B4_gui">
+            <omgdc:Bounds height="28.0" width="28.0" x="434.0" y="153.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA" id="sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA_gui">
+            <omgdi:waypoint x="448.0" y="109.0"/>
+            <omgdi:waypoint x="448.0" y="153.0"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>

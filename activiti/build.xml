@@ -1,4 +1,4 @@
-<project name="Activiti Model Converter" default="package">
+<project name="Activiti Modeler Build Script" default="package">
 
     <property file="build.properties" />
     
@@ -27,34 +27,11 @@
             </fileset>
         </jar>
     </target>
-
-    <target name="convert" description="Convert models">
-        
-        <pathconvert property="models.files" pathsep=" ">
-            <fileset dir="target/models" >
-                <include name="*.signavio.xml"/>
-            </fileset>
-            <regexpmapper to="'\1'" from="(.*)" /> 
-        </pathconvert> 
-        
-        <java classname="com.activiti.bpmn.Converter">
-            <classpath >
-                <fileset dir="lib/runtime">
-                    <include name="**/*.jar" />
-                </fileset>
-                <fileset dir="target">
-                    <include name="amconverter.jar" />
-                </fileset>
-            </classpath>
-            <arg line="${models.files}"/>
-        </java>
-        
-    </target>
     
     <target name="war" description="Build all-in-one war">
-        <mkdir dir="${basedir}/target/models" />
+        <mkdir dir="${basedir}/models" />
         <pathconvert property="models.dir" dirsep="/">
-            <path path="${basedir}/target/models"></path>
+            <path path="${basedir}/models"></path>
         </pathconvert>
         <ant antfile="${basedir}/../platform extensions/diagram core/build.xml"  dir="${basedir}/../platform extensions/diagram core/" />
        	<ant antfile="${basedir}/../platform extensions/bpmn20xmlbasic/build.xml"  dir="${basedir}/../platform extensions/bpmn20xmlbasic/" />
@@ -81,6 +58,25 @@
           </cargo>    
     </target>    
 
-    
+    <target name="junit" description="junit">
+    	<mkdir dir="build/test/classes"/>
+    	<javac srcdir="test/src" destdir="build/test/classes" includeantruntime="false" debug="true">
+    		  <classpath> 
+    		      <fileset dir="lib/runtime"/>
+    		      <fileset dir="lib/test"/>
+    		      <fileset dir="../platform/WebContent/WEB-INF/lib">
+    		      </fileset>
+    		  </classpath>
+    	</javac>
+    	<junit showoutput="true">
+    	  <test name="org.activiti.test.BaseTest"/>
+    		<formatter type="plain" usefile="false" />
+    		<classpath>
+    			<fileset dir="lib/test"></fileset>
+                <fileset dir="../platform/WebContent/WEB-INF/lib"/>
+    			<pathelement location="build/test/classes"/>
+    		</classpath>
+    	</junit>
+	</target>
     
 </project>
