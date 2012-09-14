@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -27,6 +28,9 @@ public class ActivitiExtensionFormPropertyElement extends AbstractExtensionEleme
     
     @XmlTransient
     private String porder;
+
+    @XmlAttribute(name="datePattern",namespace="http://activiti.org/bpmn")
+    private String datePattern;
     
     /*
      * Constructors 
@@ -65,6 +69,14 @@ public class ActivitiExtensionFormPropertyElement extends AbstractExtensionEleme
         }
         
         return porder.compareTo(o.porder);
+    }
+
+    public String getDatePattern() {
+        return datePattern;
+    }
+
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
     }
 }
 

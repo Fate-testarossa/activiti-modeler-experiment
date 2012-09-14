@@ -42,7 +42,7 @@ public class FormPropertiesUtil {
                 }
 
                 String values = o.getString("typeext");
-                if (values != null && !values.isEmpty()) {
+                if (values != null && !values.isEmpty() && !values.trim().isEmpty()) {
                     JSONObject valuesObj = new JSONObject(values);
                     
                     for (String name: JSONObject.getNames(valuesObj)) {
@@ -56,7 +56,9 @@ public class FormPropertiesUtil {
                 }
                 
                 e.setPorder(o.getString("porder"));
-            
+
+                e.setDatePattern(o.getString("datePattern"));
+
                 formPropertiesSet.add(e);
                 
             }

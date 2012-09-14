@@ -76,6 +76,14 @@
                                                     "value":"0",                                                                                                                                                                            
                                                     "type":"String",                                                                                                                                                                        
                                                     "width":60                                                                                                                                                                               
+                                                },
+                                                {
+                                                    "id":"datePattern",
+                                                    "name":"datePattern",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "width":80
+                                                    
                                                 },                                                                                                                                                                                           
                                                 {                                                                                                                                                                                            
                                                     "id":"typeext",                                                                                                                                                                         

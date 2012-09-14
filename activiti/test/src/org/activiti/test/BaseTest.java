@@ -30,22 +30,10 @@ import de.hpi.bpmn2_0.transformation.Diagram2XmlConverter;
 public class BaseTest {
 
     @Test
-    public void test() throws IOException, BpmnConverterException, JAXBException, SAXException,
+    public void testBase() throws IOException, BpmnConverterException, JAXBException, SAXException,
             ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
-        String json = readJson("models/junit/base.signavio.xml");
 
-        BasicDiagram diagram = BasicDiagramBuilder.parseJson(json);
-        Diagram2XmlConverter converter = new Diagram2XmlConverter(diagram,
-                "classpath:/META-INF/validation/xsd/BPMN20.xsd");
-
-        String xml = converter.getXml().getBuffer().toString();
-
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-        Document doc;
-        InputStream inpStr;
-        inpStr = new ByteArrayInputStream(xml.getBytes("UTF-8"));
-        doc = documentBuilderFactory.newDocumentBuilder().parse(inpStr);
+        Document doc = getDocument("models/junit/base.signavio.xml");
         
         XPathFactory xpathFactory = XPathFactory.newInstance();
         
@@ -55,7 +43,47 @@ public class BaseTest {
         Assert.assertEquals("ProcessName", processName);
     }
 
-    private static String readJson(String inPath) throws IOException {
+    @Test
+    public void testDatePattern() throws IOException, BpmnConverterException, JAXBException, SAXException,
+            ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
+
+        Document doc =  getDocument("models/junit/dateformat.signavio.xml");
+        
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        
+        Object o =  xpathFactory.newXPath().evaluate("/definitions/process/startEvent/extensionElements/formProperty/@datePattern",
+                doc, XPathConstants.STRING);
+        
+        Assert.assertEquals("YYYY-mm-dd", o);
+    }
+
+    
+    private Document getDocument(String path) throws BpmnConverterException, JAXBException, SAXException, ParserConfigurationException, TransformerException, IOException, JSONException {
+        String xml = getXml(path); 
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
+        Document doc;
+        InputStream inpStr;
+        inpStr = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+        doc = documentBuilderFactory.newDocumentBuilder().parse(inpStr);
+        
+        return doc;
+    }
+    
+    private String getXml(String path) throws BpmnConverterException, JAXBException, SAXException, ParserConfigurationException, TransformerException, IOException, JSONException {
+        String json = readJson(path);
+
+        BasicDiagram diagram = BasicDiagramBuilder.parseJson(json);
+        Diagram2XmlConverter converter = new Diagram2XmlConverter(diagram,
+                "classpath:/META-INF/validation/xsd/BPMN20.xsd");
+
+        String xml = converter.getXml().getBuffer().toString();
+        
+        return xml;
+    }
+    
+    private String readJson(String inPath) throws IOException {
         StringBuffer fileData = new StringBuffer(1000);
         BufferedReader reader = new BufferedReader(new FileReader(inPath));
         char[] buf = new char[1024];
