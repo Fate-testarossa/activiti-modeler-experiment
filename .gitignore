@@ -12,3 +12,5 @@ target/
 /.settings
 /.classpath
 /.project
+/bin
+/test-output
