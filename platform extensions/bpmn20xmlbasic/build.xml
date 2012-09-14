@@ -52,6 +52,7 @@
 
     <!-- Copy the JAR file into the Platform's lib folder -->
     <target name="com.signavio.extension.copy2Platform" depends="com.signavio.extension.jar, com.signavio.extension.copy2Platform.lib">
+        <copy file="${target}/${jar-file}" todir="${platform-lib}" />
         <copy file="${target}/${jar-file}" todir="${extension-syntaxchecker-lib}" />
     </target>
 </project>

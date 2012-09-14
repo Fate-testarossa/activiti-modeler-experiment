@@ -68,7 +68,7 @@
     		      </fileset>
     		  </classpath>
     	</javac>
-    	<junit showoutput="true">
+    	<junit>
     	  <test name="org.activiti.test.BaseTest"/>
     		<formatter type="plain" usefile="false" />
     		<classpath>
