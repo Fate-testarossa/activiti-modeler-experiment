@@ -54,7 +54,7 @@ public class BaseTest {
         Object o =  xpathFactory.newXPath().evaluate("/definitions/process/startEvent/extensionElements/formProperty/@datePattern",
                 doc, XPathConstants.STRING);
         
-        Assert.assertEquals("YYYY-mm-dd", o);
+        Assert.assertEquals("yyyy-MM-dd", o);
     }
 
     

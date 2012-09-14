@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns6="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-9303abf9-4e4d-41c7-a916-717cad6288ae" name="ProcessName" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-   <process id="sid-868d19a6-798d-4593-a31e-e9150d184daa" isExecutable="false" name="ProcessName">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns6="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="test" name="{&quot;title&quot;:&quot;Date Test 3&quot;, start:['ROLE_WEB_ADMIN','ROLE_WEB_DOCVIEW']}" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="timePatternTest" isExecutable="false" name="{&quot;title&quot;:&quot;Date Test 3&quot;, start:['ROLE_WEB_ADMIN','ROLE_WEB_DOCVIEW']}">
       <ns8:startEvent xmlns:ns8="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="" id="sid-63400549-4716-4886-9367-DFD642DD4B0A" name="" ns6:initiator="None">
          <ns8:extensionElements>
-            <ns6:formProperty id="date" name="date" ns6:datePattern="YYYY-mm-dd" required="false" type="date" variable="date" writable="true"/>
+            <ns6:formProperty datePattern="yyyy-MM-dd" id="date" name="date" required="false" type="date" variable="date" writable="true"/>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
          </ns8:extensionElements>
          <ns8:outgoing>sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA</ns8:outgoing>
@@ -16,8 +16,8 @@
       </endEvent>
       <sequenceFlow id="sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA" name="" sourceRef="sid-63400549-4716-4886-9367-DFD642DD4B0A" targetRef="sid-DC7B0F52-1402-4134-A105-147097E642B4"/>
    </process>
-   <bpmndi:BPMNDiagram id="sid-faba39b3-1599-45bc-9dce-8396badb37cf">
-      <bpmndi:BPMNPlane bpmnElement="sid-868d19a6-798d-4593-a31e-e9150d184daa" id="sid-24182cb1-2978-4c44-96a9-8dde7cd7822c">
+   <bpmndi:BPMNDiagram id="sid-bed96939-0ba1-4d62-834d-9a870b34f799">
+      <bpmndi:BPMNPlane bpmnElement="timePatternTest" id="sid-c99dc8ef-d414-4f2e-8454-db16627d3f7c">
          <bpmndi:BPMNShape bpmnElement="sid-63400549-4716-4886-9367-DFD642DD4B0A" id="sid-63400549-4716-4886-9367-DFD642DD4B0A_gui">
             <omgdc:Bounds height="30.0" width="30.0" x="433.0" y="79.0"/>
          </bpmndi:BPMNShape>

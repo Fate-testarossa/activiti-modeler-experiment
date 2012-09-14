@@ -3,79 +3,79 @@
     "namespace":"http://b3mn.org/stencilset/bpmn2.0#",
     "description":"This is the BPMN 2.0 stencil set specification.",
     "description_de":"Dies ist die BPMN 2.0 Stencilset Spezifikation.",
-    "propertyPackages": [                                                                                                                                                                                                                
-                {                                                                                                                                                                                                                            
-                        "name":"formPropertiesAttributes",                                                                                                                                                                                   
-                        "properties":[                                                                                                                                                                                                       
-                                {                                                                                                                                                                                                            
-                                        "id":"activiti:formproperty",                                                                                                                                                                        
-                                        "type":"Complex",                                                                                                                                                                                    
-                                        "title":"Activiti:formProperty",                                                                                                                                                                     
-                                        "readonly":false,                                                                                                                                                                                    
-                                        "optional":true,                                                                                                                                                                                     
-                                        "refToView":"",                                                                                                                                                                                      
-                                        "value":"",                                                                                                                                                                                          
-                                        "complexItems":[                                                                                                                                                                                     
-                                                {                                                                                                                                                                                            
-                                                    "id":"id",                                                                                                                                                                               
-                                                    "name":"id",                                                                                                                                                                             
-                                                    "value":"",                                                                                                                                                                              
-                                                    "type":"String",                                                                                                                                                                         
-                                                    "optional":false,                                                                                                                                                                        
-                                                    "width":150                                                                                                                                                                              
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"name",                                                                                                                                                                             
-                                                    "name":"name",                                                                                                                                                                           
-                                                    "value":"",                                                                                                                                                                              
-                                                    "type":"String",                                                                                                                                                                         
-                                                    "optional":true,                                                                                                                                                                         
-                                                    "width":250                                                                                                                                                                              
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"variable",                                                                                                                                                                         
-                                                    "name":"variable",                                                                                                                                                                       
-                                                    "value":"",                                                                                                                                                                              
-                                                    "type":"String",                                                                                                                                                                         
-                                                    "optional":true,                                                                                                                                                                         
-                                                    "width":150                                                                                                                                                                              
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"expression",                                                                                                                                                                       
-                                                    "name":"expression",                                                                                                                                                                     
-                                                    "value":"",                                                                                                                                                                              
-                                                    "type":"String",                                                                                                                                                                         
-                                                    "optional":true,                                                                                                                                                                         
-                                                    "width":150                                                                                                                                                                              
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"type",                                                                                                                                                                             
-                                                    "name":"type",                                                                                                                                                                           
-                                                    "value":"",                                                                                                                                                                              
-                                                    "type":"String",                                                                                                                                                                         
-                                                    "optional":false,                                                                                                                                                                        
-                                                    "width":150                                                                                                                                                                              
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"required",                                                                                                                                                                         
-                                                    "name":"required",                                                                                                                                                                       
-                                                    "value":false,                                                                                                                                                                           
-                                                    "type":"Boolean",                                                                                                                                                                        
-                                                    "width":60                                                                                                                                                                               
-                                                },  
-                                                {                                                                                                                                                                                            
-                                                    "id":"writable",                                                                                                                                                                         
-                                                    "name":"writable",                                                                                                                                                                       
-                                                    "value":true,                                                                                                                                                                            
-                                                    "type":"Boolean",                                                                                                                                                                        
-                                                    "width":60                                                                                                                                                                               
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"porder",                                                                                                                                                                         
-                                                    "name":"porder",                                                                                                                                                                       
-                                                    "value":"0",                                                                                                                                                                            
-                                                    "type":"String",                                                                                                                                                                        
-                                                    "width":60                                                                                                                                                                               
+    "propertyPackages": [
+                {
+                        "name":"formPropertiesAttributes",
+                        "properties":[
+                                {
+                                        "id":"activiti:formproperty",
+                                        "type":"Complex",
+                                        "title":"Activiti:formProperty",
+                                        "readonly":false,
+                                        "optional":true,
+                                        "refToView":"",
+                                        "value":"",
+                                        "complexItems":[
+                                                {
+                                                    "id":"id",
+                                                    "name":"id",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "optional":false,
+                                                    "width":150
+                                                },
+                                                {
+                                                    "id":"name",
+                                                    "name":"name",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "optional":true,
+                                                    "width":250
+                                                },
+                                                {
+                                                    "id":"variable",
+                                                    "name":"variable",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "optional":true,
+                                                    "width":150
+                                                },
+                                                {
+                                                    "id":"expression",
+                                                    "name":"expression",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "optional":true,
+                                                    "width":150
+                                                },
+                                                {
+                                                    "id":"type",
+                                                    "name":"type",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "optional":false,
+                                                    "width":150
+                                                },
+                                                {
+                                                    "id":"required",
+                                                    "name":"required",
+                                                    "value":false,
+                                                    "type":"Boolean",
+                                                    "width":60
+                                                },
+                                                {
+                                                    "id":"writable",
+                                                    "name":"writable",
+                                                    "value":true,
+                                                    "type":"Boolean",
+                                                    "width":60
+                                                },
+                                                {
+                                                    "id":"porder",
+                                                    "name":"porder",
+                                                    "value":"0",
+                                                    "type":"String",
+                                                    "width":60
                                                 },
                                                 {
                                                     "id":"datePattern",
@@ -83,20 +83,18 @@
                                                     "value":"",
                                                     "type":"String",
                                                     "width":80
-                                                    
-                                                },                                                                                                                                                                                           
-                                                {                                                                                                                                                                                            
-                                                    "id":"typeext",                                                                                                                                                                         
-                                                    "name":"Type extension value",                                                                                                                                                                       
-                                                    "value":"",                                                                                                                                                                            
-                                                    "type":"String",                                                                                                                                                                        
-                                                    "width":160                                                                                                                                                                               
-                                                },                                                                                                                                                                                           
-                                        ]                                                                                                                                                                                                    
-                                }                                                                                                                                                                                                            
-                        ]                                                                                                                                                                                                                    
-                },                                                     
- 
+                                                },
+                                                {
+                                                    "id":"typeext",
+                                                    "name":"Type extension value",
+                                                    "value":"",
+                                                    "type":"String",
+                                                    "width":160
+                                                },
+                                        ]
+                                }
+                        ]
+                },
                 {
              "name":"baseAttributes",
              "properties": [
@@ -111,7 +109,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : true,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -354,9 +352,7 @@
                 }
              ]
          },
-        
         // Event Definitions Attributes
-        
         {
              "name":"error",
              "properties":[
@@ -531,9 +527,7 @@
                  }
              ]
          },
-        
         // End Event Definitions
-        
         {
             "name" : "diagram",
             "properties" : [
@@ -570,7 +564,7 @@
                     "readonly":false,
                     "optional":true
                 },
-                {    
+                {
                     "id":"namespaces",
                     "type":"Complex",
                     "title":"Namespaces",
@@ -586,7 +580,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"url",
@@ -594,7 +588,7 @@
                             "type":"String",
                             "value":"",
                             "width":200,
-                            "optional":false 
+                            "optional":false
                         }
                     ]
                 },
@@ -724,7 +718,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"datastate",
@@ -752,7 +746,6 @@
                                    "title":"Physical",
                                    "value":"Physical"
                                }
-                                       
                             ],
                             "width":80,
                             "optional":true
@@ -799,7 +792,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"optional",
@@ -819,7 +812,7 @@
                             "optional":true
                         }
                     ]
-                },            
+                },
                 {
                     "id":"dataoutputset",
                     "type":"Complex",
@@ -837,7 +830,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"optional",
@@ -920,7 +913,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"from",
@@ -982,7 +975,7 @@
                     "title_de":"Operationsname",
                     "value":"",
                     "description":"The descriptive name for the operation element.",
-                    "description_de":"Bezeichnung der Operation", 
+                    "description_de":"Bezeichnung der Operation",
                     "readonly":false,
                     "optional":"true"
                 },
@@ -993,7 +986,7 @@
                     "title_de":"Name der Eingangs-Nachricht",
                     "value":"",
                     "description":"The descriptive name for the in message element",
-                    "description_de":"Bezeichnung der Eingangs-Nachricht", 
+                    "description_de":"Bezeichnung der Eingangs-Nachricht",
                     "readonly":false,
                     "optional":"true"
                 },
@@ -1085,7 +1078,7 @@
                     "title_de":"Name der Ausgangs-Nachricht",
                     "value":"",
                     "description":"The descriptive name for the out message element",
-                    "description_de":"Bezeichnung der Ausgangs-Nachricht", 
+                    "description_de":"Bezeichnung der Ausgangs-Nachricht",
                     "readonly":false,
                     "optional":"true"
                 },
@@ -1218,7 +1211,7 @@
                             "value":"Sequential",
                             "icon" : "activity/list/mi.sequential.png",
                             "refToView":"sequential"
-                        }    
+                        }
                     ]
                 },
                 {
@@ -1575,7 +1568,7 @@
                             "title_de":"Manuell",
                             "value":"Manual",
                             "icon" : "activity/list/type.manual.png",
-                            "refToView":"manualTask"    
+                            "refToView":"manualTask"
                         },
                         {
                             "id":"c6",
@@ -1805,7 +1798,7 @@
                     "refToView":"fill_el",
                     "fill":true,
                     "stroke":false
-                }        
+                }
             ]
         },
         {
@@ -2029,7 +2022,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"from",
@@ -2446,7 +2439,7 @@
                             "type":"String",
                             "value":"",
                             "width":100,
-                            "optional":false 
+                            "optional":false
                         },
                         {
                             "id":"from",
@@ -2508,9 +2501,7 @@
                 }
             ]
         },
-        
         // Acitvities
-        
         {
             "type" :             "node",
             "id":                 "Task",
@@ -2529,14 +2520,14 @@
                     "type":"String",
                     "value":"",
                     "optional":true,
-                },                    
+                },
                 {
                     "id":"activiti:candidategroups",
                     "title":"Activiti:candidategroups",
                     "type":"String",
                     "value":"",
                     "optional":true,
-                },                    
+                },
                 {
                     "id":"bordercolor",
                     "type":"Color",
@@ -2558,7 +2549,7 @@
                 }
             ],
             "propertyPackages" :[
-                "formPropertiesAttributes",                                                                                                                                                                                  
+                "formPropertiesAttributes",
                 "processid",
                 "baseAttributes",
                 "flowElement",
@@ -2853,7 +2844,7 @@
                             "title_de" : "Fehler",
                             "value":"Error",
                             "icon" : "activity/list/event.error.png",
-                            "refToView":"error"    
+                            "refToView":"error"
                         },
                         {
                             "id":"c6",
@@ -2902,7 +2893,7 @@
                     "refToView":"fill_el",
                     "fill":true,
                     "stroke":false
-                }    
+                }
             ],
             "roles":             [
                 "all",
@@ -2961,7 +2952,7 @@
                     "refToView":"fill_el",
                     "fill":true,
                     "stroke":false
-                },    
+                },
                 {
                     "id":"isatransaction",
                     "type":"Boolean",
@@ -3007,9 +2998,7 @@
                 "EventActivitiesMorph"
             ]
         },
-        
         // Gateways
-        
         {
             "type" :             "node",
             "id" :                "Exclusive_Databased_Gateway",
@@ -3063,7 +3052,7 @@
                     "readonly":false,
                     "optional":false,
                     "refToView":"cross"
-                },        
+                },
                 {
                     "id":"defaultgate",
                     "type":"String",
@@ -3442,9 +3431,7 @@
                 "GatewaysMorph"
             ]
         },
-        
         // Swimlanes
-        
         {
             "type" :             "node",
             "id" :                "Pool",
@@ -3485,7 +3472,7 @@
                 "messageflow_start",
                 "messageflow_end",
                 "fromtoall",
-                "canContainArtifacts"                
+                "canContainArtifacts"
             ],
             "layout" : [{"type" : "layout.bpmn2_0.pool", "orientation" : "horizontal"}]
         },
@@ -3539,13 +3526,12 @@
                     "fill":false,
                     "stroke":true
                 }
-                
             ],
             "roles" :             [
                 "all",
                 "messageflow_start",
                 "messageflow_end",
-                "fromtoall"                
+                "fromtoall"
             ]
         },
         {
@@ -3633,212 +3619,13 @@
                     "fill":false,
                     "stroke":true
                 }
-                
             ],
             "roles":             [
                 "PoolChild",
                 "fromtoall",
-                "canContainArtifacts"                
+                "canContainArtifacts"
             ]
         },
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         {
             "type" :            "node",
             "id" :              "processparticipant",
@@ -3851,7 +3638,7 @@
             "view" :            "swimlane/process.participant.svg",
             "icon" :            "swimlane/process.participant.png",
             "defaultAlign" :    [
-                                    {"align": "northeast"}, 
+                                    {"align": "northeast"},
                                     {"parentRole": "VerticalPool", "align": "southeast"},
                                     {"orientation": "vertical", "align": "southeast"}
                                 ],
@@ -3886,9 +3673,7 @@
                 "eventSubprocessElement"
             ]
         },
-        
         // Artifacts
-        
         {
             "type" :             "node",
             "id" :                 "Group",
@@ -3952,7 +3737,7 @@
             "view" :            "artifact/text.annotation.svg",
             "icon" :            "artifact/text.annotation.png",
             "defaultAlign" :    [
-                                    {"align": "northeast"}, 
+                                    {"align": "northeast"},
                                     {"orientation": "vertical", "align": "southeast"}
                                 ],
             "propertyPackages": [
@@ -4009,9 +3794,7 @@
                 "TextAnnotationMorph"
             ]
         },
-        
         // Data Objects
-        
         {
             "type" :             "node",
             "id" :                "DataObject",
@@ -4024,7 +3807,7 @@
             "view" :            "dataobject/data.object.svg",
             "icon" :            "dataobject/data.object.png",
             "defaultAlign" :    [
-                                    {"align": "southeast"}, 
+                                    {"align": "southeast"},
                                     {"orientation": "vertical", "align": "southwest"}
                                 ],
             "propertyPackages":    [
@@ -4062,7 +3845,7 @@
                         {
                             "id":"c1",
                             "title":"None",
-                            "value":"None",                        
+                            "value":"None",
                             "refToView":"none"
                         },
                         {
@@ -4080,7 +3863,7 @@
                             "refToView":"output"
                         }
                     ]
-                },        
+                },
                 {
                     "id" : "iscollection",
                     "type" : "Boolean",
@@ -4130,7 +3913,7 @@
             "propertyPackages" : [
                 "baseAttributes",
                 "flowElement",
-                "borderColor"            
+                "borderColor"
             ],
             "properties" : [
                 {
@@ -4339,9 +4122,7 @@
                 "DataObjectMorph"
             ]
         },
-        
         // Start Events
-        
         {
             "type" :             "node",
             "id":                 "StartNoneEvent",
@@ -4392,7 +4173,6 @@
                     "readonly":false,
                     "optional":true
                 },
-                
             ]
         },
         {
@@ -4904,9 +4684,7 @@
                 }
             ]
         },
-        
         // Intermediate Events Catching
-        
         {
             "type": "node",
             "id":"IntermediateMessageEventCatching",
@@ -5591,9 +5369,7 @@
                 }
             ]
         },
-        
         // Intermediate Events Throwing
-        
         {
             "type": "node",
             "id":"IntermediateEvent",
@@ -5994,9 +5770,7 @@
                 }
             ]
         },
-        
         // End Events
-        
         {
             "type" : "node",
             "id": "EndNoneEvent",
@@ -6474,9 +6248,7 @@
                 }
             ]
         },
-        
         // Edges
-        
         {
             "type": "edge",
             "id":"SequenceFlow",
@@ -6601,7 +6373,7 @@
                 "all",
                 "ConnectingObjectsMorph",
                 "fromtoall"
-            ],            
+            ],
             "propertyPackages" : [
                 "dataAssociation",
                 "borderColor"
@@ -6721,7 +6493,7 @@
                 "ConnectingObjectsMorph",
                 "Directed_Association",
                 "fromtoall"
-            ],            
+            ],
             "propertyPackages" : [
                 "dataAssociation"
             ],
@@ -6796,7 +6568,6 @@
             ]
         }
     ],
-    
     "rules" : {
         "cardinalityRules": [
             {
@@ -6805,7 +6576,6 @@
                     {
                         "role":"SequenceFlow",
                         "maximum":0
-                        
                     }
                 ]
             },
@@ -6815,7 +6585,6 @@
                     {
                         "role":"SequenceFlow",
                         "maximum":0
-                        
                     }
                 ]
             }
@@ -7053,7 +6822,7 @@
                 "contains" : [
                     "VerticalLane"
                 ]
-            }, 
+            },
             {
                 "role" : "VerticalLane",
                 "contains" : [
@@ -7096,7 +6865,6 @@
                                 "choreography_sequence_end",
                                 "Message",
                                 "TextAnnotation"
-                                                                
                             ]
             },
             {

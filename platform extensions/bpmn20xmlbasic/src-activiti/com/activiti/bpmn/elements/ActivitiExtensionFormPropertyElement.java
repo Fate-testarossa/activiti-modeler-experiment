@@ -29,7 +29,7 @@ public class ActivitiExtensionFormPropertyElement extends AbstractExtensionEleme
     @XmlTransient
     private String porder;
 
-    @XmlAttribute(name="datePattern",namespace="http://activiti.org/bpmn")
+    @XmlAttribute(name="datePattern")
     private String datePattern;
     
     /*
