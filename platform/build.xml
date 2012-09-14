@@ -4,7 +4,6 @@
     <property name="dir-target" value="target"/>
     <property name="dir-classes" value="${dir-target}/classes"/>
     <property name="dir-src" value="src"/>
-    <property name="dir-src-activiti" value="src-activiti" />
     <property name="dir-webcontent" value="WebContent"/>
     <property name="dir-webinf" value="${dir-webcontent}/WEB-INF"/>
     <property name="dir-metainf" value="${dir-webcontent}/META-INF"/>
@@ -22,7 +21,6 @@
     <target name="com.signavio.platform.compile" depends="com.signavio.platform.clean">
         <mkdir dir="${dir-classes}"/>
         <javac destdir="${dir-classes}" debug="on" target="1.5" includeantruntime="false">
-        	<src path="${dir-src-activiti}" />
         	<src path="${dir-src}" />
             <classpath id="libs">
                 <fileset dir="${dir-lib}">

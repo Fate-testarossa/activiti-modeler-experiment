@@ -8,6 +8,7 @@
     <property name="build" value="build" />
 	<property name="lib" value="lib" />
 	<property name="extension-syntaxchecker-lib" value="../../platform extensions/syntaxchecker/lib" /> 
+    <property name="extension-bpmn20xmlbasic-lib" value="../../platform extensions/bpmn20xmlbasic/lib" /> 
 
     <target name="com.signavio.extension.clean">
         <delete dir="${target}" />
@@ -37,5 +38,6 @@
 
     <target name="com.signavio.extension.copy2Platform" depends="com.signavio.extension.jar">
         <copy file="${target}/${jar-file}" todir="${extension-syntaxchecker-lib}" />
+        <copy file="${target}/${jar-file}" todir="${extension-bpmn20xmlbasic-lib}" />
     </target>
 </project>

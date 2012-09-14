@@ -27,6 +27,15 @@
             </classpath>
         </javac>
     </target>
+	
+    
+    <!-- Copy Java libraries, if the lib property is defined. -->
+    <target name="com.signavio.extension.copy2Platform.lib" if="lib">
+        <copy todir="${platform-lib}">
+            <fileset dir="${lib}">
+            </fileset>
+        </copy>
+    </target>	
 
     <!-- Generate the JAR file -->
     <target name="com.signavio.extension.jar" depends="com.signavio.extension.compile">
@@ -40,7 +49,7 @@
     </target>
 
     <!-- Copy the JAR file into the Platform's lib folder -->
-    <target name="com.signavio.extension.copy2Platform" depends="com.signavio.extension.jar">
+    <target name="com.signavio.extension.copy2Platform" depends="com.signavio.extension.jar, com.signavio.extension.copy2Platform.lib">
         <copy file="${target}/${jar-file}" todir="${platform-lib}" />
     </target>
 </project>

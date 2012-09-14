@@ -5,9 +5,11 @@
     <!-- PROPERTIES -->
     <property name="target" value="target" />
     <property name="src" value="src" />
+    <property name="src-activiti" value="src-activiti" />
     <property name="build" value="build" />
     <property name="lib" value="lib" />
-	<property name="extension-syntaxchecker-lib" value="../../platform extensions/syntaxchecker/lib" /> 
+    <property name="platform-lib" value="../../platform/WebContent/WEB-INF/lib" />  
+	<property name="extension-syntaxchecker-lib" value="../../platform extensions/syntaxchecker/lib" />
 
     <!-- Clean up project (remove temporary folders) -->
     <target name="com.signavio.extension.clean">
@@ -18,7 +20,9 @@
     <!-- Compile the Java classes -->
     <target name="com.signavio.extension.compile" depends="com.signavio.extension.clean">
         <mkdir dir="${build}" />
-        <javac srcdir="${src}" destdir="${build}" debug="on" target="1.5" includeantruntime="false">
+        <javac destdir="${build}" debug="on" target="1.5" includeantruntime="false">
+        	<src path="${src}" />
+            <src path="${src-activiti}" />
             <classpath id="libs">
                 <fileset dir="${lib}">
                     <include name="**/*.jar" />
