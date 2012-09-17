@@ -57,7 +57,9 @@ public class FormPropertiesUtil {
                 
                 e.setPorder(o.getString("porder"));
 
-                e.setDatePattern(o.getString("datePattern"));
+                if (o.has("datePattern")) {
+                    e.setDatePattern(o.getString("datePattern"));
+                }
 
                 formPropertiesSet.add(e);
                 
