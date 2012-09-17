@@ -21,13 +21,14 @@ public class FormPropertiesUtil {
             JSONObject modelJSON = new JSONObject(json);
             int count = modelJSON.getInt("totalCount");
             JSONArray arr = modelJSON.getJSONArray("items");
-            
+
             SortedSet<ActivitiExtensionFormPropertyElement> formPropertiesSet = new TreeSet<ActivitiExtensionFormPropertyElement>();
-            
-            for (int i=0;i<count;i++) {
+
+            for (int i = 0; i < count; i++) {
                 ActivitiExtensionFormPropertyElement e = new ActivitiExtensionFormPropertyElement();
                 JSONObject o = arr.getJSONObject(i);
-                for (String propName : new String[] {"name","variable","id","required","writable","type","expression"}) {
+                for (String propName : new String[] { "name", "variable", "id", "required", "writable", "type",
+                        "expression" }) {
                     Object value = null;
                     if (propName.equals("required") || propName.equals("writable")) {
                         value = Boolean.valueOf(o.getString(propName));
@@ -36,25 +37,27 @@ public class FormPropertiesUtil {
                             value = o.getString(propName);
                         }
                     }
-                    if (value!=null && !value.toString().isEmpty()) {
+                    if (value != null && !value.toString().isEmpty()) {
                         e.getExtensionAttributes().put(new QName(propName), value.toString());
                     }
                 }
 
-                String values = o.getString("typeext");
-                if (values != null && !values.isEmpty() && !values.trim().isEmpty()) {
-                    JSONObject valuesObj = new JSONObject(values);
-                    
-                    for (String name: JSONObject.getNames(valuesObj)) {
-                     
-                     ActivitiExtensionFormPropertyValueElement v = new ActivitiExtensionFormPropertyValueElement();
-                     v.getExtensionAttributes().put(new QName("id"), name);
-                     v.getExtensionAttributes().put(new QName("name"),valuesObj.getString(name));
-                     e.getValues().add(v);
-                     
-                    }  
+                if (o.has("typeext")) {
+                    String values = o.getString("typeext");
+                    if (values != null && !values.isEmpty() && !values.trim().isEmpty()) {
+                        JSONObject valuesObj = new JSONObject(values);
+
+                        for (String name : JSONObject.getNames(valuesObj)) {
+
+                            ActivitiExtensionFormPropertyValueElement v = new ActivitiExtensionFormPropertyValueElement();
+                            v.getExtensionAttributes().put(new QName("id"), name);
+                            v.getExtensionAttributes().put(new QName("name"), valuesObj.getString(name));
+                            e.getValues().add(v);
+
+                        }
+                    }
                 }
-                
+
                 e.setPorder(o.getString("porder"));
 
                 if (o.has("datePattern")) {
@@ -62,18 +65,17 @@ public class FormPropertiesUtil {
                 }
 
                 formPropertiesSet.add(e);
-                
+
             }
 
-            for (ActivitiExtensionFormPropertyElement e: formPropertiesSet) {
+            for (ActivitiExtensionFormPropertyElement e : formPropertiesSet) {
                 task.getOrCreateExtensionElements().add(e);
             }
 
-            
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
     }
-    
+
 }
