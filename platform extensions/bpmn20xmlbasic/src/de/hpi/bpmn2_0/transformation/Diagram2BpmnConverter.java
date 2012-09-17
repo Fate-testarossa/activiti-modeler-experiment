@@ -612,6 +612,7 @@ public class Diagram2BpmnConverter {
             this.processes.add(p);
             this.tmpProcesses.add(p);
         }
+        
     }
 
     /**
@@ -828,7 +829,7 @@ public class Diagram2BpmnConverter {
                     process.setExecutable(true);
                 else
                     process.setExecutable(false);
-
+                
                 process.getLaneSet().add(laneSet);
                 participant.setProcessRef(process);
                 
@@ -1273,6 +1274,9 @@ public class Diagram2BpmnConverter {
              */
             if(!(this.definitions.getFirstPlane().getBpmnElement() instanceof Collaboration)
                     && !(this.definitions.getFirstPlane().getBpmnElement() instanceof Choreography)) {
+                String isExecutableString = this.diagram.getProperty("isexecutable");
+                Boolean isExecutable = isExecutableString != null && isExecutableString.trim().toLowerCase().equals("true");
+                process.setExecutable(isExecutable);
                 this.definitions.getFirstPlane().setBpmnElement(process);
             }
             
@@ -1760,6 +1764,7 @@ public class Diagram2BpmnConverter {
             
         } catch (JSONException e) {
         }
+        
     }
 
     /**

@@ -1,4 +1,4 @@
-<project name="Activiti Modeler Build Script" default="package">
+<project name="Activiti Modeler Build Script" default="war">
 
     <property file="build.properties" />
     
@@ -9,24 +9,6 @@
         </fileset>
       </classpath>
     </taskdef>
-    
-    <target name="package" description="Build converter jar">
-        <mkdir dir="target/classes" />
-        <javac destdir="target/classes" debug="true" includeantruntime="false">
-            <src path="../platform/src-activiti" />
-            <src path="../platform extensions/diagram core/src" />
-            <src path="../platform extensions/bpmn20xmlbasic/src" />
-            <classpath >
-                <fileset dir="lib/runtime">
-                    <include name="**/*.jar" />
-                </fileset>
-            </classpath>
-        </javac>
-        <jar destfile="target/amconverter.jar" >
-            <fileset dir="target/classes">
-            </fileset>
-        </jar>
-    </target>
     
     <target name="war" description="Build all-in-one war">
         <mkdir dir="${basedir}/models" />
@@ -78,5 +60,7 @@
     		</classpath>
     	</junit>
 	</target>
-    
+
+	<target name="war-and-start" description="build war and start" depends="war,tomcat-start"></target>
+	
 </project>

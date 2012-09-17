@@ -2498,6 +2498,17 @@
                     "description":"Internal flag to set the default orientation",
                     "readonly":false,
                     "visible":false
+                },
+                {
+                    "id":"isexecutable",
+                    "type":"Boolean",
+                    "title":"Is executable",
+                    "title_de":"IstAusführbar",
+                    "value":false,
+                    "description":"An optional boolean value specifying whether the process is executable.",
+                    "description_de":"Ein optionaler Wahrheitswert, um anzuzeigen, ob der Prozess ausführbar ist.",
+                    "readonly":false,
+                    "optional":true
                 }
             ]
         },

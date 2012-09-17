@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns6="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-0ef4a850-09aa-420f-a99d-2bdb4294972e" name="ProcessName" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-   <process id="BaseProcessID" isExecutable="true" name="ProcessName">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns6="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-8118ca31-65de-4531-a1dc-515122efbf41" name="ProcessName" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="executable" isExecutable="false" name="ProcessName">
       <ns8:startEvent xmlns:ns8="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="" id="sid-63400549-4716-4886-9367-DFD642DD4B0A" name="" ns6:initiator="None">
          <ns8:extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
@@ -15,8 +15,8 @@
       </endEvent>
       <sequenceFlow id="sid-F39C2BA3-21AA-40E6-A08A-E5B2BC5C14AA" name="" sourceRef="sid-63400549-4716-4886-9367-DFD642DD4B0A" targetRef="sid-DC7B0F52-1402-4134-A105-147097E642B4"/>
    </process>
-   <bpmndi:BPMNDiagram id="sid-4fc15c6f-ad3f-4e20-995b-f8ac87d0f1bf">
-      <bpmndi:BPMNPlane bpmnElement="BaseProcessID" id="sid-3742d58d-bff2-4ad9-8f57-b49ace0d43d4">
+   <bpmndi:BPMNDiagram id="sid-3a58deb4-3194-43e3-bc8e-b9b810b1fab1">
+      <bpmndi:BPMNPlane bpmnElement="executable" id="sid-199f1cfd-b655-4ebd-ba3f-dc6fe5097651">
          <bpmndi:BPMNShape bpmnElement="sid-63400549-4716-4886-9367-DFD642DD4B0A" id="sid-63400549-4716-4886-9367-DFD642DD4B0A_gui">
             <omgdc:Bounds height="30.0" width="30.0" x="433.0" y="79.0"/>
          </bpmndi:BPMNShape>

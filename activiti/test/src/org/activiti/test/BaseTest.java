@@ -29,25 +29,31 @@ import de.hpi.bpmn2_0.transformation.Diagram2XmlConverter;
 
 public class BaseTest {
 
+    private String path = "activiti/";
+    
     @Test
     public void testBase() throws IOException, BpmnConverterException, JAXBException, SAXException,
             ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
 
-        Document doc = getDocument("models/junit/base.signavio.xml");
+        Document doc = getDocument(path + "models/junit/base.signavio.xml");
         
         XPathFactory xpathFactory = XPathFactory.newInstance();
         
         String processName = (String) xpathFactory.newXPath().evaluate("/definitions/process/@name",
                 doc, XPathConstants.STRING);
-        
         Assert.assertEquals("ProcessName", processName);
+
+        String processId = (String) xpathFactory.newXPath().evaluate("/definitions/process/@id",
+                doc, XPathConstants.STRING);
+        Assert.assertEquals("BaseProcessID", processId);
+
     }
 
     @Test
     public void testDatePattern() throws IOException, BpmnConverterException, JAXBException, SAXException,
             ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
 
-        Document doc =  getDocument("models/junit/dateformat.signavio.xml");
+        Document doc =  getDocument(path + "models/junit/dateformat.signavio.xml");
         
         XPathFactory xpathFactory = XPathFactory.newInstance();
         
@@ -55,6 +61,30 @@ public class BaseTest {
                 doc, XPathConstants.STRING);
         
         Assert.assertEquals("yyyy-MM-dd", o);
+    }
+
+    
+    @Test
+    public void testExecutable() throws IOException, BpmnConverterException, JAXBException, SAXException,
+            ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
+
+        Document doc =  getDocument(path + "models/junit/base.signavio.xml");
+        
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        
+        Object o =  xpathFactory.newXPath().evaluate("/definitions/process/@isExecutable",
+                doc, XPathConstants.STRING);
+        
+        Assert.assertEquals("false", o);
+        
+        Document doc1 =  getDocument(path + "models/junit/executable.signavio.xml");
+        
+        Object o1 =  xpathFactory.newXPath().evaluate("/definitions/process/@isExecutable",
+                doc1, XPathConstants.STRING);
+        
+        Assert.assertEquals("true", o1);
+
+    
     }
 
     
