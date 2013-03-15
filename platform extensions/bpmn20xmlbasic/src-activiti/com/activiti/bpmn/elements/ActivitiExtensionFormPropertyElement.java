@@ -64,10 +64,18 @@ public class ActivitiExtensionFormPropertyElement extends AbstractExtensionEleme
 
     @Override
     public int compareTo(ActivitiExtensionFormPropertyElement o) {
-        if (porder==null || o.porder==null || o.porder.equals(porder)) {
-            throw new RuntimeException("porder can't be empty or non uniq");
+        if (o == null) {
+            throw new NullPointerException();
         }
         
+        if (o == this) {
+            return 0;
+        }
+        
+        if (porder!=null && o.porder!=null &&  o.porder.equals(porder) ) {
+                //FIXME Exception class
+                throw new RuntimeException("porder can't be non unique: [" + porder+"]");
+        }
         return porder.compareTo(o.porder);
     }
 

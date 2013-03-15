@@ -58,7 +58,12 @@ public class FormPropertiesUtil {
                     }
                 }
 
+                if (o.getString("porder") == null || o.getString("porder").trim().isEmpty()) {
+                    //FIXME Exception class
+                    throw new RuntimeException("porder can't be null or empty");
+                }
                 e.setPorder(o.getString("porder"));
+                
 
                 if (o.has("datePattern")) {
                     e.setDatePattern(o.getString("datePattern"));
