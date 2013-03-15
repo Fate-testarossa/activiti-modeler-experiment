@@ -54,6 +54,7 @@ import de.hpi.bpmn2_0.factory.node.IntermediateCatchEventFactory;
 import de.hpi.bpmn2_0.model.BaseElement;
 import de.hpi.bpmn2_0.model.Collaboration;
 import de.hpi.bpmn2_0.model.Definitions;
+import de.hpi.bpmn2_0.model.Documentation;
 import de.hpi.bpmn2_0.model.FlowElement;
 import de.hpi.bpmn2_0.model.FlowNode;
 import de.hpi.bpmn2_0.model.Process;
@@ -1278,6 +1279,12 @@ public class Diagram2BpmnConverter {
                 Boolean isExecutable = isExecutableString != null && isExecutableString.trim().toLowerCase().equals("true");
                 process.setExecutable(isExecutable);
                 this.definitions.getFirstPlane().setBpmnElement(process);
+
+                String documentation = this.diagram.getProperty("documentation");
+                if (documentation!=null && !documentation.isEmpty()) {
+                	process.getDocumentation().add(new Documentation(documentation));
+                }
+                
             }
             
             /*

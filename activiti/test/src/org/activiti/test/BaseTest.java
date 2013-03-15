@@ -29,7 +29,22 @@ import de.hpi.bpmn2_0.transformation.Diagram2XmlConverter;
 
 public class BaseTest {
 
-    private String path = "activiti/";
+    private String path = "./";
+    
+    
+    @Test
+    public void testProcDocumentation() throws IOException, BpmnConverterException, JAXBException, SAXException,
+            ParserConfigurationException, TransformerException, JSONException, XPathExpressionException {
+        Document doc = getDocument(path + "models/junit/procdoc.signavio.xml");
+        
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        
+        String docum = (String) xpathFactory.newXPath().evaluate("/definitions/process/documentation/text()",
+                doc, XPathConstants.STRING);
+        Assert.assertEquals("testdoc1", docum);
+
+
+    }
     
     @Test
     public void testBase() throws IOException, BpmnConverterException, JAXBException, SAXException,
