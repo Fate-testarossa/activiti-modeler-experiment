@@ -18,6 +18,7 @@
 package com.signavio.platform.core.impl;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletContext;
 
@@ -41,7 +42,7 @@ public class FsPlatformInstanceImpl implements PlatformInstance {
 
     private HandlerDirectory handlerManger;
     private ServletContext servletContext;
-    private FsPlatformPropertiesImpl platformProperties;
+    private PlatformProperties platformProperties;
 
     public void bootInstance(Object... parameters) {
         if (parameters.length < 1 || (parameters.length >= 1 && !(parameters[0] instanceof ServletContext))) {
@@ -49,8 +50,19 @@ public class FsPlatformInstanceImpl implements PlatformInstance {
         }
         // load configuration
         this.servletContext = (ServletContext) parameters[0];
+        
+        @SuppressWarnings("unchecked")
+        Class<? extends PlatformProperties> platformProertiesClass = (Class<? extends PlatformProperties>) parameters[1];
+        if (platformProertiesClass == null) {
+            throw new InitializationException("Boot of servlet container PlatformInstance failed, because properties class is not specifeid.");
+        }
 
-        this.platformProperties = new FsPlatformPropertiesImpl(servletContext);
+        try {
+            this.platformProperties = platformProertiesClass.getConstructor(ServletContext.class).newInstance(servletContext);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e1) {
+            throw new InitializationException("Boot of servlet container PlatformInstance failed, because properties leader failed.",e1);
+        }
 
         FsRootDirectory.createInstance(this.platformProperties.getRootDirectoryPath());
         ModelTypeManager.createInstance();

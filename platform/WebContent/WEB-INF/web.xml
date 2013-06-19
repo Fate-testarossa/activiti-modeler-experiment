@@ -16,9 +16,24 @@
     <context-param>
         <description>Define a reg exp for all user agents which are supported for the editor</description>
         <param-name>supportedBrowserEditor</param-name>
-        <param-value>Firefox[\/\s]((3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20)\.\d+)|AppleWebKit|Opera.9\.\d+</param-value>
+        <param-value>Firefox[\/\s](\d\d\.\d+)|AppleWebKit|Opera.9\.\d+</param-value>
     </context-param>
 
+    <!-- 
+        example for jndi config
+
+    <context-param>
+        <description>Jndi prefix for search config properties</description>
+        <param-name>jndiPrefix</param-name>
+        <param-value>config/bpm-modeler</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>propertiesClass</param-name>
+        <param-value>com.signavio.platform.core.impl.FsPlatformPropertiesJndiImpl</param-value>
+    </context-param>
+    
+      -->
 
 
     <!--FILTER-->

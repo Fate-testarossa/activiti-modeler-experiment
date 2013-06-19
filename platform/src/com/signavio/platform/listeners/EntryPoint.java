@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
 import com.signavio.platform.core.Platform;
 import com.signavio.platform.core.PlatformInstance;
 import com.signavio.platform.core.impl.FsPlatformInstanceImpl;
+import com.signavio.platform.core.impl.FsPlatformPropertiesImpl;
+import com.signavio.platform.exceptions.InitializationException;
 
 /**
  * This is the entry point for the application.
@@ -53,7 +55,18 @@ public class EntryPoint implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent sce) {
         logger.info("Initializing platform...");
-        Platform.bootInstance(FsPlatformInstanceImpl.class, sce.getServletContext());
+        Class<?> clazz;
+        String propertiesClassName = sce.getServletContext().getInitParameter("propertiesClass");
+        if (propertiesClassName == null || propertiesClassName.isEmpty()) {
+            clazz = FsPlatformPropertiesImpl.class;
+        } else {
+            try {
+                clazz = this.getClass().getClassLoader().loadClass(propertiesClassName);
+            } catch (ClassNotFoundException e) {
+                throw new InitializationException("Class " + propertiesClassName + " isn't found.", e);
+            }
+        }
+        Platform.bootInstance(FsPlatformInstanceImpl.class, sce.getServletContext(), clazz);
         logger.info("Done initializing platform!");
     }
 

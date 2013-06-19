@@ -21,22 +21,21 @@
 package com.signavio.platform.core.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 
 import com.signavio.platform.core.PlatformProperties;
-import com.signavio.platform.exceptions.InitializationException;
 
 /**
  * Read the properties from the web.xml file
- * @author Bjoern Wagner
+ * @author Denis Ryabkov
  *
  */
-public class FsPlatformPropertiesImpl implements PlatformProperties {
+public class FsPlatformPropertiesJndiImpl implements PlatformProperties {
     private final String serverName;
     private final String platformUri;
     private final String explorerUri;
@@ -47,24 +46,21 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
     private final String rootDirectoryPath;
 
 
-    public FsPlatformPropertiesImpl(ServletContext context) {
+    public FsPlatformPropertiesJndiImpl(ServletContext context) throws NamingException {
         supportedBrowserEditor = context.getInitParameter("supportedBrowserEditor");
+        String jndiPrefix = context.getInitParameter("jndiPrefix");
 
-        Properties props = new Properties();
-        try {
-            props.load(this.getClass().getClassLoader().getResourceAsStream("configuration.properties"));
-        } catch (IOException e) {
-            throw new InitializationException(e);
-        }
+        InitialContext ic;
+        ic = new InitialContext();
+        String tempRootDirectoryPath = (String) ic.lookup("java:comp/env/" + jndiPrefix + "/dir");
 
-        String tempRootDirectoryPath = props.getProperty("fileSystemRootDirectory");
         if (tempRootDirectoryPath.endsWith(File.separator)) {
             rootDirectoryPath = tempRootDirectoryPath.substring(0, tempRootDirectoryPath.length()-1);
         } else {
             rootDirectoryPath = tempRootDirectoryPath;
         }
 
-        serverName = props.getProperty("host");
+        serverName = (String) ic.lookup("java:comp/env/" + jndiPrefix + "/host");
         platformUri = context.getContextPath() + "/p";
         explorerUri = context.getContextPath() + "/explorer";
         editorUri = context.getContextPath() + "/editor";

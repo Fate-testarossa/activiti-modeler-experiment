@@ -20,7 +20,7 @@
     
     <target name="com.signavio.platform.compile" depends="com.signavio.platform.clean">
         <mkdir dir="${dir-classes}"/>
-        <javac destdir="${dir-classes}" debug="on" target="1.5" includeantruntime="false">
+        <javac destdir="${dir-classes}" debug="on" target="1.7" includeantruntime="false">
         	<src path="${dir-src}" />
             <classpath id="libs">
                 <fileset dir="${dir-lib}">
