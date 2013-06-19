@@ -21,32 +21,32 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 
 public class BusinessObjectCreationFailedException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1129675556771340274L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1129675556771340274L;
 
-	public BusinessObjectCreationFailedException() {
-		super("Creating business object failed.");
-	}
-	
-	public BusinessObjectCreationFailedException(String msg) {
-		super("Creating business object failed: " + msg);
-	}
+    public BusinessObjectCreationFailedException() {
+        super("Creating business object failed.");
+    }
+    
+    public BusinessObjectCreationFailedException(String msg) {
+        super("Creating business object failed: " + msg);
+    }
 
-	public BusinessObjectCreationFailedException(String msg, String className) {
-		super("Creating business object failed: " + msg + " Class: " + className);
-	}
-	
-	public BusinessObjectCreationFailedException(String msg, String className, Throwable e) {
-		super("Creating business object failed: " + msg + " Class: " + className, e);
-	}
-	
-	public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj) {
-		super("Creating business object failed: " + msg + " Class: " + classObj.getName());
-	}
-	
-	public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj, Throwable e) {
-		super("Creating business object failed: " + msg + " Class: " + classObj.getName(), e);
-	}
+    public BusinessObjectCreationFailedException(String msg, String className) {
+        super("Creating business object failed: " + msg + " Class: " + className);
+    }
+    
+    public BusinessObjectCreationFailedException(String msg, String className, Throwable e) {
+        super("Creating business object failed: " + msg + " Class: " + className, e);
+    }
+    
+    public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj) {
+        super("Creating business object failed: " + msg + " Class: " + classObj.getName());
+    }
+    
+    public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj, Throwable e) {
+        super("Creating business object failed: " + msg + " Class: " + classObj.getName(), e);
+    }
 }

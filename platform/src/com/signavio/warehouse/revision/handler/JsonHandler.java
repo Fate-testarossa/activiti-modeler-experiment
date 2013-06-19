@@ -37,40 +37,40 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 @HandlerExportConfiguration(name="JSON", icon="/explorer/src/img/famfamfam/page_white_code.png", mime="application/json")
 public class JsonHandler extends AbstractRevisionExportHandler {
 
-	public JsonHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		FsModelRevision rev = (FsModelRevision) sbo;
-		
-		FsModelRepresentationInfo rep = rev.getRepresentation(RepresentationType.JSON);
-		
-		if(rep == null) {
-			throw new RequestException("warehouse.noJSONRepresentationAvailable");
-		} else {
-			
-  			
- 			try {
- 				JSONObject p = (JSONObject) params;
- 				if (p.has("jsonp")){
- 					String prepend = (String) p.get("jsonp");
- 					return  (prepend + "(" + new String(rep.getContent(), "utf-8") + ")").getBytes("utf-8");
- 				} else {
- 					return rep.getContent();
- 				}
-				
-				
-			} catch (JSONException e) {
-				return rep.getContent();
-			} catch (UnsupportedEncodingException e) {
-				throw new IllegalStateException("Could not read data", e);
-			}
-  			
+    public JsonHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        FsModelRevision rev = (FsModelRevision) sbo;
+        
+        FsModelRepresentationInfo rep = rev.getRepresentation(RepresentationType.JSON);
+        
+        if(rep == null) {
+            throw new RequestException("warehouse.noJSONRepresentationAvailable");
+        } else {
+            
+              
+             try {
+                 JSONObject p = (JSONObject) params;
+                 if (p.has("jsonp")){
+                     String prepend = (String) p.get("jsonp");
+                     return  (prepend + "(" + new String(rep.getContent(), "utf-8") + ")").getBytes("utf-8");
+                 } else {
+                     return rep.getContent();
+                 }
+                
+                
+            } catch (JSONException e) {
+                return rep.getContent();
+            } catch (UnsupportedEncodingException e) {
+                throw new IllegalStateException("Could not read data", e);
+            }
+              
 
-  			
-		}
-	}
+              
+        }
+    }
 }

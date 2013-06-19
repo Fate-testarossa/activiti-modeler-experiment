@@ -22,28 +22,28 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public interface SyntaxChecker {
-	
-	/**
-	 * 
-	 * @return true if there are no syntax errors
-	 */
-	boolean checkSyntax();
-	
-	/**
-	 * returns the errors if any were found
-	 * @return key = resource ID, value = error text
-	 */
-	Map<String,String> getErrors();
-	
-	/**
-	 * 
-	 * @return json representation of errors
-	 */
-	JSONObject getErrorsAsJson();
-	
-	/**
-	 * 
-	 * @return true if any errors have been found
-	 */
-	boolean errorsFound();
+    
+    /**
+     * 
+     * @return true if there are no syntax errors
+     */
+    boolean checkSyntax();
+    
+    /**
+     * returns the errors if any were found
+     * @return key = resource ID, value = error text
+     */
+    Map<String,String> getErrors();
+    
+    /**
+     * 
+     * @return json representation of errors
+     */
+    JSONObject getErrorsAsJson();
+    
+    /**
+     * 
+     * @return true if any errors have been found
+     */
+    boolean errorsFound();
 }

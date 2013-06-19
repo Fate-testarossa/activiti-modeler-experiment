@@ -64,9 +64,9 @@ public class AdHocSubProcess
     @XmlAttribute
     protected AdHocOrdering ordering;
     
-	public void acceptVisitor(Visitor v){
-		v.visitAdHocSubProcess(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitAdHocSubProcess(this);
+    }
 
     /**
      * Gets the value of the completionCondition property.

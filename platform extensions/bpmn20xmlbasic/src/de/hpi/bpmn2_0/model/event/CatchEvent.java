@@ -183,10 +183,10 @@ public abstract class CatchEvent
         this.parallelMultiple = value;
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitCatchEvent(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitCatchEvent(this);
+    }
+    
    
 
 }

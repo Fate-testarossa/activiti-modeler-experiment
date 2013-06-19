@@ -57,14 +57,14 @@ import de.hpi.bpmn2_0.model.RootElement;
 public class Resource
     extends RootElement
 {
-	public Resource() {
-		
-	}
-	
-	public Resource(String name) {
-		this.name = name;
-	}
-	
+    public Resource() {
+        
+    }
+    
+    public Resource(String name) {
+        this.name = name;
+    }
+    
     protected List<ResourceParameter> resourceParameter;
     
     @XmlID

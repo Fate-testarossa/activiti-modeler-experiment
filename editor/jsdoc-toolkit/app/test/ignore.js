@@ -4,7 +4,7 @@
  * @ignore
  */
 function Ignored() {
-	/** a method */
+    /** a method */
     this.bar = function() {
     }
 }

@@ -35,63 +35,63 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 
 public abstract class ExportHandler extends AbstractHandler {
 
-	public ExportHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
+    public ExportHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
 
-		JSONObject j = new JSONObject();
-		
-		HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
-		
-		if( an != null  ){
-			try {
-				j.put("name", an.name()); 
-				j.put("icon", an.icon());
-				j.put("mime", an.mime());
-			} catch (JSONException e) {}
-		}
+        JSONObject j = new JSONObject();
+        
+        HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
+        
+        if( an != null  ){
+            try {
+                j.put("name", an.name()); 
+                j.put("icon", an.icon());
+                j.put("mime", an.mime());
+            } catch (JSONException e) {}
+        }
 
-		return j;
-	}
-	
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		return null;
-	}
-	
-	@Override
+        return j;
+    }
+    
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        return null;
+    }
+    
+    @Override
     public  <T extends FsSecureBusinessObject> void doGet(HttpServletRequest req, HttpServletResponse res, FsAccessToken token, T sbo ) {
-		
-		HandlerMethodActivation ac;
-		try {
-			ac = this.getClass().getMethod("doExport", new Class[]{FsSecureBusinessObject.class, Object.class}).getAnnotation(HandlerMethodActivation.class);
-		
-			HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
-			if( an != null && ac != null ){
-				res.setStatus(200);
-				res.setContentType(an.mime());
-				res.setHeader("Expires", "0");
-				
-				setFileName(sbo, res);
-				
-				res.getOutputStream().write( doExport(sbo, req.getAttribute("params")) );
-			} else {
-				res.setStatus(404);
-			}
-		}catch (NoSuchMethodException e) {
-			throw new RequestException("platform.nosuchmethod", e);
-		} catch (IOException e) {
-			throw new RequestException("platform.ioexception", e);
-		}
-		
-		
-	}
+        
+        HandlerMethodActivation ac;
+        try {
+            ac = this.getClass().getMethod("doExport", new Class[]{FsSecureBusinessObject.class, Object.class}).getAnnotation(HandlerMethodActivation.class);
+        
+            HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
+            if( an != null && ac != null ){
+                res.setStatus(200);
+                res.setContentType(an.mime());
+                res.setHeader("Expires", "0");
+                
+                setFileName(sbo, res);
+                
+                res.getOutputStream().write( doExport(sbo, req.getAttribute("params")) );
+            } else {
+                res.setStatus(404);
+            }
+        }catch (NoSuchMethodException e) {
+            throw new RequestException("platform.nosuchmethod", e);
+        } catch (IOException e) {
+            throw new RequestException("platform.ioexception", e);
+        }
+        
+        
+    }
 
-	protected void setFileName(FsSecureBusinessObject sbo, HttpServletResponse res) {
-		HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
-		res.setHeader("Content-Disposition", " "+(an.download()?"attachment":"inline")+"; filename=\"" + sbo.getId() + "." + an.name().toLowerCase()+"\"");
-	}
+    protected void setFileName(FsSecureBusinessObject sbo, HttpServletResponse res) {
+        HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
+        res.setHeader("Content-Disposition", " "+(an.download()?"attachment":"inline")+"; filename=\"" + sbo.getId() + "." + an.name().toLowerCase()+"\"");
+    }
 }

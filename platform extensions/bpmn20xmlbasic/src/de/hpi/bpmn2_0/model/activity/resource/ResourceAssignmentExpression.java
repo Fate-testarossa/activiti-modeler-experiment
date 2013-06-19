@@ -56,11 +56,11 @@ import de.hpi.bpmn2_0.model.FormalExpression;
 public class ResourceAssignmentExpression
     extends BaseElement
 {
-	
-	@XmlElementRefs({
-		@XmlElementRef(type = FormalExpression.class),
-		@XmlElementRef(type = Expression.class)
-	})
+    
+    @XmlElementRefs({
+        @XmlElementRef(type = FormalExpression.class),
+        @XmlElementRef(type = Expression.class)
+    })
     protected Expression expression;
 
     /**

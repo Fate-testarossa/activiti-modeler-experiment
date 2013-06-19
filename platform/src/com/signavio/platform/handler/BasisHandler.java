@@ -39,46 +39,46 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
  */
 public abstract class BasisHandler extends AbstractHandler {
 
-	public BasisHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all available handlers for the specific context
-	 * and add there representation to it.
-	 * @param id 
-	 * @param params
-	 */
-	@Override
-	public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-		// Get all Handlers
-		Collection<HandlerEntry> hes = HandlerDirectory.getInstance().getAllHandlerByContext( this.getClass() );
-		
-		JSONArray res = new JSONArray();
-		// For every Handler
-		for( HandlerEntry he : hes )
-		{
-			// Checks if the method is activated
-			if( !isRepresenationActivated("get", true) ){
-				continue;
-			}
-			
-			// Adds there representation to it.
-			Object js = he.getHandlerInstance().getRepresentation(sbo, params, token);
-			if( js != null )
-			{
-				HandlerEntry context = Platform.getInstance().getHandlerDirectory().get( he.getContextClass().getName() );
-				
-				try {
-					JSONObject entry = new JSONObject();
-					entry.put("rel", 	he.getRel());
-					entry.put("href",  	context.getUri() + "/" + sbo.getId() + he.getUri());
-					entry.put("rep", 	js);
-					res.put(entry);
-				} catch (JSONException e) {}	
-			}
-		}
-		return res;
-	}
-	
+    public BasisHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all available handlers for the specific context
+     * and add there representation to it.
+     * @param id 
+     * @param params
+     */
+    @Override
+    public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
+        // Get all Handlers
+        Collection<HandlerEntry> hes = HandlerDirectory.getInstance().getAllHandlerByContext( this.getClass() );
+        
+        JSONArray res = new JSONArray();
+        // For every Handler
+        for( HandlerEntry he : hes )
+        {
+            // Checks if the method is activated
+            if( !isRepresenationActivated("get", true) ){
+                continue;
+            }
+            
+            // Adds there representation to it.
+            Object js = he.getHandlerInstance().getRepresentation(sbo, params, token);
+            if( js != null )
+            {
+                HandlerEntry context = Platform.getInstance().getHandlerDirectory().get( he.getContextClass().getName() );
+                
+                try {
+                    JSONObject entry = new JSONObject();
+                    entry.put("rel",     he.getRel());
+                    entry.put("href",      context.getUri() + "/" + sbo.getId() + he.getUri());
+                    entry.put("rep",     js);
+                    res.put(entry);
+                } catch (JSONException e) {}    
+            }
+        }
+        return res;
+    }
+    
 }

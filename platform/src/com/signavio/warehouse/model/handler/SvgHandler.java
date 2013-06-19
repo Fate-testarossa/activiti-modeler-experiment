@@ -30,15 +30,15 @@ import com.signavio.warehouse.revision.handler.AbstractRevisionExportHandler;
 @HandlerExportConfiguration(name="SVG", icon="/explorer/src/img/famfamfam/page_white_vector.png", mime="image/svg+xml")
 public class SvgHandler extends AbstractRevisionExportHandler {
 
-	public SvgHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		FsModel model = (FsModel) sbo;
-		return new com.signavio.warehouse.revision.handler.SvgHandler(this.getServletContext())
-				.doExport(model.getHeadRevision(), params);
-	}
+    public SvgHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        FsModel model = (FsModel) sbo;
+        return new com.signavio.warehouse.revision.handler.SvgHandler(this.getServletContext())
+                .doExport(model.getHeadRevision(), params);
+    }
 }

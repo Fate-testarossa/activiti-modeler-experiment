@@ -20,17 +20,17 @@ package com.signavio.platform.security.business.util;
 
 public class UUID {
 
-	public static UUID getUUID() {
-		return new UUID();
-	}
-	
-	private String uuid;
-	
-	public UUID() {
-		uuid = java.util.UUID.randomUUID().toString().replaceAll("-", "");
-	}
-	
-	public String toString() {
-		return uuid;
-	}
+    public static UUID getUUID() {
+        return new UUID();
+    }
+    
+    private String uuid;
+    
+    public UUID() {
+        uuid = java.util.UUID.randomUUID().toString().replaceAll("-", "");
+    }
+    
+    public String toString() {
+        return uuid;
+    }
 }

@@ -53,9 +53,9 @@ public class StartEvent
     @XmlAttribute
     protected Boolean isInterrupting;
 
-	public void acceptVisitor(Visitor v){
-		v.visitStartEvent(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitStartEvent(this);
+    }
     
     /* Getter & Setter */
     

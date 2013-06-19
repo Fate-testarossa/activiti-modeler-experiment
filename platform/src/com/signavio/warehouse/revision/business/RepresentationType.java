@@ -18,20 +18,20 @@
 package com.signavio.warehouse.revision.business;
 
 public enum RepresentationType {
-	JSON ("json"),
-	SVG ("svg"),
-	PDF ("pdf"),
-	RDF ("rdf"),
-	PNG ("png"),
-	PNG_SMALL ("png_small");
-	
-	private final String representation;
-	
-	RepresentationType(String rep) {
-		this.representation = rep;
-	}
-	
-	public String getRepresentationType() {
-		return this.representation;
-	}
+    JSON ("json"),
+    SVG ("svg"),
+    PDF ("pdf"),
+    RDF ("rdf"),
+    PNG ("png"),
+    PNG_SMALL ("png_small");
+    
+    private final String representation;
+    
+    RepresentationType(String rep) {
+        this.representation = rep;
+    }
+    
+    public String getRepresentationType() {
+        return this.representation;
+    }
 }

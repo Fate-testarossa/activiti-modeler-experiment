@@ -24,16 +24,16 @@ package com.signavio.warehouse.revision.business;
  *
  */
 public class FsModelRepresentationInfo {
-	
-	private byte[] content;
-	
-	public FsModelRepresentationInfo(byte[] content) {
-		super();
-		this.content = content;
-	}
+    
+    private byte[] content;
+    
+    public FsModelRepresentationInfo(byte[] content) {
+        super();
+        this.content = content;
+    }
 
-	public byte[] getContent() {
-		return content;
-	}
+    public byte[] getContent() {
+        return content;
+    }
 
 }

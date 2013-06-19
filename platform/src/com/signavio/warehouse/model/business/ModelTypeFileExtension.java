@@ -27,5 +27,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Inherited
 public @interface ModelTypeFileExtension {
-	public String fileExtension();
+    public String fileExtension();
 }

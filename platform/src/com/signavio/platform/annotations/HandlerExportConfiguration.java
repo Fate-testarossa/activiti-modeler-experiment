@@ -25,8 +25,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface HandlerExportConfiguration {
-	String name();
-	String icon();
-	String mime();
-	boolean download() default false;
+    String name();
+    String icon();
+    String mime();
+    boolean download() default false;
 }

@@ -32,59 +32,59 @@ import com.signavio.usermanagement.business.FsRoleManager;
  *
  */
 public class FsUser extends FsSecureBusinessSubject{
-	
-	private static final FsUser DUMMY;
-	public static final String ID_OF_DUMMY = "user-object";
-	private static final Set<FsUser> DUMMY_SET;
+    
+    private static final FsUser DUMMY;
+    public static final String ID_OF_DUMMY = "user-object";
+    private static final Set<FsUser> DUMMY_SET;
 
-	private static final Set<FsSecureBusinessObject> PARENTS;
-	
-	static {
-		DUMMY = new FsUser();
-		DUMMY_SET = new HashSet<FsUser>(1);
-		DUMMY_SET.add(DUMMY);
-		PARENTS = new HashSet<FsSecureBusinessObject>(2);
-		PARENTS.add(FsRoleManager.getSingleton());
-	}
-	
-	public static FsUser getDummy() {
-		return DUMMY;
-	}
-	public static Set<FsUser> getDummySet() {
-		return DUMMY_SET;
-	}
-	
-	
-	
-	
-	public FsUser() {
-		
-	}
-
-
-	public String getFullName(){ return emptyString; }
-	
-	public void setFirstLogin(boolean b) { return ;	}
-
-	public FsAccount getAccount() {
-		return FsAccount.getDummy();
-	}
+    private static final Set<FsSecureBusinessObject> PARENTS;
+    
+    static {
+        DUMMY = new FsUser();
+        DUMMY_SET = new HashSet<FsUser>(1);
+        DUMMY_SET.add(DUMMY);
+        PARENTS = new HashSet<FsSecureBusinessObject>(2);
+        PARENTS.add(FsRoleManager.getSingleton());
+    }
+    
+    public static FsUser getDummy() {
+        return DUMMY;
+    }
+    public static Set<FsUser> getDummySet() {
+        return DUMMY_SET;
+    }
+    
+    
+    
+    
+    public FsUser() {
+        
+    }
 
 
-	public void setRole(String string) { return ; }
-	
-	public Set<? extends FsSecureBusinessObject> getParents() {
-		return PARENTS;
-	}
+    public String getFullName(){ return emptyString; }
+    
+    public void setFirstLogin(boolean b) { return ;    }
 
-	public boolean isFirstLogin() { return false; }
-	
-	@Override
-	public String getId() {
-		return ID_OF_DUMMY;
-	}
-	public boolean isFirstStart() { return false; }
-	public void setFirstStart(boolean b) { return ; }
+    public FsAccount getAccount() {
+        return FsAccount.getDummy();
+    }
+
+
+    public void setRole(String string) { return ; }
+    
+    public Set<? extends FsSecureBusinessObject> getParents() {
+        return PARENTS;
+    }
+
+    public boolean isFirstLogin() { return false; }
+    
+    @Override
+    public String getId() {
+        return ID_OF_DUMMY;
+    }
+    public boolean isFirstStart() { return false; }
+    public void setFirstStart(boolean b) { return ; }
 
 
 }

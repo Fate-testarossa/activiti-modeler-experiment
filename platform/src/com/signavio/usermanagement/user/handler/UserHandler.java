@@ -50,43 +50,43 @@ import com.signavio.usermanagement.user.business.FsUser;
 @HandlerConfiguration(uri = "/user", rel="user")
 public class UserHandler extends BasisHandler {
 
-	/**
-	 * Constructor
-	 * @param servletContext
-	 */
-	public UserHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
+    /**
+     * Constructor
+     * @param servletContext
+     */
+    public UserHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
 
-	/**
-	 * Get all root directories
-	 */
-	@Override
-	@HandlerMethodActivation
-	public Object getRepresentation(Object params, FsAccessToken token){
-		// Return all users from the tenants
-		return getAllUsers(token);
-	}
-	
-	/**
-	 * Returns the representation of all available users
-	 * @return
-	 */
-	private Object getAllUsers(FsAccessToken token) {
-		JSONArray a = new JSONArray();
-			
-		InfoHandler ih = new InfoHandler(this.getServletContext());
-		HandlerConfiguration hc = this.getHandlerConfiguration();
-		
-		FsRoleManager manager = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, token.getTenantId(), token);
-		Set<FsUser> users = manager.getChildren(FsUser.class);
-		
-		for( FsUser user : users){	
-			// Generate the resource for every principal, includes the information from the info handler
-			a.put( this.generateResource(hc.rel(), hc.uri() + "/" + user.getId(), ih.getRepresentation(user, null, token) ) );
-		}
-		
-		return a;
-	}
-	
+    /**
+     * Get all root directories
+     */
+    @Override
+    @HandlerMethodActivation
+    public Object getRepresentation(Object params, FsAccessToken token){
+        // Return all users from the tenants
+        return getAllUsers(token);
+    }
+    
+    /**
+     * Returns the representation of all available users
+     * @return
+     */
+    private Object getAllUsers(FsAccessToken token) {
+        JSONArray a = new JSONArray();
+            
+        InfoHandler ih = new InfoHandler(this.getServletContext());
+        HandlerConfiguration hc = this.getHandlerConfiguration();
+        
+        FsRoleManager manager = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, token.getTenantId(), token);
+        Set<FsUser> users = manager.getChildren(FsUser.class);
+        
+        for( FsUser user : users){    
+            // Generate the resource for every principal, includes the information from the info handler
+            a.put( this.generateResource(hc.rel(), hc.uri() + "/" + user.getId(), ih.getRepresentation(user, null, token) ) );
+        }
+        
+        return a;
+    }
+    
 }

@@ -44,13 +44,13 @@ import javax.xml.bind.annotation.XmlType;
 public class GlobalManualTask
     extends GlobalTask
 {
-	/* Constructors */
-	public GlobalManualTask() {
-		super();
-	}
-	
-	public GlobalManualTask(GlobalTask gt) {
-		super(gt);
-	}
+    /* Constructors */
+    public GlobalManualTask() {
+        super();
+    }
+    
+    public GlobalManualTask(GlobalTask gt) {
+        super(gt);
+    }
 
 }

@@ -47,27 +47,27 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tImplicitThrowEvent")
 public class ImplicitThrowEvent extends ThrowEvent {
-	/**
-	 * Default constructor
-	 */
-	public ImplicitThrowEvent() {
+    /**
+     * Default constructor
+     */
+    public ImplicitThrowEvent() {
 
-	}
+    }
 
-	/**
-	 * 
-	 * 
-	 * @param eventIdentifier
-	 *            String to identify the appropriate {@link EventDefinition}
-	 */
-	public ImplicitThrowEvent(String eventIdentifier) {
-		this.getEventDefinition().add(
-				EventDefinition.createEventDefinition(eventIdentifier));
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitImplicitThrowEvent(this);
-	}
-	
+    /**
+     * 
+     * 
+     * @param eventIdentifier
+     *            String to identify the appropriate {@link EventDefinition}
+     */
+    public ImplicitThrowEvent(String eventIdentifier) {
+        this.getEventDefinition().add(
+                EventDefinition.createEventDefinition(eventIdentifier));
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitImplicitThrowEvent(this);
+    }
+    
 
 }

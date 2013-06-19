@@ -33,12 +33,12 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioType;
  *
  */
 @XmlSeeAlso({
-	SignavioMetaData.class,
-	SignavioType.class,
-	SignavioLabel.class,
-	SignavioMessageName.class
+    SignavioMetaData.class,
+    SignavioType.class,
+    SignavioLabel.class,
+    SignavioMessageName.class
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractExtensionElement {
-	
+    
 }

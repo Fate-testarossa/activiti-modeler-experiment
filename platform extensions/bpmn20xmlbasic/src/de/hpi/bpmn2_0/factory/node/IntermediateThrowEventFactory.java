@@ -44,179 +44,179 @@ import de.hpi.diagram.SignavioUUID;
  *
  */
 @StencilId({
-	"IntermediateEvent",
-	"IntermediateMessageEventThrowing",
-	"IntermediateEscalationEventThrowing",
-	"IntermediateLinkEventThrowing",
-	"IntermediateCompensationEventThrowing",
-	"IntermediateSignalEventThrowing",
-	"IntermediateMultipleEventThrowing"
+    "IntermediateEvent",
+    "IntermediateMessageEventThrowing",
+    "IntermediateEscalationEventThrowing",
+    "IntermediateLinkEventThrowing",
+    "IntermediateCompensationEventThrowing",
+    "IntermediateSignalEventThrowing",
+    "IntermediateMultipleEventThrowing"
 })
 public class IntermediateThrowEventFactory extends AbstractShapeFactory {
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected IntermediateThrowEvent createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		try {
-			IntermediateThrowEvent itEvent = (IntermediateThrowEvent) this.invokeCreatorMethod(shape);
-			itEvent.setId(shape.getResourceId());
-			itEvent.setName(shape.getProperty("name"));
-			
-			return itEvent;
-		} catch (Exception e) {
-			/* Wrap exceptions into specific BPMNConverterException */
-			throw new BpmnConverterException(
-					"Error while creating the process element of "
-							+ shape.getStencilId(), e);
-		}
-	}
-	
-	/* Creator methods for different throwing intermediate event definitions */
-	
-	@StencilId("IntermediateEvent")
-	public IntermediateThrowEvent createIntermediateNoneEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
-		return itEvent;
-	}
-	
-	@StencilId("IntermediateMessageEventThrowing")
-	public IntermediateThrowEvent createIntermediateMessageEvent(GenericShape shape) 
-		throws BpmnConverterException {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected IntermediateThrowEvent createProcessElement(GenericShape shape)
+            throws BpmnConverterException {
+        try {
+            IntermediateThrowEvent itEvent = (IntermediateThrowEvent) this.invokeCreatorMethod(shape);
+            itEvent.setId(shape.getResourceId());
+            itEvent.setName(shape.getProperty("name"));
+            
+            return itEvent;
+        } catch (Exception e) {
+            /* Wrap exceptions into specific BPMNConverterException */
+            throw new BpmnConverterException(
+                    "Error while creating the process element of "
+                            + shape.getStencilId(), e);
+        }
+    }
+    
+    /* Creator methods for different throwing intermediate event definitions */
+    
+    @StencilId("IntermediateEvent")
+    public IntermediateThrowEvent createIntermediateNoneEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        return itEvent;
+    }
+    
+    @StencilId("IntermediateMessageEventThrowing")
+    public IntermediateThrowEvent createIntermediateMessageEvent(GenericShape shape) 
+        throws BpmnConverterException {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
 
-		MessageEventDefinition msgDef = new MessageEventDefinition();
-		
-		
-		/* Message name */
-		String messageName = shape.getProperty("messagename");
-		if(messageName != null && !(messageName.length() == 0)) {
-			Message message = new Message();
-			message.setName(messageName);
-			msgDef.setMessageRef(message);
-		}
-		
-		/* Operation name */
-		String operationName = shape.getProperty("operationname");
-		if(operationName != null && !(operationName.length() == 0)) {
-			Operation operation = new Operation();
-			operation.setName(operationName);
-			msgDef.setOperationRef(operation);
-		}
-		
-		itEvent.getEventDefinition().add(msgDef);
-		
-		return itEvent;
-	}
-	
-	@StencilId("IntermediateEscalationEventThrowing")
-	public IntermediateThrowEvent createIntermediateEscalationEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        MessageEventDefinition msgDef = new MessageEventDefinition();
+        
+        
+        /* Message name */
+        String messageName = shape.getProperty("messagename");
+        if(messageName != null && !(messageName.length() == 0)) {
+            Message message = new Message();
+            message.setName(messageName);
+            msgDef.setMessageRef(message);
+        }
+        
+        /* Operation name */
+        String operationName = shape.getProperty("operationname");
+        if(operationName != null && !(operationName.length() == 0)) {
+            Operation operation = new Operation();
+            operation.setName(operationName);
+            msgDef.setOperationRef(operation);
+        }
+        
+        itEvent.getEventDefinition().add(msgDef);
+        
+        return itEvent;
+    }
+    
+    @StencilId("IntermediateEscalationEventThrowing")
+    public IntermediateThrowEvent createIntermediateEscalationEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
 
-		EscalationEventDefinition escalDef = new EscalationEventDefinition();
-		
-		Escalation escalation = new Escalation();
-		
-		/* Escalation name */
-		String escalationName = shape.getProperty("escalationname");
-		if(escalationName != null && !(escalationName.length() == 0)) {
-			escalation.setName(escalationName);
-		}
-		
-		/* Escalation code */
-		String escalationCode = shape.getProperty("escalationcode");
-		if(escalationCode != null && !(escalationCode.length() == 0)) {
-			escalation.setEscalationCode(escalationCode);
-		}
-		
-		escalDef.setEscalationRef(escalation);
-		itEvent.getEventDefinition().add(escalDef);
-		
-		return itEvent;
-	}
-	
-	@StencilId("IntermediateLinkEventThrowing")
-	public IntermediateThrowEvent createIntermediateLinkEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        EscalationEventDefinition escalDef = new EscalationEventDefinition();
+        
+        Escalation escalation = new Escalation();
+        
+        /* Escalation name */
+        String escalationName = shape.getProperty("escalationname");
+        if(escalationName != null && !(escalationName.length() == 0)) {
+            escalation.setName(escalationName);
+        }
+        
+        /* Escalation code */
+        String escalationCode = shape.getProperty("escalationcode");
+        if(escalationCode != null && !(escalationCode.length() == 0)) {
+            escalation.setEscalationCode(escalationCode);
+        }
+        
+        escalDef.setEscalationRef(escalation);
+        itEvent.getEventDefinition().add(escalDef);
+        
+        return itEvent;
+    }
+    
+    @StencilId("IntermediateLinkEventThrowing")
+    public IntermediateThrowEvent createIntermediateLinkEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
 
-		LinkEventDefinition linkDef = new LinkEventDefinition();
-		
-		/* Set required name attribute */
-		String name = shape.getProperty("name");
-		if(name != null && !(name.length() == 0))
-			linkDef.setName(name);
-		
-		/* Set target reference */
-		String targetEntry = shape.getProperty("entry");
-		if(targetEntry != null && targetEntry.length() != 0) {
-			linkDef.setTarget(targetEntry);
-		}
-		
-		itEvent.getEventDefinition().add(linkDef);
-		
-		return itEvent;
-	}
-	
-	@StencilId("IntermediateCompensationEventThrowing")
-	public IntermediateThrowEvent createIntermediateCompensationEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        LinkEventDefinition linkDef = new LinkEventDefinition();
+        
+        /* Set required name attribute */
+        String name = shape.getProperty("name");
+        if(name != null && !(name.length() == 0))
+            linkDef.setName(name);
+        
+        /* Set target reference */
+        String targetEntry = shape.getProperty("entry");
+        if(targetEntry != null && targetEntry.length() != 0) {
+            linkDef.setTarget(targetEntry);
+        }
+        
+        itEvent.getEventDefinition().add(linkDef);
+        
+        return itEvent;
+    }
+    
+    @StencilId("IntermediateCompensationEventThrowing")
+    public IntermediateThrowEvent createIntermediateCompensationEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
 
-		CompensateEventDefinition compDef = new CompensateEventDefinition();
-		
-		/* Activity Reference */
-		String activityRef = shape.getProperty("activityref");
-		if(activityRef != null && !(activityRef.length() == 0)) {
-			Task taskRef = new Task();
-			taskRef.setId(activityRef);
-			compDef.setActivityRef(taskRef);
-		}
-		
-		/* Wait for Completion */
-		String waitForCompletion = shape.getProperty("waitforcompletion");
-		if(waitForCompletion != null && waitForCompletion.equals("false")) {
-			compDef.setWaitForCompletion(false);
-		} else {
-			compDef.setWaitForCompletion(true);
-		}
-		
-		itEvent.getEventDefinition().add(compDef);
-		
-		return itEvent;
-	}
-	
-	
-	@StencilId("IntermediateSignalEventThrowing")
-	public IntermediateThrowEvent createIntermediateSignalEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        CompensateEventDefinition compDef = new CompensateEventDefinition();
+        
+        /* Activity Reference */
+        String activityRef = shape.getProperty("activityref");
+        if(activityRef != null && !(activityRef.length() == 0)) {
+            Task taskRef = new Task();
+            taskRef.setId(activityRef);
+            compDef.setActivityRef(taskRef);
+        }
+        
+        /* Wait for Completion */
+        String waitForCompletion = shape.getProperty("waitforcompletion");
+        if(waitForCompletion != null && waitForCompletion.equals("false")) {
+            compDef.setWaitForCompletion(false);
+        } else {
+            compDef.setWaitForCompletion(true);
+        }
+        
+        itEvent.getEventDefinition().add(compDef);
+        
+        return itEvent;
+    }
+    
+    
+    @StencilId("IntermediateSignalEventThrowing")
+    public IntermediateThrowEvent createIntermediateSignalEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
 
-		SignalEventDefinition sigDef = new SignalEventDefinition();
-		
-		Signal signal = new Signal();
-		
-		/* Signal ID */
-		signal.setId(SignavioUUID.generate());
-		
-		/* Signal name */
-		String signalName = shape.getProperty("signalname");
-		if(signalName != null && !(signalName.length() == 0)) {
-			signal.setName(signalName);
-		}
-		
-		sigDef.setSignalRef(signal);
-		itEvent.getEventDefinition().add(sigDef);
-		
-		return itEvent;
-	}
-	
-	@StencilId("IntermediateMultipleEventThrowing")
-	public IntermediateThrowEvent createIntermediateMultipleEvent(GenericShape shape) {
-		IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
-		
-		itEvent.getEventDefinition().add(new CancelEventDefinition());
-		itEvent.getEventDefinition().add(new TerminateEventDefinition());
-		
-		return itEvent;
-	}
+        SignalEventDefinition sigDef = new SignalEventDefinition();
+        
+        Signal signal = new Signal();
+        
+        /* Signal ID */
+        signal.setId(SignavioUUID.generate());
+        
+        /* Signal name */
+        String signalName = shape.getProperty("signalname");
+        if(signalName != null && !(signalName.length() == 0)) {
+            signal.setName(signalName);
+        }
+        
+        sigDef.setSignalRef(signal);
+        itEvent.getEventDefinition().add(sigDef);
+        
+        return itEvent;
+    }
+    
+    @StencilId("IntermediateMultipleEventThrowing")
+    public IntermediateThrowEvent createIntermediateMultipleEvent(GenericShape shape) {
+        IntermediateThrowEvent itEvent = new IntermediateThrowEvent();
+        
+        itEvent.getEventDefinition().add(new CancelEventDefinition());
+        itEvent.getEventDefinition().add(new TerminateEventDefinition());
+        
+        return itEvent;
+    }
 }

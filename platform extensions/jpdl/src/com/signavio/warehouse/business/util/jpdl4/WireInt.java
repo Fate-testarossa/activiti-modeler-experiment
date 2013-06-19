@@ -20,7 +20,7 @@ package com.signavio.warehouse.business.util.jpdl4;
 
 public class WireInt extends WireObjectGroup {
 
-	public WireInt(String name, String value) {
-		super(name, value, "int");
-	}
+    public WireInt(String name, String value) {
+        super(name, value, "int");
+    }
 }

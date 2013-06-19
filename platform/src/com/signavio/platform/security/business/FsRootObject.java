@@ -28,27 +28,27 @@ import com.signavio.platform.tenant.business.FsTenantManager;
  *
  */
 public class FsRootObject extends FsSecureBusinessObject {
-	
-	private static final FsRootObject SINGLETON;
-	public static final String ID_OF_SINGLETON = "root-object";
-	static {
-		SINGLETON = new FsRootObject();
-	}
+    
+    private static final FsRootObject SINGLETON;
+    public static final String ID_OF_SINGLETON = "root-object";
+    static {
+        SINGLETON = new FsRootObject();
+    }
 
-	public static FsRootObject getRootObject(FsAccessToken token) {
-		return SINGLETON;
-	}
-	
-	public FsAccountManager getAccountManager(){
-		return FsAccountManager.getSingleton();
-	}
-	public FsTenantManager getTenantManager(){
-		return FsTenantManager.getSingleton();
-	}
-	
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
+    public static FsRootObject getRootObject(FsAccessToken token) {
+        return SINGLETON;
+    }
+    
+    public FsAccountManager getAccountManager(){
+        return FsAccountManager.getSingleton();
+    }
+    public FsTenantManager getTenantManager(){
+        return FsTenantManager.getSingleton();
+    }
+    
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
 
 }

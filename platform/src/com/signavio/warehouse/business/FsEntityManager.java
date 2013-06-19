@@ -37,54 +37,54 @@ import com.signavio.warehouse.directory.business.FsRootDirectory;
  */
 public class FsEntityManager extends FsBusinessObjectManager {
 
-	private static FsEntityManager SINGLETON;
-	public static final String ID_OF_SINGLETON = "entity-mgr-object";
-	private static final Set<FsEntityManager> SINGLETON_IN_SET;
-	
-	private FsTenant tenant;
-	
-	static {
-		SINGLETON = new FsEntityManager();
-		SINGLETON_IN_SET = new HashSet<FsEntityManager>(1);
-		SINGLETON_IN_SET.add(SINGLETON);
-	}
-	
-	public static FsEntityManager getSingleton() {
-		return SINGLETON;
-	}
-	
-	public static Set<FsEntityManager> getSingletonSet() {
-		return SINGLETON_IN_SET;
-	}
-	
-	public FsEntityManager() {
-		tenant = FsTenant.getSingleton();
-	}
-	
+    private static FsEntityManager SINGLETON;
+    public static final String ID_OF_SINGLETON = "entity-mgr-object";
+    private static final Set<FsEntityManager> SINGLETON_IN_SET;
+    
+    private FsTenant tenant;
+    
+    static {
+        SINGLETON = new FsEntityManager();
+        SINGLETON_IN_SET = new HashSet<FsEntityManager>(1);
+        SINGLETON_IN_SET.add(SINGLETON);
+    }
+    
+    public static FsEntityManager getSingleton() {
+        return SINGLETON;
+    }
+    
+    public static Set<FsEntityManager> getSingletonSet() {
+        return SINGLETON_IN_SET;
+    }
+    
+    public FsEntityManager() {
+        tenant = FsTenant.getSingleton();
+    }
+    
 
-	public FsDirectory getTenantRootDirectory() {
-		return tenant.getRootDirectory();
-	}
+    public FsDirectory getTenantRootDirectory() {
+        return tenant.getRootDirectory();
+    }
 
-	public void createPrivateRootDirectory(FsUser user) {
-		throw new UnsupportedOperationException("Filesystem accessing backend cannot create private directories.");
-	}
+    public void createPrivateRootDirectory(FsUser user) {
+        throw new UnsupportedOperationException("Filesystem accessing backend cannot create private directories.");
+    }
 
-	public void createTrashFolder(FsUser user) {
-		throw new UnsupportedOperationException("Filesystem accessing backend cannot create trash directories.");
-		
-	}
+    public void createTrashFolder(FsUser user) {
+        throw new UnsupportedOperationException("Filesystem accessing backend cannot create trash directories.");
+        
+    }
 
-	@SuppressWarnings("unchecked")
-	public List<FsSecureBusinessObject> searchWarehouse(String searchTerm) {
-		List<FsSecureBusinessObject> result = new ArrayList<FsSecureBusinessObject>();
-		FsRootDirectory.getSingleton().search(searchTerm, result);
-		return result;
-	}
+    @SuppressWarnings("unchecked")
+    public List<FsSecureBusinessObject> searchWarehouse(String searchTerm) {
+        List<FsSecureBusinessObject> result = new ArrayList<FsSecureBusinessObject>();
+        FsRootDirectory.getSingleton().search(searchTerm, result);
+        return result;
+    }
 
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
-	
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
+    
 }

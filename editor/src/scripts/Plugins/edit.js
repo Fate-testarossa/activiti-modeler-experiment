@@ -32,12 +32,12 @@ ORYX.Plugins.Edit = Clazz.extend({
          name: ORYX.I18N.Edit.cut,
          description: ORYX.I18N.Edit.cutDesc,
          icon: ORYX.PATH + "images/cut.png",
-		 keyCodes: [{
-				metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
-				keyCode: 88,
-				keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
-			}
-		 ],
+         keyCodes: [{
+                metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
+                keyCode: 88,
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
+            }
+         ],
          functionality: this.callEdit.bind(this, this.editCut),
          group: ORYX.I18N.Edit.group,
          index: 1,
@@ -48,12 +48,12 @@ ORYX.Plugins.Edit = Clazz.extend({
          name: ORYX.I18N.Edit.copy,
          description: ORYX.I18N.Edit.copyDesc,
          icon: ORYX.PATH + "images/page_copy.png",
-		 keyCodes: [{
-				metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
-				keyCode: 67,
-				keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
-			}
-		 ],
+         keyCodes: [{
+                metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
+                keyCode: 67,
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
+            }
+         ],
          functionality: this.callEdit.bind(this, this.editCopy, [true, false]),
          group: ORYX.I18N.Edit.group,
          index: 2,
@@ -64,12 +64,12 @@ ORYX.Plugins.Edit = Clazz.extend({
          name: ORYX.I18N.Edit.paste,
          description: ORYX.I18N.Edit.pasteDesc,
          icon: ORYX.PATH + "images/page_paste.png",
-		 keyCodes: [{
-				metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
-				keyCode: 86,
-				keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
-			}
-		 ],
+         keyCodes: [{
+                metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
+                keyCode: 86,
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
+            }
+         ],
          functionality: this.callEdit.bind(this, this.editPaste),
          isEnabled: this.clipboard.isOccupied.bind(this.clipboard),
          group: ORYX.I18N.Edit.group,
@@ -82,45 +82,45 @@ ORYX.Plugins.Edit = Clazz.extend({
             name: ORYX.I18N.Edit.del,
             description: ORYX.I18N.Edit.delDesc,
             icon: ORYX.PATH + "images/cross.png",
-			keyCodes: [{
-					metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
-					keyCode: 8,
-					keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
-				},
-				{	
-					keyCode: 46,
-					keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
-				}
-			],
+            keyCodes: [{
+                    metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
+                    keyCode: 8,
+                    keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
+                },
+                {    
+                    keyCode: 46,
+                    keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
+                }
+            ],
             functionality: this.callEdit.bind(this, this.editDelete),
             group: ORYX.I18N.Edit.group,
             index: 4,
             minShape: 1
         });
     },
-	
-	callEdit: function(fn, args){
-		window.setTimeout(function(){
-			fn.apply(this, (args instanceof Array ? args : []));
-		}.bind(this), 1);
-	},
-	
-	/**
-	 * Handles the mouse down event and starts the copy-move-paste action, if
-	 * control or meta key is pressed.
-	 */
-	handleMouseDown: function(event) {
-		if(this._controlPressed) {
-			this._controlPressed = false;
-			this.editCopy();
-//			console.log("copiedEle: %0",this.clipboard.shapesAsJson)
-//			console.log("mousevent: %o",event)
-			this.editPaste();
-			event.forceExecution = true;
-			this.facade.raiseEvent(event, this.clipboard.shapesAsJson);
-			
-		}
-	},
+    
+    callEdit: function(fn, args){
+        window.setTimeout(function(){
+            fn.apply(this, (args instanceof Array ? args : []));
+        }.bind(this), 1);
+    },
+    
+    /**
+     * Handles the mouse down event and starts the copy-move-paste action, if
+     * control or meta key is pressed.
+     */
+    handleMouseDown: function(event) {
+        if(this._controlPressed) {
+            this._controlPressed = false;
+            this.editCopy();
+//            console.log("copiedEle: %0",this.clipboard.shapesAsJson)
+//            console.log("mousevent: %o",event)
+            this.editPaste();
+            event.forceExecution = true;
+            this.facade.raiseEvent(event, this.clipboard.shapesAsJson);
+            
+        }
+    },
     
     /**
      * The key handler for this plugin. Every action from the set of cut, copy,
@@ -161,23 +161,23 @@ ORYX.Plugins.Edit = Clazz.extend({
 //         // when ctrl is pressed, switch trough the possibilities.
 //         switch (pressedKey) {
 //         
-//	         // cut.
-//	         case ORYX.CONFIG.KEY_CODE_X:
-//	         this.editCut();
-//	         break;
-//	         
-//	         // copy.
-//	         case ORYX.CONFIG.KEY_CODE_C:
-//	         this.editCopy();
-//	         break;
-//	         
-//	         // paste.
-//	         case ORYX.CONFIG.KEY_CODE_V:
-//	         this.editPaste();
-//	         break;
+//             // cut.
+//             case ORYX.CONFIG.KEY_CODE_X:
+//             this.editCut();
+//             break;
+//             
+//             // copy.
+//             case ORYX.CONFIG.KEY_CODE_C:
+//             this.editCopy();
+//             break;
+//             
+//             // paste.
+//             case ORYX.CONFIG.KEY_CODE_V:
+//             this.editPaste();
+//             break;
 //         }
 //    },
-	
+    
     /**
      * Returns a list of shapes which should be considered while copying.
      * Besides the shapes of given ones, edges and attached nodes are added to the result set.
@@ -198,8 +198,8 @@ ORYX.Plugins.Edit = Clazz.extend({
             shapesToConsider.push(shape);
             // Consider attached nodes (e.g. intermediate events)
             if (shape instanceof ORYX.Core.Node) {
-				var attached = shape.getOutgoingNodes();
-				attached = attached.findAll(function(a){ return !shapes.include(a) });
+                var attached = shape.getOutgoingNodes();
+                attached = attached.findAll(function(a){ return !shapes.include(a) });
                 shapesToConsider = shapesToConsider.concat(attached);
             }
             
@@ -257,12 +257,12 @@ ORYX.Plugins.Edit = Clazz.extend({
      */
     editPaste: function(){
         // Create a new canvas with childShapes 
-		//and stencilset namespace to be JSON Import conform
-		var canvas = {
+        //and stencilset namespace to be JSON Import conform
+        var canvas = {
             childShapes: this.clipboard.shapesAsJson,
-			stencilset:{
-				namespace:this.clipboard.SSnamespace
-			}
+            stencilset:{
+                namespace:this.clipboard.SSnamespace
+            }
         }
         // Apply json helper to iterate over json object
         Ext.apply(canvas, ORYX.Core.AbstractShape.JSONHelper);
@@ -275,11 +275,11 @@ ORYX.Plugins.Edit = Clazz.extend({
             shape.outgoing = shape.outgoing.select(function(out){
                 return childShapeResourceIds.include(out.resourceId);
             });
-			shape.outgoing.each(function(out){
-				if (!outgoings[out.resourceId]){ outgoings[out.resourceId] = [] }
-				outgoings[out.resourceId].push(shape)
-			});
-			
+            shape.outgoing.each(function(out){
+                if (!outgoings[out.resourceId]){ outgoings[out.resourceId] = [] }
+                outgoings[out.resourceId].push(shape)
+            });
+            
             return shape;
         }.bind(this), true, true);
         
@@ -287,103 +287,103 @@ ORYX.Plugins.Edit = Clazz.extend({
         // Iterate over all shapes
         canvas.eachChild(function(shape, parent){
             
-        	// Check if there has a valid target
+            // Check if there has a valid target
             if(shape.target && !(childShapeResourceIds.include(shape.target.resourceId))){
                 shape.target = undefined;
                 shape.targetRemoved = true;
             }
-    		
-    		// Check if the first docker is removed
-    		if(	shape.dockers && 
-    			shape.dockers.length >= 1 && 
-    			shape.dockers[0].getDocker &&
-    			((shape.dockers[0].getDocker().getDockedShape() &&
-    			!childShapeResourceIds.include(shape.dockers[0].getDocker().getDockedShape().resourceId)) || 
-    			!shape.getShape().dockers[0].getDockedShape()&&!outgoings[shape.resourceId])) {
-    				
-    			shape.sourceRemoved = true;
-    		}
-			
+            
+            // Check if the first docker is removed
+            if(    shape.dockers && 
+                shape.dockers.length >= 1 && 
+                shape.dockers[0].getDocker &&
+                ((shape.dockers[0].getDocker().getDockedShape() &&
+                !childShapeResourceIds.include(shape.dockers[0].getDocker().getDockedShape().resourceId)) || 
+                !shape.getShape().dockers[0].getDockedShape()&&!outgoings[shape.resourceId])) {
+                    
+                shape.sourceRemoved = true;
+            }
+            
             return shape;
         }.bind(this), true, true);
 
-		
+        
         // Iterate over top-level shapes
         canvas.eachChild(function(shape, parent){
             // All top-level shapes should get an offset in their bounds
             // Move the shape occording to COPY_MOVE_OFFSET
-        	if (this.clipboard.useOffset) {
-	            shape.bounds = {
-	                lowerRight: {
-	                    x: shape.bounds.lowerRight.x + ORYX.CONFIG.COPY_MOVE_OFFSET,
-	                    y: shape.bounds.lowerRight.y + ORYX.CONFIG.COPY_MOVE_OFFSET
-	                },
-	                upperLeft: {
-	                    x: shape.bounds.upperLeft.x + ORYX.CONFIG.COPY_MOVE_OFFSET,
-	                    y: shape.bounds.upperLeft.y + ORYX.CONFIG.COPY_MOVE_OFFSET
-	                }
-	            };
-        	}
+            if (this.clipboard.useOffset) {
+                shape.bounds = {
+                    lowerRight: {
+                        x: shape.bounds.lowerRight.x + ORYX.CONFIG.COPY_MOVE_OFFSET,
+                        y: shape.bounds.lowerRight.y + ORYX.CONFIG.COPY_MOVE_OFFSET
+                    },
+                    upperLeft: {
+                        x: shape.bounds.upperLeft.x + ORYX.CONFIG.COPY_MOVE_OFFSET,
+                        y: shape.bounds.upperLeft.y + ORYX.CONFIG.COPY_MOVE_OFFSET
+                    }
+                };
+            }
             // Only apply offset to shapes with a target
             if (shape.dockers){
                 shape.dockers = shape.dockers.map(function(docker, i){
                     // If shape had a target but the copied does not have anyone anymore,
                     // migrate the relative dockers to absolute ones.
                     if( (shape.targetRemoved === true && i == shape.dockers.length - 1&&docker.getDocker) ||
-						(shape.sourceRemoved === true && i == 0&&docker.getDocker)){
+                        (shape.sourceRemoved === true && i == 0&&docker.getDocker)){
 
                         docker = docker.getDocker().bounds.center();
                     }
 
-					// If it is the first docker and it has a docked shape, 
-					// just return the coordinates
-				   	if ((i == 0 && docker.getDocker instanceof Function && 
-				   		shape.sourceRemoved !== true && (docker.getDocker().getDockedShape() || ((outgoings[shape.resourceId]||[]).length > 0 && (!(shape.getShape() instanceof ORYX.Core.Node) || outgoings[shape.resourceId][0].getShape() instanceof ORYX.Core.Node)))) || 
-						(i == shape.dockers.length - 1 && docker.getDocker instanceof Function && 
-						shape.targetRemoved !== true && (docker.getDocker().getDockedShape() || shape.target))){
-							
-						return {
-                        	x: docker.x, 
-                        	y: docker.y,
-                        	getDocker: docker.getDocker
-						}
-					} else if (this.clipboard.useOffset) {
-	                    return {
-		                        x: docker.x + ORYX.CONFIG.COPY_MOVE_OFFSET, 
-		                        y: docker.y + ORYX.CONFIG.COPY_MOVE_OFFSET,
-	                        	getDocker: docker.getDocker
-		                    };
-				   	} else {
-				   		return {
-                        	x: docker.x, 
-                        	y: docker.y,
-                        	getDocker: docker.getDocker
-						};
-				   	}
+                    // If it is the first docker and it has a docked shape, 
+                    // just return the coordinates
+                       if ((i == 0 && docker.getDocker instanceof Function && 
+                           shape.sourceRemoved !== true && (docker.getDocker().getDockedShape() || ((outgoings[shape.resourceId]||[]).length > 0 && (!(shape.getShape() instanceof ORYX.Core.Node) || outgoings[shape.resourceId][0].getShape() instanceof ORYX.Core.Node)))) || 
+                        (i == shape.dockers.length - 1 && docker.getDocker instanceof Function && 
+                        shape.targetRemoved !== true && (docker.getDocker().getDockedShape() || shape.target))){
+                            
+                        return {
+                            x: docker.x, 
+                            y: docker.y,
+                            getDocker: docker.getDocker
+                        }
+                    } else if (this.clipboard.useOffset) {
+                        return {
+                                x: docker.x + ORYX.CONFIG.COPY_MOVE_OFFSET, 
+                                y: docker.y + ORYX.CONFIG.COPY_MOVE_OFFSET,
+                                getDocker: docker.getDocker
+                            };
+                       } else {
+                           return {
+                            x: docker.x, 
+                            y: docker.y,
+                            getDocker: docker.getDocker
+                        };
+                       }
                 }.bind(this));
 
             } else if (shape.getShape() instanceof ORYX.Core.Node && shape.dockers && shape.dockers.length > 0 && (!shape.dockers.first().getDocker || shape.sourceRemoved === true || !(shape.dockers.first().getDocker().getDockedShape() || outgoings[shape.resourceId]))){
-            	
-            	shape.dockers = shape.dockers.map(function(docker, i){
-            		
+                
+                shape.dockers = shape.dockers.map(function(docker, i){
+                    
                     if((shape.sourceRemoved === true && i == 0&&docker.getDocker)){
-                    	docker = docker.getDocker().bounds.center();
+                        docker = docker.getDocker().bounds.center();
                     }
                     
                     if (this.clipboard.useOffset) {
-	            		return {
-	                        x: docker.x + ORYX.CONFIG.COPY_MOVE_OFFSET, 
-	                        y: docker.y + ORYX.CONFIG.COPY_MOVE_OFFSET,
-	                    	getDocker: docker.getDocker
-	                    };
+                        return {
+                            x: docker.x + ORYX.CONFIG.COPY_MOVE_OFFSET, 
+                            y: docker.y + ORYX.CONFIG.COPY_MOVE_OFFSET,
+                            getDocker: docker.getDocker
+                        };
                     } else {
-	            		return {
-	                        x: docker.x, 
-	                        y: docker.y,
-	                    	getDocker: docker.getDocker
-	                    };
+                        return {
+                            x: docker.x, 
+                            y: docker.y,
+                            getDocker: docker.getDocker
+                        };
                     }
-            	}.bind(this));
+                }.bind(this));
             }
             
             return shape;
@@ -402,9 +402,9 @@ ORYX.Plugins.Edit = Clazz.extend({
         var clipboard = new ORYX.Plugins.Edit.ClipBoard();
         clipboard.refresh(selection, this.getAllShapesToConsider(selection));
         
-		var command = new ORYX.Plugins.Edit.DeleteCommand(clipboard , this.facade);
+        var command = new ORYX.Plugins.Edit.DeleteCommand(clipboard , this.facade);
                                        
-		this.facade.executeCommands([command]);
+        this.facade.executeCommands([command]);
     }
 }); 
 
@@ -412,8 +412,8 @@ ORYX.Plugins.Edit.ClipBoard = Clazz.extend({
     construct: function(){
         this.shapesAsJson = [];
         this.selection = [];
-		this.SSnamespace="";
-		this.useOffset=true;
+        this.SSnamespace="";
+        this.useOffset=true;
     },
     isOccupied: function(){
         return this.shapesAsJson.length > 0;
@@ -464,8 +464,8 @@ ORYX.Plugins.Edit.DeleteCommand = ORYX.Core.Command.extend({
         }.bind(this));
         
         this.facade.setSelection([]);
-        this.facade.getCanvas().update();		
-		this.facade.updateSelection();
+        this.facade.getCanvas().update();        
+        this.facade.updateSelection();
         
     },
     rollback: function(){
@@ -482,8 +482,8 @@ ORYX.Plugins.Edit.DeleteCommand = ORYX.Core.Command.extend({
         }.bind(this));
         
         this.facade.setSelection(this.selectedShapes);
-        this.facade.getCanvas().update();	
-		this.facade.updateSelection();
+        this.facade.getCanvas().update();    
+        this.facade.updateSelection();
         
     }
 });

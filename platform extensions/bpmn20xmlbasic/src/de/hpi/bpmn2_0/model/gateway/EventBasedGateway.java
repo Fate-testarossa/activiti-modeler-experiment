@@ -58,9 +58,9 @@ public class EventBasedGateway
     @XmlAttribute
     protected EventBasedGatewayType eventGatewayType;
 
-	public void acceptVisitor(Visitor v){
-		v.visitEventBasedGateway(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitEventBasedGateway(this);
+    }
    
     
     /**

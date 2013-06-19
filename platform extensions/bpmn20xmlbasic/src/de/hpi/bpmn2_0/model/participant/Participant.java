@@ -76,7 +76,7 @@ public class Participant
 {
 
     @XmlElement
-	protected List<QName> interfaceRef;
+    protected List<QName> interfaceRef;
     @XmlElement
     protected List<QName> endPointRef;
     @XmlElement(type = ParticipantMultiplicity.class)
@@ -98,71 +98,71 @@ public class Participant
     private LaneSet laneSet;
     
     @XmlTransient
-	public String _processType;
-	@XmlTransient
-	public String _isClosed;
-	@XmlTransient
-	public String _isExecutable;
-	@XmlTransient
-	public boolean _isChoreographyParticipant = false;
-	@XmlTransient
-	public Message _msgRef;
+    public String _processType;
+    @XmlTransient
+    public String _isClosed;
+    @XmlTransient
+    public String _isExecutable;
+    @XmlTransient
+    public boolean _isChoreographyParticipant = false;
+    @XmlTransient
+    public Message _msgRef;
     
     /*
      * Constructors
      */
-	
-	/**
-	 * Default constructor
-	 */
-	public Participant() {
-		super();
-	}
-	
-	/**
-	 * Copy constructor
-	 * 
-	 * @param p 
-	 * 		template {@link Participant}
-	 */
+    
+    /**
+     * Default constructor
+     */
+    public Participant() {
+        super();
+    }
+    
+    /**
+     * Copy constructor
+     * 
+     * @param p 
+     *         template {@link Participant}
+     */
     public Participant(Participant p) {
-		super(p);
-		
-		this.getInterfaceRef().addAll(p.getInterfaceRef());
-		this.getEndPointRef().addAll(p.getEndPointRef());
-		
-		this.setParticipantMultiplicity(p.getParticipantMultiplicity());
-		this.setProcessRef(p.getProcessRef());
-		
-		this.setPartnerRoleRef(p.getPartnerRoleRef());
-		this.setPartnerEntityRef(p.getPartnerEntityRef());
-		
-		this.setInitiating(p.isInitiating());
-		this.setLaneSet(p.getLaneSet());
-		
-		this._processType = p._processType;
-		this._isClosed = p._isClosed;
-		this._isExecutable = p._isExecutable;
-		this._isChoreographyParticipant = p._isChoreographyParticipant;
-	}
+        super(p);
+        
+        this.getInterfaceRef().addAll(p.getInterfaceRef());
+        this.getEndPointRef().addAll(p.getEndPointRef());
+        
+        this.setParticipantMultiplicity(p.getParticipantMultiplicity());
+        this.setProcessRef(p.getProcessRef());
+        
+        this.setPartnerRoleRef(p.getPartnerRoleRef());
+        this.setPartnerEntityRef(p.getPartnerEntityRef());
+        
+        this.setInitiating(p.isInitiating());
+        this.setLaneSet(p.getLaneSet());
+        
+        this._processType = p._processType;
+        this._isClosed = p._isClosed;
+        this._isExecutable = p._isExecutable;
+        this._isChoreographyParticipant = p._isChoreographyParticipant;
+    }
     
     /* Business logic methods */
 
-	// @Override
+    // @Override
     public void addChild(BaseElement child) {
-    	if(child instanceof Lane) {
-    		if(laneSet == null) {
-    			laneSet = new LaneSet();
-    			laneSet.setId(SignavioUUID.generate());
-    		}
-    		
-    		getLaneSet().addChild(child);
-    	}
+        if(child instanceof Lane) {
+            if(laneSet == null) {
+                laneSet = new LaneSet();
+                laneSet.setId(SignavioUUID.generate());
+            }
+            
+            getLaneSet().addChild(child);
+        }
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitParticipant(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitParticipant(this);
+    }
     
     /* Getter & Setter */
     /**
@@ -195,20 +195,20 @@ public class Participant
     }
 
     /**
-	 * @return the processRef
-	 */
-	public Process getProcessRef() {
-		return this.processRef;
-	}
+     * @return the processRef
+     */
+    public Process getProcessRef() {
+        return this.processRef;
+    }
 
-	/**
-	 * @param processRef the processRef to set
-	 */
-	public void setProcessRef(Process processRef) {
-		this.processRef = processRef;
-	}
+    /**
+     * @param processRef the processRef to set
+     */
+    public void setProcessRef(Process processRef) {
+        this.processRef = processRef;
+    }
 
-	/**
+    /**
      * Gets the value of the endPointRef property.
      * 
      * <p>
@@ -262,18 +262,18 @@ public class Participant
     }
 
     /**
-	 * @return the isInitiating
-	 */
-	public boolean isInitiating() {
-		return isInitiating;
-	}
+     * @return the isInitiating
+     */
+    public boolean isInitiating() {
+        return isInitiating;
+    }
 
-	/**
-	 * @param isInitiating the isInitiating to set
-	 */
-	public void setInitiating(boolean isInitiating) {
-		this.isInitiating = isInitiating;
-	}
+    /**
+     * @param isInitiating the isInitiating to set
+     */
+    public void setInitiating(boolean isInitiating) {
+        this.isInitiating = isInitiating;
+    }
 
     /**
      * Gets the value of the partnerRoleRef property.
@@ -323,11 +323,11 @@ public class Participant
         this.partnerEntityRef = value;
     }
 
-	public LaneSet getLaneSet() {
-		return laneSet;
-	}
+    public LaneSet getLaneSet() {
+        return laneSet;
+    }
 
-	public void setLaneSet(LaneSet laneSet) {
-		this.laneSet = laneSet;
-	}
+    public void setLaneSet(LaneSet laneSet) {
+        this.laneSet = laneSet;
+    }
 }

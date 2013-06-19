@@ -44,79 +44,79 @@ import com.signavio.warehouse.revision.business.FsModelRevision;
 @HandlerConfiguration(context=ModelHandler.class, uri="/info", rel="info")
 public class InfoHandler extends AbstractInfoHandler {
 
-	/**
-	 * Construct
-	 * @param servletContext
-	 */
-	public InfoHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all information out from a particular model
-	 */
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
-		
-		JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
-		
-		try {
-			
-			FsModel model = (FsModel) sbo;
-			
-			res.put("name", model.getName());
-			res.put("description", model.getDescription());
-			res.put("created", model.getCreationDate());
-			res.put("type", model.getType());
-			
-			FsModelRevision head = model.getHeadRevision();
-			if (head != null) {
-				res.put("updated", head.getCreationDate());
-				res.put("author", "/user/" + head.getAuthor());				// TODO: Get /user/ and /revision/ from the annotations
-				res.put("rev", head.getRevisionNumber());
-				res.put("comment", head.getComment());
-				res.put("revision", "/revision/" + head.getId());
-			}
-			
-			FsDirectory originalDirectory = null;
+    /**
+     * Construct
+     * @param servletContext
+     */
+    public InfoHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all information out from a particular model
+     */
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
+        
+        JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
+        
+        try {
+            
+            FsModel model = (FsModel) sbo;
+            
+            res.put("name", model.getName());
+            res.put("description", model.getDescription());
+            res.put("created", model.getCreationDate());
+            res.put("type", model.getType());
+            
+            FsModelRevision head = model.getHeadRevision();
+            if (head != null) {
+                res.put("updated", head.getCreationDate());
+                res.put("author", "/user/" + head.getAuthor());                // TODO: Get /user/ and /revision/ from the annotations
+                res.put("rev", head.getRevisionNumber());
+                res.put("comment", head.getComment());
+                res.put("revision", "/revision/" + head.getId());
+            }
+            
+            FsDirectory originalDirectory = null;
 
-			originalDirectory = model.getParentDirectory();
-			
-			// Set folder
-			if (originalDirectory != null){
-				res.put("parent", "/directory/" + originalDirectory.getId());
-			}
-			
-		} catch (JSONException e) {
-			throw new RequestException("warehouse.noValidModelInfo");
-		}
-		
-		return res;
-	}
+            originalDirectory = model.getParentDirectory();
+            
+            // Set folder
+            if (originalDirectory != null){
+                res.put("parent", "/directory/" + originalDirectory.getId());
+            }
+            
+        } catch (JSONException e) {
+            throw new RequestException("warehouse.noValidModelInfo");
+        }
+        
+        return res;
+    }
 
-	@Override
-	@HandlerMethodActivation
-	public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
-		super.putRepresentation(sbo, params, token);
-		
-		JSONObject jParams = (JSONObject) params;
-		
-		FsModel model = (FsModel) sbo;
-		
-		try {
-			model.setName(jParams.getString("name"));
-			model.setDescription(jParams.getString("description"));
-			model.setType(jParams.getString("type"));
-		} catch (JSONException e) {
-			throw new JSONRequestException(e);
-		} catch (UnsupportedEncodingException e) {
-			throw new RequestException("unsupportedEncoding", e);
-		}
-		
-		
-		return getRepresentation(sbo, params, token);
-	}
-	
+    @Override
+    @HandlerMethodActivation
+    public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
+        super.putRepresentation(sbo, params, token);
+        
+        JSONObject jParams = (JSONObject) params;
+        
+        FsModel model = (FsModel) sbo;
+        
+        try {
+            model.setName(jParams.getString("name"));
+            model.setDescription(jParams.getString("description"));
+            model.setType(jParams.getString("type"));
+        } catch (JSONException e) {
+            throw new JSONRequestException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RequestException("unsupportedEncoding", e);
+        }
+        
+        
+        return getRepresentation(sbo, params, token);
+    }
+    
 
 }

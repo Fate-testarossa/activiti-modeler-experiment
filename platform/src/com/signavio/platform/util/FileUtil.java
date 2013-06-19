@@ -25,22 +25,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class FileUtil {
-	
-	public static StringBuffer readFile(File file) throws IOException {
-		FileInputStream fin =  new FileInputStream(file);
-		StringBuffer result = new StringBuffer();
+    
+    public static StringBuffer readFile(File file) throws IOException {
+        FileInputStream fin =  new FileInputStream(file);
+        StringBuffer result = new StringBuffer();
 
-		String thisLine = "";
-		BufferedReader myInput = new BufferedReader(new InputStreamReader(fin));
-		
-		while ((thisLine = myInput.readLine()) != null) {  
-			result.append(thisLine);
-			result.append("\n");
-		}
-		
-		myInput.close();
-		fin.close();
-		
-		return result;
-	}
+        String thisLine = "";
+        BufferedReader myInput = new BufferedReader(new InputStreamReader(fin));
+        
+        while ((thisLine = myInput.readLine()) != null) {  
+            result.append(thisLine);
+            result.append("\n");
+        }
+        
+        myInput.close();
+        fin.close();
+        
+        return result;
+    }
 }

@@ -61,10 +61,10 @@ public class DataInput
     @XmlAttribute
     protected Boolean isCollection;
 
-	public void acceptVisitor(Visitor v){
-		v.visitDataInput(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitDataInput(this);
+    }
+    
     /**
      * Gets the value of the itemSubjectRef property.
      * 

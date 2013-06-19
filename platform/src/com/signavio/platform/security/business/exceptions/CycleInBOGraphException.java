@@ -20,34 +20,34 @@ package com.signavio.platform.security.business.exceptions;
 
 public class CycleInBOGraphException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3990909925784427458L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3990909925784427458L;
 
-//	public CycleInBOGraphException(BusinessInstance parent, BusinessInstance child) {
-//		super("Adding " + child.getId() + " to " + parent.getId() + " would create a cycle in the BO Graph.");
-//	}
+//    public CycleInBOGraphException(BusinessInstance parent, BusinessInstance child) {
+//        super("Adding " + child.getId() + " to " + parent.getId() + " would create a cycle in the BO Graph.");
+//    }
 
-	public CycleInBOGraphException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public CycleInBOGraphException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public CycleInBOGraphException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    public CycleInBOGraphException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	public CycleInBOGraphException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    public CycleInBOGraphException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	public CycleInBOGraphException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+    public CycleInBOGraphException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
+    
+    
 }

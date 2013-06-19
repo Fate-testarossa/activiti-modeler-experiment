@@ -40,69 +40,69 @@ import com.signavio.warehouse.directory.business.FsRootDirectory;
 @HandlerConfiguration(context=DirectoryHandler.class, uri="/info", rel="info")
 public class InfoHandler extends AbstractInfoHandler {
 
-	/**
-	 * Construct
-	 * @param servletContext
-	 */
-	public InfoHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all information out from a particular model
-	 */
-	@Override
-	@HandlerMethodActivation
-	public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-		
-		JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
-		
-		try {
-			
-			FsDirectory  directory= (FsDirectory) sbo;
-			
-			res.put("name", directory.getName());
-			res.put("description", directory.getDescription());
-			res.put("created", directory.getCreationDate().toString());
-			
-			FsDirectory originalDirectory = null;
-			
-			
-			originalDirectory = directory.getParentDirectory();
-			
-			// Set folder
-			if (originalDirectory != null){
-				res.put("parent", "/directory/" + originalDirectory.getId());
-			}
-			
-			if(directory instanceof FsRootDirectory) {
-				res.put("type", "public");
-			}
-			
-		} catch (JSONException e) {}
-		
-		return res;
-	}
+    /**
+     * Construct
+     * @param servletContext
+     */
+    public InfoHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all information out from a particular model
+     */
+    @Override
+    @HandlerMethodActivation
+    public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
+        
+        JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
+        
+        try {
+            
+            FsDirectory  directory= (FsDirectory) sbo;
+            
+            res.put("name", directory.getName());
+            res.put("description", directory.getDescription());
+            res.put("created", directory.getCreationDate().toString());
+            
+            FsDirectory originalDirectory = null;
+            
+            
+            originalDirectory = directory.getParentDirectory();
+            
+            // Set folder
+            if (originalDirectory != null){
+                res.put("parent", "/directory/" + originalDirectory.getId());
+            }
+            
+            if(directory instanceof FsRootDirectory) {
+                res.put("type", "public");
+            }
+            
+        } catch (JSONException e) {}
+        
+        return res;
+    }
 
-	/**
-	 * Expects a params "name" and "description"
-	 */
-	@HandlerMethodActivation
-	@Override
-	public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
-		super.putRepresentation(sbo, params, token);
-		
-		JSONObject data = (JSONObject) params;
-		
-		FsDirectory dir = (FsDirectory) sbo;
-		
-		try {
-			dir.setName(data.getString("name"));
-			dir.setDescription(data.getString("description"));
-		} catch (JSONException e) {
-			throw new JSONRequestException(e);
-		}
-		
-		return getRepresentation(sbo, params, token);
-	}
+    /**
+     * Expects a params "name" and "description"
+     */
+    @HandlerMethodActivation
+    @Override
+    public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
+        super.putRepresentation(sbo, params, token);
+        
+        JSONObject data = (JSONObject) params;
+        
+        FsDirectory dir = (FsDirectory) sbo;
+        
+        try {
+            dir.setName(data.getString("name"));
+            dir.setDescription(data.getString("description"));
+        } catch (JSONException e) {
+            throw new JSONRequestException(e);
+        }
+        
+        return getRepresentation(sbo, params, token);
+    }
 }

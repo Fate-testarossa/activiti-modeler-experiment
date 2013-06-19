@@ -59,27 +59,27 @@ public class Association
     public boolean _containedInProcess;
     
     public Association() {
-    	super();
+        super();
     }
     
     public Association(DataAssociation dataAssociation) {
-    	super(dataAssociation);
-    	
-    	/*
-    	 * Determine association direction
-    	 */
-    	if(dataAssociation instanceof DataInputAssociation || dataAssociation instanceof DataOutputAssociation) {
-    		this.setAssociationDirection(AssociationDirection.ONE);
-    	}
+        super(dataAssociation);
+        
+        /*
+         * Determine association direction
+         */
+        if(dataAssociation instanceof DataInputAssociation || dataAssociation instanceof DataOutputAssociation) {
+            this.setAssociationDirection(AssociationDirection.ONE);
+        }
     }
     
-	public void acceptVisitor(Visitor v){
-		v.visitAssociation(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitAssociation(this);
+    }
     
-	
-	/* Getter & Setter */
-	
+    
+    /* Getter & Setter */
+    
     /**
      * Gets the value of the associationDirection property.
      * 

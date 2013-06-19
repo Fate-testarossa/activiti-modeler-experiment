@@ -35,25 +35,25 @@ import de.hpi.bpmn2_0.model.extension.AbstractExtensionElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SignavioMessageName extends AbstractExtensionElement {
-	@XmlAttribute
-	private String name;
-	
-	public SignavioMessageName() {
-		super();
-	}
-	
-	public SignavioMessageName(String name) {
-		super();
-		this.name = name;
-	}
-	
-	/* Getter & Setter */
+    @XmlAttribute
+    private String name;
+    
+    public SignavioMessageName() {
+        super();
+    }
+    
+    public SignavioMessageName(String name) {
+        super();
+        this.name = name;
+    }
+    
+    /* Getter & Setter */
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 }

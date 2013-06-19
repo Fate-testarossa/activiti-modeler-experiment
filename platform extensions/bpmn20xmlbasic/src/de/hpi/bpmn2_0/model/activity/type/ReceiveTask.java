@@ -64,11 +64,11 @@ public class ReceiveTask
     @XmlAttribute
     protected ServiceImplementation implementation;
     
-	public void acceptVisitor(Visitor v){
-		v.visitReceiveTask(this);
-	}
-	
-	
+    public void acceptVisitor(Visitor v){
+        v.visitReceiveTask(this);
+    }
+    
+    
     
     /**
      * Gets the value of the instantiate property.
@@ -146,18 +146,18 @@ public class ReceiveTask
         this.operationRef = value;
     }
 
-	/**
-	 * @return the implementation
-	 */
-	public ServiceImplementation getImplementation() {
-		return implementation;
-	}
+    /**
+     * @return the implementation
+     */
+    public ServiceImplementation getImplementation() {
+        return implementation;
+    }
 
-	/**
-	 * @param implementation the implementation to set
-	 */
-	public void setImplementation(ServiceImplementation implementation) {
-		this.implementation = implementation;
-	}
+    /**
+     * @param implementation the implementation to set
+     */
+    public void setImplementation(ServiceImplementation implementation) {
+        this.implementation = implementation;
+    }
 
 }

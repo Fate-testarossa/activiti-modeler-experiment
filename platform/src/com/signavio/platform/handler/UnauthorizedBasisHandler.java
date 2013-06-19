@@ -32,16 +32,16 @@ import com.signavio.platform.security.business.FsRootUser;
  */
 public abstract class UnauthorizedBasisHandler extends BasisHandler {
 
-	public UnauthorizedBasisHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * 
-	 * @return The root token! This token has to be used in handlers that do not need authentication, e. g. login
-	 */
-	protected FsAccessToken getRootToken() {
-		// ISSUE : This section has been changed as it used database-dependent code
-		return FsAccessToken.getDummy();
-	}
+    public UnauthorizedBasisHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * 
+     * @return The root token! This token has to be used in handlers that do not need authentication, e. g. login
+     */
+    protected FsAccessToken getRootToken() {
+        // ISSUE : This section has been changed as it used database-dependent code
+        return FsAccessToken.getDummy();
+    }
 }

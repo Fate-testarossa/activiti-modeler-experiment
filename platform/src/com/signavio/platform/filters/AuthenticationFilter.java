@@ -46,27 +46,27 @@ import com.signavio.platform.security.business.FsAccessToken;
  *
  */
 public class AuthenticationFilter implements Filter {
-	
-	public void destroy() {
-		
-	}
+    
+    public void destroy() {
+        
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		
-		
-		if(request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest) request;
-			HttpServletResponse res = (HttpServletResponse) response;
-			// ISSUE : Added this line in order to have correct token
-			req.getSession().setAttribute("token", FsAccessToken.getDummy());
-			
-			chain.doFilter(request, response);
-		}
-	}
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        
+        
+        if(request instanceof HttpServletRequest) {
+            HttpServletRequest req = (HttpServletRequest) request;
+            HttpServletResponse res = (HttpServletResponse) response;
+            // ISSUE : Added this line in order to have correct token
+            req.getSession().setAttribute("token", FsAccessToken.getDummy());
+            
+            chain.doFilter(request, response);
+        }
+    }
 
-	public void init(FilterConfig config) throws ServletException {
-		
-	}
+    public void init(FilterConfig config) throws ServletException {
+        
+    }
 
 }

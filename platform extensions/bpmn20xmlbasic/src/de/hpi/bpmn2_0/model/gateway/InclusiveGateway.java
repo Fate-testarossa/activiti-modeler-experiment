@@ -50,8 +50,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class InclusiveGateway
     extends GatewayWithDefaultFlow
 {
-	
-	public void acceptVisitor(Visitor v){
-		v.visitInclusiveGateway(this);
-	}
+    
+    public void acceptVisitor(Visitor v){
+        v.visitInclusiveGateway(this);
+    }
 }

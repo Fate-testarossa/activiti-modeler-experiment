@@ -19,29 +19,29 @@
 
 
 if(!ORYX.Plugins) {
-	ORYX.Plugins = new Object();
+    ORYX.Plugins = new Object();
 }
 
 ORYX.Plugins.Toolbar = Clazz.extend({
 
-	facade: undefined,
-	plugs:	[],
+    facade: undefined,
+    plugs:    [],
 
-	construct: function(facade, ownPluginData) {
-		this.facade = facade;
-		
-		this.groupIndex = new Hash();
-		ownPluginData.properties.each((function(value){
-			if(value.group && value.index != undefined) {
-				this.groupIndex[value.group] = value.index
-			}
-		}).bind(this));
-		
-		Ext.QuickTips.init();
+    construct: function(facade, ownPluginData) {
+        this.facade = facade;
+        
+        this.groupIndex = new Hash();
+        ownPluginData.properties.each((function(value){
+            if(value.group && value.index != undefined) {
+                this.groupIndex[value.group] = value.index
+            }
+        }).bind(this));
+        
+        Ext.QuickTips.init();
 
-		this.buttons = [];
+        this.buttons = [];
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_BUTTON_UPDATE, this.onButtonUpdate.bind(this));
-	},
+    },
     
     /**
      * Can be used to manipulate the state of a button.
@@ -63,43 +63,43 @@ ORYX.Plugins.Toolbar = Clazz.extend({
         }
     },
 
-	registryChanged: function(pluginsData) {
+    registryChanged: function(pluginsData) {
         // Sort plugins by group and index
-		var newPlugs =  pluginsData.sortBy((function(value) {
-			return ((this.groupIndex[value.group] != undefined ? this.groupIndex[value.group] : "" ) + value.group + "" + value.index).toLowerCase();
-		}).bind(this));
-		var plugs = $A(newPlugs).findAll(function(value){
-										return !this.plugs.include(value) && (!value.target || value.target === ORYX.Plugins.Toolbar)
-									}.bind(this));
-		if(plugs.length<1)
-			return;
+        var newPlugs =  pluginsData.sortBy((function(value) {
+            return ((this.groupIndex[value.group] != undefined ? this.groupIndex[value.group] : "" ) + value.group + "" + value.index).toLowerCase();
+        }).bind(this));
+        var plugs = $A(newPlugs).findAll(function(value){
+                                        return !this.plugs.include(value) && (!value.target || value.target === ORYX.Plugins.Toolbar)
+                                    }.bind(this));
+        if(plugs.length<1)
+            return;
 
-		this.buttons = [];
+        this.buttons = [];
 
-		ORYX.Log.trace("Creating a toolbar.")
-		if(!this.toolbar){
-			this.toolbar = new Ext.ux.SlicedToolbar({
-			height: 24
-		});
-				var region = this.facade.addToRegion("north", this.toolbar, "Toolbar");
-		}
-		
-		
-		var currentGroupsName = this.plugs.last()?this.plugs.last().group:plugs[0].group;
+        ORYX.Log.trace("Creating a toolbar.")
+        if(!this.toolbar){
+            this.toolbar = new Ext.ux.SlicedToolbar({
+            height: 24
+        });
+                var region = this.facade.addToRegion("north", this.toolbar, "Toolbar");
+        }
+        
+        
+        var currentGroupsName = this.plugs.last()?this.plugs.last().group:plugs[0].group;
         
         // Map used to store all drop down buttons of current group
         var currentGroupsDropDownButton = {};
 
-		
-		plugs.each((function(value) {
-			if(!value.name) {return}
-			this.plugs.push(value);
+        
+        plugs.each((function(value) {
+            if(!value.name) {return}
+            this.plugs.push(value);
             // Add seperator if new group begins
-			if(currentGroupsName != value.group) {
-			    this.toolbar.add('-');
-				currentGroupsName = value.group;
+            if(currentGroupsName != value.group) {
+                this.toolbar.add('-');
+                currentGroupsName = value.group;
                 currentGroupsDropDownButton = {};
-			}
+            }
 
             // If an drop down group icon is provided, a split button should be used
             if(value.dropDownGroupIcon){
@@ -159,13 +159,13 @@ ORYX.Plugins.Toolbar = Clazz.extend({
                 splitButton.menu.add(button);
                 
             } else if(value.addFill) {
-				this.toolbar.addFill();
-			} else { // create normal, simple button
+                this.toolbar.addFill();
+            } else { // create normal, simple button
                 var button = new Ext.Toolbar.Button({
                     icon:           value.icon,         // icons can also be specified inline
                     cls:            'x-btn-icon',       // Class who shows only the icon
                     itemId:         value.id,
-					tooltip:        value.description,  // Set the tooltip
+                    tooltip:        value.description,  // Set the tooltip
                     tooltipType:    'title',            // Tooltip will be shown as in the html-title attribute
                     handler:        value.toggle ? null : value.functionality,  // Handler for mouse click
                     enableToggle:   value.toggle, // Option for enabling toggling
@@ -176,42 +176,42 @@ ORYX.Plugins.Toolbar = Clazz.extend({
 
                 button.getEl().onclick = function() {this.blur()}
             }
-			     
-			value['buttonInstance'] = button;
-			this.buttons.push(value);
-			
-		}).bind(this));
+                 
+            value['buttonInstance'] = button;
+            this.buttons.push(value);
+            
+        }).bind(this));
 
-		this.enableButtons([]);
+        this.enableButtons([]);
         
         //TODO this should be done when resizing and adding elements!!!!
         this.toolbar.calcSlices();
-		window.addEventListener("resize", function(event){this.toolbar.calcSlices()}.bind(this), false);
-		window.addEventListener("onresize", function(event){this.toolbar.calcSlices()}.bind(this), false);
+        window.addEventListener("resize", function(event){this.toolbar.calcSlices()}.bind(this), false);
+        window.addEventListener("onresize", function(event){this.toolbar.calcSlices()}.bind(this), false);
 
-	},
-	
-	onSelectionChanged: function(event) {
-		this.enableButtons(event.elements);
-	},
+    },
+    
+    onSelectionChanged: function(event) {
+        this.enableButtons(event.elements);
+    },
 
-	enableButtons: function(elements) {
-		// Show the Buttons
-		this.buttons.each((function(value){
-			value.buttonInstance.enable();
-						
-			// If there is less elements than minShapes
-			if(value.minShape && value.minShape > elements.length)
-				value.buttonInstance.disable();
-			// If there is more elements than minShapes
-			if(value.maxShape && value.maxShape < elements.length)
-				value.buttonInstance.disable();	
-			// If the plugin is not enabled	
-			if(value.isEnabled && !value.isEnabled(value.buttonInstance))
-				value.buttonInstance.disable();
-			
-		}).bind(this));		
-	}
+    enableButtons: function(elements) {
+        // Show the Buttons
+        this.buttons.each((function(value){
+            value.buttonInstance.enable();
+                        
+            // If there is less elements than minShapes
+            if(value.minShape && value.minShape > elements.length)
+                value.buttonInstance.disable();
+            // If there is more elements than minShapes
+            if(value.maxShape && value.maxShape < elements.length)
+                value.buttonInstance.disable();    
+            // If the plugin is not enabled    
+            if(value.isEnabled && !value.isEnabled(value.buttonInstance))
+                value.buttonInstance.disable();
+            
+        }).bind(this));        
+    }
 });
 
 Ext.ns("Ext.ux");

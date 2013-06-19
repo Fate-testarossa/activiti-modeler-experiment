@@ -30,29 +30,29 @@ import com.signavio.warehouse.revision.business.FsModelRevision;
 
 public abstract class AbstractRevisionExportHandler extends ExportHandler {
 
-	public AbstractRevisionExportHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
+    public AbstractRevisionExportHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
 
-	@Override
-	protected void setFileName(FsSecureBusinessObject sbo, HttpServletResponse res) {
+    @Override
+    protected void setFileName(FsSecureBusinessObject sbo, HttpServletResponse res) {
 
-		FsModel m = null;
-		
-		if(sbo instanceof FsModel) {
-			m = (FsModel)sbo;
-		} else {
-			FsModelRevision mr = (FsModelRevision)sbo;
-			Set<FsModel> parents = mr.getParents(false, FsModel.class);
-			if(parents.size() == 0) {
-				parents = mr.getParents(true, FsModel.class);
-			}
-			m = parents.iterator().next();
-		}
-		
-		if (m != null) {
-			HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
-			res.setHeader("Content-Disposition", " "+(an.download()?"attachment":"inline")+"; filename=\"" + m.getName() + "." + an.name().toLowerCase()+"\"");
-		}
-	}
+        FsModel m = null;
+        
+        if(sbo instanceof FsModel) {
+            m = (FsModel)sbo;
+        } else {
+            FsModelRevision mr = (FsModelRevision)sbo;
+            Set<FsModel> parents = mr.getParents(false, FsModel.class);
+            if(parents.size() == 0) {
+                parents = mr.getParents(true, FsModel.class);
+            }
+            m = parents.iterator().next();
+        }
+        
+        if (m != null) {
+            HandlerExportConfiguration an = this.getClass().getAnnotation(HandlerExportConfiguration.class);
+            res.setHeader("Content-Disposition", " "+(an.download()?"attachment":"inline")+"; filename=\"" + m.getName() + "." + an.name().toLowerCase()+"\"");
+        }
+    }
 }

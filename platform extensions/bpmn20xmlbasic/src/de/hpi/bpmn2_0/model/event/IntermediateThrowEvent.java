@@ -47,11 +47,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class IntermediateThrowEvent
     extends ThrowEvent
 {
-	
-	public void acceptVisitor(Visitor v){
-		v.visitIntermediateThrowEvent(this);
-	}
-	
-	
+    
+    public void acceptVisitor(Visitor v){
+        v.visitIntermediateThrowEvent(this);
+    }
+    
+    
 
 }

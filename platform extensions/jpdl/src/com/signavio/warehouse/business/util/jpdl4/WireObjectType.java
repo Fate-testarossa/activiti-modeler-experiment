@@ -23,33 +23,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class WireObjectType implements IWireObjectGroup {
-	
-	private String clazz;
-	
-	public WireObjectType(String clazz) {
-		this.clazz = clazz;
-	}
-	
-	public String toJpdl() {
-		
-		StringWriter jpdl = new StringWriter();
-		jpdl.write("<object ");
-		jpdl.write(JsonToJpdl.transformAttribute("class", clazz));
-		jpdl.write(" />");
-		
-		return jpdl.toString();
-	}
+    
+    private String clazz;
+    
+    public WireObjectType(String clazz) {
+        this.clazz = clazz;
+    }
+    
+    public String toJpdl() {
+        
+        StringWriter jpdl = new StringWriter();
+        jpdl.write("<object ");
+        jpdl.write(JsonToJpdl.transformAttribute("class", clazz));
+        jpdl.write(" />");
+        
+        return jpdl.toString();
+    }
 
-	public String getClazz() {
-		return clazz;
-	}
+    public String getClazz() {
+        return clazz;
+    }
 
-	public void setClazz(String clazz) {
-		this.clazz = clazz;
-	}
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
+    }
 
-	public JSONObject toJson() throws JSONException {
-		// TODO 
-		return new JSONObject();
-	}
+    public JSONObject toJson() throws JSONException {
+        // TODO 
+        return new JSONObject();
+    }
 }

@@ -27,15 +27,15 @@ package com.signavio.platform.core;
  */
 public interface Directory {
 
-	/**
-	 * This method is called during the bootstrapping of the platform and can be used to
-	 * initialize the directory.
-	 */
-	public void start();
-	
-	/**
-	 * This method is called during the shutdown of the platform and can be used to 
-	 * free resources.
-	 */
-	public void stop();
+    /**
+     * This method is called during the bootstrapping of the platform and can be used to
+     * initialize the directory.
+     */
+    public void start();
+    
+    /**
+     * This method is called during the shutdown of the platform and can be used to 
+     * free resources.
+     */
+    public void stop();
 }

@@ -22,8 +22,8 @@ import org.json.JSONObject;
 
 public interface IWireObjectGroup {
 
-	public abstract String toJpdl();
+    public abstract String toJpdl();
 
-	public abstract JSONObject toJson() throws JSONException;
+    public abstract JSONObject toJson() throws JSONException;
 
 }

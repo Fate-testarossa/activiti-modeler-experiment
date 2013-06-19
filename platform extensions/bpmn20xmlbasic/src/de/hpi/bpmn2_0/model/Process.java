@@ -119,43 +119,43 @@ public class Process
 //    protected TAuditing auditing;
 //    protected TMonitoring monitoring;
 //    protected List<TProperty> property;
-//	@XmlElementRefs({
-//		/* Events */
-//		@XmlElementRef(type = StartEvent.class),
-//		@XmlElementRef(type = EndEvent.class),
-//		@XmlElementRef(type = IntermediateThrowEvent.class),
-//		@XmlElementRef(type = IntermediateCatchEvent.class),
-//		
-//		/* Activities */
-//		@XmlElementRef(type = Task.class),
-//		@XmlElementRef(type = ReceiveTask.class),
-//		@XmlElementRef(type = ManualTask.class),
-//		@XmlElementRef(type = ScriptTask.class),
-//		@XmlElementRef(type = SendTask.class),
-//		@XmlElementRef(type = ServiceTask.class),
-//		@XmlElementRef(type = UserTask.class),
-//		@XmlElementRef(type = BusinessRuleTask.class),
-//		@XmlElementRef(type = SubProcess.class),
-//		
-//		/* Gateways */
-//		@XmlElementRef(type = ExclusiveGateway.class),
-//		@XmlElementRef(type = ParallelGateway.class),
-//		@XmlElementRef(type = ComplexGateway.class),
-//		@XmlElementRef(type = EventBasedGateway.class),
-//		@XmlElementRef(type = InclusiveGateway.class),
-//		
-//		/* Edges */
-//		@XmlElementRef(type = SequenceFlow.class),
-//		
-//		/* Artifacts / Data elements */
-//		@XmlElementRef(type = DataObject.class),
-//		@XmlElementRef(type = TextAnnotation.class),
-//		@XmlElementRef(type = ITSystem.class),
-//		
-//		/* Partner */
-//		@XmlElementRef(type = Participant.class)
-//	})
-	@XmlElementRef
+//    @XmlElementRefs({
+//        /* Events */
+//        @XmlElementRef(type = StartEvent.class),
+//        @XmlElementRef(type = EndEvent.class),
+//        @XmlElementRef(type = IntermediateThrowEvent.class),
+//        @XmlElementRef(type = IntermediateCatchEvent.class),
+//        
+//        /* Activities */
+//        @XmlElementRef(type = Task.class),
+//        @XmlElementRef(type = ReceiveTask.class),
+//        @XmlElementRef(type = ManualTask.class),
+//        @XmlElementRef(type = ScriptTask.class),
+//        @XmlElementRef(type = SendTask.class),
+//        @XmlElementRef(type = ServiceTask.class),
+//        @XmlElementRef(type = UserTask.class),
+//        @XmlElementRef(type = BusinessRuleTask.class),
+//        @XmlElementRef(type = SubProcess.class),
+//        
+//        /* Gateways */
+//        @XmlElementRef(type = ExclusiveGateway.class),
+//        @XmlElementRef(type = ParallelGateway.class),
+//        @XmlElementRef(type = ComplexGateway.class),
+//        @XmlElementRef(type = EventBasedGateway.class),
+//        @XmlElementRef(type = InclusiveGateway.class),
+//        
+//        /* Edges */
+//        @XmlElementRef(type = SequenceFlow.class),
+//        
+//        /* Artifacts / Data elements */
+//        @XmlElementRef(type = DataObject.class),
+//        @XmlElementRef(type = TextAnnotation.class),
+//        @XmlElementRef(type = ITSystem.class),
+//        
+//        /* Partner */
+//        @XmlElementRef(type = Participant.class)
+//    })
+    @XmlElementRef
     protected List<FlowElement> flowElement;
     @XmlElementRef
     protected List<Artifact> artifact;
@@ -176,103 +176,103 @@ public class Process
      * Adds the child to the process's flow elements if possible.
      */
     public void addChild(BaseElement child) {
-    	if(child instanceof Artifact) {
-    		this.getArtifact().add((Artifact) child);
-    	}
-    	
-    	else if(child instanceof FlowElement) {
-    		this.getFlowElement().add((FlowElement) child);
-    	}
-    	
-    	if(child instanceof FlowElement) {
-    		((FlowElement) child).setProcess(this);
-    	}
+        if(child instanceof Artifact) {
+            this.getArtifact().add((Artifact) child);
+        }
+        
+        else if(child instanceof FlowElement) {
+            this.getFlowElement().add((FlowElement) child);
+        }
+        
+        if(child instanceof FlowElement) {
+            ((FlowElement) child).setProcess(this);
+        }
     }
     
     /**
      * Remove the child element from the process.
      * 
      * @param child
-     * 		Child element to remove.
+     *         Child element to remove.
      */
     public void removeChild(BaseElement child) {
-    	this.getArtifact().remove(child);
-    	
-    	this.getFlowElement().remove(child);
-    	
-    	removeFromLaneSet(child);
+        this.getArtifact().remove(child);
+        
+        this.getFlowElement().remove(child);
+        
+        removeFromLaneSet(child);
     }
     
     /**
      * Remove the element recursively from the lane set.
      */
     private void removeFromLaneSet(BaseElement child) {
-    	if(this.laneSet != null) {
-    		for(LaneSet laneSet : this.getLaneSet()) {
-    			laneSet.removeChild(child);
-    		}
-    	}
+        if(this.laneSet != null) {
+            for(LaneSet laneSet : this.getLaneSet()) {
+                laneSet.removeChild(child);
+            }
+        }
     }
     
     
     /**
      * Determines whether the process contains choreograhy elements.
      * @return 
-     * 		{@code true} if a {@link ChoreographyActivity} is contained 
-     * 		<br />
-     * 		{@code false} otherwise.
+     *         {@code true} if a {@link ChoreographyActivity} is contained 
+     *         <br />
+     *         {@code false} otherwise.
      */
     public boolean isChoreographyProcess() {
-    	for(FlowElement flowEle : this.getFlowElement()) {
-    		if(flowEle instanceof ChoreographyActivity) 
-    			return true;
-    	}
-    	
-    	return false;
+        for(FlowElement flowEle : this.getFlowElement()) {
+            if(flowEle instanceof ChoreographyActivity) 
+                return true;
+        }
+        
+        return false;
     }
     
     public List<FlowElement> getFlowElementsForChoreography() {
-    	ArrayList<FlowElement> elements = new ArrayList<FlowElement>();
-    	for(FlowElement flowEle : this.getFlowElement()) {
-    		elements.add(flowEle);
-    		
-    		/* Retrieve by associations connected messages */
-    		for(Edge e : flowEle.getOutgoing()) {
-    			if(e.getTargetRef() instanceof Message) {
-    				elements.add(e);
-    				elements.add(e.getTargetRef());
-    			}
-    		}
-    		
-    		for(Edge e : flowEle.getIncoming()) {
-    			if(e.getSourceRef() instanceof Message) {
-    				elements.add(e);
-    				elements.add(e.getSourceRef());
-    			}
-    		}
-    	}
-    	
-    	return elements;
+        ArrayList<FlowElement> elements = new ArrayList<FlowElement>();
+        for(FlowElement flowEle : this.getFlowElement()) {
+            elements.add(flowEle);
+            
+            /* Retrieve by associations connected messages */
+            for(Edge e : flowEle.getOutgoing()) {
+                if(e.getTargetRef() instanceof Message) {
+                    elements.add(e);
+                    elements.add(e.getTargetRef());
+                }
+            }
+            
+            for(Edge e : flowEle.getIncoming()) {
+                if(e.getSourceRef() instanceof Message) {
+                    elements.add(e);
+                    elements.add(e.getSourceRef());
+                }
+            }
+        }
+        
+        return elements;
     }
     
     /**
      * Retrieve all subprocesses and child subprocesses recursively.
      * 
      * @return
-     * 		A flat list of the contained subprocesses.
+     *         A flat list of the contained subprocesses.
      */
     public List<SubProcess> getSubprocessList() {
-    	List<SubProcess> subprocesses = new ArrayList<SubProcess>();
-    	
-    	for(FlowElement flowEle : getFlowElement()) {
-    		/* Process subprocess */
-    		if(flowEle instanceof SubProcess) {
-    			subprocesses.add((SubProcess) flowEle);
-    			subprocesses.addAll(((SubProcess) flowEle).getSubprocessList());
-    		}
-    	}
-    	
-    	return subprocesses;
+        List<SubProcess> subprocesses = new ArrayList<SubProcess>();
+        
+        for(FlowElement flowEle : getFlowElement()) {
+            /* Process subprocess */
+            if(flowEle instanceof SubProcess) {
+                subprocesses.add((SubProcess) flowEle);
+                subprocesses.addAll(((SubProcess) flowEle).getSubprocessList());
+            }
+        }
+        
+        return subprocesses;
     }
     
     /**
@@ -282,17 +282,17 @@ public class Process
      * @return
      */
     public List<SubChoreography> getSubChoreographyList() {
-    	List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
-    	
-    	for(FlowElement flowEle : getFlowElement()) {
-    		/* Subchoreography */
-    		if(flowEle instanceof SubChoreography) {
-    			subchoreographies.add((SubChoreography) flowEle);
-    			
-    		}
-    	}
-    	
-    	return subchoreographies;
+        List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
+        
+        for(FlowElement flowEle : getFlowElement()) {
+            /* Subchoreography */
+            if(flowEle instanceof SubChoreography) {
+                subchoreographies.add((SubChoreography) flowEle);
+                
+            }
+        }
+        
+        return subchoreographies;
     }
     
     /**
@@ -300,31 +300,31 @@ public class Process
      * @return
      */
     public List<Lane> getAllLanes() {
-    	List<Lane> laneList = new ArrayList<Lane>();
-    	
-    	if(this.getLaneSet() == null) {
-    		return laneList;
-    	}
-    	
-    	for(LaneSet laneSet : getLaneSet()) {
-    		laneList.addAll(laneSet.getAllLanes());
-    	}
-    	
-    	return laneList;
+        List<Lane> laneList = new ArrayList<Lane>();
+        
+        if(this.getLaneSet() == null) {
+            return laneList;
+        }
+        
+        for(LaneSet laneSet : getLaneSet()) {
+            laneList.addAll(laneSet.getAllLanes());
+        }
+        
+        return laneList;
     }
     
     public boolean hasId() {
-    	return this.getId() != null && this.getId().length() > 0;
+        return this.getId() != null && this.getId().length() > 0;
     }
     
     /* Getter & Setter */
     
     
     public List<LaneSet> getLaneSet() {
-    	if(this.laneSet == null) {
-    		this.laneSet = new ArrayList<LaneSet>();
-    	}
-    	return this.laneSet;
+        if(this.laneSet == null) {
+            this.laneSet = new ArrayList<LaneSet>();
+        }
+        return this.laneSet;
     }
     
     /**
@@ -611,14 +611,14 @@ public class Process
     }
 
     public boolean isExecutable() {
-		return isExecutable;
-	}
+        return isExecutable;
+    }
 
-	public void setExecutable(boolean isExecutable) {
-		this.isExecutable = isExecutable;
-	}
+    public void setExecutable(boolean isExecutable) {
+        this.isExecutable = isExecutable;
+    }
 
-	/**
+    /**
      * Gets the value of the definitionalCollaborationRef property.
      * 
      * @return
@@ -642,22 +642,22 @@ public class Process
         this.definitionalCollaborationRef = value;
     }
 
-	/**
-	 * @return the processType
-	 */
-	public ProcessType getProcessType() {
-		/* None as default value */
-		if(this.processType == null)
-			this.processType = ProcessType.NONE;
-		
-		return processType;
-	}
+    /**
+     * @return the processType
+     */
+    public ProcessType getProcessType() {
+        /* None as default value */
+        if(this.processType == null)
+            this.processType = ProcessType.NONE;
+        
+        return processType;
+    }
 
-	/**
-	 * @param processType the processType to set
-	 */
-	public void setProcessType(ProcessType processType) {
-		this.processType = processType;
-	}
+    /**
+     * @param processType the processType to set
+     */
+    public void setProcessType(ProcessType processType) {
+        this.processType = processType;
+    }
 
 }

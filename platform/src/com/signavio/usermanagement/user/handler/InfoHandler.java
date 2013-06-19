@@ -45,43 +45,43 @@ import com.signavio.usermanagement.user.business.FsUser;
 @HandlerConfiguration(context=UserHandler.class, uri="/info", rel="info")
 public class InfoHandler extends AbstractHandler {
 
-	/**
-	 * Construct
-	 * @param servletContext
-	 */
-	public InfoHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all information out from a particular model
-	 */
-	@Override
-	@HandlerMethodActivation
-	public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-		
-		FsUser user = (FsUser)sbo;
-		FsAccount account = user.getAccount();
-		
-		JSONObject res = new JSONObject();
-		try {
-			res.put("title",  account.getTitle());
-			res.put("firstName",  account.getFirstName());
-			res.put("lastName", account.getLastName());
-			res.put("name", user.getFullName());
-			res.put("principal", account.getPrincipal());
-			res.put("mail", account.getMailAddress());
-			res.put("state", "active");
-			res.put("language", account.getLanguage());
-			res.put("isFirstStart", user.isFirstStart());
-			res.put("company", account.getCompany());
-			res.put("country", account.getCountry());
-			
-			JSONArray licenses = new JSONArray();
-			
-			res.put("licenses", licenses);
-		} catch (JSONException e) {}
-		
-		return res;
-	}
+    /**
+     * Construct
+     * @param servletContext
+     */
+    public InfoHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all information out from a particular model
+     */
+    @Override
+    @HandlerMethodActivation
+    public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
+        
+        FsUser user = (FsUser)sbo;
+        FsAccount account = user.getAccount();
+        
+        JSONObject res = new JSONObject();
+        try {
+            res.put("title",  account.getTitle());
+            res.put("firstName",  account.getFirstName());
+            res.put("lastName", account.getLastName());
+            res.put("name", user.getFullName());
+            res.put("principal", account.getPrincipal());
+            res.put("mail", account.getMailAddress());
+            res.put("state", "active");
+            res.put("language", account.getLanguage());
+            res.put("isFirstStart", user.isFirstStart());
+            res.put("company", account.getCompany());
+            res.put("country", account.getCountry());
+            
+            JSONArray licenses = new JSONArray();
+            
+            res.put("licenses", licenses);
+        } catch (JSONException e) {}
+        
+        return res;
+    }
 }

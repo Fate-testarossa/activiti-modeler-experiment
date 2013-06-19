@@ -37,188 +37,188 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  * @author Sven Wagner-Boysen
  */
 @XmlSeeAlso( { 
-	DataObject.class, 
-	DataInput.class, 
-	DataOutput.class,
-	DataStoreReference.class, 
-	DataObjectReference.class
+    DataObject.class, 
+    DataInput.class, 
+    DataOutput.class,
+    DataStoreReference.class, 
+    DataObjectReference.class
 })
 public abstract class AbstractDataObject extends FlowNode {
 
-	/* Common attributes of data objects */
-	protected DataState dataState;
-	@XmlAttribute
-	protected Boolean isCollection;
+    /* Common attributes of data objects */
+    protected DataState dataState;
+    @XmlAttribute
+    protected Boolean isCollection;
     
-	public void acceptVisitor(Visitor v){
-		v.visitAbstractDataObject(this);
-	}
+    public void acceptVisitor(Visitor v){
+        v.visitAbstractDataObject(this);
+    }
 
-	// @XmlTransient
-	// private Boolean isRequiredForStart;
-	// @XmlTransient
-	// private Boolean isRequiredForCompletion;
+    // @XmlTransient
+    // private Boolean isRequiredForStart;
+    // @XmlTransient
+    // private Boolean isRequiredForCompletion;
 
-	/* Getter & Setter */
+    /* Getter & Setter */
 
-	/**
-	 * Gets the value of the dataState property.
-	 * 
-	 * @return possible object is {@link TDataState }
-	 * 
-	 */
-	public DataState getDataState() {
-		return dataState;
-	}
+    /**
+     * Gets the value of the dataState property.
+     * 
+     * @return possible object is {@link TDataState }
+     * 
+     */
+    public DataState getDataState() {
+        return dataState;
+    }
 
-	/**
-	 * Sets the value of the dataState property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link DataState }
-	 * 
-	 */
-	public void setDataState(DataState value) {
-		this.dataState = value;
-	}
+    /**
+     * Sets the value of the dataState property.
+     * 
+     * @param value
+     *            allowed object is {@link DataState }
+     * 
+     */
+    public void setDataState(DataState value) {
+        this.dataState = value;
+    }
 
-	/**
-	 * Gets the value of the isCollection property.
-	 * 
-	 * @return possible object is {@link Boolean }
-	 * 
-	 */
-	public boolean isIsCollection() {
-		if (isCollection == null) {
-			return false;
-		} else {
-			return isCollection;
-		}
-	}
+    /**
+     * Gets the value of the isCollection property.
+     * 
+     * @return possible object is {@link Boolean }
+     * 
+     */
+    public boolean isIsCollection() {
+        if (isCollection == null) {
+            return false;
+        } else {
+            return isCollection;
+        }
+    }
 
-	/**
-	 * Sets the value of the isCollection property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link Boolean }
-	 * 
-	 */
-	public void setIsCollection(Boolean value) {
-		this.isCollection = value;
-	}
+    /**
+     * Sets the value of the isCollection property.
+     * 
+     * @param value
+     *            allowed object is {@link Boolean }
+     * 
+     */
+    public void setIsCollection(Boolean value) {
+        this.isCollection = value;
+    }
 
-	// /**
-	// * @return the isRequiredForStart
-	// */
-	// public Boolean getIsRequiredForStart() {
-	// if(this.isRequiredForStart == null)
-	// return false;
-	// return isRequiredForStart;
-	// }
-	//    
-	// /**
-	// * @param isRequiredForStart the isRequiredForStart to set
-	// */
-	// public void setIsRequiredForStart(Boolean isRequiredForStart) {
-	// this.isRequiredForStart = isRequiredForStart;
-	// }
-	//    
-	// /**
-	// * @return the isRequiredForCompletion
-	// */
-	// public Boolean getIsRequiredForCompletion() {
-	// if(this.isRequiredForCompletion == null)
-	// return false;
-	// return isRequiredForCompletion;
-	// }
-	//    
-	// /**
-	// * @param isRequiredForCompletion the isRequiredForCompletion to set
-	// */
-	// public void setIsRequiredForCompletion(Boolean isRequiredForCompletion) {
-	// this.isRequiredForCompletion = isRequiredForCompletion;
-	// }
+    // /**
+    // * @return the isRequiredForStart
+    // */
+    // public Boolean getIsRequiredForStart() {
+    // if(this.isRequiredForStart == null)
+    // return false;
+    // return isRequiredForStart;
+    // }
+    //    
+    // /**
+    // * @param isRequiredForStart the isRequiredForStart to set
+    // */
+    // public void setIsRequiredForStart(Boolean isRequiredForStart) {
+    // this.isRequiredForStart = isRequiredForStart;
+    // }
+    //    
+    // /**
+    // * @return the isRequiredForCompletion
+    // */
+    // public Boolean getIsRequiredForCompletion() {
+    // if(this.isRequiredForCompletion == null)
+    // return false;
+    // return isRequiredForCompletion;
+    // }
+    //    
+    // /**
+    // * @param isRequiredForCompletion the isRequiredForCompletion to set
+    // */
+    // public void setIsRequiredForCompletion(Boolean isRequiredForCompletion) {
+    // this.isRequiredForCompletion = isRequiredForCompletion;
+    // }
 
-	/* Business logic methodes */
+    /* Business logic methodes */
 
-	/**
-	 * List of elements already traversed in the graph.
-	 */
-	@XmlTransient
-	private List<FlowElement> processedElements;
+    /**
+     * List of elements already traversed in the graph.
+     */
+    @XmlTransient
+    private List<FlowElement> processedElements;
 
-	/**
-	 * Find an appropriate {@link Process} container for the data object.
-	 * 
-	 * The algorithm checks the source and target neighborhood nodes of the data
-	 * object and the takes the referenced process of one of the neighbors.
-	 * 
-	 * Navigates into both directions.
-	 */
-	public void findRelatedProcess() {
-		this.processedElements = new ArrayList<FlowElement>();
-		Process process = this.findRelatedProcessRecursivly(this);
-		if (process != null) {
-			this.setProcess(process);
-			process.addChild(this);
-		}
-	}
+    /**
+     * Find an appropriate {@link Process} container for the data object.
+     * 
+     * The algorithm checks the source and target neighborhood nodes of the data
+     * object and the takes the referenced process of one of the neighbors.
+     * 
+     * Navigates into both directions.
+     */
+    public void findRelatedProcess() {
+        this.processedElements = new ArrayList<FlowElement>();
+        Process process = this.findRelatedProcessRecursivly(this);
+        if (process != null) {
+            this.setProcess(process);
+            process.addChild(this);
+        }
+    }
 
-	/**
-	 * Navigates into both directions.
-	 * 
-	 * @param flowElement
-	 *            The {@link FlowElement} to investigate.
-	 */
-	private Process findRelatedProcessRecursivly(FlowElement flowElement) {
-		if (flowElement == null)
-			return null;
+    /**
+     * Navigates into both directions.
+     * 
+     * @param flowElement
+     *            The {@link FlowElement} to investigate.
+     */
+    private Process findRelatedProcessRecursivly(FlowElement flowElement) {
+        if (flowElement == null)
+            return null;
 
-		/* Check if element is processed already */
-		if (this.processedElements.contains(flowElement))
-			return null;
+        /* Check if element is processed already */
+        if (this.processedElements.contains(flowElement))
+            return null;
 
-		this.processedElements.add(flowElement);
+        this.processedElements.add(flowElement);
 
-		/*
-		 * Check if one of the neighbors is assigned to a Process, otherwise
-		 * continue with the after next.
-		 */
+        /*
+         * Check if one of the neighbors is assigned to a Process, otherwise
+         * continue with the after next.
+         */
 
-		for (Edge edge : flowElement.getIncoming()) {
-			FlowElement sourceRef = edge.getSourceRef();
-			if (sourceRef == null)
-				continue;
-			Process process = sourceRef.getProcess();
-			if (process != null)
-				return process;
-		}
+        for (Edge edge : flowElement.getIncoming()) {
+            FlowElement sourceRef = edge.getSourceRef();
+            if (sourceRef == null)
+                continue;
+            Process process = sourceRef.getProcess();
+            if (process != null)
+                return process;
+        }
 
-		for (Edge edge : flowElement.getOutgoing()) {
-			FlowElement targetRef = edge.getTargetRef();
-			if (targetRef == null)
-				continue;
-			Process process = targetRef.getProcess();
-			if (process != null)
-				return process;
-		}
+        for (Edge edge : flowElement.getOutgoing()) {
+            FlowElement targetRef = edge.getTargetRef();
+            if (targetRef == null)
+                continue;
+            Process process = targetRef.getProcess();
+            if (process != null)
+                return process;
+        }
 
-		/* Continue with the after next nodes */
+        /* Continue with the after next nodes */
 
-		for (Edge edge : flowElement.getIncoming()) {
-			Process process = this.findRelatedProcessRecursivly(edge
-					.getSourceRef());
-			if (process != null)
-				return process;
-		}
+        for (Edge edge : flowElement.getIncoming()) {
+            Process process = this.findRelatedProcessRecursivly(edge
+                    .getSourceRef());
+            if (process != null)
+                return process;
+        }
 
-		for (Edge edge : flowElement.getOutgoing()) {
-			Process process = this.findRelatedProcessRecursivly(edge
-					.getTargetRef());
-			if (process != null)
-				return process;
-		}
+        for (Edge edge : flowElement.getOutgoing()) {
+            Process process = this.findRelatedProcessRecursivly(edge
+                    .getTargetRef());
+            if (process != null)
+                return process;
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

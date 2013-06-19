@@ -41,21 +41,21 @@ ORYX.Utils = {
             return results[1];
         }
     },
-	
-	adjustLightness: function(){
-		return arguments[0];	
-	},
-	
-	adjustGradient: function(gradient, reference){
-		
-		if (ORYX.CONFIG.DISABLE_GRADIENT && gradient){
-		
-			var col = reference.getAttributeNS(null, "stop-color") || "#ffffff";
-			
-			$A(gradient.getElementsByTagName("stop")).each(function(stop){
-				if (stop == reference){ return; }
-				stop.setAttributeNS(null, "stop-color", col);
-			})
-		}
-	}
+    
+    adjustLightness: function(){
+        return arguments[0];    
+    },
+    
+    adjustGradient: function(gradient, reference){
+        
+        if (ORYX.CONFIG.DISABLE_GRADIENT && gradient){
+        
+            var col = reference.getAttributeNS(null, "stop-color") || "#ffffff";
+            
+            $A(gradient.getElementsByTagName("stop")).each(function(stop){
+                if (stop == reference){ return; }
+                stop.setAttributeNS(null, "stop-color", col);
+            })
+        }
+    }
 }

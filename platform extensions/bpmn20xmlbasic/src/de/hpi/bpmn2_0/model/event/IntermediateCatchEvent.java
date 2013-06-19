@@ -50,34 +50,34 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class IntermediateCatchEvent
     extends CatchEvent
 {
-	@XmlTransient
-	protected String cancelActivity;
-	
-	
-	public void acceptVisitor(Visitor v){
-		v.visitIntermediateCatchEvent(this);
-	}
+    @XmlTransient
+    protected String cancelActivity;
     
-	/**
-	 * Avoid null values.
-	 * 
-	 * @return the cancelActivity
-	 */
-	public String getCancelActivity() {
-		if(cancelActivity == null)
-			return "";
-		return cancelActivity;
-	}
+    
+    public void acceptVisitor(Visitor v){
+        v.visitIntermediateCatchEvent(this);
+    }
+    
+    /**
+     * Avoid null values.
+     * 
+     * @return the cancelActivity
+     */
+    public String getCancelActivity() {
+        if(cancelActivity == null)
+            return "";
+        return cancelActivity;
+    }
 
-	/**
-	 * @param cancelActivity the cancelActivity to set
-	 */
-	public void setCancelActivity(String cancelActivity) {
-		this.cancelActivity = cancelActivity;
-	}
-	
-	
-	
-	
+    /**
+     * @param cancelActivity the cancelActivity to set
+     */
+    public void setCancelActivity(String cancelActivity) {
+        this.cancelActivity = cancelActivity;
+    }
+    
+    
+    
+    
 
 }

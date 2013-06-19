@@ -31,13 +31,13 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 @HandlerExportConfiguration(name="PNG", icon="/explorer/src/img/famfamfam/picture.png", mime="image/png", download=true)
 public class PngHandler extends AbstractImageHandler {
 
-	public PngHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
-		return getImage(RepresentationType.PNG, new PNGTranscoder(), sbo, null);
-	}
+    public PngHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
+        return getImage(RepresentationType.PNG, new PNGTranscoder(), sbo, null);
+    }
 }

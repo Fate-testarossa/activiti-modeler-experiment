@@ -56,8 +56,8 @@ public class TimerEventDefinition
     extends EventDefinition
 {
 
-	/* Attributes */
-	
+    /* Attributes */
+    
     protected Expression timeDate;
     protected Expression timeCycle;
     protected Expression timeDuration;
@@ -75,15 +75,15 @@ public class TimerEventDefinition
      * @param timerEventDefinition
      */
     public TimerEventDefinition(TimerEventDefinition timerEventDefinition) {
-		super(timerEventDefinition);
-		
-		this.setTimeDate(timerEventDefinition.getTimeDate());
-		this.setTimeCycle(timerEventDefinition.getTimeCycle());
-	}
+        super(timerEventDefinition);
+        
+        this.setTimeDate(timerEventDefinition.getTimeDate());
+        this.setTimeCycle(timerEventDefinition.getTimeCycle());
+    }
     
     /* Getter & Setter */
 
-	/**
+    /**
      * Gets the value of the timeDate property.
      * 
      * @return
@@ -131,12 +131,12 @@ public class TimerEventDefinition
         this.timeCycle = value;
     }
 
-	public Expression getTimeDuration() {
-		return timeDuration;
-	}
+    public Expression getTimeDuration() {
+        return timeDuration;
+    }
 
-	public void setTimeDuration(Expression timeDuration) {
-		this.timeDuration = timeDuration;
-	}
+    public void setTimeDuration(Expression timeDuration) {
+        this.timeDuration = timeDuration;
+    }
 
 }

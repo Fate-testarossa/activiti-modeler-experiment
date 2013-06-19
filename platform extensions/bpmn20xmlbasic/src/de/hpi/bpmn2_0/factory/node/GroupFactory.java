@@ -36,16 +36,16 @@ import de.hpi.bpmn2_0.model.artifacts.TextAnnotation;
 public class GroupFactory extends AbstractShapeFactory {
 
 
-	/* (non-Javadoc)
-	 * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
-	 */
-	// @Override
-	protected Group createProcessElement(GenericShape shape)
-			throws BpmnConverterException {
-		Group group = new Group();
-		group.setId(shape.getResourceId());
-				
-		return group;
-	}
+    /* (non-Javadoc)
+     * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
+     */
+    // @Override
+    protected Group createProcessElement(GenericShape shape)
+            throws BpmnConverterException {
+        Group group = new Group();
+        group.setId(shape.getResourceId());
+                
+        return group;
+    }
 
 }

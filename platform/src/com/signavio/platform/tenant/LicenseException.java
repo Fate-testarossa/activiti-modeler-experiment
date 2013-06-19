@@ -28,11 +28,11 @@ import com.signavio.platform.exceptions.LoggedRuntimeException;
  */
 public class LicenseException extends LoggedRuntimeException {
 
-	private static final long serialVersionUID = -8084147844652953038L;
+    private static final long serialVersionUID = -8084147844652953038L;
 
-	public LicenseException(String message) {
-		super(message);
-	}
+    public LicenseException(String message) {
+        super(message);
+    }
 
 
 }

@@ -53,10 +53,10 @@ public class Transaction
     @XmlAttribute
     protected TransactionMethod method;
 
-	public void acceptVisitor(Visitor v){
-		v.visitTransaction(this);
-	}
-	
+    public void acceptVisitor(Visitor v){
+        v.visitTransaction(this);
+    }
+    
     /**
      * Gets the value of the method property.
      * 

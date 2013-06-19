@@ -45,7 +45,7 @@
             image/gif
         </mime-type>
     </mime-mapping>
-	<mime-mapping>
+    <mime-mapping>
         <extension>
             png
         </extension>

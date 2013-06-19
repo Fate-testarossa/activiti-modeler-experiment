@@ -38,73 +38,73 @@ import com.signavio.warehouse.model.business.modeltype.JpdlModelType;
 import com.signavio.warehouse.model.business.modeltype.SignavioModelType;
 
 public class ModelTypeManager {
-	
-	private static ModelTypeManager SINGLETON;
+    
+    private static ModelTypeManager SINGLETON;
 
-	public static void createInstance() {
-		if (SINGLETON != null) {
-			throw new IllegalStateException("Model type manager is already initialized");
-		}
-		SINGLETON = new ModelTypeManager();
-	}
-	
-	public static ModelTypeManager getInstance() {
-		return SINGLETON;
-	}
-	
-	private final Map<String, ModelType> extension2modelTypes;
-	private final Set<ModelType> modelTypes = new HashSet<ModelType>();
-	private final ModelType backfallModelType;
-	private final FilenameFilter filter;
-	
-	private ModelTypeManager(){
-		extension2modelTypes = new HashMap<String, ModelType>();
-		backfallModelType = new SignavioModelType();
-		extension2modelTypes.put(SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), backfallModelType);
-		extension2modelTypes.put(JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), new JpdlModelType());
-//		extension2modelTypes.put(BPMN2_0XMLModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), new BPMN2_0XMLModelType());
-		filter = new FilenameFilter(){
-			public boolean accept(File dir, String name) {
-				for (String extension : extension2modelTypes.keySet()) {
-					if (name.endsWith(extension)) return true;
-				}
-				return false;
-			}
-		};
-		modelTypes.addAll(extension2modelTypes.values());
-		modelTypes.add(new BPMN2_0XMLModelType());
-	}
-	
-	
-	public FilenameFilter getFilenameFilter(){
-		return filter;
-	}
+    public static void createInstance() {
+        if (SINGLETON != null) {
+            throw new IllegalStateException("Model type manager is already initialized");
+        }
+        SINGLETON = new ModelTypeManager();
+    }
+    
+    public static ModelTypeManager getInstance() {
+        return SINGLETON;
+    }
+    
+    private final Map<String, ModelType> extension2modelTypes;
+    private final Set<ModelType> modelTypes = new HashSet<ModelType>();
+    private final ModelType backfallModelType;
+    private final FilenameFilter filter;
+    
+    private ModelTypeManager(){
+        extension2modelTypes = new HashMap<String, ModelType>();
+        backfallModelType = new SignavioModelType();
+        extension2modelTypes.put(SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), backfallModelType);
+        extension2modelTypes.put(JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), new JpdlModelType());
+//        extension2modelTypes.put(BPMN2_0XMLModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension(), new BPMN2_0XMLModelType());
+        filter = new FilenameFilter(){
+            public boolean accept(File dir, String name) {
+                for (String extension : extension2modelTypes.keySet()) {
+                    if (name.endsWith(extension)) return true;
+                }
+                return false;
+            }
+        };
+        modelTypes.addAll(extension2modelTypes.values());
+        modelTypes.add(new BPMN2_0XMLModelType());
+    }
+    
+    
+    public FilenameFilter getFilenameFilter(){
+        return filter;
+    }
 
-	public ModelType getModelType(String extensionOrNamespace) {
-		ModelType result = extension2modelTypes.get(extensionOrNamespace);
-		if (result == null) {
-			for (ModelType type : modelTypes) {
-				if (type.acceptUsageForTypeName(extensionOrNamespace)) {
-					result = type;
-					break;
-				}
-			}
-		}
-		return (result != null) ? result : backfallModelType;
-	}
-	
+    public ModelType getModelType(String extensionOrNamespace) {
+        ModelType result = extension2modelTypes.get(extensionOrNamespace);
+        if (result == null) {
+            for (ModelType type : modelTypes) {
+                if (type.acceptUsageForTypeName(extensionOrNamespace)) {
+                    result = type;
+                    break;
+                }
+            }
+        }
+        return (result != null) ? result : backfallModelType;
+    }
+    
 
 
-	public static String[] splitNameAndExtension(String nameWithExtension) {
-		int index;
-		if (nameWithExtension.endsWith(SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
-			index = nameWithExtension.length() - SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
-		} else 
-		if (nameWithExtension.endsWith(JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
-			index = nameWithExtension.length() - JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
-		} else {
-			return null;
-		}
-		return new String[] { nameWithExtension.substring(0, index), nameWithExtension.substring(index) };
-	}
+    public static String[] splitNameAndExtension(String nameWithExtension) {
+        int index;
+        if (nameWithExtension.endsWith(SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
+            index = nameWithExtension.length() - SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
+        } else 
+        if (nameWithExtension.endsWith(JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
+            index = nameWithExtension.length() - JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
+        } else {
+            return null;
+        }
+        return new String[] { nameWithExtension.substring(0, index), nameWithExtension.substring(index) };
+    }
 }

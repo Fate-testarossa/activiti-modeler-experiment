@@ -19,24 +19,24 @@ package com.signavio.platform.security.business.exceptions;
 
 public class BusinessClassNotFoundException extends RuntimeException {
 
-	public BusinessClassNotFoundException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessClassNotFoundException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public BusinessClassNotFoundException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessClassNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	public BusinessClassNotFoundException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessClassNotFoundException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	public BusinessClassNotFoundException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    public BusinessClassNotFoundException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
 }

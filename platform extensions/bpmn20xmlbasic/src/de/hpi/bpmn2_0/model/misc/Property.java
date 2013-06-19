@@ -50,14 +50,14 @@ import de.hpi.bpmn2_0.model.data_object.DataState;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tProperty", propOrder = {
-	"dataState",
-	"structure"
+    "dataState",
+    "structure"
 })
 public class Property
     extends BaseElement
 {
-	
-	@XmlElement
+    
+    @XmlElement
     protected DataState dataState;
     
     @XmlAttribute
@@ -135,39 +135,39 @@ public class Property
         return itemKind;
     }
 
-	/**
-	 * @return the isCollection
-	 */
-	public boolean isCollection() {
-		return isCollection;
-	}
+    /**
+     * @return the isCollection
+     */
+    public boolean isCollection() {
+        return isCollection;
+    }
 
-	/**
-	 * @param isCollection the isCollection to set
-	 */
-	public void setCollection(boolean isCollection) {
-		this.isCollection = isCollection;
-	}
+    /**
+     * @param isCollection the isCollection to set
+     */
+    public void setCollection(boolean isCollection) {
+        this.isCollection = isCollection;
+    }
 
-	/**
-	 * @param itemKind the itemKind to set
-	 */
-	public void setItemKind(ItemKind itemKind) {
-		this.itemKind = itemKind;
-	}
+    /**
+     * @param itemKind the itemKind to set
+     */
+    public void setItemKind(ItemKind itemKind) {
+        this.itemKind = itemKind;
+    }
 
-	/**
-	 * @return the structure
-	 */
-	public String getStructure() {
-		return structure;
-	}
+    /**
+     * @return the structure
+     */
+    public String getStructure() {
+        return structure;
+    }
 
-	/**
-	 * @param structure the structure to set
-	 */
-	public void setStructure(String structure) {
-		this.structure = structure;
-	}
+    /**
+     * @param structure the structure to set
+     */
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
 
 }

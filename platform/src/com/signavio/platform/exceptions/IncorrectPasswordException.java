@@ -26,36 +26,36 @@ package com.signavio.platform.exceptions;
  */
 public class IncorrectPasswordException extends Exception {
 
-	/**
-	 * 
-	 */
-	public IncorrectPasswordException() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * 
+     */
+    public IncorrectPasswordException() {
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 */
-	public IncorrectPasswordException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public IncorrectPasswordException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param cause
-	 */
-	public IncorrectPasswordException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public IncorrectPasswordException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public IncorrectPasswordException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public IncorrectPasswordException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
 }

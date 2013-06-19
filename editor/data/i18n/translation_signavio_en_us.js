@@ -20,7 +20,7 @@ ORYX.I18N.PropertyWindow.dateFormat = "d/m/y";
 ORYX.I18N.View.East = "Attributes";
 ORYX.I18N.View.West = "Modeling Elements";
 
-ORYX.I18N.Oryx.title	= "Signavio";
+ORYX.I18N.Oryx.title    = "Signavio";
 ORYX.I18N.Oryx.pleaseWait = "Please wait while the Signavio Process Editor is loading...";
 ORYX.I18N.Edit.cutDesc = "Cuts the selection into the clipboard";
 ORYX.I18N.Edit.copyDesc = "Copies the selection into the clipboard";
@@ -110,9 +110,9 @@ ORYX.I18N.PropertyWindow.ListView.save = "Save";
 ORYX.I18N.PropertyWindow.ListView.cancel = "Cancel";
 
 if(!Signavio.I18N.Buttons) Signavio.I18N.Buttons = {};
-Signavio.I18N.Buttons.save		= "Save";
-Signavio.I18N.Buttons.cancel 	= "Cancel";
-Signavio.I18N.Buttons.remove	= "Remove";
+Signavio.I18N.Buttons.save        = "Save";
+Signavio.I18N.Buttons.cancel     = "Cancel";
+Signavio.I18N.Buttons.remove    = "Remove";
 
 if(!Signavio.I18N.btn) {Signavio.I18N.btn = {};}
 Signavio.I18N.btn.btnEdit = "Edit";

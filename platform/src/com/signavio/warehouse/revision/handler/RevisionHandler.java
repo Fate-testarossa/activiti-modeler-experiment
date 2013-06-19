@@ -35,22 +35,22 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 @HandlerConfiguration(uri="/revision", rel="revision")
 public class RevisionHandler extends BasisHandler {
 
-	/**
-	 * Construct
-	 * @param servletContext
-	 */
-	public RevisionHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	/**
-	 * Get all revision information out from a particular model
-	 */
-	@Override
-	@HandlerMethodActivation
-	public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-		
-		return super.getRepresentation(sbo, params, token);
-	}
+    /**
+     * Construct
+     * @param servletContext
+     */
+    public RevisionHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    /**
+     * Get all revision information out from a particular model
+     */
+    @Override
+    @HandlerMethodActivation
+    public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
+        
+        return super.getRepresentation(sbo, params, token);
+    }
 
 }

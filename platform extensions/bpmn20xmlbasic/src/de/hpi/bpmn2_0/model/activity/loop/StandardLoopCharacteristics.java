@@ -58,8 +58,8 @@ import de.hpi.bpmn2_0.model.FormalExpression;
 public class StandardLoopCharacteristics
     extends LoopCharacteristics
 {
-	
-	@XmlElement(name = "loopCondition", type = FormalExpression.class)
+    
+    @XmlElement(name = "loopCondition", type = FormalExpression.class)
     protected FormalExpression loopCondition;
     @XmlAttribute
     protected Boolean testBefore;

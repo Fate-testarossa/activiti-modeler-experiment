@@ -163,7 +163,7 @@ function Rectangle(width, // This is the width
    if (width){
       this.width = width;
       if (height){
-	 this.height = height;
+     this.height = height;
       }
    }
 }
@@ -256,7 +256,7 @@ function Square(width, height){
    if (width){
       this.width = width;
       if (height){
-	 this.height = height;
+     this.height = height;
       }
    } 
    
@@ -354,7 +354,7 @@ function Coordinate(x, y){
    if (x){
       this.x = x;
       if (y){
-	 this.y = y;
+     this.y = y;
       }
    }
 }
@@ -469,7 +469,7 @@ function Bar(){}
  * @constructor 
  */
 Foo.Bar = function(){
-	/** The x. */ this.x = 2;
+    /** The x. */ this.x = 2;
 }
 
 Foo.Bar.prototype = new Bar();

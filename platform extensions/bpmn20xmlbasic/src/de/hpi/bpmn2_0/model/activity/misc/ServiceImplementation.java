@@ -63,10 +63,10 @@ public enum ServiceImplementation {
             if (c.value.equalsIgnoreCase(v)) {
                 return c;
             } else {
-            	/* Return default value otherwise */
-            	return WEB_SERVICE;
+                /* Return default value otherwise */
+                return WEB_SERVICE;
             }
-            	
+                
         }
         throw new IllegalArgumentException(v);
     }

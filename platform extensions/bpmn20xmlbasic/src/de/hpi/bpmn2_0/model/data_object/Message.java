@@ -72,7 +72,7 @@ public class Message
     private boolean isInitiating;
     
     public void acceptVisitor(Visitor v) {
-    	v.visitMessage(this);
+        v.visitMessage(this);
     }
     
     /**
@@ -82,29 +82,29 @@ public class Message
      * @return
      */
     public Association getDataConnectingAssociation() {
-    	List<Association> associationList = new ArrayList<Association>();
-    	
-    	for(FlowElement element : this.getIncoming()) {
-    		if(element instanceof Association)
-    			associationList.add((Association) element);
-    	}
-    	
-    	for(FlowElement element : this.getOutgoing()) {
-    		if(element instanceof Association)
-    			associationList.add((Association) element);
-    	}
-    	
-    	for(Association msgAssociation : associationList) {
-    		if(msgAssociation.getSourceRef() instanceof ChoreographyActivity 
-    			|| msgAssociation.getSourceRef() instanceof Participant 
-    			|| msgAssociation.getTargetRef() instanceof ChoreographyActivity 
-    			|| msgAssociation.getTargetRef() instanceof Participant) {
-    			
-    			return msgAssociation;
-    		}
-    	}
-    	
-    	return null;
+        List<Association> associationList = new ArrayList<Association>();
+        
+        for(FlowElement element : this.getIncoming()) {
+            if(element instanceof Association)
+                associationList.add((Association) element);
+        }
+        
+        for(FlowElement element : this.getOutgoing()) {
+            if(element instanceof Association)
+                associationList.add((Association) element);
+        }
+        
+        for(Association msgAssociation : associationList) {
+            if(msgAssociation.getSourceRef() instanceof ChoreographyActivity 
+                || msgAssociation.getSourceRef() instanceof Participant 
+                || msgAssociation.getTargetRef() instanceof ChoreographyActivity 
+                || msgAssociation.getTargetRef() instanceof Participant) {
+                
+                return msgAssociation;
+            }
+        }
+        
+        return null;
     }
     
     /* Getter & Setter */
@@ -133,18 +133,18 @@ public class Message
         this.structureRef = value;
     }
 
-	/**
-	 * @return the isInitiating
-	 */
-	public boolean isInitiating() {
-		return isInitiating;
-	}
+    /**
+     * @return the isInitiating
+     */
+    public boolean isInitiating() {
+        return isInitiating;
+    }
 
-	/**
-	 * @param isInitiating the isInitiating to set
-	 */
-	public void setInitiating(boolean isInitiating) {
-		this.isInitiating = isInitiating;
-	}
+    /**
+     * @param isInitiating the isInitiating to set
+     */
+    public void setInitiating(boolean isInitiating) {
+        this.isInitiating = isInitiating;
+    }
 
 }

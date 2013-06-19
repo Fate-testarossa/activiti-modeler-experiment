@@ -19,7 +19,7 @@ package com.signavio.platform.exceptions;
 
 public class IORequestException extends RequestException {
 
-	public IORequestException(Throwable t) {
-		super("platform.ioexception",t);
-	}
+    public IORequestException(Throwable t) {
+        super("platform.ioexception",t);
+    }
 }

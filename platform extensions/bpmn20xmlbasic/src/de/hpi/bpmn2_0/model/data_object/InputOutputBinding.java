@@ -53,7 +53,7 @@ import de.hpi.bpmn2_0.model.activity.misc.Operation;
 public class InputOutputBinding
     extends BaseElement
 {
-	@XmlIDREF
+    @XmlIDREF
     @XmlAttribute(name = "operationRef", required = true)
     protected Operation operationRef;
     @XmlAttribute(name = "inputDataRef", required = true)

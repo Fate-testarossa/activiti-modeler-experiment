@@ -33,36 +33,36 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 
 @HandlerConfiguration(uri = "/editor_plugins", rel="plugins")
 public class PluginsHandler extends BasisHandler {
-	
-	public PluginsHandler(ServletContext servletContext) {
-		super(servletContext);
-		
+    
+    public PluginsHandler(ServletContext servletContext) {
+        super(servletContext);
+        
 
-	}
+    }
 
-	/**
-	 * Returns a plugins configuration xml file that fits to the current user's license.
-	 * @throws Exception
-	 */
-	@Override
+    /**
+     * Returns a plugins configuration xml file that fits to the current user's license.
+     * @throws Exception
+     */
+    @Override
     public <T extends FsSecureBusinessObject> void doGet(HttpServletRequest req, HttpServletResponse res, FsAccessToken token, T sbo) {
-  	
-  		File pluginConf = new File(this.getRootDirectory() + "/WEB-INF/xml/editor/plugins.xml");
-  		
-  		if(pluginConf.exists()) {
-  			res.setStatus(200);
-  	  		res.setContentType("text/xml");
-  	  		
-  	  		try {
-				this.writeFileToResponse(pluginConf, res);
-			} catch (IOException e) {
-				throw new RequestException("platform.ioexception", e);
-			}
-  		} else {
-  			throw new RequestException("editor.pluginXmlForProfileNotFound");
-  		}
-  		
-  		
-  		
-	}
+      
+          File pluginConf = new File(this.getRootDirectory() + "/WEB-INF/xml/editor/plugins.xml");
+          
+          if(pluginConf.exists()) {
+              res.setStatus(200);
+                res.setContentType("text/xml");
+                
+                try {
+                this.writeFileToResponse(pluginConf, res);
+            } catch (IOException e) {
+                throw new RequestException("platform.ioexception", e);
+            }
+          } else {
+              throw new RequestException("editor.pluginXmlForProfileNotFound");
+          }
+          
+          
+          
+    }
 }

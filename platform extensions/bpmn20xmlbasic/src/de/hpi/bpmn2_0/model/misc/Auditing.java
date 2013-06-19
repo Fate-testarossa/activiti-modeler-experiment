@@ -47,27 +47,27 @@ import de.hpi.diagram.SignavioUUID;
 public class Auditing
     extends BaseElement
 {
-	/* Constructors */
-	
-	/**
-	 * Default constructor
-	 */
-	public Auditing() {}
-	 
-	/**
-	 * Directly sets the value of the auditing element.
-	 * 
-	 * @param value
-	 */
-	public Auditing(String value) {
-		this.setId(SignavioUUID.generate());
-		this.getDocumentation().add(new Documentation(value));
-	}
+    /* Constructors */
+    
+    /**
+     * Default constructor
+     */
+    public Auditing() {}
+     
+    /**
+     * Directly sets the value of the auditing element.
+     * 
+     * @param value
+     */
+    public Auditing(String value) {
+        this.setId(SignavioUUID.generate());
+        this.getDocumentation().add(new Documentation(value));
+    }
 
-	public String toExportString() {
-		if(this.getDocumentation().size() == 0)	return null;
-		if(this.getDocumentation().get(0) != null)
-			return this.getDocumentation().get(0).getText();
-		else return null;
-	}
+    public String toExportString() {
+        if(this.getDocumentation().size() == 0)    return null;
+        if(this.getDocumentation().get(0) != null)
+            return this.getDocumentation().get(0).getText();
+        else return null;
+    }
 }

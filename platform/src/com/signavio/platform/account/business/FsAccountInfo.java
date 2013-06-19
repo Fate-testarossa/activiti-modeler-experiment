@@ -19,23 +19,23 @@ package com.signavio.platform.account.business;
 
 
 public class FsAccountInfo {
-	
-	private static final String emptyString = "";
-	private static final FsAccountInfo DUMMY;
+    
+    private static final String emptyString = "";
+    private static final FsAccountInfo DUMMY;
 
-	static {
-		DUMMY = new FsAccountInfo();
-	}
-	
-	public static FsAccountInfo getDummy() {
-		return DUMMY;
-	}
-	
-	public FsAccountInfo() {
-		// empty
-	}
+    static {
+        DUMMY = new FsAccountInfo();
+    }
+    
+    public static FsAccountInfo getDummy() {
+        return DUMMY;
+    }
+    
+    public FsAccountInfo() {
+        // empty
+    }
 
-	public String getLanguageCode() { return emptyString; }
-	public String getCountryCode() { return emptyString; }
-	
+    public String getLanguageCode() { return emptyString; }
+    public String getCountryCode() { return emptyString; }
+    
 }

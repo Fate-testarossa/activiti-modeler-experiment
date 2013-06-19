@@ -30,15 +30,15 @@ import com.signavio.warehouse.revision.handler.AbstractImageHandler;
 @HandlerExportConfiguration(name="PNG", icon="/explorer/src/img/famfamfam/picture.png", mime="image/png", download=true)
 public class PngHandler extends AbstractImageHandler {
 
-	public PngHandler(ServletContext servletContext) {
-		super(servletContext);
-	}
-	
-	@Override
-	@HandlerMethodActivation
-	public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){		
-		FsModel model = (FsModel) sbo;
-		return new com.signavio.warehouse.revision.handler.PngHandler(this.getServletContext())
-				.doExport(model.getHeadRevision(), params);
-	}
+    public PngHandler(ServletContext servletContext) {
+        super(servletContext);
+    }
+    
+    @Override
+    @HandlerMethodActivation
+    public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){        
+        FsModel model = (FsModel) sbo;
+        return new com.signavio.warehouse.revision.handler.PngHandler(this.getServletContext())
+                .doExport(model.getHeadRevision(), params);
+    }
 }

@@ -28,13 +28,13 @@ import org.oryxeditor.server.diagram.generic.GenericNode;
  */
 public class BasicNode extends GenericNode<BasicShape, BasicDiagram> implements BasicShape{
 
-	public BasicNode(String resourceId) {
-		super(resourceId);
-	}
+    public BasicNode(String resourceId) {
+        super(resourceId);
+    }
 
 
-	public BasicNode(String resourceId, String stencilId) {
-		super(resourceId, stencilId);
-	}
+    public BasicNode(String resourceId, String stencilId) {
+        super(resourceId, stencilId);
+    }
 
 }

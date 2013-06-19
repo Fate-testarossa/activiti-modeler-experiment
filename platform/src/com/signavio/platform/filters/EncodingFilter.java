@@ -41,50 +41,50 @@ import org.apache.log4j.Logger;
  */
 public class EncodingFilter implements Filter {
 
-	private static final Logger logger = Logger.getLogger(EncodingFilter.class);
+    private static final Logger logger = Logger.getLogger(EncodingFilter.class);
 
-	private String encoding = null;
+    private String encoding = null;
 
-	/** PUBLIC METHODS */
+    /** PUBLIC METHODS */
 
-	public void destroy() {
-		logger.info("EncodingFilter destroyed...");
-	}
+    public void destroy() {
+        logger.info("EncodingFilter destroyed...");
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Filtering: "
-					+ ((HttpServletRequest) request).getRequestURL());
-		}
-		String encoding = getEncoding();
-		
-		if (encoding != null) {
-			//request.setCharacterEncoding(encoding);
-			response.setCharacterEncoding(encoding);
-		}
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Filtering: "
+                    + ((HttpServletRequest) request).getRequestURL());
+        }
+        String encoding = getEncoding();
+        
+        if (encoding != null) {
+            //request.setCharacterEncoding(encoding);
+            response.setCharacterEncoding(encoding);
+        }
 
-		chain.doFilter(request, response);
+        chain.doFilter(request, response);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Leaving");
-		}
-	}
+        if (logger.isDebugEnabled()) {
+            logger.debug("Leaving");
+        }
+    }
 
-	public void init(FilterConfig filterConfig) throws ServletException {
-		logger.info("EncodingFilter initializing...");
-		this.setEncoding(filterConfig.getInitParameter("encoding"));
-		logger.info("Using encoding: " + this.encoding);
-	}
+    public void init(FilterConfig filterConfig) throws ServletException {
+        logger.info("EncodingFilter initializing...");
+        this.setEncoding(filterConfig.getInitParameter("encoding"));
+        logger.info("Using encoding: " + this.encoding);
+    }
 
-	/** PROTECTED METHODS */
-	protected String getEncoding() {
-		return (this.encoding);
-	}
+    /** PROTECTED METHODS */
+    protected String getEncoding() {
+        return (this.encoding);
+    }
 
-	protected void setEncoding(String enc) {
-		if (enc != null) {
-			this.encoding = enc;
-		}
-	}
+    protected void setEncoding(String enc) {
+        if (enc != null) {
+            this.encoding = enc;
+        }
+    }
 }

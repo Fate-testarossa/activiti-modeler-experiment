@@ -36,81 +36,81 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *
  */
 @XmlSeeAlso({
-	SequenceFlow.class,
-	Association.class,
-	MessageFlow.class,
-	ConversationLink.class,
-	DataAssociation.class,
-	DataInputAssociation.class,
-	DataOutputAssociation.class
+    SequenceFlow.class,
+    Association.class,
+    MessageFlow.class,
+    ConversationLink.class,
+    DataAssociation.class,
+    DataInputAssociation.class,
+    DataOutputAssociation.class
 })
 public abstract class Edge extends FlowElement {
-	
-	@XmlAttribute
-	@XmlIDREF
-	@XmlSchemaType(name = "IDREF")
-	public FlowElement sourceRef;
-	
-	@XmlAttribute
-	@XmlIDREF
-	@XmlSchemaType(name = "IDREF")
-	public FlowElement targetRef;
-	
-	public Edge() {}
-	
-	public Edge(Edge edge) {
-		super(edge);
-		
-		this.setSourceRef(edge.getSourceRef());
-		this.setTargetRef(edge.getTargetRef());
-	}
+    
+    @XmlAttribute
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    public FlowElement sourceRef;
+    
+    @XmlAttribute
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    public FlowElement targetRef;
+    
+    public Edge() {}
+    
+    public Edge(Edge edge) {
+        super(edge);
+        
+        this.setSourceRef(edge.getSourceRef());
+        this.setTargetRef(edge.getTargetRef());
+    }
 
 
-	/**
-	 * Returns true if source and target node are of same pool
-	 */
-	public boolean sourceAndTargetContainedInSamePool(){
-		/* Ensure that both source and target are connected */
-		if(this.getSourceRef() == null || this.getTargetRef() == null) 
-			return false;
-		
-	    return !(this.getSourceRef() instanceof FlowNode && 
-	    		this.getTargetRef() instanceof FlowNode && 
-	    		((FlowNode)this.getTargetRef()).getPool() != ((FlowNode)this.getSourceRef()).getPool());
-	}
-	
-	public void acceptVisitor(Visitor v){
-		v.visitEdge(this);
-	}
-	
-	/* Getters */
-	
-	/**
-	 * @return the sourceRef
-	 */
-	public FlowElement getSourceRef() {
-		return sourceRef;
-	}
-	
-	/**
-	 * @return the targetRef
-	 */
-	public FlowElement getTargetRef() {
-		return targetRef;
-	}
-	
-	/* Setters */
-	
-	/**
-	 * @param sourceRef the sourceRef to set
-	 */
-	public void setSourceRef(FlowElement sourceRef) {
-		this.sourceRef = sourceRef;
-	}
-	/**
-	 * @param targetRef the targetRef to set
-	 */
-	public void setTargetRef(FlowElement targetRef) {
-		this.targetRef = targetRef;
-	}
+    /**
+     * Returns true if source and target node are of same pool
+     */
+    public boolean sourceAndTargetContainedInSamePool(){
+        /* Ensure that both source and target are connected */
+        if(this.getSourceRef() == null || this.getTargetRef() == null) 
+            return false;
+        
+        return !(this.getSourceRef() instanceof FlowNode && 
+                this.getTargetRef() instanceof FlowNode && 
+                ((FlowNode)this.getTargetRef()).getPool() != ((FlowNode)this.getSourceRef()).getPool());
+    }
+    
+    public void acceptVisitor(Visitor v){
+        v.visitEdge(this);
+    }
+    
+    /* Getters */
+    
+    /**
+     * @return the sourceRef
+     */
+    public FlowElement getSourceRef() {
+        return sourceRef;
+    }
+    
+    /**
+     * @return the targetRef
+     */
+    public FlowElement getTargetRef() {
+        return targetRef;
+    }
+    
+    /* Setters */
+    
+    /**
+     * @param sourceRef the sourceRef to set
+     */
+    public void setSourceRef(FlowElement sourceRef) {
+        this.sourceRef = sourceRef;
+    }
+    /**
+     * @param targetRef the targetRef to set
+     */
+    public void setTargetRef(FlowElement targetRef) {
+        this.targetRef = targetRef;
+    }
 }

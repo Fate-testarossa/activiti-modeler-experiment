@@ -82,31 +82,31 @@ public enum ParticipantBandKind {
      * @return boolean stating whether the participant is initiating
      */
     public boolean isInitiating(){
-    	switch(this){
-    		case TOP_INITIATING: {return true;}
-    		case TOP_NON_INITIATING: {return false;}
-    		case MIDDLE_INITIATING: {return true;}
-    		case MIDDLE_NON_INITIATING: {return false;}
-    		case BOTTOM_INITIATING: {return true;}
-    		case BOTTOM_NON_INITIATING: {return false;}
-    		default: return false;
-    	}
+        switch(this){
+            case TOP_INITIATING: {return true;}
+            case TOP_NON_INITIATING: {return false;}
+            case MIDDLE_INITIATING: {return true;}
+            case MIDDLE_NON_INITIATING: {return false;}
+            case BOTTOM_INITIATING: {return true;}
+            case BOTTOM_NON_INITIATING: {return false;}
+            default: return false;
+        }
     }
     
     public boolean isBottom(){
-    	switch(this){
-    		case BOTTOM_INITIATING: {return true;}
-    		case BOTTOM_NON_INITIATING: {return true;}
-    		default: return false;
-    	}
+        switch(this){
+            case BOTTOM_INITIATING: {return true;}
+            case BOTTOM_NON_INITIATING: {return true;}
+            default: return false;
+        }
     }
     
     public boolean isTop(){
-    	switch(this){
-    		case TOP_INITIATING: {return true;}
-    		case TOP_NON_INITIATING: {return true;}
-    		default: return false;
-    	}
+        switch(this){
+            case TOP_INITIATING: {return true;}
+            case TOP_NON_INITIATING: {return true;}
+            default: return false;
+        }
     }
 
 }

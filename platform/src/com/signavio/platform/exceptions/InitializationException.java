@@ -26,29 +26,29 @@ package com.signavio.platform.exceptions;
  */
 public class InitializationException extends LoggedRuntimeException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2799913190108208700L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2799913190108208700L;
 
-	public InitializationException(String message) {
-		super(message);
-	}
+    public InitializationException(String message) {
+        super(message);
+    }
 
-	public InitializationException() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public InitializationException() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public InitializationException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
-	}
+    public InitializationException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+        // TODO Auto-generated constructor stub
+    }
 
-	public InitializationException(Throwable arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-	}
+    public InitializationException(Throwable arg0) {
+        super(arg0);
+        // TODO Auto-generated constructor stub
+    }
 
-	
+    
 }

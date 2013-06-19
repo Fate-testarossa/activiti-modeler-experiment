@@ -26,36 +26,36 @@ package com.signavio.platform.exceptions;
  */
 public class AccountInActiveException extends RuntimeException {
 
-	/**
-	 * 
-	 */
-	public AccountInActiveException() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * 
+     */
+    public AccountInActiveException() {
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 */
-	public AccountInActiveException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     */
+    public AccountInActiveException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param cause
-	 */
-	public AccountInActiveException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param cause
+     */
+    public AccountInActiveException(Throwable cause) {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public AccountInActiveException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public AccountInActiveException(String message, Throwable cause) {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
 
 }

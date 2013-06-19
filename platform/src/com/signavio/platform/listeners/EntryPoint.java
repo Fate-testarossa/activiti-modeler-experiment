@@ -38,23 +38,23 @@ import com.signavio.platform.core.impl.FsPlatformInstanceImpl;
  *
  */
 public class EntryPoint implements ServletContextListener {
-	
-	private final Logger logger = Logger.getLogger(EntryPoint.class);
-		
-	public void contextDestroyed(ServletContextEvent sce) {
-		logger.info("Destroying platform...");
-		Platform.shutdownInstance();
-		logger.info("Done destroying platform!");
-	}
+    
+    private final Logger logger = Logger.getLogger(EntryPoint.class);
+        
+    public void contextDestroyed(ServletContextEvent sce) {
+        logger.info("Destroying platform...");
+        Platform.shutdownInstance();
+        logger.info("Done destroying platform!");
+    }
 
-	/**
-	 * Boot the platform using the default {@link PlatformInstance} implementation
-	 * for the servlet container.
-	 */
-	public void contextInitialized(ServletContextEvent sce) {
-		logger.info("Initializing platform...");
-		Platform.bootInstance(FsPlatformInstanceImpl.class, sce.getServletContext());
-		logger.info("Done initializing platform!");
-	}
+    /**
+     * Boot the platform using the default {@link PlatformInstance} implementation
+     * for the servlet container.
+     */
+    public void contextInitialized(ServletContextEvent sce) {
+        logger.info("Initializing platform...");
+        Platform.bootInstance(FsPlatformInstanceImpl.class, sce.getServletContext());
+        logger.info("Done initializing platform!");
+    }
 
 }

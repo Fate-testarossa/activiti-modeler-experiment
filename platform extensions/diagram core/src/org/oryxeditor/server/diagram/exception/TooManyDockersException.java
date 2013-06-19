@@ -26,8 +26,8 @@ package org.oryxeditor.server.diagram.exception;
 @SuppressWarnings("serial")
 public class TooManyDockersException extends RuntimeException {
 
-	public TooManyDockersException(String message) {
-		super(message);
-	}
-	
+    public TooManyDockersException(String message) {
+        super(message);
+    }
+    
 }

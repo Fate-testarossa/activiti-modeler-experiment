@@ -26,84 +26,84 @@ package com.signavio.platform.exceptions;
  */
 public class RequestException extends RuntimeException {
 
-	
-	private String errorCode;
-	private String[] params;
-	private int httpStatusCode = 500;
-	
-	/**
-	 * @param errorCode
-	 */
-	public RequestException(String errorCode) {
-		super("RequestException Error Code: " + errorCode);
-		this.errorCode = errorCode;
-	}
+    
+    private String errorCode;
+    private String[] params;
+    private int httpStatusCode = 500;
+    
+    /**
+     * @param errorCode
+     */
+    public RequestException(String errorCode) {
+        super("RequestException Error Code: " + errorCode);
+        this.errorCode = errorCode;
+    }
 
-	/**
-	 * @param errorCode
-	 * @param cause
-	 */
-	public RequestException(String errorCode, Throwable cause) {
-		super("RequestException Error Code: " + errorCode, cause);
-		this.errorCode = errorCode;
-	}
-	
-	/**
-	 * @param errorCode
-	 */
-	public RequestException(String errorCode, String ... params) {
-		super("RequestException Error Code: " + errorCode);
-		this.errorCode = errorCode;
-		this.params = params;
-	}
+    /**
+     * @param errorCode
+     * @param cause
+     */
+    public RequestException(String errorCode, Throwable cause) {
+        super("RequestException Error Code: " + errorCode, cause);
+        this.errorCode = errorCode;
+    }
+    
+    /**
+     * @param errorCode
+     */
+    public RequestException(String errorCode, String ... params) {
+        super("RequestException Error Code: " + errorCode);
+        this.errorCode = errorCode;
+        this.params = params;
+    }
 
-	/**
-	 * @param errorCode
-	 * @param cause
-	 */
-	public RequestException(String errorCode, Throwable cause, String ... params) {
-		super("RequestException Error Code: " + errorCode, cause);
-		this.errorCode = errorCode;
-		this.params = params;
-	}
-	
-	public RequestException(String errorCode, int httpStatusCode,
-			String[] params) {
-		super("RequestException Error Code: " + errorCode);
-		this.errorCode = errorCode;
-		this.httpStatusCode = httpStatusCode;
-		this.params = params;
-	}
-	
-	public RequestException(String errorCode, Throwable cause, int httpStatusCode,
-			String[] params) {
-		super("RequestException Error Code: " + errorCode, cause);
-		this.errorCode = errorCode;
-		this.httpStatusCode = httpStatusCode;
-		this.params = params;
-	}
-	
-	public RequestException(String errorCode, int httpStatusCode) {
-		super("RequestException Error Code: " + errorCode);
-		this.errorCode = errorCode;
-		this.httpStatusCode = httpStatusCode;
-	}
-	
-	public RequestException(String errorCode, Throwable cause, int httpStatusCode) {
-		super("RequestException Error Code: " + errorCode, cause);
-		this.errorCode = errorCode;
-		this.httpStatusCode = httpStatusCode;
-	}
+    /**
+     * @param errorCode
+     * @param cause
+     */
+    public RequestException(String errorCode, Throwable cause, String ... params) {
+        super("RequestException Error Code: " + errorCode, cause);
+        this.errorCode = errorCode;
+        this.params = params;
+    }
+    
+    public RequestException(String errorCode, int httpStatusCode,
+            String[] params) {
+        super("RequestException Error Code: " + errorCode);
+        this.errorCode = errorCode;
+        this.httpStatusCode = httpStatusCode;
+        this.params = params;
+    }
+    
+    public RequestException(String errorCode, Throwable cause, int httpStatusCode,
+            String[] params) {
+        super("RequestException Error Code: " + errorCode, cause);
+        this.errorCode = errorCode;
+        this.httpStatusCode = httpStatusCode;
+        this.params = params;
+    }
+    
+    public RequestException(String errorCode, int httpStatusCode) {
+        super("RequestException Error Code: " + errorCode);
+        this.errorCode = errorCode;
+        this.httpStatusCode = httpStatusCode;
+    }
+    
+    public RequestException(String errorCode, Throwable cause, int httpStatusCode) {
+        super("RequestException Error Code: " + errorCode, cause);
+        this.errorCode = errorCode;
+        this.httpStatusCode = httpStatusCode;
+    }
 
-	public String getErrorCode() {
-		return errorCode;
-	}
-	
-	public String[] getParams() {
-		return params;
-	}
-	
-	public int getHttpStatusCode() {
-		return httpStatusCode;
-	}
+    public String getErrorCode() {
+        return errorCode;
+    }
+    
+    public String[] getParams() {
+        return params;
+    }
+    
+    public int getHttpStatusCode() {
+        return httpStatusCode;
+    }
 }

@@ -31,34 +31,34 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
  *
  */
 public class FsTenantManager extends FsBusinessObjectManager {
-	
-	private static final FsTenantManager SINGLETON;
-	public static final String ID_OF_SINGLETON = "tenant-mgr-object";
-	static {
-		SINGLETON = new FsTenantManager();
-	}
+    
+    private static final FsTenantManager SINGLETON;
+    public static final String ID_OF_SINGLETON = "tenant-mgr-object";
+    static {
+        SINGLETON = new FsTenantManager();
+    }
 
-	public static FsTenantManager getSingleton() {
-		return SINGLETON;
-	}
+    public static FsTenantManager getSingleton() {
+        return SINGLETON;
+    }
 
-	public FsTenant createTenant(FsAccount account, String string, String id) throws TenantException {
-		throw new UnsupportedOperationException("This tenant manager does not support the creation of new tenants.");
-	}
+    public FsTenant createTenant(FsAccount account, String string, String id) throws TenantException {
+        throw new UnsupportedOperationException("This tenant manager does not support the creation of new tenants.");
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
-		if (FsTenant.class.isAssignableFrom(type)){
-			return (Set<T>) FsTenant.getSingletonSet();
-		} else {
-			return super.getChildren(type);
-		}
-	}
-	
-	@Override
-	public String getId() {
-		return ID_OF_SINGLETON;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
+        if (FsTenant.class.isAssignableFrom(type)){
+            return (Set<T>) FsTenant.getSingletonSet();
+        } else {
+            return super.getChildren(type);
+        }
+    }
+    
+    @Override
+    public String getId() {
+        return ID_OF_SINGLETON;
+    }
 
 }
