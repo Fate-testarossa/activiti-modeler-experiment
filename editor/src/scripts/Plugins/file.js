@@ -1,39 +1,35 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
-if (!ORYX.Plugins) 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
+if (!ORYX.Plugins)
     ORYX.Plugins = new Object();
 
 ORYX.Plugins.Save = Clazz.extend({
-    
+
     facade: undefined,
-    
+
     processURI: undefined,
-    
+
     changeSymbol : "*",
-    
+
     construct: function(facade){
         this.facade = facade;
-        
+
         this.facade.offer({
             'name': ORYX.I18N.Save.save,
             'functionality': this.save.bind(this,false),
@@ -46,18 +42,18 @@ ORYX.Plugins.Save = Clazz.extend({
             keyCodes: [{
                      metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                     keyCode: 83, // s-Keycode
-                    keyAction: ORYX.CONFIG.KEY_ACTION_UP 
+                    keyAction: ORYX.CONFIG.KEY_ACTION_UP
                 }
              ]
         });
-        
+
         document.addEventListener("keydown", function(e){
             if (e.ctrlKey&&e.keyCode === 83){
                 Event.stop(e);
             }
         }, false)
-        
-        
+
+
         this.facade.offer({
             'name': ORYX.I18N.Save.saveAs,
             'functionality': this.save.bind(this,true),
@@ -67,66 +63,66 @@ ORYX.Plugins.Save = Clazz.extend({
             'index': 2,
             'minShape': 0,
             'maxShape': 0
-        });    
-        
+        });
+
         window.onbeforeunload = this.onUnLoad.bind(this)
-        
+
         this.changeDifference = 0;
-        
-        // Register on event for executing commands --> store all commands in a stack         
+
+        // Register on event for executing commands --> store all commands in a stack
         // --> Execute
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_UNDO_EXECUTE, function(){ this.changeDifference++; this.updateTitle(); }.bind(this) );
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_EXECUTE_COMMANDS, function(){ this.changeDifference++; this.updateTitle(); }.bind(this) );
         // --> Rollback
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_UNDO_ROLLBACK, function(){ this.changeDifference--; this.updateTitle(); }.bind(this) );
-        
+
         //TODO very critical for load time performance!!!
         //this.serializedDOM = DataManager.__persistDOM(this.facade);
     },
-    
+
     updateTitle: function(){
-        
+
         var value = window.document.title || document.getElementsByTagName("title")[0].childNodes[0].nodeValue;
-        
+
         if (this.changeDifference === 0 && value.startsWith(this.changeSymbol)){
             window.document.title = value.slice(1);
         } else if (this.changeDifference !== 0 && !value.startsWith(this.changeSymbol)){
             window.document.title = this.changeSymbol + "" + value;
         }
     },
-    
+
     onUnLoad: function(){
         if(this.changeDifference !== 0 || (this.facade.getModelMetaData()['new'] && this.facade.getCanvas().getChildShapes().size() > 0)) {
             return ORYX.I18N.Save.unsavedData;
         }
-        
+
     },
-        
-    
+
+
     saveSynchronously: function(forceNew, modelInfo){
-        
+
         if (!modelInfo) {
             return;
         }
-        
+
         var modelMeta = this.facade.getModelMetaData();
         var reqURI = modelMeta.modelHandler;
 
 
         // Get the stencilset
         var ss = this.facade.getStencilSets().values()[0]
-        
+
         var typeTitle = ss.title();
-        
+
         // Define Default values
         var name = (modelMeta["new"] && modelMeta.name === "") ? ORYX.I18N.Save.newProcess : modelInfo.name;
         var defaultData = {title:Signavio.Utils.escapeHTML(name||""), summary:Signavio.Utils.escapeHTML(modelInfo.description||""), type:typeTitle, url: reqURI, namespace: modelInfo.model.stencilset.namespace, comment: '' }
-        
+
         // Create a Template
-        var dialog = new Ext.XTemplate(        
+        var dialog = new Ext.XTemplate(
                     // TODO find some nice words here -- copy from above ;)
                     '<form class="oryx_repository_edit_model" action="#" id="edit_model" onsubmit="return false;">',
-                                    
+
                         '<fieldset>',
                             '<p class="description">' + ORYX.I18N.Save.dialogDesciption + '</p>',
                             '<input type="hidden" name="namespace" value="{namespace}" />',
@@ -134,11 +130,11 @@ ORYX.Plugins.Save = Clazz.extend({
                             '<p><label for="edit_model_summary">' + ORYX.I18N.Save.dialogLabelDesc + '</label><textarea rows="5" name="summary" id="edit_model_summary" onfocus="this.className = \'activated\'" onblur="this.className = \'\'">{summary}</textarea></p>',
                             (modelMeta.versioning) ? '<p><label for="edit_model_comment">' + ORYX.I18N.Save.dialogLabelComment + '</label><textarea rows="5" name="comment" id="edit_model_comment" onfocus="this.className = \'activated\'" onblur="this.className = \'\'">{comment}</textarea></p>' : '',
                             '<p><label for="edit_model_type">' + ORYX.I18N.Save.dialogLabelType + '</label><input type="text" name="type" class="text disabled" value="{type}" disabled="disabled" id="edit_model_type" /></p>',
-                            
+
                         '</fieldset>',
-                    
+
                     '</form>')
-        
+
         // Create the callback for the template
         callback = function(form){
 
@@ -150,38 +146,38 @@ ORYX.Plugins.Save = Clazz.extend({
 
                 var title         = form.elements["title"].value.strip();
                 title             = title.length == 0 ? defaultData.title : title;
-                
-                var summary     = form.elements["summary"].value.strip();    
+
+                var summary     = form.elements["summary"].value.strip();
                 summary         = summary.length == 0 ? defaultData.summary : summary;
-                
+
                 var namespace    = form.elements["namespace"].value.strip();
                 namespace        = namespace.length == 0 ? defaultData.namespace : namespace;
-                
+
                 var comment     = form .elements["comment"].value.strip();
                 comment            = comment.length == 0 ? defaultData.comment : comment;
-                
+
                 modelMeta.name = title;
                 modelMeta.description = summary;
                 modelMeta.parent = modelInfo.parent;
                 modelMeta.namespace = namespace;
-                    
+
                 //added changing title of page after first save, but with the changed flag
                 if(!forceNew) window.document.title = this.changeSymbol + title + " | " + ORYX.CONFIG.APPNAME;
-                    
-                    
+
+
                 // Get json
                 var json = this.facade.getJSON();
-                
+
                 var glossary = [];
-                
+
                 //Support for glossary
                 if (this.facade.hasGlossaryExtension) {
-                    
+
                     Ext.apply(json, ORYX.Core.AbstractShape.JSONHelper);
                     var allNodes = json.getChildShapes(true);
-                    
+
                     var orders = {};
-                    
+
                     this.facade.getGlossary().each(function(entry){
                         if ("undefined" == typeof orders[entry.shape.resourceId+"-"+entry.property.prefix()+"-"+entry.property.id()]){
                             orders[entry.shape.resourceId+"-"+entry.property.prefix()+"-"+entry.property.id()] = 0;
@@ -193,7 +189,7 @@ ORYX.Plugins.Save = Clazz.extend({
                             propertyId    : entry.property.prefix()+"-"+entry.property.id(),
                             order        : orders[entry.shape.resourceId+"-"+entry.property.prefix()+"-"+entry.property.id()]++
                         });
-                        
+
                         // Replace the property with the generated glossary url
                         /*var rId = entry.shape.resourceId;
                         var pKe = entry.property.id();
@@ -209,8 +205,8 @@ ORYX.Plugins.Save = Clazz.extend({
                                 break;
                             }
                         }*/
-                        
-                        
+
+
                         // Replace SVG
                         if (entry.property.refToView() && entry.property.refToView().length > 0) {
                             entry.property.refToView().each(function(ref){
@@ -220,7 +216,7 @@ ORYX.Plugins.Save = Clazz.extend({
                             })
                         }
                     }.bind(this))
-                    
+
 
                     // Set the json as string
                     json = json.serialize();
@@ -228,10 +224,10 @@ ORYX.Plugins.Save = Clazz.extend({
                 } else {
                     json = Ext.encode(json);
                 }
-                
+
                 // Set the glossaries as string
                 glossary = Ext.encode(glossary);
-                
+
                 var selection = this.facade.getSelection();
                 this.facade.setSelection([]);
 
@@ -244,16 +240,16 @@ ORYX.Plugins.Save = Clazz.extend({
                         stripOutArray[i].parentNode.removeChild(stripOutArray[i]);
                     }
                 }
-                  
-                // Remove all forced stripable elements 
+
+                // Remove all forced stripable elements
                 var stripOutArray = svgClone.getElementsByClassName("stripable-element-force");
                 for (var i=stripOutArray.length-1; i>=0; i--) {
                     stripOutArray[i].parentNode.removeChild(stripOutArray[i]);
                 }
-                          
+
                 // Parse dom to string
                 var svgDOM     = DataManager.serialize(svgClone);
-                
+
                 var params = {
                         json_xml: json,
                         svg_xml: svgDOM,
@@ -266,65 +262,65 @@ ORYX.Plugins.Save = Clazz.extend({
                         namespace: modelMeta.namespace,
                         views: Ext.util.JSON.encode(modelMeta.views || [])
                 };
-                
+
                 var success = false;
-                
+
                 var successFn = function(transport) {
                     var loc = transport.getResponseHeader.location;
                     if (!this.processURI && loc) {
                         this.processURI = loc;
                     }
-    
+
                     if( forceNew ){
                         var resJSON = transport.responseText.evalJSON();
-                        
+
                         var modelURL = location.href.substring(0, location.href.indexOf(location.search)) + '?id=' + resJSON.href.substring(7);
                         var newURLWin = new Ext.Window({
-                            title:        ORYX.I18N.Save.savedAs, 
-                            bodyStyle:    "background:white;padding:10px", 
-                            width:        'auto', 
+                            title:        ORYX.I18N.Save.savedAs,
+                            bodyStyle:    "background:white;padding:10px",
+                            width:        'auto',
                             height:        'auto',
                             html:"<div style='font-weight:bold;margin-bottom:10px'>"+ORYX.I18N.Save.savedDescription+":</div><span><a href='" + modelURL +"' target='_blank'>" + modelURL + "</a></span>",
                             buttons:[{text:'Ok',handler:function(){newURLWin.destroy()}}]
                         });
                         newURLWin.show();
-                        
+
                         window.open(modelURL);
                     }
-    
+
                     //show saved status
                     /*this.facade.raiseEvent({
                             type:ORYX.CONFIG.EVENT_LOADING_STATUS,
                             text:ORYX.I18N.Save.saved
                         });*/
-                        
+
                     success = true;
-                    
+
                     win.close();
-                
+
                     if (success) {
                         // Reset changes
                         this.changeDifference = 0;
                         this.updateTitle();
-                        
+
                         if(modelMeta["new"]) {
                             modelMeta["new"] = false;
                         }
                     }
-                    
-                    
+
+
                     delete this.saving;
-                        
+
                 }.bind(this);
-                
+
                 var failure = function(transport) {
                         // raise loading disable event.
                         this.facade.raiseEvent({
                             type: ORYX.CONFIG.EVENT_LOADING_DISABLE
                         });
-                        
+
                         win.close();
-                        
+
                         if(transport.status && transport.status === 401) {
                             Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.Save.notAuthorized).setIcon(Ext.Msg.WARNING).getDialog().setWidth(260).center().syncSize();
                         } else if(transport.status && transport.status === 403) {
@@ -336,28 +332,28 @@ ORYX.Plugins.Save = Clazz.extend({
                         } else {
                             Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.Save.failed).setIcon(Ext.Msg.WARNING).getDialog().setWidth(260).center().syncSize();
                         }
-                        
+
                         delete this.saving;
-                        
+
                     }.bind(this);
-                
-                if(modelMeta["new"]) {    
+
+                if(modelMeta["new"]) {
                     // Send the request out
-                    params.id = modelMeta.modelId;                    
+                    params.id = modelMeta.modelId;
                     this.sendSaveRequest('POST', reqURI, params, forceNew, successFn, failure);
                 } else if(forceNew) {
                     this.sendSaveRequest('POST', reqURI, params, forceNew, successFn, failure);
                 } else {
                     if (!reqURI.include(modelMeta.modelId))
                         reqURI += "/" + modelMeta.modelId;
-                        
+
                     params.id = modelMeta.modelId;
                     // Send the request out
                     this.sendSaveRequest('PUT', reqURI, params, false, successFn, failure);
                 }
         }.bind(this);
-            
-        // Create a new window                
+
+        // Create a new window
         win = new Ext.Window({
             id        : 'Propertie_Window',
             width    : 'auto',
@@ -371,14 +367,14 @@ ORYX.Plugins.Save = Clazz.extend({
             buttons:[{
                 text: ORYX.I18N.Save.saveBtn,
                 handler: function(){
-                
+
                     win.body.mask(ORYX.I18N.Save.pleaseWait, "x-waiting-box");
-                    
+
                     window.setTimeout(function(){
-                        
+
                         callback($('edit_model'));
-                        
-                    }.bind(this), 10);            
+
+                    }.bind(this), 10);
                 },
                 listeners:{
                     render:function(){
@@ -392,27 +388,27 @@ ORYX.Plugins.Save = Clazz.extend({
                 }.bind(this)
             }],
             listeners: {
-                close: function(){                    
+                close: function(){
                     win.destroy();
                     delete this.saving;
                 }.bind(this)
             }
         });
-                      
+
         win.show();
     },
-    
+
     /**
      * Get the model data and call the success callback
-     * 
+     *
      * @param {Function} success Success callback
      */
     retrieveModelData: function(success){
-        
+
         var onComplete = function(){
             Ext.getBody().unmask();
         }
-        
+
         new Ajax.Request(window.location.href.replace(/#.*/g, "") + "&data", {
             method: 'get',
             asynchronous: true,
@@ -440,7 +436,7 @@ ORYX.Plugins.Save = Clazz.extend({
                 this.facade.raiseEvent({
                     type: ORYX.CONFIG.EVENT_LOADING_DISABLE
                 });
-                
+
                 delete this.saving;
                 onComplete();
                 Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.Save.failed).setIcon(Ext.Msg.ERROR).getDialog().setWidth(260).syncSize();
@@ -450,7 +446,7 @@ ORYX.Plugins.Save = Clazz.extend({
                 this.facade.raiseEvent({
                     type: ORYX.CONFIG.EVENT_LOADING_DISABLE
                 });
-                
+
                 delete this.saving;
                 onComplete();
                 Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.Save.notAuthorized).setIcon(Ext.Msg.WARNING).getDialog().setWidth(260).syncSize();
@@ -460,16 +456,16 @@ ORYX.Plugins.Save = Clazz.extend({
                 this.facade.raiseEvent({
                     type: ORYX.CONFIG.EVENT_LOADING_DISABLE
                 });
-                
+
                 delete this.saving;
                 onComplete();
                 Ext.Msg.alert(ORYX.I18N.Oryx.title, ORYX.I18N.Save.noRights).setIcon(Ext.Msg.ERROR).getDialog().setWidth(260).syncSize();
             }).bind(this)
         });
     },
-    
+
     sendSaveRequest: function(method, url, params, forceNew, success, failure){
-        
+
         // Send the request to the server.
         Ext.Ajax.request({
             url                : url,
@@ -482,26 +478,26 @@ ORYX.Plugins.Save = Clazz.extend({
             failure            : failure
         });
     },
-    
+
     /**
      * Saves the current process to the server.
      */
     save: function(forceNew, event){
-        
+
         // Check if currently is saving
         if (this.saving){
             return;
         }
-        
+
         this.saving = true;
-        
+
         this.facade.raiseEvent({
             type: ORYX.CONFIG.EVENT_ABOUT_TO_SAVE
         });
-        
+
         // ... save synchronously
         window.setTimeout((function(){
-            
+
             var meta = this.facade.getModelMetaData();
             // Check if new...
             if (meta["new"]){
@@ -513,7 +509,7 @@ ORYX.Plugins.Save = Clazz.extend({
             }
         }).bind(this), 10);
 
-        
+
         return true;
-    }    
+    }
 });

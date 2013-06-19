@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.artifacts;
 
 import java.util.ArrayList;
@@ -42,9 +36,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tArtifact complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tArtifact">
  *   &lt;complexContent>
@@ -53,8 +47,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tArtifact")
@@ -66,7 +60,7 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public abstract class Artifact
     extends FlowNode
 {
-    
+
     /* Business logic methodes */
 
     /**
@@ -77,22 +71,22 @@ public abstract class Artifact
 
     /**
      * Find an appropriate {@link Process} container for the data object.
-     * 
+     *
      * The algorithm checks the source and target neighborhood nodes of the data
      * object and the takes the referenced process of one of the neighbors.
-     * 
+     *
      * Navigates into both directions.
      */
     public void findRelatedProcess() {
         this.processedElements = new ArrayList<FlowElement>();
         Process process = this.findRelatedProcessRecursivly(this);
         if (process != null) {
-            
+
             /* Remove from other containment based process reference */
             if(this.getProcess() != null) {
                 this.getProcess().removeChild(this);
             }
-            
+
             this.setProcess(process);
             process.addChild(this);
         }
@@ -100,7 +94,7 @@ public abstract class Artifact
 
     /**
      * Navigates into both directions.
-     * 
+     *
      * @param flowElement
      *            The {@link FlowElement} to investigate.
      */
@@ -155,27 +149,27 @@ public abstract class Artifact
 
         return null;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitArtifact(this);
     }
-    
+
     /**
      * Checks whether the Artifact is contained in an conversation.
-     * 
+     *
      * The algorithm checks the source and target neighborhood nodes of the data
      * object.
-     * 
+     *
      * Navigates into both directions.
      */
     public boolean isConverstionRelated() {
         this.processedElements = new ArrayList<FlowElement>();
         return this.isConversationConversationRecursivly(this);
     }
-    
+
     /**
      * Navigates into both directions.
-     * 
+     *
      * @param flowElement
      *            The {@link FlowElement} to investigate.
      */
@@ -200,7 +194,7 @@ public abstract class Artifact
                 continue;
 
             if(sourceRef instanceof ConversationElement) {
-                return true;    
+                return true;
             }
         }
 
@@ -214,7 +208,7 @@ public abstract class Artifact
         }
 
         /* Continue with the after next nodes */
-        
+
         for (Edge edge : flowElement.getIncoming()) {
             boolean result = this.isConversationConversationRecursivly(edge
                     .getSourceRef());

@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 /**
  * Init namespaces
@@ -44,7 +40,7 @@ ORYX.Core.Bounds = {
         this.suspendChange = false;
         this.changedWhileSuspend = false;
     },
-    
+
     /**
      * Calls all registered callbacks.
      */
@@ -57,17 +53,17 @@ ORYX.Core.Bounds = {
         } else
             this.changedWhileSuspend = true;
     },
-    
+
     /**
      * Registers a callback that is called, if the bounds changes.
      * @param callback {Function} The callback function.
      */
     registerCallback: function(callback) {
         if(!this._changedCallbacks.member(callback)) {
-            this._changedCallbacks.push(callback);    
+            this._changedCallbacks.push(callback);
         }
     },
-    
+
     /**
      * Unregisters a callback.
      * @param callback {Function} The callback function.
@@ -75,18 +71,18 @@ ORYX.Core.Bounds = {
     unregisterCallback: function(callback) {
             this._changedCallbacks = this._changedCallbacks.without(callback);
     },
-    
+
     /**
      * Sets position and size of the shape dependent of four coordinates
      * (set(ax, ay, bx, by);), two points (set({x: ax, y: ay}, {x: bx, y: by});)
      * or one bound (set({a: {x: ax, y: ay}, b: {x: bx, y: by}});).
      */
     set: function() {
-        
+
         var changed = false;
-        
+
         switch (arguments.length) {
-        
+
             case 1:
                 if(this.a.x !== arguments[0].a.x) {
                     changed = true;
@@ -105,7 +101,7 @@ ORYX.Core.Bounds = {
                     this.b.y = arguments[0].b.y;
                 }
                 break;
-            
+
             case 2:
                 var ax = Math.min(arguments[0].x, arguments[1].x);
                 var ay = Math.min(arguments[0].y, arguments[1].y);
@@ -128,7 +124,7 @@ ORYX.Core.Bounds = {
                     this.b.y = by;
                 }
                 break;
-            
+
             case 4:
                 var ax = Math.min(arguments[0], arguments[2]);
                 var ay = Math.min(arguments[1], arguments[3]);
@@ -152,12 +148,12 @@ ORYX.Core.Bounds = {
                 }
                 break;
         }
-        
+
         if(changed) {
             this._changed(true);
         }
     },
-    
+
     /**
      * Moves the bounds so that the point p will be the new upper left corner.
      * @param {Point} p
@@ -166,7 +162,7 @@ ORYX.Core.Bounds = {
      * @param {Number} y
      */
     moveTo: function() {
-        
+
         var currentPosition = this.upperLeft();
         switch (arguments.length) {
             case 1:
@@ -184,20 +180,20 @@ ORYX.Core.Bounds = {
             default:
                 //TODO error
         }
-        
+
     },
-    
+
     /**
      * Moves the bounds relatively by p.
      * @param {Point} p
      * or
      * @param {Number} x
      * @param {Number} y
-     * 
+     *
      */
     moveBy: function() {
         var changed = false;
-        
+
         switch (arguments.length) {
             case 1:
                 var p = arguments[0];
@@ -208,7 +204,7 @@ ORYX.Core.Bounds = {
                     this.a.y += p.y;
                     this.b.y += p.y;
                 }
-                break;    
+                break;
             case 2:
                 var x = arguments[0];
                 var y = arguments[1];
@@ -219,54 +215,54 @@ ORYX.Core.Bounds = {
                     this.a.y += y;
                     this.b.y += y;
                 }
-                break;    
+                break;
             default:
                 //TODO error
         }
-        
+
         if(changed) {
             this._changed();
         }
     },
-    
+
     /***
      * Includes the bounds b into the current bounds.
      * @param {Bounds} b
      */
     include: function(b) {
-        
+
         if( (this.a.x === undefined) && (this.a.y === undefined) &&
             (this.b.x === undefined) && (this.b.y === undefined)) {
             return b;
         };
-        
+
         var cx = Math.min(this.a.x,b.a.x);
         var cy = Math.min(this.a.y,b.a.y);
-        
+
         var dx = Math.max(this.b.x,b.b.x);
         var dy = Math.max(this.b.y,b.b.y);
 
-        
+
         this.set(cx, cy, dx, dy);
     },
-    
+
     /**
      * Relatively extends the bounds by p.
      * @param {Point} p
      */
     extend: function(p) {
-        
+
         if(p.x !== 0 || p.y !== 0) {
             // this is over cross for the case that a and b have same coordinates.
             //((this.a.x > this.b.x) ? this.a : this.b).x += p.x;
             //((this.b.y > this.a.y) ? this.b : this.a).y += p.y;
             this.b.x += p.x;
             this.b.y += p.y;
-            
+
             this._changed(true);
         }
     },
-    
+
     /**
      * Widens the scope of the bounds by x.
      * @param {Number} x
@@ -282,95 +278,95 @@ ORYX.Core.Bounds = {
             }
         }
     },
-    
+
     /**
      * Returns the upper left corner's point regardless of the
      * bound delimiter points.
      */
     upperLeft: function() {
-        
+
         return {x:this.a.x, y:this.a.y};
     },
-    
+
     /**
      * Returns the lower Right left corner's point regardless of the
      * bound delimiter points.
      */
     lowerRight: function() {
-        
+
         return {x:this.b.x, y:this.b.y};
     },
-    
+
     /**
      * @return {Number} Width of bounds.
      */
     width: function() {
         return this.b.x - this.a.x;
     },
-    
+
     /**
      * @return {Number} Height of bounds.
      */
     height: function() {
         return this.b.y - this.a.y;
     },
-    
+
     /**
      * @return {Point} The center point of this bounds.
      */
     center: function() {
         return {
-            x: (this.a.x + this.b.x)/2.0, 
+            x: (this.a.x + this.b.x)/2.0,
             y: (this.a.y + this.b.y)/2.0
         };
     },
 
-    
+
     /**
      * @return {Point} The center point of this bounds relative to upperLeft.
      */
     midPoint: function() {
         return {
-            x: (this.b.x - this.a.x)/2.0, 
+            x: (this.b.x - this.a.x)/2.0,
             y: (this.b.y - this.a.y)/2.0
         };
     },
-        
+
     /**
      * Moves the center point of this bounds to the new position.
-     * @param p {Point} 
+     * @param p {Point}
      * or
      * @param x {Number}
      * @param y {Number}
      */
     centerMoveTo: function() {
         var currentPosition = this.center();
-        
+
         switch (arguments.length) {
-            
+
             case 1:
                 this.moveBy(arguments[0].x - currentPosition.x,
                             arguments[0].y - currentPosition.y);
                 break;
-            
+
             case 2:
                 this.moveBy(arguments[0] - currentPosition.x,
                             arguments[1] - currentPosition.y);
                 break;
         }
     },
-    
+
     isIncluded: function(point, offset) {
-        
+
         var pointX, pointY, offset;
 
-        // Get the the two Points    
+        // Get the the two Points
         switch(arguments.length) {
             case 1:
                 pointX = arguments[0].x;
                 pointY = arguments[0].y;
                 offset = 0;
-                
+
                 break;
             case 2:
                 if(arguments[0].x && arguments[0].y) {
@@ -391,37 +387,37 @@ ORYX.Core.Bounds = {
             default:
                 throw "isIncluded needs one, two or three arguments";
         }
-                
+
         var ul = this.upperLeft();
         var lr = this.lowerRight();
-        
-        if(pointX >= ul.x - offset 
-            && pointX <= lr.x + offset && pointY >= ul.y - offset 
+
+        if(pointX >= ul.x - offset
+            && pointX <= lr.x + offset && pointY >= ul.y - offset
             && pointY <= lr.y + offset)
             return true;
-        else 
+        else
             return false;
     },
-    
+
     /**
      * @return {Bounds} A copy of this bounds.
      */
     clone: function() {
-        
+
         //Returns a new bounds object without the callback
         // references of the original bounds
         return new ORYX.Core.Bounds(this);
     },
-    
+
     toString: function() {
-        
+
         return "( "+this.a.x+" | "+this.a.y+" )/( "+this.b.x+" | "+this.b.y+" )";
     },
-    
+
     serializeForERDF: function() {
 
         return this.a.x+","+this.a.y+","+this.b.x+","+this.b.y;
     }
  };
- 
+
 ORYX.Core.Bounds = Clazz.extend(ORYX.Core.Bounds);

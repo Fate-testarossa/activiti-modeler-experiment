@@ -1,26 +1,22 @@
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 /**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-/**
- * 
+ *
  */
 package com.signavio.platform.filters;
 
@@ -75,11 +71,11 @@ public class ParseParametersFilter implements Filter {
      */
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
-        
-        
+
+
         if (!(req instanceof HttpServletRequest)) {
             chain.doFilter(req, res);
-        }        
+        }
         HttpServletRequest httpReq = (HttpServletRequest) req;
         Map<String, List<String>> params = new HashMap<String, List<String>>();
         parseUriParameters(httpReq, params);
@@ -99,7 +95,7 @@ public class ParseParametersFilter implements Filter {
         // TODO Auto-generated method stub
 
     }
-     
+
     /**
      * Helper method that adds a new parameter to the map
      * @param params
@@ -107,7 +103,7 @@ public class ParseParametersFilter implements Filter {
      * @param value
      */
     private void addParameter(Map<String, List<String>> params, String key, String value) {
-        
+
         List<String> values = params.get(key);
         if (values == null) {
             values = new ArrayList<String>();
@@ -115,7 +111,7 @@ public class ParseParametersFilter implements Filter {
         }
         values.add(value);
     }
-    
+
     private void parseUriParameters(HttpServletRequest req, Map<String, List<String>> params) {
         // get parameters form uri after the extension
         String[] path     = DispatcherServlet.parseURL( req.getRequestURI() );
@@ -127,9 +123,9 @@ public class ParseParametersFilter implements Filter {
             }
         }
     }
-    
+
     /**
-     * Read all parameters directly from the input stream. Necessary because parameters are not mapped to the 
+     * Read all parameters directly from the input stream. Necessary because parameters are not mapped to the
      * HttpRequest.getParameter api on PUT requests
      * @param req
      * @param params
@@ -153,7 +149,7 @@ public class ParseParametersFilter implements Filter {
             throw new InputException(e);
         }
     }
-    
+
     /**
      * Parse parameters using the HttpRequest API
      * @param req
@@ -161,18 +157,18 @@ public class ParseParametersFilter implements Filter {
      */
     @SuppressWarnings("unchecked")
     private void parseRequestParameters(HttpServletRequest req, Map<String, List<String>> params) {
-        
+
         // get all parameter and add those to the map
         Enumeration<String> paramNames = req.getParameterNames();
         while( paramNames.hasMoreElements() ){
             String key         = paramNames.nextElement();
             String[] values = req.getParameterValues(key);
             for (String value : values) {
-                addParameter(params, key, value); 
-            }    
+                addParameter(params, key, value);
+            }
         }
     }
-    
+
     /**
      * Remove code from all parameters except those ending with '_xml'
      * @param params
@@ -188,7 +184,7 @@ public class ParseParametersFilter implements Filter {
             }
         }
     }
-    
+
     /**
      * Convert map to json object containing strings for single values and a json array
      * for multiple values
@@ -197,7 +193,7 @@ public class ParseParametersFilter implements Filter {
      */
     private JSONObject parametersToJSONObject(Map<String, List<String>> params) {
         JSONObject jsonParams = new JSONObject();
-        
+
         for (String key : params.keySet()) {
             try {
                 if (params.get(key).size() == 1) {
@@ -211,7 +207,7 @@ public class ParseParametersFilter implements Filter {
         }
         return jsonParams;
     }
-    
+
     /**
      * Helper method. converts request input stream to java string
      * @param is
@@ -221,7 +217,7 @@ public class ParseParametersFilter implements Filter {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
- 
+
         String line = null;
         try {
             String separator = "";
@@ -236,7 +232,7 @@ public class ParseParametersFilter implements Filter {
              } catch (IOException e2) {}
             throw new RequestException("platform.stream2StringFailed", e);
         }
- 
+
         return sb.toString();
     }
 }

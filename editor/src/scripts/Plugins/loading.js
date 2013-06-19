@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 if (!ORYX.Plugins) {
     ORYX.Plugins = new Object();
 }
@@ -33,41 +29,41 @@ if (!ORYX.Plugins) {
 ORYX.Plugins.Loading = {
 
     construct: function(facade){
-    
+
         this.facade = facade;
-        
+
         // The parent Node
         this.node = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", this.facade.getCanvas().getHTMLContainer().parentNode, ['div', {
             'class': 'LoadingIndicator'
         }, '']);
-        
+
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_ENABLE, this.enableLoading.bind(this));
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_DISABLE, this.disableLoading.bind(this));
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_STATUS, this.showStatus.bind(this));
-        
+
         this.disableLoading();
     },
-    
+
     enableLoading: function(options){
-        if(options.text) 
+        if(options.text)
             this.node.innerHTML = options.text + "...";
         else
             this.node.innerHTML = ORYX.I18N.Loading.waiting;
         this.node.removeClassName('StatusIndicator');
         this.node.addClassName('LoadingIndicator');
         this.node.style.display = "block";
-        
+
         var pos = this.facade.getCanvas().rootNode.parentNode.parentNode.parentNode.parentNode;
 
         this.node.style.top         = pos.offsetTop + 'px';
         this.node.style.left         = pos.offsetLeft +'px';
-                    
+
     },
-    
+
     disableLoading: function(){
         this.node.style.display = "none";
     },
-    
+
     showStatus: function(options) {
         if(options.text) {
             this.node.innerHTML = options.text;
@@ -79,16 +75,16 @@ ORYX.Plugins.Loading = {
 
             this.node.style.top     = pos.offsetTop + 'px';
             this.node.style.left     = pos.offsetLeft +'px';
-                                                
+
             var tout = options.timeout ? options.timeout : 2000;
-            
+
             window.setTimeout((function(){
-            
+
                 this.disableLoading();
-                
+
             }).bind(this), tout);
         }
-        
+
     }
 }
 

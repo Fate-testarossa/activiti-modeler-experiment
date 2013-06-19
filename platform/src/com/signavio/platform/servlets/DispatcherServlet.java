@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.platform.servlets;
 
 import java.util.Date;
@@ -42,51 +38,51 @@ import com.signavio.platform.security.business.exceptions.BusinessObjectCreation
 import com.signavio.platform.security.business.exceptions.BusinessObjectDoesNotExistException;
 
 public class DispatcherServlet extends HttpServlet {
-    
+
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -6945680310755630698L;
-    
-    
+
+
     /**
      * Define the RegEXP to get the context, id, and extension from the url
      */
     private static Pattern urlpattern = null;
-    
+
     private ServletContext servletContext;
-    
+
     /**
-     * Construct 
+     * Construct
      */
     public DispatcherServlet(){
-        
+
     }
-    
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init();
         urlpattern = Pattern.compile(config.getServletContext().getContextPath() + "/(p)/([^/]+)(/([^/]+))?(/([^/]+))?(/+(.*))?$");
         servletContext = config.getServletContext();
     }
-    
+
     private void dispatch(HttpServletRequest req, HttpServletResponse res) {
 
         //First, try to get the access token
         FsAccessToken token = (FsAccessToken) req.getSession().getAttribute("token");
-        
+
         //Get HTTP method
         String met         = req.getMethod();
-        
+
         //Parse the URL
         String[] path     = DispatcherServlet.parseURL( req.getRequestURI() );
 
         String context        = path[0];
         String identifier     = path[1];
         String extension     = path[2];
-        
+
         HandlerEntry handler = (HandlerEntry) req.getAttribute("handler");
-        
+
         // Disable cache for everything except Export handlers
         if (handler.getHandlerInstance() instanceof ExportHandler) {
             Date date = new Date();
@@ -95,7 +91,7 @@ public class DispatcherServlet extends HttpServlet {
         } else {
             res.setHeader("Cache-Control", "no-cache");
         }
-        
+
         //if the identifier is not null, get the corresponding SBO
         FsSecureBusinessObject sbo = null;
         if(token != null) {
@@ -112,14 +108,14 @@ public class DispatcherServlet extends HttpServlet {
                 } catch (BusinessObjectCreationFailedException e) {
                     throw new RequestException("platform.dispatcher.sboCreationFailed", e);
                 }
-                
+
             }
         } else {
             //throw new RequestException("platform.dispatcher.noValidToken");
         }
-        
-        
-        
+
+
+
         // Try to call the Handler
         if( met.equals("GET")){
             handler.getHandlerInstance().doGet(req, res, token, sbo);
@@ -133,7 +129,7 @@ public class DispatcherServlet extends HttpServlet {
             throw new RequestException("platform.dispatcher.methodNotAllowed");
         }
     }
-    
+
     /**
      * Splits the URL into 4 parts:
      *  String[0] The current context
@@ -144,15 +140,15 @@ public class DispatcherServlet extends HttpServlet {
      * @return An Array of four elements
      */
     public static String[] parseURL( String url ) {
-        // Extract id from the request URL 
-        
+        // Extract id from the request URL
+
         Pattern pattern = DispatcherServlet.urlpattern;
         Matcher matcher = pattern.matcher(new StringBuffer(url));
-        
+
         if (matcher.find()) {
 
-            return new String[]{    
-                                    matcher.groupCount() >= 2 ? matcher.group(2) : null, 
+            return new String[]{
+                                    matcher.groupCount() >= 2 ? matcher.group(2) : null,
                                     matcher.groupCount() >= 4 ? matcher.group(4) : null,
                                     matcher.groupCount() >= 6 ? matcher.group(6) : null,
                                     matcher.groupCount() >= 8 ? matcher.group(8) : null
@@ -161,24 +157,24 @@ public class DispatcherServlet extends HttpServlet {
             return new String[4];
         }
     }
-    
-    
+
+
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
         dispatch(req, res);
     }
-    
+
     public void doPost(HttpServletRequest req, HttpServletResponse res) {
         dispatch(req, res);
     }
-    
+
     public void doPut(HttpServletRequest req, HttpServletResponse res) {
         dispatch(req, res);
     }
-    
+
     public void doDelete(HttpServletRequest req, HttpServletResponse res) {
         dispatch(req, res);
     }
-    
-    
+
+
 
 }

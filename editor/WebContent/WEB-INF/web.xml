@@ -5,7 +5,7 @@
     id="signavioeditor" version="2.4">
 
     <display-name>Signavio Core Components - Editor</display-name>
-    
+
     <!--
         jBoss' default mapping is to "image/svg", which causes the client not to
         parse the SVG content as XML. However, the Oryx Editor client relies on

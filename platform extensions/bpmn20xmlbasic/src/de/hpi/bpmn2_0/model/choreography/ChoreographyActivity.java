@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.choreography;
 
 import java.util.ArrayList;
@@ -44,9 +38,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tChoreographyActivity complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tChoreographyActivity">
  *   &lt;complexContent>
@@ -59,8 +53,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tChoreographyActivity", propOrder = {
@@ -82,72 +76,72 @@ public abstract class ChoreographyActivity
     @XmlIDREF
     protected List<Participant> participantRef;
     protected List<CorrelationKey> correlationKey;
-    
+
     @XmlIDREF
     @XmlAttribute(required = true)
     @XmlSchemaType(name = "IDREF")
     protected Participant initiatingParticipantRef;
-    
+
     @XmlAttribute
     protected ChoreographyLoopType loopType;
-    
+
     public ChoreographyActivity(ChoreographyActivity choreoAct) {
-  super(choreoAct);
-  
-     if(!choreoAct.getParticipantRef().isEmpty()) {
-   this.getParticipantRef().addAll(choreoAct.getParticipantRef());
-  }
-  if(!choreoAct.getCorrelationKey().isEmpty()) {
-   this.getCorrelationKey().addAll(choreoAct.getCorrelationKey());
-  }
-  
-  this.setInitiatingParticipantRef(choreoAct.getInitiatingParticipant());
-  this.setLoopType(choreoAct.getLoopType());
- }
+        super(choreoAct);
 
+        if(!choreoAct.getParticipantRef().isEmpty()) {
+            this.getParticipantRef().addAll(choreoAct.getParticipantRef());
+        }
+        if(!choreoAct.getCorrelationKey().isEmpty()) {
+            this.getCorrelationKey().addAll(choreoAct.getCorrelationKey());
+        }
 
- public ChoreographyActivity() {
-  super();
- }
-
-
- public void addChild(BaseElement child) {
-     if(child instanceof Participant) {
-      this.getParticipantRef().add((Participant) child);
-      if(((Participant) child).isInitiating()) {
-       this.setInitiatingParticipantRef((Participant) child);
-      }
-     }
+        this.setInitiatingParticipantRef(choreoAct.getInitiatingParticipant());
+        this.setLoopType(choreoAct.getLoopType());
     }
-    
-     
- public void acceptVisitor(Visitor v){
-  v.visitChoreographyActivity(this);
- }
- 
+
+
+    public ChoreographyActivity() {
+        super();
+    }
+
+
+    public void addChild(BaseElement child) {
+        if(child instanceof Participant) {
+            this.getParticipantRef().add((Participant) child);
+            if(((Participant) child).isInitiating()) {
+                this.setInitiatingParticipantRef((Participant) child);
+            }
+        }
+    }
+
+
+    public void acceptVisitor(Visitor v){
+        v.visitChoreographyActivity(this);
+    }
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the participant property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participant property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipantRef().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Participant }
-     * 
-     * 
+     *
+     *
      */
     public List<Participant> getParticipantRef() {
         if (participantRef == null) {
@@ -158,11 +152,11 @@ public abstract class ChoreographyActivity
 
     /**
      * Gets the value of the initiatingParticipantRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Participant }
-     *     
+     *
      */
     public Participant getInitiatingParticipant() {
         return initiatingParticipantRef;
@@ -170,29 +164,29 @@ public abstract class ChoreographyActivity
 
     /**
      * Sets the value of the initiatingParticipantRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Participant }
-     *     
+     *
      */
     public void setInitiatingParticipantRef(Participant value) {
         this.initiatingParticipantRef = value;
     }
 
- public ChoreographyLoopType getLoopType() {
-  return loopType;
- }
+    public ChoreographyLoopType getLoopType() {
+        return loopType;
+    }
 
- public void setLoopType(ChoreographyLoopType loopType) {
-  this.loopType = loopType;
- }
+    public void setLoopType(ChoreographyLoopType loopType) {
+        this.loopType = loopType;
+    }
 
- public List<CorrelationKey> getCorrelationKey() {
-  if(correlationKey == null) {
-   correlationKey = new ArrayList<CorrelationKey>();
-  }
-  return correlationKey;
- }
+    public List<CorrelationKey> getCorrelationKey() {
+        if(correlationKey == null) {
+            correlationKey = new ArrayList<CorrelationKey>();
+        }
+        return correlationKey;
+    }
 
 }

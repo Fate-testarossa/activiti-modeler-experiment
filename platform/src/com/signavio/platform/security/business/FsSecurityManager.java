@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.platform.security.business;
 
 import java.io.File;
@@ -47,14 +43,14 @@ import com.signavio.warehouse.revision.business.FsModelRevision;
 
 /**
  * Security Manager implementation for file system accessing Oryx..
- * 
+ *
  * @author Stefan Krumnow
  */
 public class FsSecurityManager {
 
     private static final FsSecurityManager INSTANCE;
-    
-//    private final Logger logger = Logger.getLogger(SecurityManager.class);    
+
+//    private final Logger logger = Logger.getLogger(SecurityManager.class);
 
     /**
      * Creating singleton
@@ -73,19 +69,19 @@ public class FsSecurityManager {
     private FsSecurityManager() {
         // empty
     }
-    
+
     public static  String hashPassword(String plainPassword) {
         return plainPassword;
     }
-    
+
     public static FsAccessToken createToken(String principal, String password, String tenantPrincipal) throws PrincipalException, IncorrectPasswordException, TenantException, TenantInActiveException, AccountInActiveException {
-        return FsAccessToken.getDummy(); 
+        return FsAccessToken.getDummy();
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> T createObject(Class<T> businessObjectClass, FsSecureBusinessObject parentObject, FsAccessToken token, Object ... parameters){
-        
+
         if (FsDirectory.class.isAssignableFrom(businessObjectClass)) {
             assert (parentObject instanceof FsDirectory) ;
             FsDirectory parent = (FsDirectory)parentObject;
@@ -93,9 +89,9 @@ public class FsSecurityManager {
                 return (T)parent.createDirectory((String)parameters[0], "");
             }
             throw new IllegalArgumentException("Could not create Directory");
-        // ISSUE : necessary ?        
+        // ISSUE : necessary ?
         // } else if (Model.class.equals(businessObjectClass)) {
-        //    
+        //
         } else if (FsBusinessObjectManager.class.isAssignableFrom(businessObjectClass)) {
             return (T)FsBusinessObjectManager.getGlobalManagerInstance((Class<FsBusinessObjectManager>)businessObjectClass, token);
 
@@ -104,15 +100,15 @@ public class FsSecurityManager {
         } else {
             throw new UnsupportedOperationException("Creation of this type is not supported");
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> T loadObject(Class<T> businessObjectClass, String id, FsAccessToken token) {
-        
+
         if (id.length() == 0){
             return null;
-            
+
         } else if (FsModel.class.isAssignableFrom(businessObjectClass) ){
             String id2 = id.replace(";", File.separator);
             if (id2.startsWith(FsRootDirectory.ID_OF_SINGLETON)) {
@@ -127,7 +123,7 @@ public class FsSecurityManager {
                     throw new BusinessObjectDoesNotExistException(id);
                 }
             }
-            
+
         } else if (FsDirectory.class.isAssignableFrom(businessObjectClass)){
              if (id.equals(FsRootDirectory.ID_OF_SINGLETON)) {
                 return (T)FsRootDirectory.getSingleton();
@@ -146,12 +142,12 @@ public class FsSecurityManager {
                     }
                 }
             }
-             
+
         } else {
             return (T)loadObject(id, token);
         }
     }
-    
+
     public FsSecureBusinessObject loadObject(String id, FsAccessToken token) {
         if (id.length() == 0){
             return null;
@@ -189,12 +185,12 @@ public class FsSecurityManager {
             } catch (Exception e) {
                 throw new BusinessObjectDoesNotExistException(id);
             }
-        
+
         } else {
             // Model..
             try {
                 return loadObject(FsModel.class, id, token);
-            } catch (Exception e) { 
+            } catch (Exception e) {
                 // Directory..
                 try {
                     return loadObject(FsDirectory.class, id, token);
@@ -205,7 +201,7 @@ public class FsSecurityManager {
             }
         }
     }
-    
+
     public void deleteObject(FsSecureBusinessObject businessObject, FsAccessToken token) {
         if (businessObject instanceof FsDirectory) {
             ((FsDirectory)businessObject).delete();
@@ -223,7 +219,7 @@ public class FsSecurityManager {
     public FsAccount verifyCredentials(String principal, String password) {
         return FsAccount.getDummy();
     }
-    
+
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> T loadGlobalSingletonObject(Class<T> businessClass, FsAccessToken token) {
         if (FsBusinessObjectManager.class.isAssignableFrom(businessClass)) {
@@ -244,6 +240,6 @@ public class FsSecurityManager {
             return (T)FsBusinessObjectManager.getTenantManagerInstance((Class<? extends FsBusinessObjectManager>)businessClass, tenantId, token);
         }
         throw new IllegalArgumentException("Could not load tenant singleton of " + businessClass.getCanonicalName());
-    }        
+    }
 }
-    
+

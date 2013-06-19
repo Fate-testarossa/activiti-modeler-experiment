@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 if(!ORYX) var ORYX = {};
 
 if(!ORYX.CONFIG) ORYX.CONFIG = {};
@@ -43,7 +39,7 @@ ORYX.CONFIG.SHOW_GRIDLINE =             false;
     /* Editor-Mode */
 ORYX.CONFIG.MODE_READONLY =                "readonly";
 ORYX.CONFIG.MODE_FULLSCREEN =            "fullscreen";
-ORYX.CONFIG.WINDOW_HEIGHT =             400;    
+ORYX.CONFIG.WINDOW_HEIGHT =             400;
 ORYX.CONFIG.PREVENT_LOADINGMASK_AT_READY = false;
 
     /* Plugins */
@@ -57,7 +53,7 @@ ORYX.CONFIG.NAMESPACE_ORYX =            "http://www.b3mn.org/oryx";
 ORYX.CONFIG.NAMESPACE_SVG =                "http://www.w3.org/2000/svg";
 
     /* UI */
-ORYX.CONFIG.CANVAS_WIDTH =                1485; 
+ORYX.CONFIG.CANVAS_WIDTH =                1485;
 ORYX.CONFIG.CANVAS_HEIGHT =                1050;
 ORYX.CONFIG.CANVAS_RESIZE_INTERVAL =    300;
 ORYX.CONFIG.SELECTED_AREA_PADDING =        4;
@@ -74,7 +70,7 @@ ORYX.CONFIG.OFFSET_EDGE_LABEL_TOP =        8;
 ORYX.CONFIG.OFFSET_EDGE_LABEL_BOTTOM =    8;
 ORYX.CONFIG.OFFSET_EDGE_BOUNDS =        5;
 ORYX.CONFIG.COPY_MOVE_OFFSET =            30;
-    
+
 ORYX.CONFIG.BORDER_OFFSET =                14;
 
 ORYX.CONFIG.MAX_NUM_SHAPES_NO_GROUP    =    12;
@@ -107,7 +103,7 @@ ORYX.CONFIG.TYPE_TEXT =                    "text";
 ORYX.CONFIG.TYPE_EPC_FREQ =             "epcfrequency";
 ORYX.CONFIG.TYPE_GLOSSARY_LINK =        "glossarylink";
 
-    
+
     /* Vertical line distance of multiline labels */
 ORYX.CONFIG.LABEL_LINE_DISTANCE =        2;
 ORYX.CONFIG.LABEL_DEFAULT_LINE_HEIGHT =    12;
@@ -136,7 +132,7 @@ ORYX.CONFIG.EVENT_KEYDOWN =                "keydown";
 ORYX.CONFIG.EVENT_KEYUP =                "keyup";
 
 ORYX.CONFIG.EVENT_LOADED =                "editorloaded";
-    
+
 ORYX.CONFIG.EVENT_EXECUTE_COMMANDS =        "executeCommands";
 ORYX.CONFIG.EVENT_STENCIL_SET_LOADED =        "stencilSetLoaded";
 ORYX.CONFIG.EVENT_SELECTION_CHANGED =        "selectionchanged";
@@ -175,19 +171,19 @@ ORYX.CONFIG.EVENT_LAYOUT =                     "layout.dolayout";
 ORYX.CONFIG.EVENT_GLOSSARY_LINK_EDIT =         "glossary.link.edit";
 ORYX.CONFIG.EVENT_GLOSSARY_SHOW =            "glossary.show.info";
 ORYX.CONFIG.EVENT_GLOSSARY_NEW =            "glossary.show.new";
-ORYX.CONFIG.EVENT_DOCKERDRAG =                 "dragTheDocker";    
-    
+ORYX.CONFIG.EVENT_DOCKERDRAG =                 "dragTheDocker";
+
 ORYX.CONFIG.EVENT_SHOW_PROPERTYWINDOW =        "propertywindow.show";
 ORYX.CONFIG.EVENT_ABOUT_TO_SAVE = "file.aboutToSave";
-    
+
     /* Selection Shapes Highlights */
 ORYX.CONFIG.SELECTION_HIGHLIGHT_SIZE =                5;
 ORYX.CONFIG.SELECTION_HIGHLIGHT_COLOR =                "#4444FF";
 ORYX.CONFIG.SELECTION_HIGHLIGHT_COLOR2 =            "#9999FF";
-    
+
 ORYX.CONFIG.SELECTION_HIGHLIGHT_STYLE_CORNER =         "corner";
 ORYX.CONFIG.SELECTION_HIGHLIGHT_STYLE_RECTANGLE =     "rectangle";
-    
+
 ORYX.CONFIG.SELECTION_VALID_COLOR =                    "#00FF00";
 ORYX.CONFIG.SELECTION_INVALID_COLOR =                "#FF0000";
 
@@ -195,7 +191,7 @@ ORYX.CONFIG.SELECTION_INVALID_COLOR =                "#FF0000";
 ORYX.CONFIG.DOCKER_DOCKED_COLOR =        "#00FF00";
 ORYX.CONFIG.DOCKER_UNDOCKED_COLOR =        "#FF0000";
 ORYX.CONFIG.DOCKER_SNAP_OFFSET =        10;
-        
+
     /* Copy & Paste */
 ORYX.CONFIG.EDIT_OFFSET_PASTE =            10;
 
@@ -219,7 +215,7 @@ ORYX.CONFIG.KEY_Code_top =                38;
 ORYX.CONFIG.KEY_Code_bottom =            40;
 
 /* Supported Meta Keys */
-    
+
 ORYX.CONFIG.META_KEY_META_CTRL =         "metactrl";
 ORYX.CONFIG.META_KEY_ALT =                 "alt";
 ORYX.CONFIG.META_KEY_SHIFT =             "shift";

@@ -1,7 +1,7 @@
 /**
     @overview
     @date $Date: 2009-01-24 10:42:04 +0100 (Sa, 24 Jan 2009) $
-    @version $Revision: 773 $ 
+    @version $Revision: 773 $
     @location $HeadURL: http://jsdoc-toolkit.googlecode.com/svn/trunk/jsdoc-toolkit/app/lib/JSDOC.js $
     @name JSDOC.js
  */
@@ -18,7 +18,7 @@ JSDOC = {
  */
 if (typeof arguments == "undefined") arguments = [];
 JSDOC.opt = Opt.get(
-    arguments, 
+    arguments,
     {
         d: "directory",
         c: "conf",
@@ -26,7 +26,7 @@ JSDOC.opt = Opt.get(
         r: "recurse",
         x: "ext",
         p: "private",
-        a: "allfunctions", 
+        a: "allfunctions",
         e: "encoding",
         n: "nocode",
         o: "out",
@@ -66,31 +66,31 @@ JSDOC.usage = function() {
     print("  -T or --test\n          Run all unit tests and exit.\n");
     print("  -v or --verbose\n          Provide verbose feedback about what is happening.\n");
     print("  -x=<EXT>[,EXT]... or --ext=<EXT>[,EXT]...\n          Scan source files with the given extension/s (defaults to js).\n");
-    
+
     quit();
 }
 
 /*t:
     plan(4, "Testing JSDOC namespace.");
-    
+
     is(
         typeof JSDOC,
         "object",
         "JSDOC.usage is a function."
     );
-    
+
     is(
         typeof JSDOC.VERSION,
         "string",
         "JSDOC.VERSION is a string."
     );
-    
+
     is(
         typeof JSDOC.usage,
         "function",
         "JSDOC.usage is a function."
     );
-    
+
     is(
         typeof JSDOC.opt,
         "object",

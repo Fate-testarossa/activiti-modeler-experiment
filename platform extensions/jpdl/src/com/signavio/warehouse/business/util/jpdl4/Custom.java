@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2010, Nicolas Peters, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.warehouse.business.util.jpdl4;
 
 import java.io.StringWriter;
@@ -40,11 +36,11 @@ public class Custom extends Node {
     private String method;
     private String autoWire;
     private String cache;
-    
+
     private List<Field> fields;
     private List<Property> properties;
     private List<Arg> args;
-    
+
     public Custom(JSONObject java) {
 
         this.name = JsonToJpdl.getAttribute(java, "name");
@@ -55,7 +51,7 @@ public class Custom extends Node {
         this.method = JsonToJpdl.getAttribute(java, "method");
         this.autoWire = JsonToJpdl.getAttribute(java, "autowire");
         this.cache = JsonToJpdl.getAttribute(java, "cache");
-        
+
         this.bounds = JsonToJpdl.getBounds(java);
 
         fields = new ArrayList<Field>();
@@ -79,7 +75,7 @@ public class Custom extends Node {
             }
         } catch (JSONException e) {
         }
-        
+
         args = new ArrayList<Arg>();
         try {
             JSONArray parameters = java.getJSONObject("properties")
@@ -137,9 +133,9 @@ public class Custom extends Node {
                 jpdl.write(JsonToJpdl.transformRequieredAttribute("auto-wire", autoWire));
             }
             if(cache != null && !cache.equals("")) {
-                jpdl.write(JsonToJpdl.transformRequieredAttribute("cache", cache)); 
+                jpdl.write(JsonToJpdl.transformRequieredAttribute("cache", cache));
             }
-            
+
         } catch (InvalidModelException e) {
             throw new InvalidModelException("Invalid Java activity. "
                     + e.getMessage());
@@ -161,7 +157,7 @@ public class Custom extends Node {
         for (Property a : properties) {
             jpdl.write(a.toJpdl());
         }
-        
+
         for (Arg a : args) {
             jpdl.write(a.toJpdl());
         }

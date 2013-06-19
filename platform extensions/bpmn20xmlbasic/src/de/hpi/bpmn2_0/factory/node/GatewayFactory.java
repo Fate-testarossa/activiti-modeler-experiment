@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.factory.node;
 
 import java.util.List;
@@ -45,22 +39,22 @@ import de.hpi.bpmn2_0.model.gateway.ParallelGateway;
 
 /**
  * The factory to create {@link Gateway} BPMN 2.0 elements
- * 
+ *
  * @author Sven Wagner-Boysen
- * 
+ *
  */
-@StencilId({ 
-    "Exclusive_Databased_Gateway",  
-    "ParallelGateway", 
-    "EventbasedGateway", 
-    "InclusiveGateway", 
+@StencilId({
+    "Exclusive_Databased_Gateway",
+    "ParallelGateway",
+    "EventbasedGateway",
+    "InclusiveGateway",
     "ComplexGateway" })
 public class GatewayFactory extends AbstractShapeFactory {
-    
+
     // @Override
     public BPMNElement createBpmnElement(GenericShape shape, BPMNElement parent)
             throws BpmnConverterException {
-        
+
         BPMNElement element = super.createBpmnElement(shape, parent);
         if(element.getNode() instanceof ExclusiveGateway) {
             BPMNShape bpmnShape = (BPMNShape) element.getShape();
@@ -71,13 +65,13 @@ public class GatewayFactory extends AbstractShapeFactory {
                 bpmnShape.setIsMarkerVisible(Boolean.FALSE);
             }
         }
-        
+
         return element;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
      * oryxeditor.server.diagram.Shape)
      */
@@ -98,7 +92,7 @@ public class GatewayFactory extends AbstractShapeFactory {
 
     /**
      * Creator method for an exclusive databased Gateway.
-     * 
+     *
      * @param shape
      *            The resource shape
      * @return The resulting {@link ExclusiveGateway}
@@ -118,25 +112,25 @@ public class GatewayFactory extends AbstractShapeFactory {
         gateway.setName(shape.getProperty("name"));
         return gateway;
     }
-    
+
     @StencilId("EventbasedGateway")
     public EventBasedGateway createEventBasedGateway(GenericShape shape) {
         EventBasedGateway gateway = new EventBasedGateway();
-        
+
         gateway.setId(shape.getResourceId());
         gateway.setName(shape.getProperty("name"));
-        
+
 //        String instantiate = shape.getProperty("instantiate");
-//        
+//
 //        if(instantiate != null && instantiate.equals("true"))
 //            gateway.setInstantiate(true);
 //        else
 //            gateway.setInstantiate(false);
-        
+
         /* Set gateway type and instantiation */
         gateway.setEventGatewayType(EventBasedGatewayType.EXCLUSIVE);
         gateway.setInstantiate(false);
-        
+
         String type = shape.getProperty("eventtype");
         if(type != null) {
             if(type.equalsIgnoreCase("instantiate_parallel")) {
@@ -147,39 +141,39 @@ public class GatewayFactory extends AbstractShapeFactory {
                 gateway.setInstantiate(true);
             }
         }
-        
-//        if(type != null && type.equalsIgnoreCase("instantiate_parallel")) 
+
+//        if(type != null && type.equalsIgnoreCase("instantiate_parallel"))
 //            gateway.setEventGatewayType(EventBasedGatewayType.PARALLEL);
-//        else 
+//        else
 //            gateway.setEventGatewayType(EventBasedGatewayType.EXCLUSIVE);
-        
+
         return gateway;
     }
-    
+
     @StencilId("InclusiveGateway")
     public InclusiveGateway createInclusiveGateway(GenericShape shape) {
         InclusiveGateway gateway = new InclusiveGateway();
-        
+
         gateway.setId(shape.getResourceId());
         gateway.setName(shape.getProperty("name"));
-        
+
         return gateway;
     }
-    
+
     @StencilId("ComplexGateway")
     public ComplexGateway createComplexGateway(GenericShape shape) {
         ComplexGateway gateway = new ComplexGateway();
         gateway.setId(shape.getResourceId());
         gateway.setName(shape.getProperty("name"));
-        
+
         String activationCondition = shape.getProperty("activationcondition");
         if(activationCondition != null && !activationCondition.equals("")) {
             gateway.setActivationCondition(new FormalExpression(activationCondition));
         }
-        
+
         return gateway;
     }
-    
+
     /**
      * Determines and sets the {@link GatewayDirection}
      */
@@ -202,7 +196,7 @@ public class GatewayFactory extends AbstractShapeFactory {
         /* Set the gateway direction */
         gateway.setGatewayDirection(direction);
     }
-    
+
     /**
      * Counts the number of sequence flows contained in the list.
      * @param edges
@@ -210,13 +204,13 @@ public class GatewayFactory extends AbstractShapeFactory {
      */
     private int countSequenceFlows(List<GenericShape> edges) {
         int i = 0;
-        
+
         for(GenericShape edge : edges) {
             if(edge.getStencilId().equals("SequenceFlow")) {
                 i++;
             }
         }
-        
+
         return i;
     }
 

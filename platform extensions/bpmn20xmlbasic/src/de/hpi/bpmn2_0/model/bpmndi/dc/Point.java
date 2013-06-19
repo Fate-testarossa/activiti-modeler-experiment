@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2010
- * Signavio, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.bpmndi.dc;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for Point complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="Point">
  *   &lt;complexContent>
@@ -44,8 +38,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Point")
@@ -55,32 +49,32 @@ public class Point {
     protected double x;
     @XmlAttribute(name = "y", required = true)
     protected double y;
-    
+
     /* Constructors */
-    
+
     public Point() {}
-    
+
     /**
      * Creating a point instance based on a oryx diagram point.
-     * 
+     *
      * @param dockerPoint
      */
     public Point(org.oryxeditor.server.diagram.Point dockerPoint) {
-     this.setX(dockerPoint.getX());
-     this.setY(dockerPoint.getY());
+        this.setX(dockerPoint.getX());
+        this.setY(dockerPoint.getY());
     }
-    
+
     public Point(int x, int y) {
-     this.setX((new Integer(x)).doubleValue());
-     this.setY((new Integer(y)).doubleValue());
+        this.setX((new Integer(x)).doubleValue());
+        this.setY((new Integer(y)).doubleValue());
     }
 
     /* Getter & Setter */
 
 
- /**
+    /**
      * Gets the value of the x property.
-     * 
+     *
      */
     public Double getX() {
         return x;
@@ -88,7 +82,7 @@ public class Point {
 
     /**
      * Sets the value of the x property.
-     * 
+     *
      */
     public void setX(double value) {
         this.x = value;
@@ -96,7 +90,7 @@ public class Point {
 
     /**
      * Gets the value of the y property.
-     * 
+     *
      */
     public Double getY() {
         return y;
@@ -104,14 +98,14 @@ public class Point {
 
     /**
      * Sets the value of the y property.
-     * 
+     *
      */
     public void setY(double value) {
         this.y = value;
     }
-    
+
     public org.oryxeditor.server.diagram.Point toDiagramPoint(){
-     return new org.oryxeditor.server.diagram.Point(this.getX(), this.getY());
+        return new org.oryxeditor.server.diagram.Point(this.getX(), this.getY());
     }
 
 }

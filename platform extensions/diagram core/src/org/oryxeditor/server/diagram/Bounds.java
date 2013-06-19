@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package org.oryxeditor.server.diagram;
 
 import org.json.JSONException;
@@ -6,21 +23,21 @@ import org.json.JSONObject;
 /**
  * Represents a rectangular space within a canvas.
  * Defined by the upper left and lower right points
- * 
+ *
  * @author Philipp Maschke
- *    
+ *
  */
 public class Bounds {
     Point lowerRight;
     Point upperLeft;
-    
+
     /**
      * Creates a bounds with 0,0 and 0,0 coordinates.
      */
     public Bounds(){
         this(new Point(0.0, 0.0), new Point(0.0, 0.0));
     }
-    
+
     /**
      * Creates the bounds with a json like structured string.
      * @param string
@@ -36,7 +53,7 @@ public class Bounds {
             this.upperLeft = new Point(0.0, 0.0);
         }
     }
-    
+
     /**
      * Creates the bounds with the json representation of it.
      * @param points
@@ -51,7 +68,7 @@ public class Bounds {
             this.upperLeft = new Point(0.0, 0.0);
         }
     }
-    
+
     /**
      * Constructs a Bounds defined by the two given points.<p/>
      * Constructs the rectangle which is spanned by the two points and then computes coordinates for upper left and lower right points.<br/>
@@ -65,16 +82,16 @@ public class Bounds {
         this.lowerRight = second;
         validatePoints();
     }
-    
+
     /**
      * Returns a copy of the lower right point
      */
     public Point getLowerRight() {
         return new Point(lowerRight);
     }
-    
+
 //    /**
-//     * Sets the new lower right. Also checks whether the new coordinates are valid 
+//     * Sets the new lower right. Also checks whether the new coordinates are valid
 //     * (upper left coordinates really in upper left; lower right coordinates really in lower right).
 //     * <p/>
 //     * <b>CAUTION:</b> Automatically swaps coordinates, such that these constraints hold!
@@ -84,32 +101,32 @@ public class Bounds {
 //        this.lowerRight = lowerRight;
 //        validatePoints();
 //    }
-    
+
     /**
      * Returns a copy of the upper left point
      */
     public Point getUpperLeft() {
         return new Point(upperLeft);
     }
-    
+
 //    /**
-//     * Sets the new upper left. Also checks whether the new coordinates are valid 
+//     * Sets the new upper left. Also checks whether the new coordinates are valid
 //     * (upper left coordinates really in upper left; lower right coordinates really in lower right).
 //     * <p/>
 //     * <b>CAUTION:</b> Automatically swaps coordinates, such that these constraints hold!
-//     * 
+//     *
 //     * @param upperLeft the upperLeft to set
 //     */
 //    public void setUpperLeft(Point upperLeft) {
 //        this.upperLeft = upperLeft;
 //        validatePoints();
 //    }
-    
+
     /**
      * Updated the bounds with the new values. <p/>
      * Computes the rectangle spanned by the two given points and infers the new coordinates of upper left and lower right points.<bt/>
      * This means that the given points don't need to be in the "right" order and may even be the lower left and upper right coordinates.
-     * 
+     *
      * @param first one corner point of the new bounds
      * @param second corner point on the opposite side of first
      */
@@ -122,7 +139,7 @@ public class Bounds {
      * Updated the bounds with the new values. <p/>
      * Computes the rectangle spanned by the two given points and infers the new coordinates of upper left and lower right points.<bt/>
      * This means that the given points don't need to be in the "right" order and may even be the lower left and upper right coordinates.
-     * 
+     *
      * @param firstX X-coordinate of one corner point of the new bounds
      * @param firstY Y-coordinate of one corner point of the new bounds
      * @param secondX X-coordinate of the corner point on the opposite side of first
@@ -131,8 +148,8 @@ public class Bounds {
     public void setCoordinates(Number firstX, Number firstY, Number secondX, Number secondY){
         setCoordinates(new Point(firstX, firstY), new Point(secondX, secondY));
     }
-    
-    
+
+
     /**
      * Move the bounds to the absolute point.
      * @param a
@@ -143,7 +160,7 @@ public class Bounds {
         this.lowerRight.set(a);
         this.lowerRight.add(size);
     }
-    
+
     /**
      * Move the bounds relative.
      * @param a
@@ -161,7 +178,7 @@ public class Bounds {
     public void extend(double x, double y){
         this.lowerRight.add(x, y);
     }
-    
+
     /**
      * Extend the lowerRight with the point
      * @param point
@@ -169,7 +186,7 @@ public class Bounds {
     public void extend(Point point){
         this.extend(point.getX(), point.getY());
     }
-    
+
     /**
      * Widen the bounds with the upperleft and lowerright
      * @param x
@@ -179,7 +196,7 @@ public class Bounds {
         this.upperLeft.subtract(x, y);
         this.lowerRight.add(x, y);
     }
-    
+
     /**
      * Widen the bounds with the upperleft and lowerright
      * @param point
@@ -187,7 +204,7 @@ public class Bounds {
     public void widen(Point point){
         this.widen(point.getX(), point.getY());
     }
-    
+
     /**
      * Returns the middle point, the point between upperleft and lowerright
      * @return
@@ -198,7 +215,7 @@ public class Bounds {
         p.divide(2);
         return p;
     }
-    
+
     /**
      * Return the center of the bounds
      * @return
@@ -208,24 +225,24 @@ public class Bounds {
         p.add(this.upperLeft);
         return p;
     }
-    
-    
+
+
     /**
      * Returns a copy of the upper right point
      */
     public Point getUpperRight(){
         return new Point(getLowerRight().getX(), getUpperLeft().getY());
     }
-    
-    
+
+
     /**
      * Returns a copy of the lower left point
      */
     public Point getLowerLeft(){
         return new Point(getUpperLeft().getX(), getLowerRight().getY());
     }
-    
-    
+
+
     /**
      * Return the width
      * @return
@@ -241,8 +258,8 @@ public class Bounds {
     public double getHeight(){
         return this.getLowerRight().getY() - this.getUpperLeft().getY();
     }
-    
-    
+
+
     /**
      * Returns width and height of the bounds as a Point object
      * @return
@@ -250,8 +267,8 @@ public class Bounds {
     public Point getSize(){
         return new Point(getWidth(), getHeight());
     }
-    
-    
+
+
     /**
      * Return true if the coordinates is on or inside the bounds
      * @param x
@@ -262,7 +279,7 @@ public class Bounds {
         return this.upperLeft.getX() <= x && this.upperLeft.getY() <= y &&
                 this.lowerRight.getX() >= x && this.lowerRight.getY() >= y;
     }
-    
+
     /**
      * Return true if the point is on or inside the bounds
      * @param point
@@ -271,21 +288,21 @@ public class Bounds {
     public boolean isPointIncluded(Point point){
         if (point == null)
             return false;
-        
+
         return this.isPointIncluded(point.getX(), point.getY());
     }
-    
+
     /**
      * Returns a new instance of the given bounds
      */
     public Bounds copy(){
         return new Bounds(this.upperLeft.copy(), this.lowerRight.copy());
     }
-    
+
     /**
      * Returns a json representation of the bounds.
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     public JSONObject toJSON() throws JSONException{
         JSONObject pos = new JSONObject();
@@ -293,9 +310,9 @@ public class Bounds {
         pos.put("b", this.getLowerRight().toJSON());
         return pos;
     }
-    
+
     /**
-     * Returns a string representation of the bounds in 
+     * Returns a string representation of the bounds in
      * a json like structure.
      * In case of a JSONException, it returns super.toString().
      * @return
@@ -307,19 +324,19 @@ public class Bounds {
             return super.toString();
         }
     }
-    
-    
+
+
     /**
      * Checks whether lower right and upper left of both bounds are the same, using {@link Point#hasSameCoordinatesAs(Point)}
      * @param other
      * @return true, if lower right and upper left of both bounds are the same
      */
     public boolean hasSamePositionsAs(Bounds other){
-        return upperLeft.hasSameCoordinatesAs(other.getUpperLeft()) && 
+        return upperLeft.hasSameCoordinatesAs(other.getUpperLeft()) &&
             lowerRight.hasSameCoordinatesAs(other.getLowerRight());
     }
-    
-    
+
+
     /**
      * Checks whether lower right and upper left of both bounds are the same, using {@link Point#hasSameCoordinatesAs(Point, double)}
      * @param other
@@ -327,11 +344,11 @@ public class Bounds {
      * @return true, if lower right and upper left of both bounds are the same (allowing for the given delta)
      */
     public boolean hasSamePositionsAs(Bounds other, double maxDelta){
-        return upperLeft.hasSameCoordinatesAs(other.getUpperLeft(), maxDelta) && 
+        return upperLeft.hasSameCoordinatesAs(other.getUpperLeft(), maxDelta) &&
             lowerRight.hasSameCoordinatesAs(other.getLowerRight(), maxDelta);
     }
-    
-    
+
+
     /**
      * Computes the actual rectangle spanned by the two given points and determines the actual upper left and lower right points.
      */

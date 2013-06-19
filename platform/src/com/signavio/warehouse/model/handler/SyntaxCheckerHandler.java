@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.warehouse.model.handler;
 
 import java.io.IOException;
@@ -41,35 +58,35 @@ public class SyntaxCheckerHandler extends BasisHandler {
         try {
             // Get the parameter list
             JSONObject params = (JSONObject)req.getAttribute("params");
-            
+
             String isJson = params.getString("isJson");
-            
+
             JSONObject result = null;
             if(isJson.equals("true")) {
                 String json = params.getString("data_json");
-                
+
                 List<Class<? extends AbstractBpmnFactory>> factoryClasses = AbstractBpmnFactory.getFactoryClasses();
-                
+
                 SyntaxCheckerPerformer checker = new SyntaxCheckerPerformer();
-                
+
                 result = checker.processDocument(BasicDiagramBuilder.parseJson(json), factoryClasses);
             } //else {
 //                String rdf = req.getParameter("data");
-//                
+//
 //                context = req.getParameter("context");
-//                
+//
 //                DocumentBuilder builder;
 //                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //                builder = factory.newDocumentBuilder();
 //                Document document = builder.parse(new ByteArrayInputStream(rdf.getBytes("UTF-8")));
-//                
-//                processDocument(document, res.getWriter());            
+//
+//                processDocument(document, res.getWriter());
 //            }
-            
+
             if(result == null) {
                 result = new JSONObject();
             }
-            
+
             res.setContentType("application/json");
             res.setStatus(200);
             res.getWriter().write(result.toString());

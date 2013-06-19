@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 /**
  * Init namespaces
@@ -30,10 +26,10 @@ if(!ORYX.Core.SVG) {ORYX.Core.SVG = {};}
 
 /**
  * @classDescription Class for adding text to a shape.
- * 
+ *
  */
 ORYX.Core.SVG.Label = Clazz.extend({
-    
+
     _characterSets:[
         "%W",
         "@",
@@ -54,52 +50,52 @@ ORYX.Core.SVG.Label = Clazz.extend({
      * Constructor
      * @param options {Object} :
      *     textElement
-     * 
+     *
      */
     construct: function(options) {
         arguments.callee.$.construct.apply(this, arguments);
-        
+
         if(!options.textElement) {
-            throw "Label: No parameter textElement." 
+            throw "Label: No parameter textElement."
         } else if (!ORYX.Editor.checkClassType( options.textElement, SVGTextElement ) ) {
-            throw "Label: Parameter textElement is not an SVGTextElement."    
+            throw "Label: Parameter textElement is not an SVGTextElement."
         }
-        
+
         this.invisibleRenderPoint = -5000;
-        
+
         this.node = options.textElement;
-        
-        
+
+
         this.node.setAttributeNS(null, 'stroke-width', '0pt');
         this.node.setAttributeNS(null, 'letter-spacing', '-0.01px');
-        
+
         this.shapeId = options.shapeId;
-        
+
         this.id;
-        
+
         this.fitToElemId;
-        
+
         this.edgePosition;
-        
+
         this.x;
         this.y;
         this.oldX;
         this.oldY;
-        
+
         this.isVisible = true;
-        
+
         this._text;
         this._verticalAlign;
         this._horizontalAlign;
         this._rotate;
         this._rotationPoint;
-        
+
         //this.anchors = [];
         this.anchorLeft;
         this.anchorRight;
         this.anchorTop;
         this.anchorBottom;
-        
+
         this._isChanged = true;
 
         //if the text element already has an id, don't change it.
@@ -107,21 +103,21 @@ ORYX.Core.SVG.Label = Clazz.extend({
         if(_id) {
             this.id = _id;
         }
-        
-        //initialization    
-        
+
+        //initialization
+
         //set referenced element the text is fit to
         this.fitToElemId = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'fittoelem');
         if(this.fitToElemId)
             this.fitToElemId = this.shapeId + this.fitToElemId;
-        
-        //set alignment    
+
+        //set alignment
         var alignValues = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'align');
         if(alignValues) {
             alignValues = alignValues.replace(/,/g, " ");
             alignValues = alignValues.split(" ");
             alignValues = alignValues.without("");
-            
+
             alignValues.each((function(alignValue) {
                 switch (alignValue) {
                     case 'top':
@@ -137,27 +133,27 @@ ORYX.Core.SVG.Label = Clazz.extend({
                 }
             }).bind(this));
         }
-        
+
         //set edge position (only in case the label belongs to an edge)
         this.edgePosition = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'edgePosition');
         if(this.edgePosition) {
             this.originEdgePosition = this.edgePosition = this.edgePosition.toLowerCase();
         }
-        
-        
+
+
         //get offset top
         this.offsetTop = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'offsetTop') || ORYX.CONFIG.OFFSET_EDGE_LABEL_TOP;
         if(this.offsetTop) {
             this.offsetTop = parseInt(this.offsetTop);
         }
-        
+
         //get offset top
         this.offsetBottom = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'offsetBottom') || ORYX.CONFIG.OFFSET_EDGE_LABEL_BOTTOM;
         if(this.offsetBottom) {
             this.offsetBottom = parseInt(this.offsetBottom);
         }
-        
-                
+
+
         //set rotation
         var rotateValue = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'rotate');
         if(rotateValue) {
@@ -169,13 +165,13 @@ ORYX.Core.SVG.Label = Clazz.extend({
         } else {
             this._rotate = 0;
         }
-        
+
         //anchors
         var anchorAttr = this.node.getAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, "anchors");
         if(anchorAttr) {
             anchorAttr = anchorAttr.replace("/,/g", " ");
             var anchors = anchorAttr.split(" ").without("");
-            
+
             for(var i = 0; i < anchors.length; i++) {
                 switch(anchors[i].toLowerCase()) {
                     case "left":
@@ -193,7 +189,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
                 }
             }
         }
-        
+
         //if no alignment defined, set default alignment
         if(!this._verticalAlign) { this._verticalAlign = 'bottom'; }
         if(!this._horizontalAlign) { this._horizontalAlign = 'left'; }
@@ -204,22 +200,22 @@ ORYX.Core.SVG.Label = Clazz.extend({
         } else {
             //TODO error
         }
-        
+
         var yValue = this.node.getAttributeNS(null, 'y');
         if(yValue) {
             this.oldY = this.y = parseFloat(yValue);
         } else {
             //TODO error
         }
-        
+
         //set initial text
         this.text(this.node.textContent);
     },
-    
+
     /**
      * Reset the anchor position to the original value
      * which was specified in the stencil set
-     * 
+     *
      */
     resetAnchorPosition: function(){
         this.anchorLeft = this.originAnchorLeft || false;
@@ -227,18 +223,18 @@ ORYX.Core.SVG.Label = Clazz.extend({
         this.anchorTop = this.originAnchorTop || false;
         this.anchorBottom = this.originAnchorBottom || false;
     },
-    
+
     isOriginAnchorLeft: function(){ return this.originAnchorLeft || false; },
     isOriginAnchorRight: function(){ return this.originAnchorRight || false; },
     isOriginAnchorTop: function(){ return this.originAnchorTop || false; },
     isOriginAnchorBottom: function(){ return this.originAnchorBottom || false; },
-    
-    
+
+
     isAnchorLeft: function(){ return this.anchorLeft || false; },
     isAnchorRight: function(){ return this.anchorRight || false; },
     isAnchorTop: function(){ return this.anchorTop || false; },
     isAnchorBottom: function(){ return this.anchorBottom || false; },
-    
+
     /**
      * Returns the x coordinate
      * @return {number}
@@ -256,15 +252,15 @@ ORYX.Core.SVG.Label = Clazz.extend({
             return this.x;
         }
     },
-        
+
     setX: function(x){
         if (this.position)
             this.position.x = x;
-        else 
+        else
             this.setOriginX(x);
     },
-    
-    
+
+
     /**
      * Returns the y coordinate
      * @return {number}
@@ -276,23 +272,23 @@ ORYX.Core.SVG.Label = Clazz.extend({
             return this.y;
         }
     },
-    
+
     setY: function(y){
         if (this.position)
             this.position.y = y;
-        else 
+        else
             this.setOriginY(y);
     },
-    
+
     setOriginX: function(x){
         this.x = x;
     },
-    
+
     setOriginY: function(y){
         this.y = y;
     },
 
-    
+
     /**
      * Returns the width of the label
      * @return {number}
@@ -319,7 +315,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
             return 0;
         }
     },
-    
+
     getOriginUpperLeft: function(){
         var x = this.x, y = this.y;
         switch (this._horizontalAlign){
@@ -340,7 +336,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
         }
         return {x:x, y:y};
     },
-    
+
     /**
      * Returns the height of the label
      * @return {number}
@@ -352,9 +348,9 @@ ORYX.Core.SVG.Label = Clazz.extend({
             return 0;
         }
     },
-    
+
     /**
-     * Returns the relative center position of the label 
+     * Returns the relative center position of the label
      * to its parent shape.
      * @return {Object}
      */
@@ -364,7 +360,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
         up.y += this.getHeight()/2;
         return up;
     },
-    
+
     /**
      * Sets the position of a label relative to the parent.
      * @param {Object} position
@@ -375,23 +371,23 @@ ORYX.Core.SVG.Label = Clazz.extend({
         } else {
             this.position = position;
         }
-        
+
         if (this.position){
             delete this._referencePoint;
             delete this.edgePosition;
         }
-        
+
         this._isChanged = true;
         this.update();
     },
-    
+
     /**
      * Return the position
      */
     getPosition: function(){
         return this.position;
     },
-    
+
     setReferencePoint: function(ref){
         if (ref) {
             this._referencePoint = ref;
@@ -402,15 +398,15 @@ ORYX.Core.SVG.Label = Clazz.extend({
             delete this.position;
         }
     },
-    
+
     getReferencePoint: function(){
         return this._referencePoint || undefined;
     },
-    
+
     changed: function() {
         this._isChanged = true;
     },
-    
+
     /**
      * Register a callback which will be called if the label
      * was rendered.
@@ -424,7 +420,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
             this.changeCallbacks.push(fn);
         }
     },
-    
+
     /**
      * Unregister the callback for changes.
      * @param {Object} fn
@@ -434,40 +430,40 @@ ORYX.Core.SVG.Label = Clazz.extend({
             this.changeCallbacks = this.changeCallbacks.without(fn);
         }
     },
-    
+
     /**
      * Returns TRUE if the labe is currently in
      * the update mechanism.
      * @return {Boolean}
      */
     isUpdating: function(){
-        return !!this._isUpdating;    
+        return !!this._isUpdating;
     },
-    
-    
+
+
     getOriginEdgePosition: function(){
-        return this.originEdgePosition;    
+        return this.originEdgePosition;
     },
-    
+
     /**
      * Returns the edgeposition.
-     * 
-     * @return {String} "starttop", "startmiddle", "startbottom", 
+     *
+     * @return {String} "starttop", "startmiddle", "startbottom",
      * "midtop", "midbottom", "endtop", "endbottom" or null
      */
     getEdgePosition: function(){
-        return this.edgePosition || null;    
+        return this.edgePosition || null;
     },
-    
+
     /**
      * Set the edge position, must be one of the valid
      * edge positions (see getEdgePosition).
      * Removes the reference point and the absolute position as well.
-     * 
+     *
      * @param {Object} position
      */
     setEdgePosition: function(position){
-        if (["starttop", "startmiddle", "startbottom", 
+        if (["starttop", "startmiddle", "startbottom",
             "midtop", "midbottom", "endtop", "endbottom"].include(position)){
             this.edgePosition = position;
             delete this.position;
@@ -476,53 +472,53 @@ ORYX.Core.SVG.Label = Clazz.extend({
             delete this.edgePosition;
         }
     },
-    
+
     /**
      * Update the SVG text element.
      */
     update: function(force) {
-        
+
         var x = this.x, y = this.y;
         if (this.position){
             x = this.position.x;
             y = this.position.y;
         }
         x = Math.floor(x); y = Math.floor(y);
-        
+
         if(this._isChanged || x !== this.oldX || y !== this.oldY || force === true) {
             if (this.isVisible) {
                 this._isChanged = false;
                 this._isUpdating = true;
-                
+
                 this.node.setAttributeNS(null, 'x', x);
                 this.node.setAttributeNS(null, 'y', y);
                 this.node.removeAttributeNS(null, "fill-opacity");
-                
+
                 //this.node.setAttributeNS(null, 'font-size', this._fontSize);
                 //this.node.setAttributeNS(ORYX.CONFIG.NAMESPACE_ORYX, 'align', this._horizontalAlign + " " + this._verticalAlign);
-                
+
                 this.oldX = x;
                 this.oldY = y;
-                
+
                 //set rotation
                 if (!this.position && !this.getReferencePoint()) {
                     if (this._rotate !== undefined) {
-                        if (this._rotationPoint) 
+                        if (this._rotationPoint)
                             this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(this._rotationPoint.x) + ' ' + Math.floor(this._rotationPoint.y) + ')');
-                        else 
+                        else
                             this.node.setAttributeNS(null, 'transform', 'rotate(' + this._rotate + ' ' + Math.floor(x) + ' ' + Math.floor(y) + ')');
                     }
                 } else {
                     this.node.removeAttributeNS(null, 'transform');
                 }
-                
+
                 var textLines = this._text.split("\n");
-                while (textLines.last() == "") 
+                while (textLines.last() == "")
                     textLines.pop();
-                
-                
+
+
                 if (this.node.ownerDocument) {
-                    // Only reset the tspans if the text 
+                    // Only reset the tspans if the text
                     // has changed or has to be wrapped
                     if (this.fitToElemId || this._textHasChanged){
                         this.node.textContent = ""; // Remove content
@@ -533,7 +529,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
                                 tspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
                                 tspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
                             }
-                            
+
                             /*
                              * Chrome's getBBox() method fails, if a text node contains an empty tspan element.
                              * So, we add a whitespace to such a tspan element.
@@ -541,19 +537,19 @@ ORYX.Core.SVG.Label = Clazz.extend({
                             if(tspan.textContent === "") {
                                 tspan.textContent = " ";
                             }
-                            
+
                             //append tspan to text node
                             this.node.appendChild(tspan);
                         }).bind(this));
                         delete this._textHasChanged;
                         delete this.indices;
                     }
-                    
+
                     //Work around for Mozilla bug 293581
                     if (this.isVisible && this.fitToElemId) {
                         this.node.setAttributeNS(null, 'visibility', 'hidden');
                     }
-                    
+
                     if (this.fitToElemId) {
                         window.setTimeout(this._checkFittingToReferencedElem.bind(this), 0);
                     } else {
@@ -567,42 +563,42 @@ ORYX.Core.SVG.Label = Clazz.extend({
             }
         }
     },
-    
+
     _checkFittingToReferencedElem: function() {
         try {
             var tspans = $A(this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan'));
-            
+
             //only do this in firefox 3. all other browsers do not support word wrapping!!!!!
             //if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1)>=3) {
                 var newtspans = [];
-                
+
                 var refNode = this.node.ownerDocument.getElementById(this.fitToElemId);
-                
+
                 if (refNode) {
-                
+
                     var refbb = refNode.getBBox();
-                    
+
                     var fontSize = this.getFontSize();
-                    
+
                     for (var j = 0; j < tspans.length; j++) {
                         var tspan = tspans[j];
-                        
+
                         var textLength = this._getRenderedTextLength(tspan, undefined, undefined, fontSize);
-                        
-                        var refBoxLength = (this._rotate != 0 
-                                && this._rotate % 180 != 0 
-                                && this._rotate % 90 == 0 ? 
+
+                        var refBoxLength = (this._rotate != 0
+                                && this._rotate % 180 != 0
+                                && this._rotate % 90 == 0 ?
                                         refbb.height : refbb.width);
-                                        
+
                         if (textLength > refBoxLength) {
-                        
+
                             var startIndex = 0;
                             var lastSeperatorIndex = 0;
-                            
+
                             var numOfChars = this.getTrimmedTextLength(tspan.textContent);
                             for (var i = 0; i < numOfChars; i++) {
                                 var sslength = this._getRenderedTextLength(tspan, startIndex, i-startIndex, fontSize);
-                                
+
                                 if (sslength > refBoxLength - 2) {
                                     var newtspan = this.node.ownerDocument.createElementNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
                                     if (lastSeperatorIndex <= startIndex) {
@@ -613,16 +609,16 @@ ORYX.Core.SVG.Label = Clazz.extend({
                                     else {
                                         newtspan.textContent = tspan.textContent.slice(startIndex, ++lastSeperatorIndex).trim();
                                     }
-                                    
+
                                     newtspan.setAttributeNS(null, 'x', this.invisibleRenderPoint);
                                     newtspan.setAttributeNS(null, 'y', this.invisibleRenderPoint);
-                                    
+
                                     //insert tspan to text node
                                     //this.node.insertBefore(newtspan, tspan);
                                     newtspans.push(newtspan);
-                                    
+
                                     startIndex = lastSeperatorIndex;
-                                    
+
                                 }
                                 else {
                                     var curChar = tspan.textContent.charAt(i);
@@ -636,16 +632,16 @@ ORYX.Core.SVG.Label = Clazz.extend({
                                     }
                                 }
                             }
-                            
+
                             tspan.textContent = tspan.textContent.slice(startIndex).trim();
                         }
-                        
+
                         newtspans.push(tspan);
                     }
-                    
-                    while (this.node.hasChildNodes()) 
+
+                    while (this.node.hasChildNodes())
                         this.node.removeChild(this.node.childNodes[0]);
-                    
+
                     while (newtspans.length > 0) {
                         this.node.appendChild(newtspans.shift());
                     }
@@ -654,10 +650,10 @@ ORYX.Core.SVG.Label = Clazz.extend({
         } catch (e) {
             //console.log(e);
         }
-        
+
         window.setTimeout(this._positionText.bind(this), 0);
     },
-    
+
     /**
      * This is a work around method for Mozilla bug 293581.
      * Before the method getComputedTextLength works, the text has to be rendered.
@@ -665,28 +661,28 @@ ORYX.Core.SVG.Label = Clazz.extend({
     _positionText: function() {
         try {
             var tspans = this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
-            
-            var fontSize = this.getFontSize(this.node); 
-            
+
+            var fontSize = this.getFontSize(this.node);
+
             var invalidTSpans = [];
-            
+
             var x = this.x, y = this.y;
             if (this.position){
                 x = this.position.x;
                 y = this.position.y;
             }
             x = Math.floor(x); y = Math.floor(y);
-            
-            var i = 0, indic = []; // Cache indices if the _positionText is called again, before update is called 
+
+            var i = 0, indic = []; // Cache indices if the _positionText is called again, before update is called
             var is =(this.indices || $R(0,tspans.length-1).toArray());
             var length = is.length;
             is.each((function(index){
                 if ("undefined" == typeof index){
                     return;
                 }
-                
+
                 var tspan = tspans[i++];
-                
+
                 if(tspan.textContent.trim() === "") {
                     invalidTSpans.push(tspan);
                 } else {
@@ -705,23 +701,23 @@ ORYX.Core.SVG.Label = Clazz.extend({
                             dy += fontSize;
                             break;
                     }
-                    
+
                     tspan.setAttributeNS(null, 'dy', Math.floor(dy));
-                    
+
                     tspan.setAttributeNS(null, 'x', x);
                     tspan.setAttributeNS(null, 'y', y);
                     indic.push(index);
                 }
-                
+
             }).bind(this));
-            
+
             indic.length = tspans.length;
             this.indices = this.indices || indic;
-            
+
             invalidTSpans.each(function(tspan) {
                 this.node.removeChild(tspan)
             }.bind(this));
-            
+
             //set horizontal alignment
             switch (this._horizontalAlign) {
                 case 'left':
@@ -734,28 +730,28 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     this.node.setAttributeNS(null, 'text-anchor', 'end');
                     break;
             }
-            
+
         } catch(e) {
             //console.log(e);
             this._isChanged = true;
         }
-        
-        
+
+
         if(this.isVisible) {
             this.node.removeAttributeNS(null, 'visibility');
-        }        
-        
-        
+        }
+
+
         // Finished
         delete this._isUpdating;
-        
+
         // Raise change event
         (this.changeCallbacks||[]).each(function(fn){
             fn.apply(fn);
         })
-                
+
     },
-    
+
     /**
      * Returns the text length of the text content of an SVG tspan element.
      * For all browsers but Firefox 3 the values are estimated.
@@ -782,7 +778,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
             }
         }
     },
-    
+
     /**
      * Estimates the text width for a string.
      * Used for word wrapping in all browser but FF3.
@@ -793,10 +789,10 @@ ORYX.Core.SVG.Label = Clazz.extend({
         for(var i = 0; i < text.length; i++) {
             sum += this._estimateCharacterWidth(text.charAt(i));
         }
-        
+
         return sum*(fontSize/14.0);
     },
-    
+
     /**
      * Estimates the width of a single character for font size 14.
      * Used for word wrapping in all browser but FF3.
@@ -807,27 +803,27 @@ ORYX.Core.SVG.Label = Clazz.extend({
              if(this._characterSets[i].indexOf(character) >= 0) {
                 return this._characterSetValues[i];
             }
-         }    
+         }
         return 9;
      },
-    
+
     getReferencedElementWidth: function() {
         var refNode = this.node.ownerDocument.getElementById(this.fitToElemId);
-        
+
         if(refNode) {
             var refbb = refNode.getBBox();
-                
+
             if(refbb) {
-                return (this._rotate != 0 
-                        && this._rotate % 180 != 0 
-                        && this._rotate % 90 == 0 ? 
+                return (this._rotate != 0
+                        && this._rotate % 180 != 0
+                        && this._rotate % 90 == 0 ?
                                 refbb.height : refbb.width);
             }
         }
-        
+
         return undefined;
     },
-    
+
     /**
      * If no parameter is provided, this method returns the current text.
      * @param text {String} Optional. Replaces the old text with this one.
@@ -837,7 +833,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
             case 0:
                 return this._text
                 break;
-            
+
             case 1:
                 var oldText = this._text;
                 if(arguments[0]) {
@@ -850,17 +846,17 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     this._textHasChanged = true;
                 }
                 break;
-                
-            default: 
+
+            default:
                 //TODO error
                 break;
         }
     },
-    
+
     getOriginVerticalAlign: function(){
         return this._originVerticalAlign;
     },
-    
+
     verticalAlign: function() {
         switch(arguments.length) {
             case 0:
@@ -874,17 +870,17 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     }
                 }
                 break;
-                
+
             default:
                 //TODO error
                 break;
         }
     },
-    
+
     getOriginHorizontalAlign: function(){
         return this._originHorizontalAlign;
     },
-    
+
     horizontalAlign: function() {
         switch(arguments.length) {
             case 0:
@@ -895,16 +891,16 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     this._horizontalAlign = arguments[0];
                     if(this._horizontalAlign !== oldValue) {
                         this._isChanged = true;
-                    }    
+                    }
                 }
                 break;
-                
+
             default:
                 //TODO error
                 break;
         }
     },
-    
+
     rotate: function() {
         switch(arguments.length) {
             case 0:
@@ -924,24 +920,24 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     this._rotationPoint = arguments[1];
                     this._isChanged = true;
                 }
-                
+
         }
     },
-    
+
     hide: function() {
         if(this.isVisible) {
             this.isVisible = false;
             this._isChanged = true;
         }
     },
-    
+
     show: function() {
         if(!this.isVisible) {
             this.isVisible = true;
             this._isChanged = true;
         }
     },
-    
+
     /**
      * iterates parent nodes till it finds a SVG font-size
      * attribute.
@@ -950,7 +946,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
     getInheritedFontSize: function(node) {
         if(!node || !node.getAttributeNS)
             return;
-            
+
         var attr = node.getAttributeNS(null, "font-size");
         if(attr) {
             return parseFloat(attr);
@@ -958,14 +954,14 @@ ORYX.Core.SVG.Label = Clazz.extend({
             return this.getInheritedFontSize(node.parentNode);
         }
     },
-    
+
     getFontSize: function(node) {
         var tspans = this.node.getElementsByTagNameNS(ORYX.CONFIG.NAMESPACE_SVG, 'tspan');
-            
+
         //trying to get an inherited font-size attribute
         //NO CSS CONSIDERED!
-        var fontSize = this.getInheritedFontSize(this.node); 
-        
+        var fontSize = this.getInheritedFontSize(this.node);
+
         if (!fontSize) {
             //because this only works in firefox 3, all other browser use the default line height
             if (tspans[0] && /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 3) {
@@ -974,19 +970,19 @@ ORYX.Core.SVG.Label = Clazz.extend({
             else {
                 fontSize = ORYX.CONFIG.LABEL_DEFAULT_LINE_HEIGHT;
             }
-            
+
             //handling of unsupported method in webkit
             if (fontSize <= 0) {
                 fontSize = ORYX.CONFIG.LABEL_DEFAULT_LINE_HEIGHT;
             }
         }
-        
+
         if(fontSize)
             this.node.setAttribute("oryx:fontSize", fontSize);
-        
+
         return fontSize;
     },
-    
+
     /**
      * Get trimmed text length for use with
      * getExtentOfChar and getSubStringLength.
@@ -994,7 +990,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
      */
     getTrimmedTextLength: function(text) {
         text = text.strip().gsub('  ', ' ');
-        
+
         var oldLength;
         do {
             oldLength = text.length;
@@ -1003,36 +999,36 @@ ORYX.Core.SVG.Label = Clazz.extend({
 
         return text.length;
     },
-    
+
     /**
      * Returns the offset from
-     * edge to the label which is 
+     * edge to the label which is
      * positioned under the edge
      * @return {int}
      */
     getOffsetBottom: function(){
         return this.offsetBottom;
     },
-    
-        
+
+
     /**
      * Returns the offset from
-     * edge to the label which is 
+     * edge to the label which is
      * positioned over the edge
      * @return {int}
      */
     getOffsetTop: function(){
         return this.offsetTop;
     },
-    
+
     /**
-     * 
+     *
      * @param {Object} obj
      */
     deserialize: function(obj, shape){
-        if (obj && "undefined" != typeof obj.x && "undefined" != typeof obj.y){            
+        if (obj && "undefined" != typeof obj.x && "undefined" != typeof obj.y){
             this.setPosition({x:obj.x, y:obj.y});
-            
+
             if ("undefined" != typeof obj.distance){
                 var from = shape.dockers[obj.from];
                 var to = shape.dockers[obj.to];
@@ -1053,25 +1049,25 @@ ORYX.Core.SVG.Label = Clazz.extend({
                     })
                 }
             }
-            
+
             if (obj.left) this.anchorLeft = true;
             if (obj.right) this.anchorRight = true;
             if (obj.top) this.anchorTop = true;
             if (obj.bottom) this.anchorBottom = true;
             if (obj.valign) this.verticalAlign(obj.valign);
             if (obj.align) this.horizontalAlign(obj.align);
-            
+
         } else if (obj && "undefined" != typeof obj.edge){
             this.setEdgePosition(obj.edge);
         }
     },
 
     /**
-     * 
+     *
      * @return {Object}
      */
     serialize: function(){
-        
+
         // On edge position
         if (this.getEdgePosition()){
             if (this.getOriginEdgePosition() !== this.getEdgePosition()){
@@ -1080,7 +1076,7 @@ ORYX.Core.SVG.Label = Clazz.extend({
                 return null;
             }
         }
-        
+
         // On self defined position
         if (this.position){
             var pos = {x: this.position.x, y: this.position.y};
@@ -1096,17 +1092,17 @@ ORYX.Core.SVG.Label = Clazz.extend({
             if (this.isAnchorBottom() && this.isAnchorBottom() !== this.isOriginAnchorBottom()){
                 pos.bottom = true;
             }
-            
+
             if (this.getOriginVerticalAlign() !== this.verticalAlign()){
                 pos.valign = this.verticalAlign();
             }
             if (this.getOriginHorizontalAlign() !== this.horizontalAlign()){
                 pos.align = this.horizontalAlign();
             }
-            
+
             return pos;
         }
-        
+
         // On reference point which is interesting for edges
         if (this.getReferencePoint()){
             var ref = this.getReferencePoint();
@@ -1123,6 +1119,6 @@ ORYX.Core.SVG.Label = Clazz.extend({
         }
         return null;
     },
-    
+
     toString: function() { return "Label " + this.id }
  });

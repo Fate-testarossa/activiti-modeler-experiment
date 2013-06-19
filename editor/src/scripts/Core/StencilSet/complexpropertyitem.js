@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 /**
  * Init namespaces
@@ -50,23 +46,23 @@ ORYX.Core.StencilSet.ComplexPropertyItem = Clazz.extend({
         if(!property) {
             throw "ORYX.Core.StencilSet.ComplexPropertyItem(construct): Parameter property is not defined.";
         }
-        
+
         this._jsonItem = jsonItem;
         this._namespace = namespace;
         this._property = property;
         this._items = new Hash();
-        
+
         //init all values
         if(!jsonItem.name) {
             throw "ORYX.Core.StencilSet.ComplexPropertyItem(construct): Name is not defined.";
         }
-        
+
         if(!jsonItem.type) {
             throw "ORYX.Core.StencilSet.ComplexPropertyItem(construct): Type is not defined.";
         } else {
             jsonItem.type = jsonItem.type.toLowerCase();
         }
-        
+
         if(jsonItem.type === ORYX.CONFIG.TYPE_CHOICE) {
             if(jsonItem.items && jsonItem.items instanceof Array) {
                 jsonItem.items.each((function(item) {
@@ -98,31 +94,31 @@ ORYX.Core.StencilSet.ComplexPropertyItem = Clazz.extend({
     name: function() {
         return ORYX.Core.StencilSet.getTranslation(this._jsonItem, "name");
     },
-    
+
     id: function() {
         return this._jsonItem.id;
     },
-    
+
     type: function() {
         return this._jsonItem.type;
     },
-    
+
     optional: function() {
         return this._jsonItem.optional;
     },
-    
+
     width: function() {
         return this._jsonItem.width;
     },
-    
+
     value: function() {
         return this._jsonItem.value;
     },
-    
+
     items: function() {
         return this._items.values();
     },
-    
+
     disable: function() {
         return this._jsonItem.disable;
     }

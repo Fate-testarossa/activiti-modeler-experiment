@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.platform.security.business.exceptions;
 
 import com.signavio.platform.security.business.FsSecureBusinessObject;
@@ -26,14 +22,14 @@ import com.signavio.platform.security.business.FsSecureBusinessObject;
 public class BusinessObjectCreationFailedException extends RuntimeException {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1129675556771340274L;
 
     public BusinessObjectCreationFailedException() {
         super("Creating business object failed.");
     }
-    
+
     public BusinessObjectCreationFailedException(String msg) {
         super("Creating business object failed: " + msg);
     }
@@ -41,15 +37,15 @@ public class BusinessObjectCreationFailedException extends RuntimeException {
     public BusinessObjectCreationFailedException(String msg, String className) {
         super("Creating business object failed: " + msg + " Class: " + className);
     }
-    
+
     public BusinessObjectCreationFailedException(String msg, String className, Throwable e) {
         super("Creating business object failed: " + msg + " Class: " + className, e);
     }
-    
+
     public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj) {
         super("Creating business object failed: " + msg + " Class: " + classObj.getName());
     }
-    
+
     public BusinessObjectCreationFailedException(String msg, Class<? extends FsSecureBusinessObject> classObj, Throwable e) {
         super("Creating business object failed: " + msg + " Class: " + classObj.getName(), e);
     }

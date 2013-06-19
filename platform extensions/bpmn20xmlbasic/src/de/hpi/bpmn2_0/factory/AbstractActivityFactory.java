@@ -1,25 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.factory;
 
 import java.math.BigInteger;
@@ -47,16 +42,16 @@ import de.hpi.bpmn2_0.model.misc.Property;
 
 /**
  * Common factory for BPMN 2.0 activities
- * 
+ *
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 public abstract class AbstractActivityFactory extends AbstractShapeFactory {
 
     /**
      * Sets common attributes of activity (task, subprocess, event-subprocess)
      * derived from the source shape.
-     * 
+     *
      * @param activity
      *            The resulting activity.
      * @param shape
@@ -64,46 +59,46 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
      */
     protected void setStandardAttributes(Activity activity, GenericShape shape) {
         this.setCommonAttributes(activity, shape);
-        
+
         /* Handle isCompensation Property */
         this.setCompensationProperty(activity, shape);
-        
+
         /* Loop Characteristics */
         this.createLoopCharacteristics(activity, shape);
-        
+
         /* Properties */
         activity.getProperty().addAll(this.createPropertiesList(shape));
-        
+
         /* Start and Completion Quantity */
         this.setStartAndCompletionQuantity(activity, shape);
-        
+
         /* Collect data for IOSpecification */
         this.collectIoSpecificationInfo(activity, shape);
-        
+
     }
 
     /**
-     * Takes the complex property input set as well as output set and stores 
+     * Takes the complex property input set as well as output set and stores
      * them in a hash map for further processing.
-     * @param shape 
-     * @param activity 
+     * @param shape
+     * @param activity
      */
     private void collectIoSpecificationInfo(Activity activity, GenericShape shape) {
         activity.getOutputSetInfo().add(this.collectSetInfoFor(shape, "dataoutputset"));
         activity.getInputSetInfo().add(this.collectSetInfoFor(shape, "datainputset"));
     }
-    
+
     /**
      * Generic method to parse data input and output set properties.
-     * 
+     *
      * @param property
      *         Identifies the shape's property to handle either a output or input set.
      */
     private HashMap<String, IoOption> collectSetInfoFor(GenericShape shape, String property) {
         String ioSpecString = shape.getProperty(property);
-        
+
         HashMap<String, IoOption> options = new HashMap<String, IoOption>();
-        
+
         if(ioSpecString != null && !(ioSpecString.length() == 0)) {
             try {
                 JSONObject ioSpecObject = new JSONObject(ioSpecString);
@@ -119,32 +114,32 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
                     String name = propertyItem.getString("name");
                     if(name == null || name.length() == 0)
                         continue;
-                    
+
                     /* Optional */
                     String isOptional = propertyItem.getString("optional");
                     if(isOptional != null && isOptional.equalsIgnoreCase("true"))
                         ioOpt.setOptional(true);
-                    
+
                     /* While executing */
                     String whileExecuting = propertyItem.getString("whileexecuting");
                     if(whileExecuting != null && whileExecuting.equalsIgnoreCase("true"))
                         ioOpt.setOptional(true);
-                    
+
                     options.put(name, ioOpt);
-                    
+
                 }
 
             } catch(Exception e) {
                 e.printStackTrace();
             }
         }
-        
+
         return options;
     }
 
     /**
      * Process the compensation property.
-     * 
+     *
      * @param activity
      * @param shape
      */
@@ -155,19 +150,19 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
                                 "true")
                         : false));
     }
-    
+
 
     /**
      * Sets the start quantity of the activity based on the data of the shape.
-     * 
+     *
      * @param activity
      * @param shape
      *         The resource shape
      */
     private void setStartAndCompletionQuantity(Activity activity, GenericShape shape) {
-        
+
         /* Start quantity */
-        
+
         String startQuantity = shape.getProperty("startquantity");
         if(startQuantity != null) {
             try {
@@ -177,9 +172,9 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
                 /* Set to default value in case of an exception */
                 activity.setStartQuantity(BigInteger.valueOf(1));
             }
-            
+
         }
-        
+
         /* Completion quantity */
         String completionQuantity = shape.getProperty("completionquantity");
         if(completionQuantity != null) {
@@ -192,11 +187,11 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
             }
         }
     }
-    
+
     /**
-     * Entry method to create the {@link LoopCharacteristics} for a given 
+     * Entry method to create the {@link LoopCharacteristics} for a given
      * activity's shape.
-     * 
+     *
      * @param activity
      * @param shape
      * @return
@@ -208,9 +203,9 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
         if (loopType != null && !(loopType.length() == 0)) {
 
             /* Loop type standard */
-            if (loopType.equalsIgnoreCase("Standard")) 
+            if (loopType.equalsIgnoreCase("Standard"))
                 activity.setLoopCharacteristics(createStandardLoopCharacteristics(shape));
-            
+
             /* Loop type multiple instances */
             else if (loopType.equalsIgnoreCase("Parallel")
                     || loopType.equalsIgnoreCase("Sequential")) {
@@ -218,16 +213,16 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
             }
         }
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      * @param shape
      * @return
      */
     protected List<Property> createPropertiesList(GenericShape shape) {
         ArrayList<Property> propertiesList = new ArrayList<Property>();
-        
+
         String propertiesString = shape.getProperty("properties");
         if(propertiesString != null && !(propertiesString.length() == 0)) {
             try {
@@ -247,29 +242,29 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
                     String name = propertyItem.getString("name");
                     if(name != null && !(name.length() == 0))
                         property.setName(name);
-                    
+
                     /* Data State */
                     String dataState = propertyItem.getString("datastate");
                     if(dataState != null && !(dataState.length() == 0))
                         property.setDataState(new DataState(dataState));
-                    
+
                     /* ItemKind */
                     String itemKind = propertyItem.getString("itemkind");
                     if(itemKind != null && !(itemKind.length() == 0))
                         property.setItemKind(ItemKind.fromValue(itemKind));
-                    
+
                     /* Structure */
                     String structureString = propertyItem.getString("structure");
                     if(structureString != null && !(structureString.length() == 0))
                         property.setStructure(structureString);
-                    
+
                     /* isCollection */
                     String isCollection = propertyItem.getString("iscollection");
                     if(isCollection != null && isCollection.equalsIgnoreCase("false"))
                         property.setCollection(false);
-                    else 
+                    else
                         property.setCollection(true);
-                    
+
                     propertiesList.add(property);
                 }
 
@@ -277,13 +272,13 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
                 e.printStackTrace();
             }
         }
-        
+
         return propertiesList;
     }
 
     /**
      * Creates the loop characteristics for multiple instances loops.
-     * 
+     *
      * @param shape
      * @param loopType
      */
@@ -323,13 +318,13 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
 
         /* Handle loop behavior */
         handleLoopBehaviorAttributes(shape, miLoop);
-        
+
         return miLoop;
     }
 
     /**
-     * Processes the attributes that are related to the loop behavior. 
-     * 
+     * Processes the attributes that are related to the loop behavior.
+     *
      * @param shape
      * @param miLoop
      */
@@ -404,9 +399,9 @@ public abstract class AbstractActivityFactory extends AbstractShapeFactory {
     }
 
     /**
-     * Creates a {@link StandardLoopCharacteristics} object based on the shape's 
+     * Creates a {@link StandardLoopCharacteristics} object based on the shape's
      * properties.
-     * 
+     *
      * @param shape
      *         The resource shape
      * @return

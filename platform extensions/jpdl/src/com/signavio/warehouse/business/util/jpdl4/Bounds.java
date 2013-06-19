@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Ole Eckermann, Stefan Krumnow & Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.warehouse.business.util.jpdl4;
 
 import java.io.StringWriter;
@@ -31,7 +27,7 @@ public class Bounds {
     private int uly = 0;
     private int height = 80;
     private int width = 100;
-    
+
     public void setUlx(int ulx) {
         this.ulx = ulx;
     }
@@ -57,7 +53,7 @@ public class Bounds {
         this.width = width;
     }
     public Bounds() {
-        
+
     }
     public Bounds(JSONObject bounds) {
         try {
@@ -69,7 +65,7 @@ public class Bounds {
             this.height = lowerRight.getInt("y") - uly;
         } catch (JSONException e) {}
     }
-    
+
     public Bounds(String[] bounds) {
         if(bounds.length == 4) {
             this.ulx = Integer.parseInt(bounds[0]);
@@ -78,7 +74,7 @@ public class Bounds {
             this.height = Integer.parseInt(bounds[3]);
         }
     }
-    
+
     public String toJpdl() {
         StringWriter jpdl = new StringWriter();
         jpdl.write(" g=\"");
@@ -88,22 +84,22 @@ public class Bounds {
         jpdl.write(height + "\"");
         return jpdl.toString();
     }
-    
+
     public JSONObject toJson() throws JSONException {
 
         JSONObject lowerRight = new JSONObject();
         lowerRight.put("x", ulx + width);
         lowerRight.put("y", uly + height);
-        
+
         JSONObject upperLeft = new JSONObject();
         upperLeft.put("x", ulx);
         upperLeft.put("y", uly);
-        
+
         JSONObject bounds = new JSONObject();
         bounds.put("lowerRight", lowerRight);
         bounds.put("upperLeft", upperLeft);
-        
+
         return bounds;
     }
-    
+
 }

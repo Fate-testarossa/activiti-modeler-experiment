@@ -1,9 +1,21 @@
-﻿/**
- * @author willi.tscheschner
- * 
- * contains all strings for default language (en_us)
- * 
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 
 
@@ -125,7 +137,7 @@ Signavio.I18N.Repository.Info.Attributes.infoMulipleTwo= "geändert zwischen <b>
 if(!Signavio.I18N.Repository.BreadCrumb) Signavio.I18N.Repository.BreadCrumb = {};
 Signavio.I18N.Repository.BreadCrumb.delimiter = "&raquo; ";
 Signavio.I18N.Repository.BreadCrumb.search = "Suche: ";
-Signavio.I18N.Repository.BreadCrumb.nrOfResults = "in {nr} Objekten gefunden"; 
+Signavio.I18N.Repository.BreadCrumb.nrOfResults = "in {nr} Objekten gefunden";
 Signavio.I18N.Repository.BreadCrumb.none = "Es wurde kein Ordner selektiert";
 Signavio.I18N.Repository.BreadCrumb.goBack = "Zurück";
 

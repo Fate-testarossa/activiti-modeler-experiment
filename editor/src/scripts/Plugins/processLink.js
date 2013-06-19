@@ -1,33 +1,28 @@
-/**
- * Copyright (c) 2008
- * Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 
 if(!ORYX.Plugins)
     ORYX.Plugins = new Object();
 
 /**
  * Supports EPCs by offering a syntax check and export and import ability..
- * 
- * 
+ *
+ *
  */
 ORYX.Plugins.ProcessLink = Clazz.extend({
 
@@ -35,57 +30,57 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
 
     /**
      * Offers the plugin functionality:
-     * 
+     *
      */
     construct: function(facade) {
 
         this.facade = facade;
-        
+
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_PROPERTY_CHANGED, this.propertyChanged.bind(this) );
-        
+
     },
 
 
     /**
-     * 
+     *
      * @param {Object} option
      */
     propertyChanged: function( option, node){
 
         if( option.name !== "oryx-refuri" || !node instanceof ORYX.Core.Node ){ return }
-        
-        
+
+
         if( option.value && option.value.length > 0 && option.value != "undefined"){
-            
+
             this.show( node, option.value );
-                    
+
         } else {
 
             this.hide( node );
 
-        }                
+        }
 
     },
-    
+
     /**
      * Shows the Link for a particular shape with a specific url
-     * 
+     *
      * @param {Object} shape
      * @param {Object} url
      */
     show: function( shape, url){
 
-        
+
         // Generate the svg-representation of a link
         var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,
                     [ 'a',
                         {'target': '_blank'},
-                        ['path', 
+                        ['path',
                             { "stroke-width": 1.0, "stroke":"#00DD00", "fill": "#00AA00", "d":  "M3,3 l0,-2.5 l7.5,0 l0,-2.5 l7.5,4.5 l-7.5,3.5 l0,-2.5 l-8,0", "line-captions": "round"}
                         ]
                     ]);
 
-        var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,        
+        var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,
                         [ 'a',
                             {'target': '_blank'},
                             ['path', { "style": "fill:#92BFFC;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72", "d": "M0 1.44 L0 15.05 L11.91 15.05 L11.91 5.98 L7.37 1.44 L0 1.44 Z"}],
@@ -94,7 +89,7 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
                         ]);
 
     /*
-     * 
+     *
      *                     [ 'a',
                         {'target': '_blank'},
                         ['path', { "style": "fill:none;stroke-width:0.5px; stroke:#000000", "d": "M7,4 l0,2"}],
@@ -107,25 +102,25 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
                         ['rect', { "style": "fill:none;stroke:none;pointer-events:all", "width": 14, "height": 16, "x": 0, "y": 0}]
                     ]);
      */
-        
+
         // Set the link with the special namespace
         link.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", url);
-        
-        
-        // Shows the link in the overlay                    
+
+
+        // Shows the link in the overlay
         this.facade.raiseEvent({
                     type:             ORYX.CONFIG.EVENT_OVERLAY_SHOW,
                     id:             "arissupport.urlref_" + shape.id,
                     shapes:         [shape],
                     node:            link,
                     nodePosition:    "SE"
-                });    
-                            
-    },    
+                });
+
+    },
 
     /**
      * Hides the Link for a particular shape
-     * 
+     *
      * @param {Object} shape
      */
     hide: function( shape ){
@@ -133,7 +128,7 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
         this.facade.raiseEvent({
                     type:             ORYX.CONFIG.EVENT_OVERLAY_HIDE,
                     id:             "arissupport.urlref_" + shape.id
-                });    
-                            
-    }        
+                });
+
+    }
 });

@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 
 if(!ORYX.Plugins) {
@@ -33,20 +29,20 @@ ORYX.Plugins.Toolbar = Clazz.extend({
 
     construct: function(facade, ownPluginData) {
         this.facade = facade;
-        
+
         this.groupIndex = new Hash();
         ownPluginData.properties.each((function(value){
             if(value.group && value.index != undefined) {
                 this.groupIndex[value.group] = value.index
             }
         }).bind(this));
-        
+
         Ext.QuickTips.init();
 
         this.buttons = [];
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_BUTTON_UPDATE, this.onButtonUpdate.bind(this));
     },
-    
+
     /**
      * Can be used to manipulate the state of a button.
      * @example
@@ -61,7 +57,7 @@ ORYX.Plugins.Toolbar = Clazz.extend({
         var button = this.buttons.find(function(button){
             return button.id === event.id;
         });
-        
+
         if(event.pressed !== undefined){
             button.buttonInstance.toggle(event.pressed);
         }
@@ -87,14 +83,14 @@ ORYX.Plugins.Toolbar = Clazz.extend({
         });
                 var region = this.facade.addToRegion("north", this.toolbar, "Toolbar");
         }
-        
-        
+
+
         var currentGroupsName = this.plugs.last()?this.plugs.last().group:plugs[0].group;
-        
+
         // Map used to store all drop down buttons of current group
         var currentGroupsDropDownButton = {};
 
-        
+
         plugs.each((function(value) {
             if(!value.name) {return}
             this.plugs.push(value);
@@ -108,8 +104,8 @@ ORYX.Plugins.Toolbar = Clazz.extend({
             // If an drop down group icon is provided, a split button should be used
             if(value.dropDownGroupIcon){
                 var splitButton = currentGroupsDropDownButton[value.dropDownGroupIcon];
-                
-                // Create a new split button if this is the first plugin using it 
+
+                // Create a new split button if this is the first plugin using it
                 if(splitButton === undefined){
                     splitButton = currentGroupsDropDownButton[value.dropDownGroupIcon] = new Ext.Toolbar.SplitButton({
                         cls: "x-btn-icon", //show icon only
@@ -125,13 +121,13 @@ ORYX.Plugins.Toolbar = Clazz.extend({
                             } else {
                                 button.hideMenu();
                             }
-                          } 
+                          }
                         }
                     });
-                    
+
                     this.toolbar.add(splitButton);
                 }
-                
+
                 // General config button which will be used either to create a normal button
                 // or a check button (if toggling is enabled)
                 var buttonCfg = {
@@ -152,16 +148,16 @@ ORYX.Plugins.Toolbar = Clazz.extend({
                         }
                     }
                 }
-                
+
                 // Create buttons depending on toggle
                 if(value.toggle) {
                     var button = new Ext.menu.CheckItem(buttonCfg);
                 } else {
                     var button = new Ext.menu.Item(buttonCfg);
                 }
-                
+
                 splitButton.menu.add(button);
-                
+
             } else if(value.addFill) {
                 this.toolbar.addFill();
             } else { // create normal, simple button
@@ -174,27 +170,27 @@ ORYX.Plugins.Toolbar = Clazz.extend({
                     handler:        value.toggle ? null : value.functionality,  // Handler for mouse click
                     enableToggle:   value.toggle, // Option for enabling toggling
                     toggleHandler:  value.toggle ? value.functionality : null // Handler for toggle (Parameters: button, active)
-                }); 
-                
+                });
+
                 this.toolbar.add(button);
 
                 button.getEl().onclick = function() {this.blur()}
             }
-                 
+
             value['buttonInstance'] = button;
             this.buttons.push(value);
-            
+
         }).bind(this));
 
         this.enableButtons([]);
-        
+
         //TODO this should be done when resizing and adding elements!!!!
         this.toolbar.calcSlices();
         window.addEventListener("resize", function(event){this.toolbar.calcSlices()}.bind(this), false);
         window.addEventListener("onresize", function(event){this.toolbar.calcSlices()}.bind(this), false);
 
     },
-    
+
     onSelectionChanged: function(event) {
         this.enableButtons(event.elements);
     },
@@ -203,42 +199,42 @@ ORYX.Plugins.Toolbar = Clazz.extend({
         // Show the Buttons
         this.buttons.each((function(value){
             value.buttonInstance.enable();
-                        
+
             // If there is less elements than minShapes
             if(value.minShape && value.minShape > elements.length)
                 value.buttonInstance.disable();
             // If there is more elements than minShapes
             if(value.maxShape && value.maxShape < elements.length)
-                value.buttonInstance.disable();    
-            // If the plugin is not enabled    
+                value.buttonInstance.disable();
+            // If the plugin is not enabled
             if(value.isEnabled && !value.isEnabled(value.buttonInstance))
                 value.buttonInstance.disable();
-            
-        }).bind(this));        
+
+        }).bind(this));
     }
 });
 
 Ext.ns("Ext.ux");
 Ext.ux.SlicedToolbar = Ext.extend(Ext.Toolbar, {
     currentSlice: 0,
-    iconStandardWidth: 22, //22 px 
+    iconStandardWidth: 22, //22 px
     seperatorStandardWidth: 2, //2px, minwidth for Ext.Toolbar.Fill
     toolbarStandardPadding: 2,
-    
+
     initComponent: function(){
         Ext.apply(this, {
         });
         Ext.ux.SlicedToolbar.superclass.initComponent.apply(this, arguments);
     },
-    
+
     onRender: function(){
         Ext.ux.SlicedToolbar.superclass.onRender.apply(this, arguments);
     },
-    
+
     onResize: function(){
         Ext.ux.SlicedToolbar.superclass.onResize.apply(this, arguments);
     },
-    
+
     calcSlices: function(){
         var slice = 0;
         this.sliceMap = {};
@@ -251,28 +247,28 @@ Ext.ux.SlicedToolbar = Ext.extend(Ext.Toolbar, {
                 item.destroy();
                 return;
             }
-            
+
             var itemWidth = item.getEl().getWidth();
-            
+
             if(sliceWidth + itemWidth + 5 * this.iconStandardWidth > toolbarWidth){
                 var itemIndex = this.items.indexOf(item);
-                
+
                 this.insertSlicingButton("next", slice, itemIndex);
-                
+
                 if (slice !== 0) {
                     this.insertSlicingButton("prev", slice, itemIndex);
                 }
-                
+
                 this.insertSlicingSeperator(slice, itemIndex);
 
                 slice += 1;
                 sliceWidth = 0;
             }
-            
+
             this.sliceMap[item.id] = slice;
             sliceWidth += itemWidth;
         }.bind(this));
-        
+
         // Add prev button at the end
         if(slice > 0){
             this.insertSlicingSeperator(slice, this.items.getCount()+1);
@@ -281,45 +277,45 @@ Ext.ux.SlicedToolbar = Ext.extend(Ext.Toolbar, {
             this.insertSlicedHelperButton(spacer, slice, this.items.getCount()+1);
             Ext.get(spacer.id).setWidth(this.iconStandardWidth);
         }
-        
+
         this.maxSlice = slice;
-        
+
         // Update view
         this.setCurrentSlice(this.currentSlice);
     },
-    
+
     insertSlicedButton: function(button, slice, index){
         this.insertButton(index, button);
         this.sliceMap[button.id] = slice;
     },
-    
+
     insertSlicedHelperButton: function(button, slice, index){
         button.helperItem = true;
         this.insertSlicedButton(button, slice, index);
     },
-    
+
     insertSlicingSeperator: function(slice, index){
         // Align right
         this.insertSlicedHelperButton(new Ext.Toolbar.Fill(), slice, index);
     },
-    
+
     // type => next or prev
     insertSlicingButton: function(type, slice, index){
         var nextHandler = function(){this.setCurrentSlice(this.currentSlice+1)}.bind(this);
         var prevHandler = function(){this.setCurrentSlice(this.currentSlice-1)}.bind(this);
-        
+
         var button = new Ext.Toolbar.Button({
             cls: "x-btn-icon",
             icon: ORYX.CONFIG.ROOT_PATH + "images/toolbar_"+type+".png",
             handler: (type === "next") ? nextHandler : prevHandler
         });
-        
+
         this.insertSlicedHelperButton(button, slice, index);
     },
-    
+
     setCurrentSlice: function(slice){
         if(slice > this.maxSlice || slice < 0) return;
-        
+
         this.currentSlice = slice;
 
         this.items.getRange().each(function(item){

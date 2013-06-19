@@ -1,9 +1,20 @@
-/**
- * @author nicolas.peters
- * 
- * Contains all strings for the default language (en-us).
- * Version 1 - 08/29/08
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 if(!ORYX) var ORYX = {};
 
 if(!ORYX.I18N) ORYX.I18N = {};
@@ -112,7 +123,7 @@ ORYX.I18N.jPDLSupport.impDesc = "Import jPDL File";
 ORYX.I18N.jPDLSupport.impFailedReq = "Request for import of jPDL failed.";
 ORYX.I18N.jPDLSupport.impFailedJson = "Transformation of jPDL failed.";
 ORYX.I18N.jPDLSupport.impFailedJsonAbort = "Import aborted.";
-ORYX.I18N.jPDLSupport.loadSseQuestionTitle = "jBPM stencil set extension needs to be loaded"; 
+ORYX.I18N.jPDLSupport.loadSseQuestionTitle = "jBPM stencil set extension needs to be loaded";
 ORYX.I18N.jPDLSupport.loadSseQuestionBody = "In order to import jPDL, the stencil set extension has to be loaded. Do you want to proceed?";
 ORYX.I18N.jPDLSupport.expFailedReq = "Request for export of model failed.";
 ORYX.I18N.jPDLSupport.expFailedXml = "Export to jPDL failed. Exporter reported: ";

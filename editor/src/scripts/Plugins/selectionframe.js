@@ -1,25 +1,21 @@
-/**
- * Copyright (c) 2006
- * Martin Czuchra, Nicolas Peters, Daniel Polak, Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 if(!ORYX.Plugins)
     ORYX.Plugins = new Object();
@@ -53,7 +49,7 @@ if(!ORYX.Plugins)
         if( uiObj instanceof ORYX.Core.Canvas ) {
             // Calculate the Offset
             var scrollNode = uiObj.rootNode.parentNode.parentNode;
-                        
+
             var a = this.facade.getCanvas().node.getScreenCTM();
             this.offsetPosition = {
                 x: a.e,
@@ -65,16 +61,16 @@ if(!ORYX.Plugins)
             // Reset the size
             this.resize({width:0, height:0});
             this.moveCallback = this.handleMouseMove.bind(this);
-        
+
             // Register Mouse-Move Event
             document.documentElement.addEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
 
             this.offsetScroll        = {x:scrollNode.scrollLeft,y:scrollNode.scrollTop};
-            
+
             // Show the Frame
             this.show();
-            
-            
+
+
 
         }
 
@@ -88,8 +84,8 @@ if(!ORYX.Plugins)
             this.hide();
 
             // Unregister Mouse-Move
-            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);            
-        
+            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
+
             this.moveCallback = undefined;
 
             var corrSVG = this.facade.getCanvas().node.getScreenCTM();
@@ -133,9 +129,9 @@ if(!ORYX.Plugins)
         }
 
         var scrollNode     = this.facade.getCanvas().rootNode.parentNode.parentNode;
-        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft; 
+        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft;
         size.height     -= this.offsetScroll.y - scrollNode.scrollTop;
-                        
+
         // Set the size
         this.resize(size);
 
@@ -162,7 +158,7 @@ if(!ORYX.Plugins)
         // Calculate the negative offset
         this.setPos(this.position);
         this.size = Object.clone(size);
-        
+
         if(size.width < 0) {
             this.node.style.left = (this.position.x + size.width) + "px";
             size.width = - size.width;

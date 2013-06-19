@@ -1,10 +1,27 @@
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package org.oryxeditor.server.diagram.label;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Wrapper class for a set of {@link Anchor} that can be used to define positioning policies of labels 
+ * Wrapper class for a set of {@link Anchor} that can be used to define positioning policies of labels
  * @author philipp.maschke
  *
  */
@@ -26,7 +43,7 @@ public class Anchors {
          */
         public static Anchor fromString(String enumString) {
             if (enumString == null) return null;
-            
+
             for (Anchor attrEnum : values()) {
                 if (attrEnum.label.equals(enumString) || attrEnum.name().equals(enumString))
                     return attrEnum;
@@ -49,8 +66,8 @@ public class Anchors {
             return label;
         }
     }
-    
-    
+
+
     public static Anchors fromString(String anchorsString){
         if (anchorsString == null) return null;
         anchorsString = anchorsString.trim();
@@ -61,22 +78,22 @@ public class Anchors {
         }
         return result;
     }
-    
-    
+
+
     private Set<Anchor> anchors = new HashSet<Anchor>();
-    
+
     public Anchors(Anchor...anchors){
         for (Anchor anchor: anchors){
             this.anchors.add(anchor);
         }
     }
-    
-    
+
+
     public void addAnchor(Anchor newAnchor){
         anchors.add(newAnchor);
     }
 
-    
+
     public String toString(){
         StringBuffer buff = new StringBuffer();
         for (Anchor anchor: anchors){
@@ -85,8 +102,8 @@ public class Anchors {
         }
         return buff.toString();
     }
-    
-    
+
+
     public int size(){
         return anchors.size();
     }
@@ -100,7 +117,7 @@ public class Anchors {
         return result;
     }
 
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -117,8 +134,8 @@ public class Anchors {
             return false;
         return true;
     }
-    
-    
+
+
     public boolean contains(Anchor anchor){
         return anchors.contains(anchor);
     }

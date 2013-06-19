@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2010
- * Signavio, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.choreography;
 
 import java.util.ArrayList;
@@ -46,9 +40,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCallChoreography complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCallChoreography">
  *   &lt;complexContent>
@@ -62,8 +56,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -78,86 +72,86 @@ public class CallChoreography
     @XmlAttribute(name = "calledChoreographyRef")
     @XmlIDREF
     protected Choreography calledChoreographyRef;
-    
+
     @XmlTransient
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
-    
+
     /*
      * Constructors
      */
-    
+
     public CallChoreography() {
-     super();
+        super();
     }
-    
+
     public CallChoreography(ChoreographyActivity choreoAct) {
-     super(choreoAct);
-     
-     this.setStartQuantity(null);
-     this.setCompletionQuantity(null);
-     
-     if(choreoAct instanceof ChoreographyTask) {
-      this.setCalledChoreographyRef(new GlobalChoreographyTask());
-     }
+        super(choreoAct);
+
+        this.setStartQuantity(null);
+        this.setCompletionQuantity(null);
+
+        if(choreoAct instanceof ChoreographyTask) {
+            this.setCalledChoreographyRef(new GlobalChoreographyTask());
+        }
     }
 
     public List<BaseElement> getCalledElements() {
-     List<BaseElement> calledElements = new ArrayList<BaseElement>();
-     
-     /* Global Task */
-     if(calledChoreographyRef instanceof GlobalChoreographyTask) {
-      calledElements.add(calledChoreographyRef);
-     } 
-     
-     /* Calling a sub choreography */
-     else if(calledChoreographyRef instanceof Choreography) {
-      for(FlowElement flowEl : calledChoreographyRef.getFlowElement()) {
-       if(flowEl instanceof CallingElement) {
-        calledElements.addAll(((CallingElement) flowEl).getCalledElements());
-       }
-      }
-     }
-     
-     return calledElements;
+        List<BaseElement> calledElements = new ArrayList<BaseElement>();
+
+        /* Global Task */
+        if(calledChoreographyRef instanceof GlobalChoreographyTask) {
+            calledElements.add(calledChoreographyRef);
+        }
+
+        /* Calling a sub choreography */
+        else if(calledChoreographyRef instanceof Choreography) {
+            for(FlowElement flowEl : calledChoreographyRef.getFlowElement()) {
+                if(flowEl instanceof CallingElement) {
+                    calledElements.addAll(((CallingElement) flowEl).getCalledElements());
+                }
+            }
+        }
+
+        return calledElements;
     }
-    
+
     public List<Edge> getChildEdges() {
-  List<Edge> edgeList = new ArrayList<Edge>();
-  
-  for(FlowElement fe : this.getFlowElement()) {
-   if(fe instanceof Edge) {
-    edgeList.add((Edge) fe);
-   } else if(fe instanceof ContainerElement) {
-    edgeList.addAll(((ContainerElement) fe).getChildEdges());
-   }
-  }
-  
-  return edgeList;
- }
-    
+        List<Edge> edgeList = new ArrayList<Edge>();
+
+        for(FlowElement fe : this.getFlowElement()) {
+            if(fe instanceof Edge) {
+                edgeList.add((Edge) fe);
+            } else if(fe instanceof ContainerElement) {
+                edgeList.addAll(((ContainerElement) fe).getChildEdges());
+            }
+        }
+
+        return edgeList;
+    }
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the participantAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participantAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipantAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ParticipantAssociation }
-     * 
-     * 
+     *
+     *
      */
     public List<ParticipantAssociation> getParticipantAssociation() {
         if (participantAssociation == null) {
@@ -168,11 +162,11 @@ public class CallChoreography
 
     /**
      * Gets the value of the calledChoreographyRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Choreography }
-     *     
+     *
      */
     public Choreography getCalledChoreographyRef() {
         return calledChoreographyRef;
@@ -180,31 +174,31 @@ public class CallChoreography
 
     /**
      * Sets the value of the calledChoreographyRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Choreography }
-     *     
+     *
      */
     public void setCalledChoreographyRef(Choreography value) {
         this.calledChoreographyRef = value;
     }
-    
+
     public void acceptVisitor(Visitor v){
-  v.visitCallChoreography(this);
- }
+        v.visitCallChoreography(this);
+    }
 
- public List<DiagramElement> _getDiagramElements() {
-  return _diagramElements;
- }
+    public List<DiagramElement> _getDiagramElements() {
+        return _diagramElements;
+    }
 
- public List<FlowElement> getFlowElement() {
-  if(this.getCalledChoreographyRef() != null) {
-   return this.getCalledChoreographyRef().getFlowElement();
-  }
-  
-  return new ArrayList<FlowElement>();
- }
+    public List<FlowElement> getFlowElement() {
+        if(this.getCalledChoreographyRef() != null) {
+            return this.getCalledChoreographyRef().getFlowElement();
+        }
+
+        return new ArrayList<FlowElement>();
+    }
 
 
 }

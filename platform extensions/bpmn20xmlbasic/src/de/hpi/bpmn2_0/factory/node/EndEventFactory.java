@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.factory.node;
 
 import org.oryxeditor.server.diagram.generic.GenericShape;
@@ -46,7 +40,7 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * Factory to create end events
- * 
+ *
  * @author Sven Wagner-Boysen
  *
  */
@@ -72,7 +66,7 @@ public class EndEventFactory extends AbstractShapeFactory {
             EndEvent endEvent = (EndEvent) this.invokeCreatorMethod(shape);
             endEvent.setId(shape.getResourceId());
             endEvent.setName(shape.getProperty("name"));
-            
+
             return endEvent;
         } catch (Exception e) {
             /* Wrap exceptions into specific BPMNConverterException */
@@ -81,23 +75,23 @@ public class EndEventFactory extends AbstractShapeFactory {
                             + shape.getStencilId(), e);
         }
     }
-    
+
     /* Methods for different */
-    
+
     @StencilId("EndNoneEvent")
     public EndEvent createEndNoneEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndMessageEvent")
     public EndEvent createEndMessageEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         MessageEventDefinition msgEventDef = new MessageEventDefinition();
-        
-        
+
+
         /* Message name */
         String messageName = shape.getProperty("messagename");
         if(messageName != null && !(messageName.length() == 0)) {
@@ -105,7 +99,7 @@ public class EndEventFactory extends AbstractShapeFactory {
             message.setName(messageName);
             msgEventDef.setMessageRef(message);
         }
-        
+
         /* Operation name */
         String operationName = shape.getProperty("operationname");
         if(operationName != null && !(operationName.length() == 0)) {
@@ -113,81 +107,81 @@ public class EndEventFactory extends AbstractShapeFactory {
             operation.setName(operationName);
             msgEventDef.setOperationRef(operation);
         }
-        
+
         endEvent.getEventDefinition().add(msgEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndEscalationEvent")
     public EndEvent createEndEscalationEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         EscalationEventDefinition escalEventDef = new EscalationEventDefinition();
-        
+
         Escalation escalation = new Escalation();
-        
+
         /* Escalation name */
         String escalationName = shape.getProperty("escalationname");
         if(escalationName != null && !(escalationName.length() == 0)) {
             escalation.setName(escalationName);
         }
-        
+
         /* Escalation code */
         String escalationCode = shape.getProperty("escalationcode");
         if(escalationCode != null && !(escalationCode.length() == 0)) {
             escalation.setEscalationCode(escalationCode);
         }
-        
+
         escalEventDef.setEscalationRef(escalation);
         endEvent.getEventDefinition().add(escalEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndErrorEvent")
     public EndEvent createEndErrorEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         ErrorEventDefinition errorEventDef = new ErrorEventDefinition();
-        
+
         Error error = new Error();
-        
+
         /* Error name */
         String errorName = shape.getProperty("errorname");
         if(errorName != null && !(errorName.length() == 0)) {
             error.setName(errorName);
         }
-        
+
         /* Error code */
         String errorCode = shape.getProperty("errorcode");
         if(errorCode != null && !(errorCode.length() == 0)) {
             error.setErrorCode(errorCode);
         }
-        
+
         errorEventDef.setErrorRef(error);
-        
+
         endEvent.getEventDefinition().add(errorEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndCancelEvent")
     public EndEvent createEndCancelEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         CancelEventDefinition cancelEventDef = new CancelEventDefinition();
         endEvent.getEventDefinition().add(cancelEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndCompensationEvent")
     public EndEvent createEndCompensateEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         CompensateEventDefinition compEventDef = new CompensateEventDefinition();
-        
+
         /* Activity Reference */
         String activityRef = shape.getProperty("activityref");
         if(activityRef != null && !(activityRef.length() == 0)) {
@@ -195,7 +189,7 @@ public class EndEventFactory extends AbstractShapeFactory {
             taskRef.setId(activityRef);
             compEventDef.setActivityRef(taskRef);
         }
-        
+
         /* Wait for Completion */
         String waitForCompletion = shape.getProperty("waitforcompletion");
         if(waitForCompletion != null && waitForCompletion.equals("false")) {
@@ -203,52 +197,52 @@ public class EndEventFactory extends AbstractShapeFactory {
         } else {
             compEventDef.setWaitForCompletion(true);
         }
-        
+
         endEvent.getEventDefinition().add(compEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndSignalEvent")
     public EndEvent createEndSignalEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         SignalEventDefinition signalEventDef = new SignalEventDefinition();
-        
+
         Signal signal = new Signal();
-        
+
         /* Signal ID */
         signal.setId(SignavioUUID.generate());
-        
+
         /* Signal name */
         String signalName = shape.getProperty("signalname");
         if(signalName != null && !(signalName.length() == 0)) {
             signal.setName(signalName);
         }
-        
+
         signalEventDef.setSignalRef(signal);
         endEvent.getEventDefinition().add(signalEventDef);
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndMultipleEvent")
     public EndEvent createEndMultipleEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         endEvent.getEventDefinition().add(new CancelEventDefinition());
         endEvent.getEventDefinition().add(new TerminateEventDefinition());
-        
+
         return endEvent;
     }
-    
+
     @StencilId("EndTerminateEvent")
     public EndEvent createEndTerminateEvent(GenericShape shape) {
         EndEvent endEvent = new EndEvent();
-        
+
         TerminateEventDefinition eventDef = new TerminateEventDefinition();
         endEvent.getEventDefinition().add(eventDef);
-        
+
         return endEvent;
     }
 }

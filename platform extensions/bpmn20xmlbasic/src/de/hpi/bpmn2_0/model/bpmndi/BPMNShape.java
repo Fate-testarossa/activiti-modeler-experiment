@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2010
- * Signavio, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.bpmndi;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -39,11 +33,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for BPMNShape complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="BPMNShape">
  *   &lt;complexContent>
@@ -63,8 +57,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(name = "BPMNShape")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -100,12 +94,12 @@ public class BPMNShape extends LabeledShape {
     public void acceptVisitor(Visitor v){
         v.visitBpmnShape(this);
     }
-    
+
     /**
      * Gets the value of the bpmnLabel property.
-     * 
+     *
      * @return possible object is {@link BPMNLabel }
-     * 
+     *
      */
     public BPMNLabel getBPMNLabel() {
         return bpmnLabel;
@@ -113,10 +107,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the bpmnLabel property.
-     * 
+     *
      * @param value
      *            allowed object is {@link BPMNLabel }
-     * 
+     *
      */
     public void setBPMNLabel(BPMNLabel value) {
         this.bpmnLabel = value;
@@ -124,9 +118,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the bpmnElement property.
-     * 
+     *
      * @return possible object is {@link BaseElement }
-     * 
+     *
      */
     public BaseElement getBpmnElement() {
         return bpmnElement;
@@ -134,10 +128,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the bpmnElement property.
-     * 
+     *
      * @param value
      *            allowed object is {@link BaseElement }
-     * 
+     *
      */
     public void setBpmnElement(BaseElement value) {
         this.bpmnElement = value;
@@ -145,28 +139,28 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the isHorizontal property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public Boolean isIsHorizontal() {
         return isHorizontal;
     }
-    
+
     public boolean isIsHorizontalNoNull() {
         if(this.isHorizontal == null) {
             return false;
         }
-        
+
         return this.isHorizontal.booleanValue();
     }
 
     /**
      * Sets the value of the isHorizontal property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsHorizontal(Boolean value) {
         this.isHorizontal = value;
@@ -174,9 +168,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the isExpanded property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public Boolean isIsExpanded() {
         return isExpanded;
@@ -184,10 +178,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the isExpanded property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsExpanded(Boolean value) {
         this.isExpanded = value;
@@ -195,9 +189,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the isMarkerVisible property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public Boolean isIsMarkerVisible() {
         return isMarkerVisible;
@@ -205,10 +199,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the isMarkerVisible property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsMarkerVisible(Boolean value) {
         this.isMarkerVisible = value;
@@ -216,9 +210,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the isMessageVisible property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public Boolean isIsMessageVisible() {
         return isMessageVisible;
@@ -226,10 +220,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the isMessageVisible property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsMessageVisible(Boolean value) {
         this.isMessageVisible = value;
@@ -237,9 +231,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the participantBandKind property.
-     * 
+     *
      * @return possible object is {@link ParticipantBandKind }
-     * 
+     *
      */
     public ParticipantBandKind getParticipantBandKind() {
         return participantBandKind;
@@ -247,10 +241,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the participantBandKind property.
-     * 
+     *
      * @param value
      *            allowed object is {@link ParticipantBandKind }
-     * 
+     *
      */
     public void setParticipantBandKind(ParticipantBandKind value) {
         this.participantBandKind = value;
@@ -258,9 +252,9 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Gets the value of the choreographyActivityShape property.
-     * 
+     *
      * @return possible object is {@link BPMNShape }
-     * 
+     *
      */
     public BPMNShape getChoreographyActivityShape() {
         return choreographyActivityShape;
@@ -268,10 +262,10 @@ public class BPMNShape extends LabeledShape {
 
     /**
      * Sets the value of the choreographyActivityShape property.
-     * 
+     *
      * @param value
      *            allowed object is {@link BPMNShape }
-     * 
+     *
      */
     public void setChoreographyActivityShape(BPMNShape value) {
         this.choreographyActivityShape = value;

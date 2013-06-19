@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.platform.core;
 
 import java.lang.reflect.Constructor;
@@ -26,13 +22,13 @@ import java.lang.reflect.Constructor;
 import com.signavio.platform.exceptions.InitializationException;
 
 /**
- * The Platform class stores the active {@link PlatformInstance} and provides an interface for 
+ * The Platform class stores the active {@link PlatformInstance} and provides an interface for
  * booting and stopping the platform
  * @author Bjoern Wagner
  *
  */
 public class Platform  {
-    
+
     private static PlatformInstance INSTANCE;
 
     /**
@@ -40,14 +36,14 @@ public class Platform  {
      * @throws InitializationException if no platform is running
      */
     public static PlatformInstance getInstance() {
-        
+
         if (INSTANCE != null) {
             return INSTANCE;
         } else {
             throw new InitializationException("Platform not running!");
         }
     }
-    
+
     /**
      * Returns true if an {@link PlatformInstance} is running.
      * @return
@@ -55,17 +51,17 @@ public class Platform  {
     public static boolean isRunning() {
         return INSTANCE != null;
     }
-    
+
     /**
      * Bootstraps a new Platform instance
      * @param instanceImpl The actual implementation class of the new instance
-     * @param parameters Implementation specific parameters that will be used to 
+     * @param parameters Implementation specific parameters that will be used to
      * initialize the {@link PlatformInstance}
      * @throws InitializationException if another instance is already running
      */
-    public static <T extends PlatformInstance> T  bootInstance(Class<T> instanceImpl, 
+    public static <T extends PlatformInstance> T  bootInstance(Class<T> instanceImpl,
             Object ... parameters) throws InitializationException {
-        
+
         try {
             if (isRunning()) {
                 throw new InitializationException("Platform boot failed! Another PlatformInstance is already running. ");
@@ -79,9 +75,9 @@ public class Platform  {
         } catch (Exception e) {
             e.printStackTrace();
             throw new InitializationException("Platform boot failed!", e);
-        } 
+        }
     }
-    
+
     /**
      * Shutdown the running {@link PlatformInstance}. This call is ignored if no instance
      * is running.

@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.factory.node;
 
 import org.oryxeditor.server.diagram.generic.GenericShape;
@@ -45,7 +39,7 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioMetaData;
 
 /**
  * Factory that creates elements of a choreography diagram.
- * 
+ *
  * @author Sven Wagner-Boysen
  *
  */
@@ -58,14 +52,14 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
 
     public BPMNElement createBpmnElement(GenericShape shape, Configuration configuration) throws BpmnConverterException {
         BPMNElement bpmnElement = super.createBpmnElement(shape, configuration);
-        
+
         if(bpmnElement != null) {
-            handleLinkedDiagrams(bpmnElement.getNode(), shape, configuration);            
+            handleLinkedDiagrams(bpmnElement.getNode(), shape, configuration);
         }
-        
+
         return bpmnElement;
     }
-    
+
     /* (non-Javadoc)
      * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
      */
@@ -76,13 +70,13 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
             ChoreographyActivity activity = (ChoreographyActivity) this.invokeCreatorMethod(shape);
             activity.setId(shape.getResourceId());
             activity.setName(shape.getProperty("name"));
-            
+
             /* Call choreography */
             String isCallActivity = shape.getProperty("callacitivity");
             if(isCallActivity != null && isCallActivity.equals("true")) {
                 activity = new CallChoreography(activity);
             }
-            
+
             /* Loop type */
             String loopType = shape.getProperty("looptype");
             if(loopType != null) {
@@ -94,12 +88,12 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
                 }
                 else if(loopType.equalsIgnoreCase("MultiInstance")) {
                     activity.setLoopType(ChoreographyLoopType.MULTI_INSTANCE_PARALLEL);
-                } 
+                }
                 else if(loopType.equalsIgnoreCase("Sequential")) {
                     activity.setLoopType(ChoreographyLoopType.MULTI_INSTANCE_SEQUENTIAL);
                 }
             }
-            
+
             return activity;
         } catch (Exception e) {
             /* Wrap exceptions into specific BPMNConverterException */
@@ -108,10 +102,10 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
                             + shape.getStencilId(), e);
         }
     }
-    
+
     /**
      * Creator method for a choreography task.
-     * 
+     *
      * @param shape
      *         The resource shape
      * @return
@@ -121,10 +115,10 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
     public ChoreographyTask createChoreographyTask(GenericShape shape) {
         return new ChoreographyTask();
     }
-    
+
     /**
      * Creator method for a collapsed choreography subprocess.
-     * 
+     *
      * @param shape
      *         The resource shape
      * @return
@@ -141,7 +135,7 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
     // @Override
     protected BPMNShape createDiagramElement(GenericShape shape) {
         BPMNShape diagramElement = super.createDiagramElement(shape);
-        
+
         /* Expanded subprocess */
         if(shape.getStencilId().equals("ChoreographySubprocessExpanded")) {
             diagramElement.setIsExpanded(Boolean.TRUE);
@@ -150,13 +144,13 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
         else if(shape.getStencilId().equals("ChoreographySubprocessCollapsed")) {
             diagramElement.setIsExpanded(Boolean.FALSE);
         }
-        
+
         return diagramElement;
     }
-    
+
     /**
      * Transforms linked diagrams of collapsed subprocess and event subprocess.
-     * 
+     *
      * @param baseElement
      * @param shape
      * @param config
@@ -165,7 +159,7 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
         if(baseElement == null || !(baseElement instanceof SubChoreography) || !shape.getStencilId().matches(".*Collapsed.*")) {
             return;
         }
-        
+
         /*
          * Diagram Link
          */
@@ -173,25 +167,25 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
         if(entry == null || entry.length() == 0) {
             return;
         }
-        
+
         SignavioMetaData metaData = new SignavioMetaData("entry", entry);
         baseElement.getOrCreateExtensionElements().add(metaData);
-        
+
         Definitions linkedDiagram = SubprocessFactory.retrieveDefinitionsOfLinkedDiagram(entry, config);
-        
+
         if(linkedDiagram == null || linkedDiagram.getRootElement().size() == 0) {
             return;
         }
-        
+
         for(BaseElement rootEl : linkedDiagram.getRootElement()) {
             if(rootEl instanceof Choreography) {
                 Choreography linkedChoreo = (Choreography) rootEl;
-                
+
                 /* Sub choreography */
                 if(baseElement instanceof SubChoreography) {
                     SubChoreography subChoreography = (SubChoreography) baseElement;
-                    
-                    /* 
+
+                    /*
                      * Add flow elements and artifacts including their diagram
                      * elements
                      */
@@ -199,25 +193,25 @@ public class ChoreographyActivityFactory extends AbstractShapeFactory {
                         subChoreography.getFlowElement().add(flowEl);
                         subChoreography._diagramElements.add(flowEl._diagramElement);
                     }
-                    
+
                     for(Artifact artifact : linkedChoreo.getArtifact()) {
                         subChoreography.getArtifact().add(artifact);
                         subChoreography._diagramElements.add(artifact._diagramElement);
                     }
-                    
+
                 }
-                
+
                 /* Call choreography */
                 else if(baseElement instanceof CallChoreography) {
                     CallChoreography callChoreography = (CallChoreography) baseElement;
                     callChoreography.setCalledChoreographyRef(linkedChoreo);
-                    
+
                     for(BaseElement baseEl : linkedChoreo.getChilds()) {
                         callChoreography._diagramElements.add(baseEl._diagramElement);
                     }
-                    
+
                 }
-            } 
+            }
         }
     }
 }

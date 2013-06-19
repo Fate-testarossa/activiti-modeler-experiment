@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model;
 
 import java.util.ArrayList;
@@ -58,11 +52,11 @@ import de.hpi.diagram.SignavioUUID;
 /**
  * <p>
  * Java class for tBaseElement complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name=&quot;tBaseElement&quot;&gt;
  *   &lt;complexContent&gt;
@@ -76,8 +70,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "tBaseElement", propOrder = {
@@ -126,7 +120,7 @@ import de.hpi.diagram.SignavioUUID;
 DataOutput.class
 })
 public abstract class BaseElement {
-    
+
     @XmlElement
     protected List<Documentation> documentation;
     @XmlAnyElement(lax = true)
@@ -136,23 +130,23 @@ public abstract class BaseElement {
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
-    
+
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
-    
+
     @XmlElement
     private ExtensionElements extensionElements;
-    
+
     @XmlTransient
     private Lane lane;
-    
+
     @XmlTransient
     private Process processRef;
-    
+
     @XmlTransient
     public DiagramElement _diagramElement;
-    
-    
+
+
     /**
      * Default constructor
      */
@@ -160,49 +154,49 @@ public abstract class BaseElement {
         super();
         setId(SignavioUUID.generate());
     }
-    
+
     /**
      * Copy constructor
-     * 
+     *
      * @param base
      *         The {@link BaseElement} to copy.
      */
     public BaseElement(BaseElement base) {
         if(base.getDocumentation().size() > 0)
             this.getDocumentation().addAll(base.getDocumentation());
-        
+
         if(base.getAny().size() > 0)
             this.getAny().addAll(base.getAny());
-        
+
         if(base.getOtherAttributes().size() > 0)
             this.getOtherAttributes().putAll(base.getOtherAttributes());
-        
+
         this.setId(base.getId());
         this.setLane(base.getLane());
         this.setProcessRef(base.getProcessRef());
-        
+
         if(base.getExtensionElements() != null && !base.getExtensionElements().getAny().isEmpty()) {
             this.setExtensionElements(base.getExtensionElements());
         }
     }
-    
+
     public Map<String, String> getExternalNamespaceDefinitions() {
         Map<String, String> result = new HashMap<String, String>();
-        
+
         for(QName qn : this.getOtherAttributes().keySet()) {
             if(qn.getPrefix() != null && qn.getNamespaceURI() != null) {
                 result.put(qn.getNamespaceURI(), qn.getPrefix());
             }
         }
-        
+
         return result;
     }
-    
+
     /**
      * Adds a child element to the current BPMN element if possible. This method
      * should be implemented by the concrete sub class, if it can contain child
      * elements.
-     * 
+     *
      * @param child
      *            The child element to add
      */
@@ -223,17 +217,17 @@ public abstract class BaseElement {
     public double getStandardWidth(){
         return 0;
     }
-    
+
     /**
      * For a fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
         return 0;
     }
-    
+
     /**
      * Returns a list of all child elements of the current element.
-     * 
+     *
      * @return
      */
     public List<BaseElement> getChilds() {
@@ -250,58 +244,58 @@ public abstract class BaseElement {
 
     /**
      * Retrieves the highest lane in the elements tree
-     * 
+     *
      * @return
      */
     public Lane getHighestParentLane() {
-        if(this.getLane() == null) 
+        if(this.getLane() == null)
             return null;
-        
+
         Lane lane = (Lane) this.getLane();
         while(lane != null && lane != lane.getLane()) {
             lane = lane.getLane();
         }
-        
+
         return lane;
     }
 
     public void acceptVisitor(Visitor v){
         v.visitBaseElement(this);
     }
-    
+
     public ExtensionElements getOrCreateExtensionElements() {
         if(extensionElements == null) {
             extensionElements = new ExtensionElements();
         }
-        
+
         return extensionElements;
     }
-    
-    
+
+
     /* Getter & Setter */
 
     /**
      * Gets the value of the documentation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the documentation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getDocumentation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Documentation }
-     * 
-     * 
+     *
+     *
      */
      public List<Documentation> getDocumentation() {
      if (documentation == null) {
@@ -311,26 +305,26 @@ public abstract class BaseElement {
      }
     /**
      * Gets the value of the any property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the any property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getAny().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list {@link Object }
      * {@link Element }
-     * 
-     * 
+     *
+     *
      */
     public List<Object> getAny() {
         if (any == null) {
@@ -338,7 +332,7 @@ public abstract class BaseElement {
         }
         return this.any;
     }
-    
+
     /**
      * @return the processRef
      */
@@ -355,9 +349,9 @@ public abstract class BaseElement {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return possible object is {@link String }
-     * 
+     *
      */
     public String getId() {
         return id;
@@ -365,10 +359,10 @@ public abstract class BaseElement {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
      *            allowed object is {@link String }
-     * 
+     *
      */
     public void setId(String value) {
         this.id = value;
@@ -377,15 +371,15 @@ public abstract class BaseElement {
     /**
      * Gets a map that contains attributes that aren't bound to any typed
      * property on this class.
-     * 
+     *
      * <p>
      * the map is keyed by the name of the attribute and the value is the string
      * value of the attribute.
-     * 
+     *
      * the map returned by this method is live, and you can add new attribute by
      * updating the map directly. Because of this design, there's no setter.
-     * 
-     * 
+     *
+     *
      * @return always non-null
      */
     public Map<QName, String> getOtherAttributes() {
@@ -401,9 +395,9 @@ public abstract class BaseElement {
     }
 
     /**
-     * 
+     *
      * Returns the lane that contains this element.
-     * 
+     *
      * @return the lane
      */
     public Lane getLane() {

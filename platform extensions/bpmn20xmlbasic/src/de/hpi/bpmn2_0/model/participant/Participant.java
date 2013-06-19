@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.participant;
 
 import java.util.ArrayList;
@@ -47,9 +41,9 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * <p>Java class for tParticipant complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tParticipant">
  *   &lt;complexContent>
@@ -67,8 +61,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -87,22 +81,22 @@ public class Participant
     protected List<QName> endPointRef;
     @XmlElement(type = ParticipantMultiplicity.class)
     protected ParticipantMultiplicity participantMultiplicity;
-    
+
     @XmlAttribute
     @XmlIDREF
     protected Process processRef;
-    
+
     @XmlAttribute
     protected QName partnerRoleRef;
     @XmlAttribute
     protected QName partnerEntityRef;
-    
+
     @XmlTransient
     protected boolean isInitiating;
-    
+
     @XmlTransient
     private LaneSet laneSet;
-    
+
     @XmlTransient
     public String _processType;
     @XmlTransient
@@ -113,45 +107,45 @@ public class Participant
     public boolean _isChoreographyParticipant = false;
     @XmlTransient
     public Message _msgRef;
-    
+
     /*
      * Constructors
      */
-    
+
     /**
      * Default constructor
      */
     public Participant() {
         super();
     }
-    
+
     /**
      * Copy constructor
-     * 
-     * @param p 
+     *
+     * @param p
      *         template {@link Participant}
      */
     public Participant(Participant p) {
         super(p);
-        
+
         this.getInterfaceRef().addAll(p.getInterfaceRef());
         this.getEndPointRef().addAll(p.getEndPointRef());
-        
+
         this.setParticipantMultiplicity(p.getParticipantMultiplicity());
         this.setProcessRef(p.getProcessRef());
-        
+
         this.setPartnerRoleRef(p.getPartnerRoleRef());
         this.setPartnerEntityRef(p.getPartnerEntityRef());
-        
+
         this.setInitiating(p.isInitiating());
         this.setLaneSet(p.getLaneSet());
-        
+
         this._processType = p._processType;
         this._isClosed = p._isClosed;
         this._isExecutable = p._isExecutable;
         this._isChoreographyParticipant = p._isChoreographyParticipant;
     }
-    
+
     /* Business logic methods */
 
     // @Override
@@ -161,37 +155,37 @@ public class Participant
                 laneSet = new LaneSet();
                 laneSet.setId(SignavioUUID.generate());
             }
-            
+
             getLaneSet().addChild(child);
         }
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitParticipant(this);
     }
-    
+
     /* Getter & Setter */
     /**
      * Gets the value of the interfaceRef property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the interfaceRef property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getInterfaceRef().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link QName }
-     * 
-     * 
+     *
+     *
      */
     public List<QName> getInterfaceRef() {
         if (interfaceRef == null) {
@@ -216,25 +210,25 @@ public class Participant
 
     /**
      * Gets the value of the endPointRef property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the endPointRef property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEndPointRef().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link QName }
-     * 
-     * 
+     *
+     *
      */
     public List<QName> getEndPointRef() {
         if (endPointRef == null) {
@@ -245,11 +239,11 @@ public class Participant
 
     /**
      * Gets the value of the participantMultiplicity property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link ParticipantMultiplicity }
-     *     
+     *
      */
     public ParticipantMultiplicity getParticipantMultiplicity() {
         return participantMultiplicity;
@@ -257,11 +251,11 @@ public class Participant
 
     /**
      * Sets the value of the participantMultiplicity property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link ParticipantMultiplicity }
-     *     
+     *
      */
     public void setParticipantMultiplicity(ParticipantMultiplicity value) {
         this.participantMultiplicity = value;
@@ -283,11 +277,11 @@ public class Participant
 
     /**
      * Gets the value of the partnerRoleRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getPartnerRoleRef() {
         return partnerRoleRef;
@@ -295,11 +289,11 @@ public class Participant
 
     /**
      * Sets the value of the partnerRoleRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setPartnerRoleRef(QName value) {
         this.partnerRoleRef = value;
@@ -307,11 +301,11 @@ public class Participant
 
     /**
      * Gets the value of the partnerEntityRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getPartnerEntityRef() {
         return partnerEntityRef;
@@ -319,11 +313,11 @@ public class Participant
 
     /**
      * Sets the value of the partnerEntityRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setPartnerEntityRef(QName value) {
         this.partnerEntityRef = value;

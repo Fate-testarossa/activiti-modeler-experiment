@@ -1,26 +1,22 @@
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 /**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-/**
- * 
+ *
  */
 package com.signavio.platform.core.impl;
 
@@ -47,20 +43,20 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
     private final String editorUri;
     private final String libsUri;
     private final String supportedBrowserEditor;
-    
+
     private final String rootDirectoryPath;
-    
+
 
     public FsPlatformPropertiesImpl(ServletContext context) {
         supportedBrowserEditor = context.getInitParameter("supportedBrowserEditor");
-        
+
         Properties props = new Properties();
         try {
             props.load(this.getClass().getClassLoader().getResourceAsStream("configuration.properties"));
         } catch (IOException e) {
             throw new InitializationException(e);
         }
-        
+
         String tempRootDirectoryPath = props.getProperty("fileSystemRootDirectory");
         System.out.println("ROOT: " +tempRootDirectoryPath );
         if (tempRootDirectoryPath.endsWith(File.separator)) {
@@ -68,14 +64,14 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
         } else {
             rootDirectoryPath = tempRootDirectoryPath;
         }
-        
+
         serverName = props.getProperty("host");
         platformUri = context.getContextPath() + "/p";
         explorerUri = context.getContextPath() + "/explorer";
         editorUri = context.getContextPath() + "/editor";
         libsUri = context.getContextPath() + "/libs";
     }
-    
+
     /* (non-Javadoc)
      * @see com.signavio.platform.core.impl.PlatformProperties#getServerName()
      */
@@ -105,7 +101,7 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
      */
     public String getLibsUri() {
         return libsUri;
-    }    
+    }
     /* (non-Javadoc)
      * @see com.signavio.platform.core.impl.PlatformProperties#getSupportedBrowserEditorRegExp()
      */
@@ -116,7 +112,7 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
     public Set<String> getAdmins() {
         return new HashSet<String>(0);
     }
-    
+
     public String getRootDirectoryPath() {
         return rootDirectoryPath;
     }

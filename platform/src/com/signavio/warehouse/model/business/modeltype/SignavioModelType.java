@@ -1,24 +1,20 @@
-/**
- * Copyright (c) 2009, Signavio GmbH
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package com.signavio.warehouse.model.business.modeltype;
 
 import java.io.File;
@@ -34,12 +30,12 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 public class SignavioModelType implements ModelType {
 
     private static final String XPATH_PREFIX = "/oryxmodel/";
-    
+
     private static final String DESCRIPTION_ElEMENT_NAME = "description";
     private static final String TYPE_ElEMENT_NAME = "type";
     private static final String JSON_ElEMENT_NAME = "json-representation";
     private static final String SVG_ElEMENT_NAME = "svg-representation";
-    
+
     public String getFileExtension() {
         return this.getClass().getAnnotation(ModelTypeFileExtension.class).fileExtension();
     }
@@ -47,7 +43,7 @@ public class SignavioModelType implements ModelType {
     public String getDescriptionFromModelFile(String path) {
         return FileSystemUtil.readXmlNodeChildFromFile(XPATH_PREFIX + DESCRIPTION_ElEMENT_NAME, path, null);
     }
-    
+
     public String getTypeStringFromModelFile(String path) {
         return FileSystemUtil.readXmlNodeChildFromFile(XPATH_PREFIX + TYPE_ElEMENT_NAME, path, null);
     }
@@ -78,9 +74,9 @@ public class SignavioModelType implements ModelType {
             case SVG :
                 String svg = FileSystemUtil.readXmlNodeChildFromFile(XPATH_PREFIX + SVG_ElEMENT_NAME, path, null);
                 if (svg != null) {
-                    
+
                         return svg.getBytes("utf-8");
-                    
+
                 }
                 break;
             }
@@ -90,7 +86,7 @@ public class SignavioModelType implements ModelType {
         System.out.println("Failed to return reprensentation of type " + type);
         return null;
     }
-    
+
     public void storeRepresentationInfoToModelFile(RepresentationType type, byte[] content, String path) {
         try {
             if (RepresentationType.JSON == type){
@@ -98,11 +94,11 @@ public class SignavioModelType implements ModelType {
                     throw new IllegalStateException("Could not write new revision data to file");
                 }
             } else if (RepresentationType.SVG == type) {
-                
+
                     if (!FileSystemUtil.writeXmlNodeChildToFile(SVG_ElEMENT_NAME, new String(content, "utf-8"), true, path)) {
                         throw new IllegalStateException("Could not write new revision data to file");
                     }
-                
+
             } else  {
                 System.out.println("Imitated creation of reprensentation of type " + type);
             }
@@ -115,12 +111,12 @@ public class SignavioModelType implements ModelType {
         if (!FileSystemUtil.writeXmlNodeChildToFile(JSON_ElEMENT_NAME, jsonRep, true, path)) {
             throw new IllegalStateException("Could not write new revision data to file");
         }
-        
+
         if (!FileSystemUtil.writeXmlNodeChildToFile(SVG_ElEMENT_NAME, svgRep, true, path)) {
             throw new IllegalStateException("Could not write new revision data to file");
         }
     }
-        
+
     public boolean acceptUsageForTypeName(String typeName) {
         return false;
     }
@@ -138,8 +134,8 @@ public class SignavioModelType implements ModelType {
     }
 
     private String getInitialModelString(String id, String name, String description, String type, String jsonRep, String svgRep) {
-        return     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + 
-                "<oryxmodel>\n" + 
+        return     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<oryxmodel>\n" +
                     "<description>" + description + "</description>\n" +
                     "<type>" + type + "</type>\n" +
                     "<json-representation><![CDATA[" + jsonRep + "]]></json-representation>\n" +
@@ -159,5 +155,5 @@ public class SignavioModelType implements ModelType {
     public void deleteFile(String parentPath, String name) {
         FileSystemUtil.deleteFileOrDirectory(parentPath + File.separator + name + getFileExtension());
     }
-    
+
 }

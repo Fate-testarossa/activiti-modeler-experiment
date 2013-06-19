@@ -3,5 +3,5 @@
     name="signavio.war"
     domain="signaviodomain"
     export-all="NON_EMPTY"
-    import-all="false">     
+    import-all="false">
 </classloading>

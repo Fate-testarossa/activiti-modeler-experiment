@@ -1,56 +1,52 @@
-/**
- * Copyright (c) 2008
- * Willi Tscheschner
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- **/
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
 
 
 /**
  * This plugin offer the functionality of undo/redo
  * Therewith the command pattern is used.
- * 
- * A Plugin which want that the changes could get undo/redo has 
+ *
+ * A Plugin which want that the changes could get undo/redo has
  * to implement a command-class (which implements the method .execute(), .rollback()).
  * Those instance of class must be execute thru the facade.executeCommands(). If so,
  * those command get stored here in the undo/redo stack and can get reset/restore.
  *
  **/
 
-if (!ORYX.Plugins) 
+if (!ORYX.Plugins)
     ORYX.Plugins = new Object();
 
 ORYX.Plugins.Undo = Clazz.extend({
-    
+
     // Defines the facade
     facade        : undefined,
-    
+
     // Defines the undo/redo Stack
     undoStack    : [],
     redoStack    : [],
-    
-    // Constructor 
+
+    // Constructor
     construct: function(facade){
-    
-        this.facade = facade;     
-        
-        // Offers the functionality of undo                
+
+        this.facade = facade;
+
+        // Offers the functionality of undo
         this.facade.offer({
             name            : ORYX.I18N.Undo.undo,
             description        : ORYX.I18N.Undo.undoDesc,
@@ -65,7 +61,7 @@ ORYX.Plugins.Undo = Clazz.extend({
             group            : ORYX.I18N.Undo.group,
             isEnabled        : function(){ return this.undoStack.length > 0 }.bind(this),
             index            : 0
-        }); 
+        });
 
         // Offers the functionality of redo
         this.facade.offer({
@@ -82,96 +78,96 @@ ORYX.Plugins.Undo = Clazz.extend({
             group            : ORYX.I18N.Undo.group,
             isEnabled        : function(){ return this.redoStack.length > 0 }.bind(this),
             index            : 1
-        }); 
-        
-        // Register on event for executing commands --> store all commands in a stack         
+        });
+
+        // Register on event for executing commands --> store all commands in a stack
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_EXECUTE_COMMANDS, this.handleExecuteCommands.bind(this) );
-        
+
     },
-    
+
     /**
      * Stores all executed commands in a stack
-     * 
+     *
      * @param {Object} evt
      */
     handleExecuteCommands: function( evt ){
-        
+
         // If the event has commands
         if( !evt.commands ){ return }
-        
+
         // Add the commands to a undo stack ...
         this.undoStack.push( evt.commands );
         // ...and delete the redo stack
         this.redoStack = [];
-        
+
         // Update
         this.facade.getCanvas().update();
         this.facade.updateSelection();
-        
+
     },
-    
+
     /**
      * Does the undo
-     * 
+     *
      */
     doUndo: function(){
-        
+
         // Get the last commands
         var lastCommands = this.undoStack.pop();
-        
+
         if( lastCommands ){
             // Add the commands to the redo stack
             this.redoStack.push( lastCommands );
-            
+
             // Rollback every command
             for(var i=lastCommands.length-1; i>=0; --i){
                 lastCommands[i].rollback();
             }
-                    
+
             // Update and refresh the canvas
             //this.facade.getCanvas().update();
             //this.facade.updateSelection();
             this.facade.raiseEvent({
-                type     : ORYX.CONFIG.EVENT_UNDO_ROLLBACK, 
+                type     : ORYX.CONFIG.EVENT_UNDO_ROLLBACK,
                 commands: lastCommands
             });
-            
+
             // Update
             this.facade.getCanvas().update();
             this.facade.updateSelection();
         }
     },
-    
+
     /**
      * Does the redo
-     * 
+     *
      */
     doRedo: function(){
-        
+
         // Get the last commands from the redo stack
         var lastCommands = this.redoStack.pop();
-        
+
         if( lastCommands ){
             // Add this commands to the undo stack
             this.undoStack.push( lastCommands );
-            
+
             // Execute those commands
             lastCommands.each(function(command){
                 command.execute();
             });
-                
-            // Update and refresh the canvas        
+
+            // Update and refresh the canvas
             //this.facade.getCanvas().update();
             //this.facade.updateSelection();
             this.facade.raiseEvent({
-                type     : ORYX.CONFIG.EVENT_UNDO_EXECUTE, 
+                type     : ORYX.CONFIG.EVENT_UNDO_EXECUTE,
                 commands: lastCommands
             });
-            
+
             // Update
             this.facade.getCanvas().update();
             this.facade.updateSelection();
         }
     }
-    
+
 });
