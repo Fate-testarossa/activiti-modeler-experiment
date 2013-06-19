@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,17 +51,17 @@ public class StencilSetHandler extends BasisHandler {
             + "/WEB-INF/json/stencilsets";
 
     public final String EDITOR_URL_PREFIX;
-    
+
     public StencilSetHandler(ServletContext servletContext) {
         super(servletContext);
-        
-        EDITOR_URL_PREFIX = (Platform.getInstance().getPlatformProperties().getEditorUri() + "/").replace(servletContext.getContextPath(), ""); 
+
+        EDITOR_URL_PREFIX = (Platform.getInstance().getPlatformProperties().getEditorUri() + "/").replace(servletContext.getContextPath(), "");
     }
 
     /**
      * Returns a JSON file that contains information about the available stencil
      * sets
-     * 
+     *
      * @throws Exception
      */
     @Override
@@ -69,14 +69,14 @@ public class StencilSetHandler extends BasisHandler {
             HttpServletResponse res, FsAccessToken token, T sbo) {
 
         FsUser user = token.getUser();
-        
+
         String namespace = getParameter(req, "namespace");
         String jsonp = getParameter(req, "jsonp");
         String embedSvg = getParameter(req, "embedsvg");
         String url = getParameter(req, "url");
 
         String fileName = SS_CONFIGURATION_FILE + ".json";
-        
+
         // if the namespace is not set, return information
         // about all available stencilsets.
 
@@ -129,7 +129,7 @@ public class StencilSetHandler extends BasisHandler {
                                                                     // embedding
                     jsonFile = new File(rootDirectory
                             + EDITOR_URL_PREFIX + "stencilsets/" + resource);
-                    
+
                 } else { // no SVG embedding (default)
                     // try to find stencilset nosvg representation
                     int pIdx = resource.lastIndexOf('.');

@@ -17,7 +17,7 @@ public enum VerticalAlign {
     public static VerticalAlign fromString(String enumString) {
         return fromString(enumString, true);
     }
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -56,8 +56,8 @@ public enum VerticalAlign {
     public String toString() {
         return label;
     }
-    
-    
+
+
     public int getIndex(){
         return index;
     }

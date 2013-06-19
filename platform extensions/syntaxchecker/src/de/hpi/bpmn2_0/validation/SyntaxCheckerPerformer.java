@@ -29,7 +29,7 @@ public class SyntaxCheckerPerformer {
 //            else if (type.equals("epc.json"))
 //                checker = getCheckerEPC(document);
 //        }
-//        
+//
 //        if(checker == null) {//try eRDF
 //            try {
 //                NamedNodeMap map = XPathAPI.selectSingleNode(document, "//a[@rel='oryx-stencilset']").getAttributes();
@@ -49,22 +49,22 @@ public class SyntaxCheckerPerformer {
 //            writer.print(checker.getErrorsAsJson().toString());
 //        }
 //    }
-    
+
     public JSONObject processDocument(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws JSONException, BpmnConverterException {
 //        GenericDiagram diagram = DiagramBuilder.parseJson(jsonDocument);
-        
+
         //TODO: validate edges that are not in the java object model
 //        ArrayList<Shape> edges = this.getEdgesFromDiagram(diagram.getChildShapes());
-        
+
         String type = diagram.getStencilsetRef().getNamespace();
         SyntaxChecker checker = null;
-        
+
         if(type != null && (type.equals("http://b3mn.org/stencilset/bpmn2.0#") ||
                 type.equals("http://b3mn.org/stencilset/bpmn2.0choreography#") ||
                 type.equals("http://b3mn.org/stencilset/bpmn2.0conversation#"))) {
             checker = getCheckerBPMN2(diagram, factoryClasses);
         }
-        
+
         if (checker == null) {
             return new JSONObject();
         } else {
@@ -72,13 +72,13 @@ public class SyntaxCheckerPerformer {
             return checker.getErrorsAsJson();
         }
     }
-    
+
 //    private ArrayList<Shape> getEdgesFromDiagram(ArrayList<Shape> shapes) {
 //        ArrayList<Shape> edges = new ArrayList<Shape>();
-//        
+//
 //        for(Shape shape : shapes) {
 //            String sid = shape.getStencilId();
-//            
+//
 //            if(sid.equals("SequenceFlow")
 //                    || sid.equals("MessageFlow")
 //                    || sid.equals("Association_Undirected")
@@ -88,15 +88,15 @@ public class SyntaxCheckerPerformer {
 //            } else if(shape.getChildShapes().size() > 0) {
 //                edges.addAll(this.getEdgesFromDiagram(shape.getChildShapes()));
 //            }
-//            
+//
 //        }
-//        
+//
 //        return edges;
 //    }
-    
+
     protected SyntaxChecker getCheckerBPMN2(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws BpmnConverterException {
         Diagram2BpmnConverter converter = new Diagram2BpmnConverter(diagram, factoryClasses, false);
-        
+
         Definitions defs = converter.getDefinitionsFromDiagram();
         return new BPMN2SyntaxChecker(defs);
     }

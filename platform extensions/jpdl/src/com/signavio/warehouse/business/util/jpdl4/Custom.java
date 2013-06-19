@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2010, Nicolas Peters, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,11 +40,11 @@ public class Custom extends Node {
     private String method;
     private String autoWire;
     private String cache;
-    
+
     private List<Field> fields;
     private List<Property> properties;
     private List<Arg> args;
-    
+
     public Custom(JSONObject java) {
 
         this.name = JsonToJpdl.getAttribute(java, "name");
@@ -55,7 +55,7 @@ public class Custom extends Node {
         this.method = JsonToJpdl.getAttribute(java, "method");
         this.autoWire = JsonToJpdl.getAttribute(java, "autowire");
         this.cache = JsonToJpdl.getAttribute(java, "cache");
-        
+
         this.bounds = JsonToJpdl.getBounds(java);
 
         fields = new ArrayList<Field>();
@@ -79,7 +79,7 @@ public class Custom extends Node {
             }
         } catch (JSONException e) {
         }
-        
+
         args = new ArrayList<Arg>();
         try {
             JSONArray parameters = java.getJSONObject("properties")
@@ -137,9 +137,9 @@ public class Custom extends Node {
                 jpdl.write(JsonToJpdl.transformRequieredAttribute("auto-wire", autoWire));
             }
             if(cache != null && !cache.equals("")) {
-                jpdl.write(JsonToJpdl.transformRequieredAttribute("cache", cache)); 
+                jpdl.write(JsonToJpdl.transformRequieredAttribute("cache", cache));
             }
-            
+
         } catch (InvalidModelException e) {
             throw new InvalidModelException("Invalid Java activity. "
                     + e.getMessage());
@@ -161,7 +161,7 @@ public class Custom extends Node {
         for (Property a : properties) {
             jpdl.write(a.toJpdl());
         }
-        
+
         for (Arg a : args) {
             jpdl.write(a.toJpdl());
         }

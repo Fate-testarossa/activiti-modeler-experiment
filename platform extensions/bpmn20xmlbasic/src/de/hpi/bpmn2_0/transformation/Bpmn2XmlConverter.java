@@ -38,7 +38,7 @@ public class Bpmn2XmlConverter {
     private String bpmn20XsdPath;
 
     public Bpmn2XmlConverter() {}
-    
+
     public Bpmn2XmlConverter(Definitions bpmnDefinitions, String bpmn20XsdPath) {
         this.bpmnDefinitions = bpmnDefinitions;
         this.bpmn20XsdPath = bpmn20XsdPath;
@@ -58,7 +58,7 @@ public class Bpmn2XmlConverter {
 
         NamespacePrefixMapper nsp = new BPMNPrefixMapper();
         ((BPMNPrefixMapper) nsp).setNsDefs(bpmnDefinitions.externalNSDefs);
-        
+
         marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", nsp);
 
         /* Marshal BPMN 2.0 XML */
@@ -68,15 +68,15 @@ public class Bpmn2XmlConverter {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.newDocument();
         marshaller.marshal(bpmnDefinitions, doc);
-        
+
         /*
          * Remove unused namespace prefixes
          */
-        
+
         for(String prefix : bpmnDefinitions.unusedNamespaceDeclarations) {
             doc.getDocumentElement().removeAttribute("xmlns:" + prefix);
         }
-        
+
         String styleSheet = "<!DOCTYPE stylesheet [  <!ENTITY cr \"<xsl:text></xsl:text>\">]> <xsl:stylesheet    xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"     xmlns:xalan=\"http://xml.apache.org/xslt\"     version=\"1.0\">        <xsl:output method=\"xml\" indent=\"yes\" xalan:indent-amount=\"3\"/>           <!-- copy out the xml -->    <xsl:template match=\"* | @*\">        <xsl:copy><xsl:copy-of select=\"@*\"/><xsl:apply-templates/></xsl:copy>    </xsl:template> </xsl:stylesheet>";
         StreamSource styleStream = new StreamSource(new ByteArrayInputStream(styleSheet.getBytes()));
         DOMSource domSource = new DOMSource(doc);
@@ -93,11 +93,11 @@ public class Bpmn2XmlConverter {
 
     public StringBuilder getValidationResults() throws JAXBException,
             SAXException {
-        
+
         final Map<String, Object> properties = new HashMap<String, Object>();
 
         Class[] classes = { Definitions.class };
-        
+
         JAXBContext context = JAXBContext.newInstance(classes, properties);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

@@ -69,17 +69,17 @@ public class BasicEdgeTest extends BasicShapeTest{
         assertEquals(0, target.getOutgoingsReadOnly().size());
 
     }
-    
+
     @Ignore //TODO rewrite, to actually test 'addDocker'
     @Test
     public void testAddDockerEdge1() {
-        
+
         BasicShape source = getBasicShapeOfRandomType("aSource");
-        
+
         BasicEdge e = new BasicEdge("anEdge");
-        
+
 //        e.connectToASource(source);
-        
+
         List<Point> l = new ArrayList<Point>();
         Random r = new Random(System.currentTimeMillis());
         Point p1 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
@@ -90,33 +90,33 @@ public class BasicEdgeTest extends BasicShapeTest{
                 r.nextDouble() * (r.nextInt(2000) - 1000));
         Point p4 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
                 r.nextDouble() * (r.nextInt(2000) - 1000));
-        
+
         l.add(p1);
         l.add(p2);
         l.add(p3);
         l.add(p4);
         e.setDockers(l);
-    
+
         ArrayList<Point> l2 = new ArrayList<Point>();
         for(Point p : l)
             l2.add(p.copy());
         Point exceptionPoint = l2.get(0);
         exceptionPoint.moveBy(-source.getUpperLeft().getX(), -source.getUpperLeft().getY());
-        
+
         assertEqualBoundsHelper(calculateBoundsFromPointsTestHelper(l2), e.getBounds());
-        
+
     }
-    
+
     @Ignore //TODO rewrite, to actually test 'addDocker'
     @Test
     public void testAddDockerEdge2() {
         BasicShape target = getBasicShapeOfRandomType("aTarget");
-        
+
 
         BasicEdge e = new BasicEdge("anEdge");
-        
+
 //        e.connectToATarget(target);
-        
+
         List<Point> l = new ArrayList<Point>();
         Random r = new Random(System.currentTimeMillis());
         Point p1 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
@@ -127,26 +127,26 @@ public class BasicEdgeTest extends BasicShapeTest{
                 r.nextDouble() * (r.nextInt(2000) - 1000));
         Point p4 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
                 r.nextDouble() * (r.nextInt(2000) - 1000));
-        
+
         l.add(p1);
         l.add(p2);
         l.add(p3);
         l.add(p4);
         e.setDockers(l);
-    
+
         ArrayList<Point> l2 = new ArrayList<Point>();
         for(Point p : l)
             l2.add(p.copy());
         Point exceptionPoint = l2.get(l2.size() - 1);
         exceptionPoint.moveBy(-target.getUpperLeft().getX(), -target.getUpperLeft().getY());
-        
+
         assertEqualBoundsHelper(calculateBoundsFromPointsTestHelper(l2), e.getBounds());
     }
-    
+
     @Test
     public void testSetDockers(){
         BasicEdge e = new BasicEdge("anEdge");
-        
+
         List<Point> l = new ArrayList<Point>();
         Random r = new Random(System.currentTimeMillis());
         Point p1 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
@@ -155,20 +155,20 @@ public class BasicEdgeTest extends BasicShapeTest{
                 r.nextDouble() * (r.nextInt(2000) - 1000));
         l.add(p1);
         l.add(p2);
-        
+
         e.setDockers(l);
-        
+
         Bounds b = new Bounds(p1, p2);
-        
+
         assertEqualBoundsHelper(b, e.getBounds());
-        
+
         Point p3 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
                 r.nextDouble() * (r.nextInt(2000) - 1000));
         Point p4 = new Point(r.nextDouble() * (r.nextInt(2000) - 1000),
                 r.nextDouble() * (r.nextInt(2000) - 1000));
         l.add(p3);
         l.add(p4);
-        
+
         e.setDockers(l);
 
         assertEqualBoundsHelper(calculateBoundsFromPointsTestHelper(l), e.getBounds());
@@ -199,9 +199,9 @@ public class BasicEdgeTest extends BasicShapeTest{
         BasicShape testShape = getBasicShapeToTest("test1");
         testShape.addDocker(new Point(100.26535, 200.14159));
         testShape.addDocker(new Point(300.89793, 400.23846));
-        
+
         BasicShape testChild = getBasicShapeToTest(
-                "subshape", 
+                "subshape",
                 "SubShape");
         // relative to parent shape!
         testChild.addDocker(new Point(10.1, 10.2));

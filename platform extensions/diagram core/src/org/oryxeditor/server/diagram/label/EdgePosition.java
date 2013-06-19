@@ -2,19 +2,19 @@ package org.oryxeditor.server.diagram.label;
 
 /**
  * Enumeration of positions along an edge, that a label of this edge can have
- *  
+ *
  * @author philipp.maschke
  *
  */
 public enum EdgePosition {
     START_TOP("starttop"),
     START_MIDDLE("startmiddle"),
-    START_BOTTOM("startbottom"), 
+    START_BOTTOM("startbottom"),
     MID_TOP("midtop"),
     MID_BOTTOM("midbottom"),
-    END_TOP("endtop"), 
+    END_TOP("endtop"),
     END_BOTTOM("endbottom");
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -24,7 +24,7 @@ public enum EdgePosition {
     public static EdgePosition fromString(String enumString) {
         return fromString(enumString, true);
     }
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -35,7 +35,7 @@ public enum EdgePosition {
     public static EdgePosition fromString(String enumString, boolean exceptionIfNoMatch) {
         if (enumString == null)
             return null;
-        
+
         for (EdgePosition attrEnum : values()) {
             if (attrEnum.label.equalsIgnoreCase(enumString) || attrEnum.name().equals(enumString))
                 return attrEnum;

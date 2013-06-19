@@ -47,7 +47,7 @@ public class FileIO {
         return contents.toString();
     }
 
-    
+
     /**
      * Writes content into a file.
      * Will create a new file or overwrite an existing one.
@@ -67,7 +67,7 @@ public class FileIO {
      */
     public static void writeToFile(String fileName, String content) throws IOException {
         BufferedWriter out = null;
-        
+
         try{
             out = new BufferedWriter(new FileWriter(fileName));
             out.write(content);

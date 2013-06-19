@@ -5,7 +5,7 @@ import org.oryxeditor.server.diagram.generic.GenericNode;
 /**
  * Simple extension of {@link GenericNode} to allow for easier usage without having to use generics.
  * Does not add or change any functionality
- * 
+ *
  * @author Philipp Maschke
  *
  */

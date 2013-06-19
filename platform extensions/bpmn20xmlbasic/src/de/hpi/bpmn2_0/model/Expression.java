@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,9 +41,9 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * <p>Java class for tExpression complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tExpression">
  *   &lt;complexContent>
@@ -52,8 +52,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(/*name = "conditionExpression"*/)
 @XmlSeeAlso({
@@ -65,34 +65,34 @@ import de.hpi.diagram.SignavioUUID;
 })
 public class Expression
     extends BaseElement
-{ 
+{
  /**
   * Default no-arg constructor
   */
  public Expression() {
   super();
  }
- 
+
  public Expression(String text) {
   super();
   this.setId(SignavioUUID.generate());
   this.getContent().add(text);
  }
- 
+
  @XmlMixed
     @XmlAnyElement(lax = true)
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected List<String> content;
- 
+
  /**
   * Is used for exporting the expression.
-  * 
+  *
   * @return Returns a string, or null if there is no expression.
   */
     public String toExportString(){
      return this.getContent().size() == 0? null : this.getContent().get(0);
     }
- 
+
  public List<String> getContent() {
         if (content == null) {
             content = new ArrayList<String>();

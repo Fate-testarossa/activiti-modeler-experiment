@@ -48,9 +48,9 @@ public class BasicNodeTest extends BasicShapeTest{
         List<Point> dockers1 = new ArrayList<Point>();
         dockers1.add(new Point(b.getCenter()));
         testShape.setDockers(dockers1);
-        
+
         BasicShape testChild = new BasicNode(
-                "subshape", 
+                "subshape",
                 "SubShape");
         // relative to parent shape!
         Bounds b2 = new Bounds(new Point(10.1, 10.2), new Point(120.3, 120.4));
@@ -74,8 +74,8 @@ public class BasicNodeTest extends BasicShapeTest{
 
         return testShape;
     }
-    
-    
+
+
     @Override
     public void testGetDockers() {
         Point p = new Point(456.321, 98907.3134);
@@ -87,19 +87,19 @@ public class BasicNodeTest extends BasicShapeTest{
         BasicNode node = new BasicNode("test");
         assertNotNull(node.getDockersReadOnly());
         assertTrue(node.getDockersReadOnly().isEmpty());
-        
+
         node.setDockers(null);
         assertNotNull(node.getDockersReadOnly());
         assertTrue(node.getDockersReadOnly().isEmpty());
-        
+
         node.setDockers(l);
         assertEquals(l, node.getDockersReadOnly());
-        
+
         l.clear();
         l.add(p2);
         node.setDockers(l);
         assertEquals(l, node.getDockersReadOnly());
-        
+
         l.clear();
         l.add(p);
         assertFalse(l.equals(node.getDockersReadOnly()));
@@ -109,7 +109,7 @@ public class BasicNodeTest extends BasicShapeTest{
     public void testSetDockers() {
         testGetDockers();
     }
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testSetDockersException(){
         Point p = new Point(456.321, 98907.3134);
@@ -118,7 +118,7 @@ public class BasicNodeTest extends BasicShapeTest{
         List<Point> l = new ArrayList<Point>();
         l.add(p);
         l.add(p2);
-        
+
         new BasicNode("test").setDockers(l);
     }
 
@@ -127,18 +127,18 @@ public class BasicNodeTest extends BasicShapeTest{
         BasicNode node = new BasicNode("test");
         Point p1 = new Point(1, 1);
         Point p2 = new Point(2, 2);
-        
+
         assertTrue(node.getDockersReadOnly().isEmpty());
         node.addDocker(p1);
         assertFalse(node.getDockersReadOnly().isEmpty());
         assertEquals(p1, node.getDockersReadOnly().get(0));
-        
+
         node.setDockers(null);
         assertTrue(node.getDockersReadOnly().isEmpty());
         node.addDocker(p2);
         assertEquals(p2, node.getDockersReadOnly().get(0));
     }
-    
+
     @Override
     public void testAddDocker4(){
         BasicNode node = new BasicNode("test");
@@ -146,26 +146,26 @@ public class BasicNodeTest extends BasicShapeTest{
         Point p2 = new Point(2, 2);
         node.addDocker(p1,0);
         assertEquals(p1, node.getDockersReadOnly().get(0));
-        
+
         node.setDockers(null);
         node.addDocker(p2,0);
         assertEquals(p2, node.getDockersReadOnly().get(0));
     }
 
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testAddDockerException1(){
         BasicNode node = new BasicNode("test");
         node.addDocker(new Point(1, 1));
-        
+
         node.addDocker(new Point(2, 2));
     }
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testAddDockerException2(){
         BasicNode node = new BasicNode("test");
         node.addDocker(new Point(1, 1),0);
-        
+
         node.addDocker(new Point(2, 2),1);
     }
 }

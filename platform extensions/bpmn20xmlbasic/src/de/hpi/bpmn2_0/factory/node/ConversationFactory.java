@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,26 +51,26 @@ import de.hpi.bpmn2_0.util.DiagramHelper;
 
 /**
  * Factory that creates communication and conversation elements
- * 
+ *
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 @StencilId( { "Communication", "SubConversation" })
 public class ConversationFactory extends AbstractShapeFactory {
 
     public BPMNElement createBpmnElement(GenericShape shape, Configuration configuration) throws BpmnConverterException {
         BPMNElement bpmnElement = super.createBpmnElement(shape, configuration);
-        
+
         if(bpmnElement != null && bpmnElement.getNode() != null) {
             handleLinkedDiagrams(bpmnElement.getNode(), shape, configuration);
         }
-        
+
         return bpmnElement;
     }
-    
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
      * oryxeditor.server.diagram.Shape)
      */
@@ -80,12 +80,12 @@ public class ConversationFactory extends AbstractShapeFactory {
         try {
             ConversationNode node = (ConversationNode) this
                     .invokeCreatorMethod(shape);
-            
+
             node.setName(shape.getProperty("name"));
             node.setId(shape.getResourceId());
-            
+
             node = convertToCallConversation(shape, node);
-            
+
             return node;
         } catch (Exception e) {
             throw new BpmnConverterException(
@@ -97,27 +97,27 @@ public class ConversationFactory extends AbstractShapeFactory {
 
     /**
      * Creates the process element for a call conversation.
-     * 
+     *
      * @param shape
      *            The resource shape
      * @return The {@link CallConversation}
      */
     public ConversationNode convertToCallConversation(GenericShape shape, ConversationNode node) {
         String isCallConversation = shape.getProperty("iscallconversation");
-        
+
         if(isCallConversation != null && isCallConversation.equals("true")) {
             return new CallConversation(node);
         } else {
             return node;
         }
-        
+
     }
 
     @StencilId("Communication")
     public Conversation createConversation(GenericShape shape) {
         return new Conversation();
     }
-    
+
     @StencilId("SubConversation")
     public SubConversation createSubConversation(GenericShape shape) {
         return new SubConversation();
@@ -131,7 +131,7 @@ public class ConversationFactory extends AbstractShapeFactory {
         for (GenericEdge connector : DiagramHelper.getOutgoingEdges(shape)) {
             if (!connector.getStencilId().equals("ConversationLink"))
                 continue;
-            
+
             if (connector.getTarget() != null
                     && connector.getTarget().getStencilId().equals(
                             "Participant"))
@@ -151,10 +151,10 @@ public class ConversationFactory extends AbstractShapeFactory {
 
         return participantIds;
     }
-    
+
     /**
      * Transforms linked diagrams of collapsed subprocess and event subprocess.
-     * 
+     *
      * @param baseElement
      * @param shape
      * @param config
@@ -163,7 +163,7 @@ public class ConversationFactory extends AbstractShapeFactory {
         if(baseElement == null || !shape.getStencilId().matches(".*SubConversation.*")) {
             return;
         }
-        
+
         /*
          * Diagram Link
          */
@@ -171,70 +171,70 @@ public class ConversationFactory extends AbstractShapeFactory {
         if(entry == null || entry.length() == 0) {
             return;
         }
-        
+
         SignavioMetaData metaData = new SignavioMetaData("entry", entry);
         baseElement.getOrCreateExtensionElements().add(metaData);
-        
+
         Definitions linkedDiagram = SubprocessFactory.retrieveDefinitionsOfLinkedDiagram(entry, config);
-        
+
         if(linkedDiagram == null || linkedDiagram.getRootElement().size() == 0) {
             return;
         }
-        
+
         for(BaseElement rootEl : linkedDiagram.getRootElement()) {
             if(rootEl instanceof Collaboration) {
                 Collaboration linkedCon = (Collaboration) rootEl;
-                
+
                 /* Sub choreography */
                 if(baseElement instanceof SubConversation) {
                     SubConversation subConversation = (SubConversation) baseElement;
-                    
-                    /* 
-                     * Add conversation nodes, links, participants, 
+
+                    /*
+                     * Add conversation nodes, links, participants,
                      * artifacts, associations, message flows
                      */
                     for(ConversationNode node : linkedCon.getConversationNode()) {
                         subConversation.getConversationNode().add(node);
                         subConversation._diagramElements.add(node._diagramElement);
                     }
-                    
+
                     for(ConversationLink link : linkedCon.getConversationLink()) {
                         subConversation.getConversationLink().add(link);
                         subConversation._diagramElements.add(link._diagramElement);
                     }
-                    
+
                     for(Artifact a : linkedCon.getArtifact()) {
                         subConversation.getArtifact().add(a);
                         subConversation._diagramElements.add(a._diagramElement);
                     }
-                    
+
                     for(MessageFlow m : linkedCon.getMessageFlow()) {
                         subConversation.getMessageFlow().add(m);
                         subConversation._diagramElements.add(m._diagramElement);
                     }
-                    
+
                     for(Participant p : linkedCon.getParticipant()) {
                         subConversation.getParticipantRef().add(p);
                         subConversation._diagramElements.add(p._diagramElement);
                     }
-                    
+
                     for(Association associ : linkedCon.getAssociation()) {
                         subConversation.getAssociation().add(associ);
                         subConversation._diagramElements.add(associ._diagramElement);
                     }
                 }
-                
+
                 /* Call choreography */
                 else if(baseElement instanceof CallConversation) {
                     CallConversation callConversation = (CallConversation) baseElement;
                     callConversation.setCalledElementRef(linkedCon);
-                    
+
                     for(BaseElement baseEl : linkedCon.getChilds()) {
                         callConversation._diagramElements.add(baseEl._diagramElement);
                     }
-                    
+
                 }
-            } 
+            }
         }
     }
 }

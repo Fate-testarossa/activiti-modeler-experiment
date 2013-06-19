@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,10 +45,10 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * Factory that creates association elements
- * 
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 @StencilId( { "Association_Undirected", "Association_Unidirectional",
         "Association_Bidirectional" })
@@ -60,7 +60,7 @@ public class AssociationFactory extends AbstractEdgesFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
      * oryxeditor.server.diagram.Shape)
      */
@@ -98,7 +98,7 @@ public class AssociationFactory extends AbstractEdgesFactory {
 
     /**
      * Returns the {@link AssociationDirection} for a given association shape.
-     * 
+     *
      * @param shape
      *            The association resource shape.
      * @return The {@link AssociationDirection}
@@ -116,7 +116,7 @@ public class AssociationFactory extends AbstractEdgesFactory {
 
     /**
      * Determines whether the association is a data association or not.
-     * 
+     *
      * <ul>
      * <li>DATA_INPUT: 'ID': Association_Unidirectional, 'source': data object,
      * 'target' activity</li>
@@ -126,9 +126,9 @@ public class AssociationFactory extends AbstractEdgesFactory {
      * MessageFlow/SequenceFlow, 'target' data object/Message</li>
      * <li>ASSOCIATION: otherwise</li>
      * </ul>
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param shape
      *            The association resource shape
      */
@@ -168,7 +168,7 @@ public class AssociationFactory extends AbstractEdgesFactory {
 
     /**
      * Processes the data association attributes transformation and assignments.
-     * 
+     *
      * @param dataAssociation
      * @param shape
      */

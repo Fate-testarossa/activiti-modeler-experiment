@@ -15,7 +15,7 @@ public class NotificationHandler extends AbstractHandler {
     public NotificationHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     @Override
     public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
         return new JSONObject();

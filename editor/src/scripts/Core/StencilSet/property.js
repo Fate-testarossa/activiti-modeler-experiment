@@ -45,17 +45,17 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
      */
     construct: function(jsonProp, namespace, stencil){
         arguments.callee.$.construct.apply(this, arguments);
-        
+
         this._jsonProp = jsonProp || ORYX.Log.error("Parameter jsonProp is not defined.");
         this._namespace = namespace || ORYX.Log.error("Parameter namespace is not defined.");
         this._stencil = stencil || ORYX.Log.error("Parameter stencil is not defined.");
-        
+
         this._items = {};
         this._complexItems = {};
-        
+
         jsonProp.id = jsonProp.id || ORYX.Log.error("ORYX.Core.StencilSet.Property(construct): Id is not defined.");
         jsonProp.id = jsonProp.id.toLowerCase();
-        
+
         if (!jsonProp.type) {
             ORYX.Log.info("Type is not defined for stencil '%0', id '%1'. Falling back to 'String'.", stencil, jsonProp.id);
             jsonProp.type = "string";
@@ -63,14 +63,14 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
         else {
             jsonProp.type = jsonProp.type.toLowerCase();
         }
-        
+
         jsonProp.prefix = jsonProp.prefix || "oryx";
         jsonProp.title = jsonProp.title || "";
         jsonProp.value = jsonProp.value || "";
         jsonProp.description = jsonProp.description || "";
         jsonProp.readonly = jsonProp.readonly || false;
         jsonProp.optional = jsonProp.optional !== false;
-        
+
         //init refToView
         if (this._jsonProp.refToView) {
             if (!(this._jsonProp.refToView instanceof Array)) {
@@ -80,75 +80,75 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
         else {
             this._jsonProp.refToView = [];
         }
-        
+
         var globalMin = this.getMinForType(jsonProp.type);
         if (jsonProp.min === undefined || jsonProp.min === null) {
             jsonProp.min =globalMin;
         } else if (jsonProp.min < globalMin) {
             jsonProp.min = globalMin;
         }
-        
+
         var globalMax = this.getMaxForType(jsonProp.type);
         if (jsonProp.max === undefined || jsonProp.max === null) {
             jsonProp.max = globalMax;
         } else if (jsonProp.max > globalMax) {
             jsonProp.min = globalMax;
         }
-        
+
         if (!jsonProp.fillOpacity) {
             jsonProp.fillOpacity = false;
         }
-        
+
         if ("number" != typeof jsonProp.lightness) {
             jsonProp.lightness = 1
         } else {
             jsonProp.lightness = Math.max(0, Math.min(1, jsonProp.lightness))
         }
-        
+
         if (!jsonProp.strokeOpacity) {
             jsonProp.strokeOpacity = false;
         }
-        
+
         if (jsonProp.length === undefined || jsonProp.length === null) {
             jsonProp.length = Number.MAX_VALUE;
         }
-        
+
         if (!jsonProp.wrapLines) {
             jsonProp.wrapLines = false;
         }
-        
+
         if (!jsonProp.dateFormat) {
             jsonProp.dateFormat = ORYX.I18N.PropertyWindow.dateFormat || "m/d/y";
         }
-        
+
         if (!jsonProp.fill) {
             jsonProp.fill = false;
         }
-        
+
         if (!jsonProp.stroke) {
             jsonProp.stroke = false;
         }
-        
+
         if(!jsonProp.inverseBoolean) {
             jsonProp.inverseBoolean = false;
         }
-        
+
         if(!jsonProp.directlyEditable && jsonProp.directlyEditable != false) {
             jsonProp.directlyEditable = true;
         }
-        
+
         if(jsonProp.visible !== false) {
             jsonProp.visible = true;
         }
-        
+
         if(jsonProp.isList !== true) {
             jsonProp.isList = false;
-            
+
             if(!jsonProp.list || !(jsonProp.list instanceof Array)) {
                 jsonProp.list = [];
-            }    
+            }
         }
-        
+
         if(!jsonProp.category) {
             if (jsonProp.popular) {
                 jsonProp.category = "popular";
@@ -156,11 +156,11 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
                 jsonProp.category = "others";
             }
         }
-        
+
         if(!jsonProp.alwaysAppearInMultiselect) {
             jsonProp.alwaysAppearInMultiselect = false;
         }
-        
+
         if (jsonProp.type === ORYX.CONFIG.TYPE_CHOICE) {
             if (jsonProp.items && jsonProp.items instanceof Array) {
                 jsonProp.items.each((function(jsonItem){
@@ -173,7 +173,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
             }
             // extended by Kerstin (start)
         }
-        else 
+        else
             if (jsonProp.type === ORYX.CONFIG.TYPE_COMPLEX) {
                 if (jsonProp.complexItems && jsonProp.complexItems instanceof Array) {
                     jsonProp.complexItems.each((function(jsonComplexItem){
@@ -186,14 +186,14 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
             }
         // extended by Kerstin (end)
     },
-    
+
     getMinForType : function(type) {
         if (type.toLowerCase() == ORYX.CONFIG.TYPE_INTEGER) {
             return -Math.pow(2,31)
         } else {
             return -Number.MAX_VALUE+1;
         }
-    }, 
+    },
     getMaxForType : function(type) {
         if (type.toLowerCase() == ORYX.CONFIG.TYPE_INTEGER) {
             return Math.pow(2,31)-1
@@ -201,7 +201,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
             return Number.MAX_VALUE;
         }
     },
-    
+
     /**
      * @param {ORYX.Core.StencilSet.Property} property
      * @return {Boolean} True, if property has the same namespace and id.
@@ -210,67 +210,67 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
         return (this._namespace === property.namespace() &&
         this.id() === property.id()) ? true : false;
     },
-    
+
     namespace: function(){
         return this._namespace;
     },
-    
+
     stencil: function(){
         return this._stencil;
     },
-    
+
     id: function(){
         return this._jsonProp.id;
     },
-    
+
     prefix: function(){
         return this._jsonProp.prefix;
     },
-    
+
     type: function(){
         return this._jsonProp.type;
     },
-    
+
     inverseBoolean: function() {
         return this._jsonProp.inverseBoolean;
     },
-    
+
     category: function() {
         return this._jsonProp.category;
     },
-    
+
     setCategory: function(value) {
         this._jsonProp.category = value;
     },
-    
+
     directlyEditable: function() {
         return this._jsonProp.directlyEditable;
     },
-    
+
     visible: function() {
         return this._jsonProp.visible;
     },
-    
+
     title: function(){
         return ORYX.Core.StencilSet.getTranslation(this._jsonProp, "title");
     },
-    
+
     value: function(){
         return this._jsonProp.value;
     },
-    
+
     readonly: function(){
         return this._jsonProp.readonly;
     },
-    
+
     optional: function(){
         return this._jsonProp.optional;
     },
-    
+
     description: function(){
         return ORYX.Core.StencilSet.getTranslation(this._jsonProp, "description");
     },
-    
+
     /**
      * An optional link to a SVG element so that the property affects the
      * graphical representation of the stencil.
@@ -278,21 +278,21 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     refToView: function(){
         return this._jsonProp.refToView;
     },
-    
+
     /**
      * If type is integer or float, min is the lower bounds of value.
      */
     min: function(){
         return this._jsonProp.min;
     },
-    
+
     /**
      * If type ist integer or float, max is the upper bounds of value.
      */
     max: function(){
         return this._jsonProp.max;
     },
-    
+
     /**
      * If type is float, this method returns if the fill-opacity property should
      *  be set.
@@ -301,7 +301,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     fillOpacity: function(){
         return this._jsonProp.fillOpacity;
     },
-    
+
     /**
      * If type is float, this method returns if the stroke-opacity property should
      *  be set.
@@ -310,7 +310,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     strokeOpacity: function(){
         return this._jsonProp.strokeOpacity;
     },
-    
+
     /**
      * If type is string or richtext, length is the maximum length of the text.
      * TODO how long can a string be.
@@ -318,11 +318,11 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     length: function(){
         return this._jsonProp.length ? this._jsonProp.length : Number.MAX_VALUE;
     },
-    
+
     wrapLines: function(){
         return this._jsonProp.wrapLines;
     },
-    
+
     /**
      * If type is date, dateFormat specifies the format of the date. The format
      * specification of the ext library is used:
@@ -363,7 +363,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     dateFormat: function(){
         return this._jsonProp.dateFormat;
     },
-    
+
     /**
      * If type is color, this method returns if the fill property should
      *  be set.
@@ -372,7 +372,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     fill: function(){
         return this._jsonProp.fill;
     },
-    
+
     /**
      * Lightness defines the satiation of the color
      * 0 is the pure color
@@ -382,7 +382,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     lightness: function(){
         return this._jsonProp.lightness;
     },
-    
+
     /**
      * If type is color, this method returns if the stroke property should
      *  be set.
@@ -391,7 +391,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     stroke: function(){
         return this._jsonProp.stroke;
     },
-    
+
     /**
      * If type is choice, items is a hash map with all alternative values
      * (PropertyItem objects) with id as keys.
@@ -399,7 +399,7 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
     items: function(){
         return $H(this._items).values();
     },
-    
+
     item: function(value){
         if (value) {
             return this._items[value.toLowerCase()];
@@ -407,56 +407,56 @@ ORYX.Core.StencilSet.Property = Clazz.extend({
             return null;
         }
     },
-    
+
     toString: function(){
         return "Property " + this.title() + " (" + this.id() + ")";
     },
-    
+
     complexItems: function(){
         return $H(this._complexItems).values();
     },
-    
+
     complexItem: function(id){
         if(id) {
             return this._complexItems[id.toLowerCase()];
         } else {
             return null;
         }
-        
+
     },
-    
+
     complexAttributeToView: function(){
         return this._jsonProp.complexAttributeToView || "";
     },
-    
+
     isList: function() {
         return !!this._jsonProp.isList;
     },
-    
+
     getListItems: function() {
         return this._jsonProp.list;
     },
-    
+
     /**
-     * If type is glossary link, the 
+     * If type is glossary link, the
      * type of category can be defined where
      * the link only can go to.
-     * @return {String} The glossary category id 
+     * @return {String} The glossary category id
      */
     linkableType: function(){
         return this._jsonProp.linkableType || "";
     },
-    
+
     alwaysAppearInMultiselect : function() {
         return this._jsonProp.alwaysAppearInMultiselect;
     },
-    
+
     popular: function() {
         return this._jsonProp.popular || false;
     },
-    
+
     setPopular: function() {
         this._jsonProp.popular = true;
     }
-    
+
 });

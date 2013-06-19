@@ -3,17 +3,17 @@ package de.hpi.bpmn2_0.factory;
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,10 +46,10 @@ public class BPMNElement {
         this.node = node;
         this.id = id;
     }
-    
+
     /**
      * Adds a {@link BPMNElement} as child to the current {@link BPMNElement}
-     * 
+     *
      * @param child
      *         The child element
      */
@@ -60,15 +60,15 @@ public class BPMNElement {
                 child.getNode().setLane(this.getNode().getLane());
             }
             this.getNode().addChild(child.getNode());
-            
+
             /* Special handling of choreography activities */
-            if(this.getNode() instanceof ChoreographyActivity 
-                    && child.getShape() != null 
-                    && child.getShape() instanceof BPMNShape 
+            if(this.getNode() instanceof ChoreographyActivity
+                    && child.getShape() != null
+                    && child.getShape() instanceof BPMNShape
                     && child.getNode() instanceof Participant) {
                 ((BPMNShape) child.getShape()).setChoreographyActivityShape((BPMNShape) this.getShape());
             }
-            
+
             /* Set attributes of participant band kind of choreography activities */
             if(getNode() instanceof ChoreographyActivity && child.getNode() instanceof Participant) {
                 /* Retrieve bounds of the activity */
@@ -76,15 +76,15 @@ public class BPMNElement {
                 Bounds participantBounds = ((BPMNShape) child.getShape()).getBounds();
                 BPMNShape participantShape = (BPMNShape) child.getShape();
                 Participant participant = (Participant) child.getNode();
-                
+
                 /* Top participant with rounded corners */
                 if(actBounds.getY() == participantBounds.getY()) {
                     if(participant.isInitiating())
                         participantShape.setParticipantBandKind(ParticipantBandKind.TOP_INITIATING);
                     else
                         participantShape.setParticipantBandKind(ParticipantBandKind.TOP_NON_INITIATING);
-                } 
-                
+                }
+
                 /* Bottom participant with rounded corners */
                 else if(actBounds.getY() + actBounds.getHeight() == participantBounds.getY() + participantBounds.getHeight()) {
                     if(participant.isInitiating())
@@ -92,7 +92,7 @@ public class BPMNElement {
                     else
                         participantShape.setParticipantBandKind(ParticipantBandKind.BOTTOM_NON_INITIATING);
                 }
-                
+
                 /* Middle participant */
                 else {
                     if(participant.isInitiating())
@@ -103,9 +103,9 @@ public class BPMNElement {
             }
         }
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * @return the id
      */
@@ -119,7 +119,7 @@ public class BPMNElement {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public DiagramElement getShape() {
         return shape;
     }

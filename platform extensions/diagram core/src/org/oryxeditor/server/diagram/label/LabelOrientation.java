@@ -3,7 +3,7 @@ package org.oryxeditor.server.diagram.label;
 /**
  * Enumeration of positioning policies for labels belonging to an edge.
  * Defines which point of the labels bounding box should be closest to the edge.
- * 
+ *
  * @author philipp.maschke
  *
  */
@@ -14,7 +14,7 @@ public enum LabelOrientation {
     UPPER_LEFT("ul"),
     UPPER_RIGHT("ur"),
     CENTER("ce");
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -24,7 +24,7 @@ public enum LabelOrientation {
     public static LabelOrientation fromString(String enumString) {
         return fromString(enumString, true);
     }
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString

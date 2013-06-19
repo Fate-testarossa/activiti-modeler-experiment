@@ -31,30 +31,30 @@ if(!ORYX.Core.SVG) {ORYX.Core.SVG = {};}
 
 /**
  * MinMaxPathHandler
- * 
+ *
  * Determine the minimum and maximum of a SVG path's absolute coordinates.
  * For relative coordinates the absolute value is computed for consideration.
  * The values are stored in attributes minX, minY, maxX, and maxY.
- * 
+ *
  * @constructor
  */
 ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
-    
+
     construct: function() {
         arguments.callee.$.construct.apply(this, arguments);
-        
+
         this.minX = undefined;
         this.minY = undefined;
         this.maxX = undefined;
         this.maxY = undefined;
-        
+
         this._lastAbsX = undefined;
         this._lastAbsY = undefined;
     },
 
     /**
      * Store minimal and maximal coordinates of passed points to attributes minX, maxX, minY, maxY
-     * 
+     *
      * @param {Array} points Array of absolutePoints
      */
     calculateMinMax: function(points) {
@@ -64,12 +64,12 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
                 x = parseFloat(points[i]);
                 i++;
                 y = parseFloat(points[i]);
-                
+
                 this.minX = (this.minX !== undefined) ? Math.min(this.minX, x) : x;
                 this.maxX = (this.maxX !== undefined) ? Math.max(this.maxX, x) : x;
                 this.minY = (this.minY !== undefined) ? Math.min(this.minY, y) : y;
                 this.maxY = (this.maxY !== undefined) ? Math.max(this.maxY, y) : y;
-                    
+
                 this._lastAbsX = x;
                 this._lastAbsY = y;
             }
@@ -80,7 +80,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * arcAbs - A
-     * 
+     *
      * @param {Number} rx
      * @param {Number} ry
      * @param {Number} xAxisRotation
@@ -95,7 +95,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * arcRel - a
-     * 
+     *
      * @param {Number} rx
      * @param {Number} ry
      * @param {Number} xAxisRotation
@@ -110,7 +110,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicAbs - C
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x2
@@ -124,7 +124,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicRel - c
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x2
@@ -140,7 +140,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoHorizontalAbs - H
-     * 
+     *
      * @param {Number} x
      */
     linetoHorizontalAbs: function(x) {
@@ -149,7 +149,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoHorizontalRel - h
-     * 
+     *
      * @param {Number} x
      */
     linetoHorizontalRel: function(x) {
@@ -158,7 +158,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoAbs - L
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -168,7 +168,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoRel - l
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -178,7 +178,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * movetoAbs - M
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -188,7 +188,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * movetoRel - m
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -202,7 +202,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticAbs - Q
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x
@@ -214,7 +214,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticRel - q
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x
@@ -226,7 +226,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicSmoothAbs - S
-     * 
+     *
      * @param {Number} x2
      * @param {Number} y2
      * @param {Number} x
@@ -238,7 +238,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicSmoothRel - s
-     * 
+     *
      * @param {Number} x2
      * @param {Number} y2
      * @param {Number} x
@@ -250,7 +250,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticSmoothAbs - T
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -260,7 +260,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticSmoothRel - t
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -270,7 +270,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoVerticalAbs - V
-     * 
+     *
      * @param {Number} y
      */
     linetoVerticalAbs: function(y) {
@@ -279,7 +279,7 @@ ORYX.Core.SVG.MinMaxPathHandler = Clazz.extend({
 
     /**
      * linetoVerticalRel - v
-     * 
+     *
      * @param {Number} y
      */
     linetoVerticalRel: function(y) {

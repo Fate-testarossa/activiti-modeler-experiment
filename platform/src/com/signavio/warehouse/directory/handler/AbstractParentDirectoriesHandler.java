@@ -20,26 +20,26 @@ public abstract class AbstractParentDirectoriesHandler extends AbstractHandler {
     }
 
     /**
-     * Get an ordered list of all (indirect) parent directories 
+     * Get an ordered list of all (indirect) parent directories
      */
-    @Override 
+    @Override
     public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
         JSONArray result = new JSONArray();
-        
+
         List<FsDirectory> parents = null;
         if(sbo instanceof FsModel) {
             parents = ((FsModel)sbo).getParentDirectories();
         } else if(sbo instanceof FsDirectory) {
             parents = ((FsDirectory)sbo).getParentDirectories();
         }
-        
+
         if(parents != null) {
             DirectoryHandler dirHandler = new DirectoryHandler(this.getServletContext());
             for(FsDirectory parent : parents) {
                 result.put(dirHandler.getDirectoryInfo(parent));
             }
         }
-        
+
         return result;
     }
 }

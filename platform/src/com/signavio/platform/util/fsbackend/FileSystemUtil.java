@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,32 +51,32 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class FileSystemUtil {
-    
+
     public static String getCleanFileName(String rawName) {
         return rawName.replaceAll("/|\\\\|:|\\*|\\?|\\\"|<|>|\\||;|$|%|&", "");
     }
-    
+
     public static boolean isFileExistent(String path) {
         synchronized (path.intern()) {
             File file = new File(path);
             return file.exists();
         }
     }
-    
+
     public static boolean isFileAccessible(String path) {
         synchronized (path.intern()) {
             File file = new File(path);
             return file.canRead() && file.canWrite();
         }
     }
-    
+
     public static boolean isFileDirectory(String path) {
         synchronized (path.intern()) {
             File file = new File(path);
             return file.isDirectory();
         }
     }
-    
+
     public static File createFile(String path) {
         synchronized (path.intern()) {
             File f = new File(path);
@@ -93,7 +93,7 @@ public class FileSystemUtil {
             }
         }
     }
-    
+
     public static File createDirectory(String path){
         synchronized (path.intern()) {
             File f = new File(path);
@@ -101,10 +101,10 @@ public class FileSystemUtil {
                 return f;
             } else {
                 return null;
-            }    
+            }
         }
     }
-    
+
     public static boolean renameFile(String path, String newPath) {
         synchronized (path.intern()) {
             File newFile = new File (newPath);
@@ -126,14 +126,14 @@ public class FileSystemUtil {
             }
         }
     }
-    
+
     public static void deleteFileOrDirectory(String path) {
         synchronized (path.intern()) {
             File f = new File (path) ;
             deleteFileOrDirectory(f);
         }
     }
-    
+
     private static void deleteFileOrDirectory(File f) {
         if (f.isDirectory()) {
             for (File child : f.listFiles()) {
@@ -153,7 +153,7 @@ public class FileSystemUtil {
             this.asCData = asCData;
         }
     }
-    
+
     public static File createFile(String path, String xmlString) {
         synchronized (path.intern()) {
             File f = createFile(path);
@@ -169,7 +169,7 @@ public class FileSystemUtil {
             return f;
         }
     }
-    
+
     public static String readXmlNodeChildFromFile(String xPath, String path, NamespaceContext nsContext) {
         synchronized (path.intern()) {
             File f = new File(path);
@@ -197,15 +197,15 @@ public class FileSystemUtil {
             }
         }
     }
-    
+
     public static boolean writeXmlNodeChildToFile(String nodeName, String stringValue, boolean asCData, String fileName) {
         return writeXmlNodeChildToFile(new WriteOperation[] { new WriteOperation(nodeName, null, stringValue, asCData )} , fileName );
     }
-    
+
     public static boolean writeXmlNodeAttributeToFile(String nodeName, String attributeName, String stringValue, String fileName) {
         return writeXmlNodeChildToFile(new WriteOperation[] { new WriteOperation(nodeName, attributeName, stringValue, false )} , fileName );
     }
-    
+
     private static boolean writeXmlNodeChildToFile(WriteOperation[] operations, String path) {
         synchronized (path.intern()) {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -217,7 +217,7 @@ public class FileSystemUtil {
                 for (WriteOperation operation : operations) {
                     String nodeName = operation.nodeName;
                     boolean handleAttribute = operation.attributeName != null;
-                    
+
                     if (nodeName.contains(":")) {
                         nodeName = nodeName.substring(nodeName.lastIndexOf(':')+1);
                     }
@@ -226,8 +226,8 @@ public class FileSystemUtil {
                         return false;
                     }
                     Node node = nodelist.item(0);
-                    
-                    
+
+
                     if (handleAttribute) {
                         NamedNodeMap attributes = node.getAttributes();
                         Attr newAttr = doc.createAttribute(operation.attributeName);
@@ -251,21 +251,21 @@ public class FileSystemUtil {
                 }
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-    
+
                 StreamResult result = new StreamResult(new FileWriter(new File(path)));
-                
+
                 File f = new File(path);
                 if (!f.exists() || !f.canRead() || !f.canWrite()) {
                     return false;
                 }
-                
+
                 DOMSource source = new DOMSource(doc);
                 transformer.transform(source, result);
-                
+
                 result.getWriter().close();
-                
+
                 return true;
-    
+
             } catch (FileNotFoundException e) {
                 return false;
             } catch (IOException e) {

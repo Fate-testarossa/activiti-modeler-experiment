@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,9 +37,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tServiceTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tServiceTask">
  *   &lt;complexContent>
@@ -50,8 +50,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -61,12 +61,12 @@ public class ServiceTask
 {
 
  public ServiceTask() {
-  
+
  }
- 
+
  /**
   * Copy constructor
-  * 
+  *
   * @param brTask
   *   Template {@link BusinessRuleTask}
   */
@@ -74,27 +74,27 @@ public class ServiceTask
   super(brTask);
   this.setImplementation(brTask.getImplementation());
  }
- 
- 
+
+
     @XmlAttribute
     protected ServiceImplementation implementation;
- 
+
     @XmlAttribute
     protected QName operationRef;
-    
+
  public void acceptVisitor(Visitor v){
   v.visitServiceTask(this);
  }
- 
+
  /* Getter & Setter */
- 
+
  /**
   * @return the implementation
   */
  public ServiceImplementation getImplementation() {
   return implementation;
  }
- 
+
  /**
   * @param implementation the implementation to set
   */
@@ -104,11 +104,11 @@ public class ServiceTask
 
     /**
      * Gets the value of the operationRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getOperationRef() {
         return operationRef;
@@ -116,11 +116,11 @@ public class ServiceTask
 
     /**
      * Sets the value of the operationRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setOperationRef(QName value) {
         this.operationRef = value;

@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,9 +45,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCallActivity complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCallActivity">
  *   &lt;complexContent>
@@ -57,8 +57,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -70,31 +70,31 @@ public class CallActivity
  public CallActivity() {
   super();
  }
- 
+
  public CallActivity(Task t) {
   super(t);
  }
- 
+
  @XmlTransient
  private List<FlowElement> processElements;
- 
+
  /*
   * The diagram and process element of a linked subprocess
   */
  @XmlTransient
  public BPMNDiagram _diagramElement;
- 
+
     @XmlAttribute
     @XmlIDREF
     protected CallableElement calledElement;
 
     /**
      * Gets the value of the calledElement property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link CallableElement }
-     *     
+     *
      */
     public CallableElement getCalledElement() {
         return calledElement;
@@ -102,33 +102,33 @@ public class CallActivity
 
     /**
      * Sets the value of the calledElement property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link CallableElement }
-     *     
+     *
      */
     public void setCalledElement(CallableElement value) {
         this.calledElement = value;
     }
-    
+
  public void acceptVisitor(Visitor v){
   v.visitCallActivity(this);
  }
- 
+
  public List<BaseElement> getCalledElements() {
   List<BaseElement> calledElements = new ArrayList<BaseElement>();
-  
+
   if(getCalledElement() != null) {
    calledElements.add(getCalledElement());
   }
-  
+
   return calledElements;
  }
- 
+
  /**
-  * Overrides the general addChild method to collect elements of a call 
-  * activity expanded sub process. 
+  * Overrides the general addChild method to collect elements of a call
+  * activity expanded sub process.
   */
  public void addChild(BaseElement el) {
   if(el instanceof FlowElement) {
@@ -137,7 +137,7 @@ public class CallActivity
  }
 
  /* Getter & Setter */
- 
+
  /**
   * !!! Only for usages during the BPMN 2.0 Export process.
   * Returns the elements the expanded subprocess called be this call activity.
@@ -146,7 +146,7 @@ public class CallActivity
   if(this.processElements == null) {
    this.processElements = new ArrayList<FlowElement>();
   }
-  
+
   return this.processElements;
  }
 }

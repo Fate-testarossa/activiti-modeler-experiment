@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,9 +37,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tReceiveTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tReceiveTask">
  *   &lt;complexContent>
@@ -51,8 +51,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -69,20 +69,20 @@ public class ReceiveTask
     protected QName operationRef;
     @XmlAttribute
     protected ServiceImplementation implementation;
-    
+
  public void acceptVisitor(Visitor v){
   v.visitReceiveTask(this);
  }
- 
- 
-    
+
+
+
     /**
      * Gets the value of the instantiate property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Boolean }
-     *     
+     *
      */
     public boolean isInstantiate() {
         if (instantiate == null) {
@@ -94,11 +94,11 @@ public class ReceiveTask
 
     /**
      * Sets the value of the instantiate property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *     
+     *
      */
     public void setInstantiate(Boolean value) {
         this.instantiate = value;
@@ -106,11 +106,11 @@ public class ReceiveTask
 
     /**
      * Gets the value of the messageRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getMessageRef() {
         return messageRef;
@@ -118,11 +118,11 @@ public class ReceiveTask
 
     /**
      * Sets the value of the messageRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setMessageRef(QName value) {
         this.messageRef = value;
@@ -130,11 +130,11 @@ public class ReceiveTask
 
     /**
      * Gets the value of the operationRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getOperationRef() {
         return operationRef;
@@ -142,11 +142,11 @@ public class ReceiveTask
 
     /**
      * Sets the value of the operationRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setOperationRef(QName value) {
         this.operationRef = value;

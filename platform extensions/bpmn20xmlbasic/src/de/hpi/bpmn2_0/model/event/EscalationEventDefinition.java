@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,9 +33,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for tEscalationEventDefinition complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tEscalationEventDefinition">
  *   &lt;complexContent>
@@ -46,8 +46,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -57,37 +57,37 @@ public class EscalationEventDefinition
 {
 
  /* Attributes */
-    
+
     @XmlAttribute
     @XmlIDREF
     protected Escalation escalationRef;
-    
+
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
     public EscalationEventDefinition() {}
-    
+
     /**
      * Copy constructor
      * @param escEventDefinition
      */
     public EscalationEventDefinition(EscalationEventDefinition escEventDefinition) {
      super(escEventDefinition);
-     
+
      this.setEscalationRef(escEventDefinition.getEscalationRef());
     }
-    
+
     /* Getter & Setter */
 
     /**
      * Gets the value of the escalationRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Escalation }
-     *     
+     *
      */
     public Escalation getEscalationRef() {
         return escalationRef;
@@ -95,11 +95,11 @@ public class EscalationEventDefinition
 
     /**
      * Sets the value of the escalationRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Escalation }
-     *     
+     *
      */
     public void setEscalationRef(Escalation value) {
         this.escalationRef = value;

@@ -220,7 +220,7 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
 
     // Limit input to hex values
     //maskRe: /[#a-f0-9]/i,
-    
+
     // private
     validateValue : function(value){
         if(!Ext.ux.ColorField.superclass.validateValue.call(this, value)){
@@ -263,7 +263,7 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
             this.on('render',function(){this.setColor(color)},this);
         }
     },
-    
+
     // private
     // Provides logic to override the default TriggerField.validateBlur which just returns true
     validateBlur : function(){
@@ -278,7 +278,7 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
         var value = Ext.ux.ColorField.superclass.getValue.call(this) || "";
         value = value.replace(/[\s]/g, "").toLowerCase();
         if (value && this.isColor(value)){
-            return this.formatColor(value)    
+            return this.formatColor(value)
         }
         return "";
     },
@@ -296,20 +296,20 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
         Ext.ux.ColorField.superclass.setValue.call(this, color);
         this.setColor(color);
     },
-    
+
     isRGB: function(value){
         return value.replace(/(rgb|[()])/g, "").split(",").findAll(function(r){ var p = parseInt(r); return p >= 0 && p <= 255 && String(p) === r }).length === 3;
     },
-    
+
     isHEX: function(value){
         value = value.startsWith("#") ? value.slice(1) : value;
         return !value.replace(/[a-fA-F0-9]+/g, "") && (value.length === 6 || value.length === 3);
     },
-    
+
     isSimpleColor: function(value){
         return !!this.colorMap[value];
     },
-    
+
     isColor: function(value){
         return this.isRGB(value) || this.isHEX(value) || this.isSimpleColor(value);
     },
@@ -321,31 +321,31 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
             value = value.replace(/[\s]/g, "").toLowerCase();
             if (this.isColor(value)){
                 return true;
-            } 
+            }
         }
         return false;
     },
 
     // private
-    formatColor : function(value){        
-        
+    formatColor : function(value){
+
         value = value.replace(/[\s]/g, "").toLowerCase();
-        
+
         if (this.isColor(value)){
             if (this.isSimpleColor(value)){
                 value = this.colorMap[value];
             } else if (this.isRGB(value)){
                 value = value.split(/[^0-9]+/i)
                         .slice(1,4)        // Extract to RGB
-                        .map(function(r){ 
+                        .map(function(r){
                             var hex = parseInt(r).toString(16);
                             return (hex.length == 1 ? "0" : "") + hex;
-                        })                // RGB to HEX 
+                        })                // RGB to HEX
                         .join("");         // Concat
             }
             value = value.startsWith("#") ? value : "#" + value;
             value = value.toUpperCase();
-        } 
+        }
         return value;
     },
 
@@ -383,7 +383,7 @@ Ext.ux.ColorField = Ext.extend(Ext.form.TriggerField,  {
 
         this.menu.show(this.el, "tl-bl?");
     },
-    
+
     onDestroy : function(){
         if(this.menu){
             this.menu.destroy();

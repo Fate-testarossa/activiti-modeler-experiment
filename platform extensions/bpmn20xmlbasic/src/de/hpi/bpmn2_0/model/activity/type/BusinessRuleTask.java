@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,9 +38,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tBusinessRuleTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tBusinessRuleTask">
  *   &lt;complexContent>
@@ -49,8 +49,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -60,17 +60,17 @@ public class BusinessRuleTask
 {
  @XmlAttribute
  BusinessRuleTaskImplementation implementation;
- 
+
  /* Constructors */
- 
+
  /**
   * Default constructor
   */
  public BusinessRuleTask() { }
- 
+
  /**
   * Copy constructor
-  * 
+  *
   * @param brTask
   *   Template {@link BusinessRuleTask}
   */
@@ -78,22 +78,22 @@ public class BusinessRuleTask
   super(brTask);
   this.setImplementation(brTask.getImplementation());
  }
- 
+
  public void acceptVisitor(Visitor v){
   v.visitBusinessRuleTask(this);
  }
- 
+
  public GlobalTask getAsGlobalTask() {
   GlobalBusinessRuleTask brGt = new GlobalBusinessRuleTask(super.getAsGlobalTask());
   brGt.setImplementation(this.getImplementation());
-  
+
   return brGt;
  }
- 
- 
+
+
 
  /* Getter & Setter */
- 
+
  /**
   * @return the implementation
   */

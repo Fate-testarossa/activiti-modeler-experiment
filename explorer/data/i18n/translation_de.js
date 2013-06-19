@@ -1,8 +1,8 @@
 ﻿/**
  * @author willi.tscheschner
- * 
+ *
  * contains all strings for default language (en_us)
- * 
+ *
  */
 
 
@@ -125,7 +125,7 @@ Signavio.I18N.Repository.Info.Attributes.infoMulipleTwo= "geändert zwischen <b>
 if(!Signavio.I18N.Repository.BreadCrumb) Signavio.I18N.Repository.BreadCrumb = {};
 Signavio.I18N.Repository.BreadCrumb.delimiter = "&raquo; ";
 Signavio.I18N.Repository.BreadCrumb.search = "Suche: ";
-Signavio.I18N.Repository.BreadCrumb.nrOfResults = "in {nr} Objekten gefunden"; 
+Signavio.I18N.Repository.BreadCrumb.nrOfResults = "in {nr} Objekten gefunden";
 Signavio.I18N.Repository.BreadCrumb.none = "Es wurde kein Ordner selektiert";
 Signavio.I18N.Repository.BreadCrumb.goBack = "Zurück";
 

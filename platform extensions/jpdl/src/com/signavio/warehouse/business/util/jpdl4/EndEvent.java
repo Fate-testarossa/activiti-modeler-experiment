@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Ole Eckermann, Stefan Krumnow & Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,15 +40,15 @@ public class EndEvent extends Node {
         this.ends = JsonToJpdl.getAttribute(endEvent, "ends");
         this.state = JsonToJpdl.getAttribute(endEvent, "state");
         this.bounds = JsonToJpdl.getBounds(endEvent);
-        
+
         this.bounds.setUlx(this.bounds.getUlx() - 10);
         this.bounds.setUly(this.bounds.getUly() - 10);
         this.bounds.setWidth(48);
         this.bounds.setHeight(48);
-        
+
 
     }
-    
+
     public EndEvent(org.w3c.dom.Node endEvent) {
         this.uuid = "oryx_" + UUID.randomUUID().toString();
         NamedNodeMap attributes = endEvent.getAttributes();
@@ -56,12 +56,12 @@ public class EndEvent extends Node {
         this.ends = JpdlToJson.getAttribute(attributes, "ends");
         this.state = JpdlToJson.getAttribute(attributes, "state");
         this.bounds = JpdlToJson.getBounds(attributes.getNamedItem("g"));
-        
+
         this.bounds.setUlx(this.bounds.getUlx() + 10);
         this.bounds.setUly(this.bounds.getUly() + 10);
         this.bounds.setWidth(28);
         this.bounds.setHeight(28);
-        
+
     }
 
     public String getState() {

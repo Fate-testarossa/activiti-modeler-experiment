@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,8 +34,8 @@ import de.hpi.bpmn2_0.model.data_object.DataStoreReference;
 import de.hpi.diagram.SignavioUUID;
 
 /**
- * Factory for DataStores 
- * 
+ * Factory for DataStores
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
  *
@@ -53,13 +53,13 @@ public class DataStoreFactory extends AbstractShapeFactory {
         this.setCommonAttributes(dataStoreRef, shape);
         dataStoreRef.setDataStoreRef(new DataStore());
         this.setDataStoreRefAttributes(dataStoreRef, shape);
-        
+
         return dataStoreRef;
     }
-    
+
     /**
      * Sets the attributes related to a data store element.
-     * 
+     *
      * @param dataStoreRef
      *         The @link {@link DataStoreReference}.
      * @param shape
@@ -74,25 +74,25 @@ public class DataStoreFactory extends AbstractShapeFactory {
             dataStore.setName(shape.getProperty("name"));
             if(shape.getProperty("capacity") != null && !(shape.getProperty("capacity").length() == 0))
                 dataStore.setCapacity(Integer.valueOf(shape.getProperty("capacity")).intValue());
-            
+
             /* Set isUnlimited attribute */
             String isUnlimited = shape.getProperty("isunlimited");
-            if(isUnlimited != null && isUnlimited.equalsIgnoreCase("true")) 
+            if(isUnlimited != null && isUnlimited.equalsIgnoreCase("true"))
                 dataStore.setUnlimited(true);
             else
                 dataStore.setUnlimited(false);
-            
+
             /* Define DataState element */
             if(dataStateName != null && !(dataStateName.length() == 0)) {
                 DataState dataState = new DataState(dataStateName);
                 dataStore.setDataState(dataState);
             }
         }
-        
+
         /* Set attributes of the data store reference */
         dataStoreRef.setName(shape.getProperty("name"));
         dataStoreRef.setId(shape.getResourceId());
-        
+
         /* Define DataState element */
         if(dataStateName != null && !(dataStateName.length() == 0)) {
             DataState dataState = new DataState(dataStateName);

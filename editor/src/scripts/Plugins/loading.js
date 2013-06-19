@@ -33,41 +33,41 @@ if (!ORYX.Plugins) {
 ORYX.Plugins.Loading = {
 
     construct: function(facade){
-    
+
         this.facade = facade;
-        
+
         // The parent Node
         this.node = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", this.facade.getCanvas().getHTMLContainer().parentNode, ['div', {
             'class': 'LoadingIndicator'
         }, '']);
-        
+
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_ENABLE, this.enableLoading.bind(this));
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_DISABLE, this.disableLoading.bind(this));
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADING_STATUS, this.showStatus.bind(this));
-        
+
         this.disableLoading();
     },
-    
+
     enableLoading: function(options){
-        if(options.text) 
+        if(options.text)
             this.node.innerHTML = options.text + "...";
         else
             this.node.innerHTML = ORYX.I18N.Loading.waiting;
         this.node.removeClassName('StatusIndicator');
         this.node.addClassName('LoadingIndicator');
         this.node.style.display = "block";
-        
+
         var pos = this.facade.getCanvas().rootNode.parentNode.parentNode.parentNode.parentNode;
 
         this.node.style.top         = pos.offsetTop + 'px';
         this.node.style.left         = pos.offsetLeft +'px';
-                    
+
     },
-    
+
     disableLoading: function(){
         this.node.style.display = "none";
     },
-    
+
     showStatus: function(options) {
         if(options.text) {
             this.node.innerHTML = options.text;
@@ -79,16 +79,16 @@ ORYX.Plugins.Loading = {
 
             this.node.style.top     = pos.offsetTop + 'px';
             this.node.style.left     = pos.offsetLeft +'px';
-                                                
+
             var tout = options.timeout ? options.timeout : 2000;
-            
+
             window.setTimeout((function(){
-            
+
                 this.disableLoading();
-                
+
             }).bind(this), tout);
         }
-        
+
     }
 }
 

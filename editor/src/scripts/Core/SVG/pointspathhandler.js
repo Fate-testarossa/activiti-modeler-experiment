@@ -31,27 +31,27 @@ if(!ORYX.Core.SVG) {ORYX.Core.SVG = {};}
 
 /**
  * PathHandler
- * 
- * Determine absolute points of a SVG path. The coordinates are stored 
+ *
+ * Determine absolute points of a SVG path. The coordinates are stored
  * sequentially in the attribute points (x-coordinates at even indices,
  * y-coordinates at odd indices).
- * 
+ *
  * @constructor
  */
 ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
-    
+
     construct: function() {
         arguments.callee.$.construct.apply(this, arguments);
-        
+
         this.points = [];
-        
+
         this._lastAbsX = undefined;
         this._lastAbsY = undefined;
     },
 
     /**
      * addPoints
-     * 
+     *
      * @param {Array} points Array of absolutePoints
      */
     addPoints: function(points) {
@@ -61,11 +61,11 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
                 x = parseFloat(points[i]);
                 i++;
                 y = parseFloat(points[i]);
-                
+
                 this.points.push(x);
                 this.points.push(y);
                 //this.points.push({x:x, y:y});
-                    
+
                 this._lastAbsX = x;
                 this._lastAbsY = y;
             }
@@ -76,7 +76,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * arcAbs - A
-     * 
+     *
      * @param {Number} rx
      * @param {Number} ry
      * @param {Number} xAxisRotation
@@ -91,7 +91,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * arcRel - a
-     * 
+     *
      * @param {Number} rx
      * @param {Number} ry
      * @param {Number} xAxisRotation
@@ -106,7 +106,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicAbs - C
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x2
@@ -120,7 +120,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicRel - c
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x2
@@ -134,7 +134,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoHorizontalAbs - H
-     * 
+     *
      * @param {Number} x
      */
     linetoHorizontalAbs: function(x) {
@@ -143,7 +143,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoHorizontalRel - h
-     * 
+     *
      * @param {Number} x
      */
     linetoHorizontalRel: function(x) {
@@ -152,7 +152,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoAbs - L
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -162,7 +162,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoRel - l
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -172,7 +172,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * movetoAbs - M
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -182,7 +182,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * movetoRel - m
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -196,7 +196,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticAbs - Q
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x
@@ -208,7 +208,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticRel - q
-     * 
+     *
      * @param {Number} x1
      * @param {Number} y1
      * @param {Number} x
@@ -220,7 +220,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicSmoothAbs - S
-     * 
+     *
      * @param {Number} x2
      * @param {Number} y2
      * @param {Number} x
@@ -232,7 +232,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoCubicSmoothRel - s
-     * 
+     *
      * @param {Number} x2
      * @param {Number} y2
      * @param {Number} x
@@ -244,7 +244,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticSmoothAbs - T
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -254,7 +254,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * curvetoQuadraticSmoothRel - t
-     * 
+     *
      * @param {Number} x
      * @param {Number} y
      */
@@ -264,7 +264,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoVerticalAbs - V
-     * 
+     *
      * @param {Number} y
      */
     linetoVerticalAbs: function(y) {
@@ -273,7 +273,7 @@ ORYX.Core.SVG.PointsPathHandler = Clazz.extend({
 
     /**
      * linetoVerticalRel - v
-     * 
+     *
      * @param {Number} y
      */
     linetoVerticalRel: function(y) {

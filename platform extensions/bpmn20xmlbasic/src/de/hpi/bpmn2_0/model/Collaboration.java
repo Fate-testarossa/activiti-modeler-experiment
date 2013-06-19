@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,9 +50,9 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 
 /**
  * <p>Java class for tCollaboration complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCollaboration">
  *   &lt;complexContent>
@@ -73,8 +73,8 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -97,7 +97,7 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 public class Collaboration
     extends RootElement
 {
- 
+
  @XmlElement(type = Participant.class)
  protected List<Participant> participant;
     protected List<MessageFlow> messageFlow;
@@ -111,30 +111,30 @@ public class Collaboration
 //    protected List<ParticipantAssociation> participantAssociation;
 //    protected List<MessageFlowAssociation> messageFlowAssociation;
     protected List<CorrelationKey> correlationKey;
-    
+
     @XmlIDREF
     @XmlElement
     protected List<Choreography> choreographyRef;
     protected List<ConversationLink> conversationLink;
-    
+
     @XmlAttribute(name = "name")
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected String name;
     @XmlAttribute(name = "isClosed")
     protected Boolean isClosed;
-    
+
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
     public Collaboration() {
      super();
     }
-    
+
     public Collaboration(Collaboration collaboration) {
      super(collaboration);
-     
+
      this.getParticipant().addAll(collaboration.getParticipant());
      this.getMessageFlow().addAll(collaboration.getMessageFlow());
      this.getArtifact().addAll(collaboration.getArtifact());
@@ -142,15 +142,15 @@ public class Collaboration
      this.getAssociation().addAll(collaboration.getAssociation());
      this.getCorrelationKey().addAll(collaboration.getCorrelationKey());
      this.getChoreographyRef().addAll(collaboration.getChoreographyRef());
-     
+
      this.setName(collaboration.getName());
      this.setIsClosed(collaboration.isIsClosed());
-     
+
     }
-    
+
     public List<BaseElement> getChilds() {
      List<BaseElement> childs = super.getChilds();
-     
+
      childs.addAll(this.getParticipant());
      childs.addAll(this.getMessageFlow());
      childs.addAll(this.getArtifact());
@@ -158,34 +158,34 @@ public class Collaboration
      childs.addAll(this.getConversationLink());
      childs.addAll(this.getAssociation());
      childs.addAll(this.getCorrelationKey());
-     
+
      return childs;
     }
-    
+
     /* Getter & Setter */
-    
-    
+
+
     /**
      * Gets the value of the participant property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participant property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipant().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TParticipant }
-     * 
-     * 
+     *
+     *
      */
     public List<Participant> getParticipant() {
         if (participant == null) {
@@ -196,25 +196,25 @@ public class Collaboration
 
     /**
      * Gets the value of the messageFlow property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the messageFlow property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getMessageFlow().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TMessageFlow }
-     * 
-     * 
+     *
+     *
      */
     public List<MessageFlow> getMessageFlow() {
         if (messageFlow == null) {
@@ -225,28 +225,28 @@ public class Collaboration
 
     /**
      * Gets the value of the artifact property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the artifact property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getArtifact().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link TArtifact }{@code >}
      * {@link JAXBElement }{@code <}{@link TAssociation }{@code >}
      * {@link JAXBElement }{@code <}{@link TGroup }{@code >}
      * {@link JAXBElement }{@code <}{@link TTextAnnotation }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Artifact> getArtifact() {
         if (artifact == null) {
@@ -257,25 +257,25 @@ public class Collaboration
 
     /**
      * Gets the value of the conversation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the conversation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getConversation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Conversation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<Conversation> getConversation() {
 //        if (conversation == null) {
@@ -286,25 +286,25 @@ public class Collaboration
 
     /**
      * Gets the value of the conversationAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the conversationAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getConversationAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TConversationAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<TConversationAssociation> getConversationAssociation() {
 //        if (conversationAssociation == null) {
@@ -315,25 +315,25 @@ public class Collaboration
 
     /**
      * Gets the value of the participantAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participantAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipantAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TParticipantAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<TParticipantAssociation> getParticipantAssociation() {
 //        if (participantAssociation == null) {
@@ -344,25 +344,25 @@ public class Collaboration
 
     /**
      * Gets the value of the messageFlowAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the messageFlowAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getMessageFlowAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TMessageFlowAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<TMessageFlowAssociation> getMessageFlowAssociation() {
 //        if (messageFlowAssociation == null) {
@@ -373,11 +373,11 @@ public class Collaboration
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
@@ -385,11 +385,11 @@ public class Collaboration
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -397,11 +397,11 @@ public class Collaboration
 
     /**
      * Gets the value of the isClosed property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Boolean }
-     *     
+     *
      */
     public boolean isIsClosed() {
         if (isClosed == null) {
@@ -413,11 +413,11 @@ public class Collaboration
 
     /**
      * Sets the value of the isClosed property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *     
+     *
      */
     public void setIsClosed(Boolean value) {
         this.isClosed = value;
@@ -425,11 +425,11 @@ public class Collaboration
 
     /**
      * Gets the value of the choreographyRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Choreography }
-     *     
+     *
      */
     public List<Choreography> getChoreographyRef() {
         if(choreographyRef == null)

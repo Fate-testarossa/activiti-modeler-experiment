@@ -41,35 +41,35 @@ public class SyntaxCheckerHandler extends BasisHandler {
         try {
             // Get the parameter list
             JSONObject params = (JSONObject)req.getAttribute("params");
-            
+
             String isJson = params.getString("isJson");
-            
+
             JSONObject result = null;
             if(isJson.equals("true")) {
                 String json = params.getString("data_json");
-                
+
                 List<Class<? extends AbstractBpmnFactory>> factoryClasses = AbstractBpmnFactory.getFactoryClasses();
-                
+
                 SyntaxCheckerPerformer checker = new SyntaxCheckerPerformer();
-                
+
                 result = checker.processDocument(BasicDiagramBuilder.parseJson(json), factoryClasses);
             } //else {
 //                String rdf = req.getParameter("data");
-//                
+//
 //                context = req.getParameter("context");
-//                
+//
 //                DocumentBuilder builder;
 //                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //                builder = factory.newDocumentBuilder();
 //                Document document = builder.parse(new ByteArrayInputStream(rdf.getBytes("UTF-8")));
-//                
-//                processDocument(document, res.getWriter());            
+//
+//                processDocument(document, res.getWriter());
 //            }
-            
+
             if(result == null) {
                 result = new JSONObject();
             }
-            
+
             res.setContentType("application/json");
             res.setStatus(200);
             res.getWriter().write(result.toString());

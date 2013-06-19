@@ -1,8 +1,8 @@
 ﻿/**
  * @author willi.tscheschner
- * 
+ *
  * contains all strings for default language (en_us)
- * 
+ *
  */
 
 
@@ -123,7 +123,7 @@ Signavio.I18N.Repository.Info.Attributes.infoMulipleTwo= "last edited between <b
 if(!Signavio.I18N.Repository.BreadCrumb) Signavio.I18N.Repository.BreadCrumb = {};
 Signavio.I18N.Repository.BreadCrumb.delimiter = "&raquo; ";
 Signavio.I18N.Repository.BreadCrumb.search = "Search: ";
-Signavio.I18N.Repository.BreadCrumb.nrOfResults = "found in {nr} objects"; 
+Signavio.I18N.Repository.BreadCrumb.nrOfResults = "found in {nr} objects";
 Signavio.I18N.Repository.BreadCrumb.none = "No directory selected";
 Signavio.I18N.Repository.BreadCrumb.goBack = "Back";
 

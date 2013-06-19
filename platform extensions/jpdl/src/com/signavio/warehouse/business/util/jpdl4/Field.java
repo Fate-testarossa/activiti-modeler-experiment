@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Ole Eckermann, Stefan Krumnow & Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,18 +29,18 @@ import org.json.JSONObject;
 public class Field {
     private IWireObjectGroup child = null;
     private String name;
-    
+
     protected String elementName = "field";
-    
+
     public Field(String name) {
         this.name = name;
     }
-    
+
     public Field (JSONObject field) {
         try {
             this.name = field.getString("f_name");
         } catch (JSONException e) {}
-        
+
         try {
             if(field.getString("type").toLowerCase().equals("string")) {
                 String sName = field.getString("name");
@@ -77,14 +77,14 @@ public class Field {
                 String sValue = field.getString("value");
                 this.child = new WireFalse(sName, sValue);
             }
-            
+
             if(field.getString("type").toLowerCase().equals("object")) {
                 String oName = field.getString("value");
                 this.child = new WireObjectType(oName);
             }
         } catch (JSONException e) {}
     }
-    
+
     public String toJpdl() throws InvalidModelException {
         StringWriter jpdl = new StringWriter();
         jpdl.write("    <" + elementName + " ");

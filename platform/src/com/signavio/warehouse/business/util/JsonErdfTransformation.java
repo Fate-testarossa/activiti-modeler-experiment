@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ public class JsonErdfTransformation {
     private Document doc;
     private Node root;
     private List<JSONObject> allShapes;
-    
+
     public JsonErdfTransformation(String canvas){
         try {
             this.canvas = new JSONObject(canvas);
@@ -59,14 +59,14 @@ public class JsonErdfTransformation {
             e.printStackTrace();
         }
     }
-    
+
     public JsonErdfTransformation(JSONObject canvas){
         this.canvas = canvas;
     }
-    
+
     public String toString(){
         Document document = toDoc();
-        
+
         OutputFormat format = new OutputFormat(document);
 
         StringWriter stringOut = new StringWriter();
@@ -77,7 +77,7 @@ public class JsonErdfTransformation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         String serialized = stringOut.toString();
         //TODO this isn't nice at all!
         serialized = serialized.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
@@ -86,11 +86,11 @@ public class JsonErdfTransformation {
 
         return serialized;
     }
-    
+
     public Document toDoc(){
         doc = createNewDocument();
         allShapes = new LinkedList<JSONObject>();
-        
+
         createRoot();
         try {
             createCanvas();
@@ -99,10 +99,10 @@ public class JsonErdfTransformation {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        
+
         return doc;
     }
-    
+
     protected void createRoot(){
         Element r = doc.createElement("root");
         /*r.setAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
@@ -113,30 +113,30 @@ public class JsonErdfTransformation {
         r.setAttribute("xmlns:rdfs", "http://www.w3.org/2000/01/rdf-schema#");*/
         root = doc.appendChild(r);
     }
-    
+
     protected void createCanvas() throws DOMException, JSONException{
         Node canvasNode = createShape(canvas);
-        
+
         // Render element
         for(JSONObject shape : allShapes){
             canvasNode.appendChild(createOryxNsResourceElement("render", "#"+shape.getString("resourceId")));
         }
-        
+
         // Adding class="-oryx-canvas"
         Attr canvasClass = doc.createAttribute("class");
         canvasClass.setValue("-oryx-canvas");
         canvasNode.getAttributes().setNamedItem(canvasClass);
-        
+
         // Stencil set
         canvasNode.appendChild(createOryxNsResourceElement("stencilset", canvas.getJSONObject("stencilset").getString("url")));
     }
-    
+
     protected Node createShape(JSONObject shape) throws DOMException, JSONException{
         Element shapeEl = doc.createElement("div");
         if (shape.has("resourceId")) {
             shapeEl.setAttribute("id", shape.getString("resourceId"));
         }
-        
+
         // Childshapes
         JSONArray childShapes = shape.getJSONArray("childShapes");
         for(int i = 0; i < childShapes.length(); i++){
@@ -150,7 +150,7 @@ public class JsonErdfTransformation {
         }
 
         shapeEl.appendChild(createOryxNsElement("type", shape.getJSONObject("stencil").getString("id")));
-        
+
         // Bounds
         if(shape.has("bounds")){
             JSONObject bounds = shape.getJSONObject("bounds");
@@ -158,7 +158,7 @@ public class JsonErdfTransformation {
             JSONObject upperLeft = bounds.getJSONObject("upperLeft");
             shapeEl.appendChild(createOryxNsElement("bounds", lowerRight.getString("x")+","+lowerRight.getString("y")+","+upperLeft.getString("x")+","+upperLeft.getString("y")));
         }
-        
+
         // Properties
         if(shape.has("properties")){
             JSONObject props = shape.getJSONObject("properties");
@@ -169,7 +169,7 @@ public class JsonErdfTransformation {
                 shapeEl.appendChild(createOryxNsElement(key, val));
             }
         }
-        
+
         // Outgoings
         if(shape.has("outgoing")){
             JSONArray outgoings = shape.getJSONArray("outgoing");
@@ -178,12 +178,12 @@ public class JsonErdfTransformation {
                 shapeEl.appendChild(createRazielNsResourceElement("target", "#"+outgoings.getJSONObject(i).getString("resourceId")));
             }
         }
-        
+
         // Parent
         if(shape.has("parent")){
             shapeEl.appendChild(createRazielNsResourceElement("parent", "#"+shape.getString("parent")));
         }
-        
+
         // Dockers
         if(shape.has("dockers")){
             String dockers = " # ";
@@ -194,10 +194,10 @@ public class JsonErdfTransformation {
             }
             shapeEl.appendChild(createOryxNsElement("docker", dockers));
         }
-        
+
         return root.appendChild(shapeEl);
     }
-    
+
     private Document createNewDocument(){
         DocumentBuilder builder;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -210,14 +210,14 @@ public class JsonErdfTransformation {
         }
         return null;
     }
-    
+
     private Element createOryxNsElement(String name, String textContent){
         Element el = doc.createElement("span");
         el.setAttribute("class", "oryx-"+name);
         el.setTextContent(textContent);
         return el;
     }
-    
+
     private Element createRazielNsResourceElement(String name, String resource){
         Element el = doc.createElement("a");
         el.setAttribute("rel", "raziel-"+name);

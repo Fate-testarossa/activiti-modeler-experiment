@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 /**
- * 
+ *
  */
 package com.signavio.platform.core.impl;
 
@@ -47,20 +47,20 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
     private final String editorUri;
     private final String libsUri;
     private final String supportedBrowserEditor;
-    
+
     private final String rootDirectoryPath;
-    
+
 
     public FsPlatformPropertiesImpl(ServletContext context) {
         supportedBrowserEditor = context.getInitParameter("supportedBrowserEditor");
-        
+
         Properties props = new Properties();
         try {
             props.load(this.getClass().getClassLoader().getResourceAsStream("configuration.properties"));
         } catch (IOException e) {
             throw new InitializationException(e);
         }
-        
+
         String tempRootDirectoryPath = props.getProperty("fileSystemRootDirectory");
         System.out.println("ROOT: " +tempRootDirectoryPath );
         if (tempRootDirectoryPath.endsWith(File.separator)) {
@@ -68,14 +68,14 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
         } else {
             rootDirectoryPath = tempRootDirectoryPath;
         }
-        
+
         serverName = props.getProperty("host");
         platformUri = context.getContextPath() + "/p";
         explorerUri = context.getContextPath() + "/explorer";
         editorUri = context.getContextPath() + "/editor";
         libsUri = context.getContextPath() + "/libs";
     }
-    
+
     /* (non-Javadoc)
      * @see com.signavio.platform.core.impl.PlatformProperties#getServerName()
      */
@@ -105,7 +105,7 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
      */
     public String getLibsUri() {
         return libsUri;
-    }    
+    }
     /* (non-Javadoc)
      * @see com.signavio.platform.core.impl.PlatformProperties#getSupportedBrowserEditorRegExp()
      */
@@ -116,7 +116,7 @@ public class FsPlatformPropertiesImpl implements PlatformProperties {
     public Set<String> getAdmins() {
         return new HashSet<String>(0);
     }
-    
+
     public String getRootDirectoryPath() {
         return rootDirectoryPath;
     }

@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,17 +26,17 @@ package de.hpi.bpmn2_0.model.connector;
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,11 +65,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tSequenceFlow complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tSequenceFlow">
  *   &lt;complexContent>
@@ -84,16 +84,16 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(name = "sequenceFlow")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tSequenceFlow", propOrder = { "conditionExpression" })
 public class SequenceFlow extends Edge {
-    
+
     /* Attributes */
-    
+
     @XmlElement(name = "conditionExpression")
     protected Expression conditionExpression;
     @XmlAttribute
@@ -103,20 +103,20 @@ public class SequenceFlow extends Edge {
     private boolean isDefaultSequenceFlow;
 
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
     public SequenceFlow() {}
-    
+
     /**
      * Copy constructor
-     * 
+     *
      * @param seqFlow
      */
     public SequenceFlow(SequenceFlow seqFlow) {
         super(seqFlow);
-        
+
         this.setConditionExpression(seqFlow.getConditionExpression());
         this.setIsImmediate(seqFlow.isImmediate);
         this.setDefaultSequenceFlow(seqFlow.isDefaultSequenceFlow());
@@ -168,7 +168,7 @@ public class SequenceFlow extends Edge {
     /**
      * Retrieves the undirected data associations connected to the sequence
      * flow.
-     * 
+     *
      * @return List of {@link DataAssociation}
      */
     private List<DataAssociation> getUndirectedDataAssociations() {
@@ -196,14 +196,14 @@ public class SequenceFlow extends Edge {
     public void acceptVisitor(Visitor v){
         v.visitSequenceFlow(this);
     }
-    
+
     /* Getter & Setter */
 
     /**
      * Gets the value of the conditionExpression property.
-     * 
+     *
      * @return possible object is {@link Expression }
-     * 
+     *
      */
     public Expression getConditionExpression() {
         return conditionExpression;
@@ -211,10 +211,10 @@ public class SequenceFlow extends Edge {
 
     /**
      * Sets the value of the conditionExpression property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Expression }
-     * 
+     *
      */
     public void setConditionExpression(Expression value) {
         this.conditionExpression = value;
@@ -222,9 +222,9 @@ public class SequenceFlow extends Edge {
 
     /**
      * Gets the value of the isImmediate property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public boolean isIsImmediate() {
         if (isImmediate == null) {
@@ -236,10 +236,10 @@ public class SequenceFlow extends Edge {
 
     /**
      * Sets the value of the isImmediate property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsImmediate(Boolean value) {
         this.isImmediate = value;

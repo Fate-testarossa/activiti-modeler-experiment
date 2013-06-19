@@ -6,7 +6,7 @@ import org.oryxeditor.server.diagram.generic.GenericDiagramBuilder;
 
 /**
  * Simple extension of {@link GenericDiagramBuilder} to allow for easier usage without having to use generics.
- * 
+ *
  * @author Philipp Maschke
  *
  */
@@ -14,7 +14,7 @@ public class BasicDiagramBuilder extends GenericDiagramBuilder<BasicShape, Basic
 
     /**
      * Parse the json string to the diagram model, assumes that the json is hierarchical ordered
-     * 
+     *
      * @param json
      *            hierarchical JSON string representing a diagram
      * @return a diagram object with all shapes as defined in json
@@ -27,11 +27,11 @@ public class BasicDiagramBuilder extends GenericDiagramBuilder<BasicShape, Basic
         else
             return BasicDiagramBuilder.parseJson(new JSONObject(json));
     }
-    
-    
+
+
     /**
      * Parse the json string to the diagram model, assumes that the json is hierarchical ordered
-     * 
+     *
      * @param json
      *            hierarchical JSON string representing a diagram
      * @return a diagram object with all shapes as defined in json
@@ -41,10 +41,10 @@ public class BasicDiagramBuilder extends GenericDiagramBuilder<BasicShape, Basic
     public static BasicDiagram parseJson(JSONObject json) throws JSONException{
         return (new BasicDiagramBuilder()).parse(json);
     }
-    
+
     /**
      * Parses the namespace of the stencilset only
-     * 
+     *
      * @param json
      *            JSON string representing a diagram
      * @return namespace of the diagram's stencilset

@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,9 +44,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCallConversation complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCallConversation">
  *   &lt;complexContent>
@@ -59,8 +59,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -75,21 +75,21 @@ public class CallConversation
     @XmlIDREF
  @XmlAttribute
     protected Collaboration calledElementRef;
-    
+
     @XmlTransient
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
 
     /*
      * Constructors
      */
-    
+
     public CallConversation() {
      super();
     }
-    
+
  public CallConversation(ConversationNode node) {
   super(node);
-  
+
   if(node instanceof Conversation) {
    setCalledElementRef(new GlobalConversation());
   }
@@ -99,29 +99,29 @@ public class CallConversation
  public void acceptVisitor(Visitor v){
   v.visitCallConversation(this);
  }
- 
-    
+
+
     /**
      * Gets the value of the participantAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participantAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipantAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TParticipantAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<TParticipantAssociation> getParticipantAssociation() {
 //        if (participantAssociation == null) {
@@ -132,11 +132,11 @@ public class CallConversation
 
     /**
      * Gets the value of the calledElementRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Collaboration }
-     *     
+     *
      */
     public Collaboration getCalledElementRef() {
         return calledElementRef;
@@ -144,11 +144,11 @@ public class CallConversation
 
     /**
      * Sets the value of the calledElementRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Collaboration }
-     *     
+     *
      */
     public void setCalledElementRef(Collaboration value) {
         this.calledElementRef = value;
@@ -157,11 +157,11 @@ public class CallConversation
 
  public List<BaseElement> getCalledElements() {
   List<BaseElement> calledElements = new ArrayList<BaseElement>();
-  
+
   if(calledElementRef != null) {
    calledElements.add(getCalledElementRef());
   }
-  
+
   return calledElements;
  }
 

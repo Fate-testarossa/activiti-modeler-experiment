@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Wrapper class for a set of {@link Anchor} that can be used to define positioning policies of labels 
+ * Wrapper class for a set of {@link Anchor} that can be used to define positioning policies of labels
  * @author philipp.maschke
  *
  */
@@ -26,7 +26,7 @@ public class Anchors {
          */
         public static Anchor fromString(String enumString) {
             if (enumString == null) return null;
-            
+
             for (Anchor attrEnum : values()) {
                 if (attrEnum.label.equals(enumString) || attrEnum.name().equals(enumString))
                     return attrEnum;
@@ -49,8 +49,8 @@ public class Anchors {
             return label;
         }
     }
-    
-    
+
+
     public static Anchors fromString(String anchorsString){
         if (anchorsString == null) return null;
         anchorsString = anchorsString.trim();
@@ -61,22 +61,22 @@ public class Anchors {
         }
         return result;
     }
-    
-    
+
+
     private Set<Anchor> anchors = new HashSet<Anchor>();
-    
+
     public Anchors(Anchor...anchors){
         for (Anchor anchor: anchors){
             this.anchors.add(anchor);
         }
     }
-    
-    
+
+
     public void addAnchor(Anchor newAnchor){
         anchors.add(newAnchor);
     }
 
-    
+
     public String toString(){
         StringBuffer buff = new StringBuffer();
         for (Anchor anchor: anchors){
@@ -85,8 +85,8 @@ public class Anchors {
         }
         return buff.toString();
     }
-    
-    
+
+
     public int size(){
         return anchors.size();
     }
@@ -100,7 +100,7 @@ public class Anchors {
         return result;
     }
 
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -117,8 +117,8 @@ public class Anchors {
             return false;
         return true;
     }
-    
-    
+
+
     public boolean contains(Anchor anchor){
         return anchors.contains(anchor);
     }

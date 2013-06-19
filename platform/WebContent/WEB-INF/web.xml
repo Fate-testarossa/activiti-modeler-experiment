@@ -31,7 +31,7 @@
         <filter-name>HandlerFilter</filter-name>
         <filter-class>com.signavio.platform.filters.HandlerFilter</filter-class>
     </filter>
-    
+
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.signavio.platform.filters.EncodingFilter</filter-class>
@@ -74,7 +74,7 @@
             /p/*
         </url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>
@@ -150,38 +150,38 @@
     <welcome-file-list>
         <welcome-file>welcome</welcome-file>
     </welcome-file-list>
-    
+
     <!-- Servlets from the Oryx Editor -->
     <servlet>
         <display-name>BPMN Layouter</display-name>
         <servlet-name>BPMNLayouterServlet</servlet-name>
         <servlet-class>org.oryxeditor.server.BPMNLayouterServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>BPMN2BPEL Servlet</display-name>
         <servlet-name>BPMN2BPELServlet</servlet-name>
         <servlet-class>org.oryxeditor.server.BPMN2BPELServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>Step Through</display-name>
         <servlet-name>StepThrough</servlet-name>
         <servlet-class>de.hpi.diagram.stepthrough.StepThroughServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>XForms Export</display-name>
         <servlet-name>XFormsExportServlet</servlet-name>
         <servlet-class>org.oryxeditor.server.XFormsExportServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>XForms Import</display-name>
         <servlet-name>XFormsImportServlet</servlet-name>
         <servlet-class>org.oryxeditor.server.XFormsImportServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>Oryx Legacy File Download Servlet</display-name>
         <servlet-name>DownloadServlet</servlet-name>
@@ -189,31 +189,31 @@
             org.oryxeditor.server.MultiDownloader
         </servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>Alternatives Renderer</display-name>
         <servlet-name>AlternativesRenderer</servlet-name>
         <servlet-class>org.oryxeditor.server.AlternativesRenderer</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>Oryx syntax checker</display-name>
         <servlet-name>SyntaxChecker</servlet-name>
         <servlet-class>org.oryxeditor.server.SyntaxCheckerServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>Oryx Validator</display-name>
         <servlet-name>Validator</servlet-name>
         <servlet-class>org.oryxeditor.server.ValidatorServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <display-name>RDF 2 JSON Servlet</display-name>
         <servlet-name>RDF2JSONServlet</servlet-name>
         <servlet-class>org.oryxeditor.server.RDF2JSONServlet</servlet-class>
     </servlet>
-        
+
     <servlet-mapping>
         <servlet-name>BPMNLayouterServlet</servlet-name>
         <url-pattern>/editor/bpmnlayouter</url-pattern>
@@ -228,22 +228,22 @@
         <servlet-name>StepThrough</servlet-name>
         <url-pattern>/editor/stepthrough</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>XFormsExportServlet</servlet-name>
         <url-pattern>/editor/xformsexport</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>XFormsImportServlet</servlet-name>
         <url-pattern>/editor/xformsimport</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>SyntaxChecker</servlet-name>
         <url-pattern>/editor/syntaxchecker</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>Validator</servlet-name>
         <url-pattern>/editor/validator</url-pattern>
@@ -253,7 +253,7 @@
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/editor/download</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>AlternativesRenderer</servlet-name>
         <url-pattern>/editor/pdf</url-pattern>

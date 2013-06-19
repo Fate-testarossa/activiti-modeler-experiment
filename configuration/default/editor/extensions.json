@@ -14,7 +14,7 @@
             "description":"A basic subset of BPMN 2.0 containing only task, sequence flow, start event, end event, parallel gateway and data-based XOR.",
             "definition":"bpmn2.0basicsubset/bpmn2.0basicsubset.json",
             "extends":"http://b3mn.org/stencilset/bpmn2.0#"
-        },    
+        },
         {
             "title":"Choreographies",
             "title_de":"Choreographie",

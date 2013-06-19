@@ -31,23 +31,23 @@ if (!ORYX.Plugins) {
 ORYX.Plugins.CanvasResize = Clazz.extend({
 
     construct: function(facade){
-        
+
         this.facade = facade;
-        
+
         new ORYX.Plugins.CanvasResizeButton( this.facade.getCanvas(), "N", this.resize.bind(this));
         new ORYX.Plugins.CanvasResizeButton( this.facade.getCanvas(), "W", this.resize.bind(this));
         new ORYX.Plugins.CanvasResizeButton( this.facade.getCanvas(), "E", this.resize.bind(this));
         new ORYX.Plugins.CanvasResizeButton( this.facade.getCanvas(), "S", this.resize.bind(this));
 
     },
-    
+
     resize: function( position, shrink ){
-        
+
         resizeCanvas = function(position, extentionSize, facade) {
             var canvas         = facade.getCanvas();
             var b             = canvas.bounds;
             var scrollNode     = facade.getCanvas().getHTMLContainer().parentNode.parentNode;
-            
+
             if( position == "E" || position == "W"){
                 canvas.setSize({width: (b.width() + extentionSize)*canvas.zoomLevel, height: (b.height())*canvas.zoomLevel})
 
@@ -56,7 +56,7 @@ ORYX.Plugins.CanvasResize = Clazz.extend({
             }
 
             if( position == "N" || position == "W"){
-                
+
                 var move = position == "N" ? {x: 0, y: extentionSize}: {x: extentionSize, y: 0 };
 
                 // Move all children
@@ -70,17 +70,17 @@ ORYX.Plugins.CanvasResize = Clazz.extend({
             } else if( position == "E" ){
                 scrollNode.scrollLeft += extentionSize;
             }
-            
+
             canvas.update();
             facade.updateSelection();
         }
-        
+
         var commandClass = ORYX.Core.Command.extend({
             construct: function(position, extentionSize, facade){
                 this.position = position;
                 this.extentionSize = extentionSize;
                 this.facade = facade;
-            },            
+            },
             execute: function(){
                 resizeCanvas(this.position, this.extentionSize, this.facade);
             },
@@ -90,33 +90,33 @@ ORYX.Plugins.CanvasResize = Clazz.extend({
             update:function(){
             }
         });
-        
+
         var extentionSize = ORYX.CONFIG.CANVAS_RESIZE_INTERVAL;
         if(shrink) extentionSize = -extentionSize;
         var command = new commandClass(position, extentionSize, this.facade);
-        
+
         this.facade.executeCommands([command]);
-            
+
     }
-    
+
 });
 
 
 ORYX.Plugins.CanvasResizeButton = Clazz.extend({
-    
+
     construct: function(canvas, position, callback){
         this.canvas = canvas;
         var parentNode = canvas.getHTMLContainer().parentNode.parentNode.parentNode;
-        
+
         window.myParent=parentNode
         var scrollNode     = parentNode.firstChild;
         var svgRootNode = scrollNode.firstChild.firstChild;
         // The buttons
         var buttonGrow     = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", parentNode, ['div', { 'class': 'canvas_resize_indicator canvas_resize_indicator_grow' + ' ' + position ,'title':ORYX.I18N.RESIZE.tipGrow+ORYX.I18N.RESIZE[position]}]);
         var buttonShrink     = ORYX.Editor.graft("http://www.w3.org/1999/xhtml", parentNode, ['div', { 'class': 'canvas_resize_indicator canvas_resize_indicator_shrink' + ' ' + position ,'title':ORYX.I18N.RESIZE.tipShrink+ORYX.I18N.RESIZE[position]}]);
-        
+
         // Defines a callback which gives back
-        // a boolean if the current mouse event 
+        // a boolean if the current mouse event
         // is over the particular button area
         var offSetWidth = 60;
         var isOverOffset = function(event){
@@ -125,10 +125,10 @@ ORYX.Plugins.CanvasResizeButton = Clazz.extend({
             //Safari work around
             var X=event.layerX !== undefined ? event.layerX : event.offsetX;
             var Y=event.layerY !== undefined ? event.layerY : event.offsetY;
-            
+
             if((X - scrollNode.scrollLeft)<0 ||Ext.isSafari){    X+=scrollNode.scrollLeft;}
             if((Y - scrollNode.scrollTop )<0 ||Ext.isSafari){ Y+=scrollNode.scrollTop ;}
-            
+
             //
 
             if(position == "N"){
@@ -147,13 +147,13 @@ ORYX.Plugins.CanvasResizeButton = Clazz.extend({
 
                 return Y > scrollNode.scrollHeight -offsetDown- offSetWidth;
             }
-            
+
             return false;
         }
-        
+
         var showButtons = (function() {
-            buttonGrow.show(); 
-        
+            buttonGrow.show();
+
             var x1, y1, x2, y2;
             try {
                 var bb = this.canvas.getRootNode().childNodes[1].getBBox();
@@ -179,24 +179,24 @@ ORYX.Plugins.CanvasResizeButton = Clazz.extend({
                     }
                 });
             }
-        
+
             var w = canvas.bounds.width();
             var h = canvas.bounds.height();
-        
+
             var isEmpty = canvas.getChildNodes().size()==0;
-        
+
             if(position=="N" && (y1>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL || (isEmpty && h>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL))) buttonShrink.show();
             else if(position=="E" && (w-x2)>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL) buttonShrink.show();
             else if(position=="S" && (h-y2)>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL) buttonShrink.show();
             else if(position=="W" && (x1>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL || (isEmpty && w>ORYX.CONFIG.CANVAS_RESIZE_INTERVAL))) buttonShrink.show();
             else buttonShrink.hide();
         }).bind(this);
-        
+
         var hideButtons = function() {
-            buttonGrow.hide(); 
+            buttonGrow.hide();
             buttonShrink.hide();
-        }    
-        
+        }
+
         // If the mouse move is over the button area, show the button
         scrollNode.addEventListener(    ORYX.CONFIG.EVENT_MOUSEMOVE,     function(event){ if( isOverOffset(event) ){showButtons();} else {hideButtons()}} , false );
         // If the mouse is over the button, show them
@@ -206,7 +206,7 @@ ORYX.Plugins.CanvasResizeButton = Clazz.extend({
         //scrollNode.addEventListener(        ORYX.CONFIG.EVENT_MOUSEOUT,     function(event){button.hide()}, true )
         parentNode.addEventListener(    ORYX.CONFIG.EVENT_MOUSEOUT,     function(event){hideButtons()} , true );
         //svgRootNode.addEventListener(    ORYX.CONFIG.EVENT_MOUSEOUT,     function(event){ inCanvas = false } , true );
-        
+
         // Hide the button initialy
         hideButtons();
 
@@ -215,7 +215,7 @@ ORYX.Plugins.CanvasResizeButton = Clazz.extend({
         buttonShrink.addEventListener('click', function(){callback( position, true ); showButtons();}, true);
 
     }
-    
+
 
 });
 

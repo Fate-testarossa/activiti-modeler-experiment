@@ -8,7 +8,7 @@ package org.oryxeditor.server.diagram.label;
 public enum HorizontalAlign {
 
     LEFT("left", 0), CENTER("center", 1), RIGHT("right", 2);
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -18,7 +18,7 @@ public enum HorizontalAlign {
     public static HorizontalAlign fromString(String enumString) {
         return fromString(enumString, true);
     }
-    
+
     /**
      * Returns the matching object for the given string
      * @param enumString
@@ -57,8 +57,8 @@ public enum HorizontalAlign {
     public String toString() {
         return label;
     }
-    
-    
+
+
     public int getIndex(){
         return index;
     }

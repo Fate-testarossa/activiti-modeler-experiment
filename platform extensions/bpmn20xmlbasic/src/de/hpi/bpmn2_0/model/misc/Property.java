@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2010
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,9 +35,9 @@ import de.hpi.bpmn2_0.model.data_object.DataState;
 
 /**
  * <p>Java class for tProperty complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tProperty">
  *   &lt;complexContent>
@@ -51,8 +51,8 @@ import de.hpi.bpmn2_0.model.data_object.DataState;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tProperty", propOrder = {
@@ -62,32 +62,32 @@ import de.hpi.bpmn2_0.model.data_object.DataState;
 public class Property
     extends BaseElement
 {
- 
+
  @XmlElement
     protected DataState dataState;
-    
+
     @XmlAttribute
     protected String name;
-    
+
     @XmlAttribute
     protected  ItemKind itemKind;
-    
+
     @XmlAttribute
     protected boolean isCollection;
-    
+
     @XmlElement
     protected String structure;
 
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the dataState property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link DataState }
-     *     
+     *
      */
     public DataState getDataState() {
         return dataState;
@@ -95,11 +95,11 @@ public class Property
 
     /**
      * Sets the value of the dataState property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link DataState }
-     *     
+     *
      */
     public void setDataState(DataState value) {
         this.dataState = value;
@@ -107,11 +107,11 @@ public class Property
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
@@ -119,11 +119,11 @@ public class Property
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -131,11 +131,11 @@ public class Property
 
     /**
      * Gets the value of the itemSubjectRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link ItemKind }
-     *     
+     *
      */
     public ItemKind getItemKind() {
         return itemKind;

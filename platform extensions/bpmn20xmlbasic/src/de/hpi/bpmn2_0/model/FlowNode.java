@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,11 +51,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tFlowNode complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name=&quot;tFlowNode&quot;&gt;
  *   &lt;complexContent&gt;
@@ -68,8 +68,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tFlowNode")
@@ -100,23 +100,23 @@ public abstract class FlowNode extends FlowElement {
 
     /**
      * Copy constructor
-     * 
+     *
      * @param flowNode
      *            The {@link FlowNode} to copy
      */
     public FlowNode(FlowNode flowNode) {
         super(flowNode);
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitBaseElement(this);
     }
 
     /**
      * Convenience method to retrieve all incoming {@link SequenceFlow}
-     * 
+     *
      * Changes to that list have no influence to the result other callers get.
-     * 
+     *
      * @return The list of {@link SequenceFlow}
      */
     public List<SequenceFlow> getIncomingSequenceFlows() {
@@ -135,7 +135,7 @@ public abstract class FlowNode extends FlowElement {
     /**
      * The {@link Marshaller} invokes this method right before marshaling to
      * XML. Add sequenceflow to the reference list.
-     * 
+     *
      * @param marshaller
      *            The marshaling context
      */
@@ -157,9 +157,9 @@ public abstract class FlowNode extends FlowElement {
 
     /**
      * Convenience method to retrieve all outgoing {@link SequenceFlow}
-     * 
+     *
      * Changes to that list have no influence to the result other callers get.
-     * 
+     *
      * @return The list of {@link SequenceFlow}
      */
     public List<SequenceFlow> getOutgoingSequenceFlows() {

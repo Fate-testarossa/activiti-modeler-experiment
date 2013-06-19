@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,9 +39,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tScriptTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tScriptTask">
  *   &lt;complexContent>
@@ -54,8 +54,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -69,12 +69,12 @@ public class ScriptTask
   * Default constructor
   */
  public ScriptTask() {
-  
+
  }
- 
+
  /**
   * Copy constructor
-  * 
+  *
   * @param scriptTask
   *   The {@link ScriptTask} to copy.
   */
@@ -83,38 +83,38 @@ public class ScriptTask
   this.setScript(scriptTask.getScript());
   this.setScriptFormat(scriptTask.getScriptFormat());
  }
- 
+
  @XmlElement
     protected String script;
-    
+
  @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String scriptFormat;
 
- 
- 
+
+
  public void acceptVisitor(Visitor v){
   v.visitScriptTask(this);
  }
- 
+
  public GlobalTask getAsGlobalTask() {
   GlobalScriptTask gst = new GlobalScriptTask(super.getAsGlobalTask());
-  
+
   gst.setScript(this.getScript());
   gst.setScriptLanguage(this.getScriptFormat());
-  
+
   return gst;
  }
- 
+
  /* Getter & Setter */
- 
+
     /**
      * Gets the value of the script property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getScript() {
         return script;
@@ -122,11 +122,11 @@ public class ScriptTask
 
     /**
      * Sets the value of the script property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setScript(String value) {
         this.script = value;
@@ -134,11 +134,11 @@ public class ScriptTask
 
     /**
      * Gets the value of the scriptLanguage property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getScriptFormat() {
         return scriptFormat;
@@ -146,11 +146,11 @@ public class ScriptTask
 
     /**
      * Sets the value of the scriptLanguage property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setScriptFormat(String value) {
         this.scriptFormat = value;

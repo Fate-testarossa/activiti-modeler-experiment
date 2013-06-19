@@ -2,7 +2,7 @@
 Ext.PagingToolbar.prototype.prevText = "Vorherige Seite";
 Ext.PagingToolbar.prototype.nextText = "Nächste Seite";
 Ext.PagingToolbar.prototype.lastText  = "Letzte Seite";
-    
+
 
 ORYX.I18N.PropertyWindow.dateFormat = "d.m.y";
 

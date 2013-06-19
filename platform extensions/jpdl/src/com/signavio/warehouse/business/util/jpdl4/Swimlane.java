@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Ole Eckermann, Stefan Krumnow & Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,11 +30,11 @@ public class Swimlane {
     private String assignee;
     private String candidateGroups;
     private String candidateUsers;
-    
+
     // TODO Integrate Swimline in transformation.
     // Swimlane as child of process.
     // Swimlane is not parent of any Task.
-    
+
     public Swimlane(JSONObject swimlane) {
         this.name = JsonToJpdl.getAttribute(swimlane, "name");
         this.assignee = JsonToJpdl.getAttribute(swimlane, "assignee");
@@ -75,11 +75,11 @@ public class Swimlane {
     public void setCandidateUsers(String candidateUsers) {
         this.candidateUsers = candidateUsers;
     }
-    
+
     public String toJpdl() throws InvalidModelException {
         StringWriter jpdl = new StringWriter();
         jpdl.write("<swimlane");
-        
+
         jpdl.write(JsonToJpdl.transformAttribute("name", name));
         jpdl.write(JsonToJpdl.transformAttribute("assignee", assignee));
         jpdl.write(JsonToJpdl.transformAttribute("candidate-groups", candidateGroups));
@@ -88,5 +88,5 @@ public class Swimlane {
         jpdl.write(" />\n");
         return jpdl.toString();
     }
-    
+
 }

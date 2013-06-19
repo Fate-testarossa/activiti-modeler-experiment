@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,9 +34,9 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * <p>Java class for tEventDefinition complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tEventDefinition">
  *   &lt;complexContent>
@@ -45,8 +45,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tEventDefinition")
@@ -65,17 +65,17 @@ import de.hpi.diagram.SignavioUUID;
 public abstract class EventDefinition
     extends RootElement
 {
- 
+
  /* Constructors */
- 
+
  /**
   * Default constructor
   */
  public EventDefinition() {}
- 
+
  /**
   * Copy constructor
-  * 
+  *
   * @param timerEventDefinition
   */
  public EventDefinition(EventDefinition eventDefinition) {
@@ -85,9 +85,9 @@ public abstract class EventDefinition
  public static EventDefinition createEventDefinition(String eventIdentifier){
   if(eventIdentifier == null)
    return null;
-  
+
   EventDefinition evDef = null;
-  if(eventIdentifier.equalsIgnoreCase("Message")) 
+  if(eventIdentifier.equalsIgnoreCase("Message"))
    evDef = new MessageEventDefinition();
   else if(eventIdentifier.equalsIgnoreCase("Escalation"))
    evDef = new EscalationEventDefinition();
@@ -101,10 +101,10 @@ public abstract class EventDefinition
    evDef = new SignalEventDefinition();
   else if(eventIdentifier.equalsIgnoreCase("Terminate"))
    evDef = new TerminateEventDefinition();
-  
+
   if(evDef != null)
    evDef.setId(SignavioUUID.generate());
-  
+
   return evDef;
  }
 }

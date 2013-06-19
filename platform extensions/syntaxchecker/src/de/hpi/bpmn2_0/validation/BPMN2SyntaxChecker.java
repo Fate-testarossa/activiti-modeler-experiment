@@ -44,17 +44,17 @@ import de.hpi.diagram.verification.AbstractSyntaxChecker;
 
 /**
  * Copyright (c) 2009 Philipp Giese
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -148,8 +148,8 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
                 if (edge instanceof MessageFlow) {
                     FlowElement source = edge.getSourceRef();
                     FlowElement target = edge.getTargetRef();
-                    
-                    
+
+
 
                     /*
                      * Not in same process or sub process
@@ -505,16 +505,16 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     // addError(node, NODE_NOT_ALLOWED);
     // }
     // }
-    //    
+    //
     // private boolean checkForAllowedNode(FlowElement node, HashSet<String>
     // classes, boolean allowed) {
     // // If checking for allowed classes, empty classes means all are allowed
     // if(allowed && classes.size() == 0)
     // return true;
-    //        
+    //
     // boolean containedInClasses = false;
     // String nodeClassName = node.getClass().getSimpleName();
-    //    
+    //
     // for(String clazz : classes){
     // //TODO this doesn't checks for superclasses!!!
     // // better would be "node instanceof Class.forName(clazz)"
@@ -524,10 +524,10 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     // containedInClasses = (node instanceof Activity) &&
     // ((Activity)node).isMultipleInstance();
     // }
-    //            
+    //
     // if(containedInClasses) break;
     // }
-    //        
+    //
     // return containedInClasses == allowed;
     // }
 
@@ -598,12 +598,12 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     private boolean hasOutgoingControlFlow(FlowNode node) {
         return node.getOutgoingSequenceFlows().size() > 0;
     }
-    
+
     /**
      * Checks whether the {@link FlowElement} has a correlating diagram element.
-     * 
+     *
      * @param element
-     * 
+     *
      * @return
      *         true if diagram element exists
      */
@@ -613,13 +613,13 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
                     && ((BPMNShape) diaEl).getBpmnElement().equals(element)) {
                 return true;
             }
-            
+
             if(diaEl instanceof BPMNEdge
                     && ((BPMNEdge) diaEl).getBpmnElement().equals(element)) {
                 return true;
             }
         }
-        
+
         return false;
     }
 

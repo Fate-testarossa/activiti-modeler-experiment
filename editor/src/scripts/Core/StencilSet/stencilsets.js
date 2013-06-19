@@ -39,7 +39,7 @@ if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 ORYX.Core.StencilSet._stencilSetsByNamespace = new Hash();
 
 //storage for stencil sets by url
-ORYX.Core.StencilSet._stencilSetsByUrl = new Hash();    
+ORYX.Core.StencilSet._stencilSetsByUrl = new Hash();
 
 //storage for stencil set namespaces by editor instances
 ORYX.Core.StencilSet._StencilSetNSByEditorInstance = new Hash();
@@ -48,9 +48,9 @@ ORYX.Core.StencilSet._StencilSetNSByEditorInstance = new Hash();
 ORYX.Core.StencilSet._rulesByEditorInstance = new Hash();
 
 /**
- * 
+ *
  * @param {String} editorId
- * 
+ *
  * @return {Hash} Returns a hash map with all stencil sets that are loaded by
  *                     the editor with the editorId.
  */
@@ -67,12 +67,12 @@ ORYX.Core.StencilSet.stencilSets = function(editorId) {
 };
 
 /**
- * 
+ *
  * @param {String} namespace
- * 
+ *
  * @return {ORYX.Core.StencilSet.StencilSet} Returns the stencil set with the specified
  *                                         namespace.
- * 
+ *
  * The method can handle namespace strings like
  *  http://www.example.org/stencilset
  *  http://www.example.org/stencilset#
@@ -90,11 +90,11 @@ ORYX.Core.StencilSet.stencilSet = function(namespace) {
 };
 
 /**
- * 
+ *
  * @param {String} id
- * 
+ *
  * @return {ORYX.Core.StencilSet.Stencil} Returns the stencil specified by the id.
- * 
+ *
  * The id must be unique and contains the namespace of the stencil's stencil set.
  * e.g. http://www.example.org/stencilset#ANode
  */
@@ -111,9 +111,9 @@ ORYX.Core.StencilSet.stencil = function(id) {
 };
 
 /**
- * 
+ *
  * @param {String} editorId
- * 
+ *
  * @return {ORYX.Core.StencilSet.Rules} Returns the rules object for the editor
  *                                     specified by its editor id.
  */
@@ -125,12 +125,12 @@ ORYX.Core.StencilSet.rules = function(editorId) {
 };
 
 /**
- * 
+ *
  * @param {String} url
  * @param {String} editorId
- * 
+ *
  * Loads a stencil set from url, if it is not already loaded.
- * It also stores which editor instance loads the stencil set and 
+ * It also stores which editor instance loads the stencil set and
  * initializes the Rules object for the editor instance.
  */
 ORYX.Core.StencilSet.loadStencilSet = function(url, editorId) {
@@ -139,16 +139,16 @@ ORYX.Core.StencilSet.loadStencilSet = function(url, editorId) {
     if(!stencilSet) {
         //load stencil set
         stencilSet = new ORYX.Core.StencilSet.StencilSet(url);
-        
+
         //store stencil set
         ORYX.Core.StencilSet._stencilSetsByNamespace[stencilSet.namespace()] = stencilSet;
-        
+
         //store stencil set by url
         ORYX.Core.StencilSet._stencilSetsByUrl[url] = stencilSet;
     }
-    
+
     var namespace = stencilSet.namespace();
-    
+
     //store which editorInstance loads the stencil set
     if(ORYX.Core.StencilSet._StencilSetNSByEditorInstance[editorId]) {
         ORYX.Core.StencilSet._StencilSetNSByEditorInstance[editorId].push(namespace);
@@ -172,16 +172,16 @@ ORYX.Core.StencilSet.loadStencilSet = function(url, editorId) {
  */
 ORYX.Core.StencilSet.getTranslation = function(jsonObject, name) {
     var lang = ORYX.I18N.Language.toLowerCase();
-    
+
     var result = jsonObject[name + "_" + lang];
-    
+
     if(result)
         return result;
-        
+
     result = jsonObject[name + "_" + lang.substr(0, 2)];
-    
+
     if(result)
         return result;
-        
+
     return jsonObject[name];
 };

@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,11 +49,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tSubConversation complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tSubConversation">
  *   &lt;complexContent>
@@ -67,14 +67,14 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "tSubConversation", propOrder = { 
+@XmlType(name = "tSubConversation", propOrder = {
         "conversationNode",
-        "artifact", 
+        "artifact",
         "correlationKeyRef",
         "messageFlow",
         "association",
@@ -117,10 +117,10 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
         return childs;
     }
-    
+
     public List<Edge> getChildEdges() {
         List<Edge> edgeList = new ArrayList<Edge>();
-        
+
         for(FlowElement fe : this.getFlowElement()) {
             if(fe instanceof Edge) {
                 edgeList.add((Edge) fe);
@@ -128,7 +128,7 @@ public class SubConversation extends ConversationNode implements ContainerElemen
                 edgeList.addAll(((ContainerElement) fe).getChildEdges());
             }
         }
-        
+
         return edgeList;
     }
 
@@ -136,29 +136,29 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
     /**
      * Gets the value of the conversationNode property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the conversationNode property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getConversationNode().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link SubConversation }{@code >}
      * {@link JAXBElement }{@code <}{@link CallConversation }{@code >}
      * {@link JAXBElement }{@code <}{@link Communication }{@code >}
      * {@link JAXBElement }{@code <}{@link ConversationNode }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<ConversationNode> getConversationNode() {
         if (conversationNode == null) {
@@ -169,29 +169,29 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
     /**
      * Gets the value of the artifact property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the artifact property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getArtifact().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link TArtifact }{@code >}
      * {@link JAXBElement }{@code <}{@link TAssociation }{@code >}
      * {@link JAXBElement }{@code <}{@link TGroup }{@code >} {@link JAXBElement }
      * {@code <}{@link TTextAnnotation }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Artifact> getArtifact() {
         if (artifact == null) {
@@ -224,9 +224,9 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
     /**
      * Gets the value of the correlationKeyRef property.
-     * 
+     *
      * @return possible object is {@link CorrelationKey }
-     * 
+     *
      */
     public CorrelationKey getCorrelationKeyRef() {
         return correlationKeyRef;
@@ -234,10 +234,10 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
     /**
      * Sets the value of the correlationKeyRef property.
-     * 
+     *
      * @param value
      *            allowed object is {@link CorrelationKey }
-     * 
+     *
      */
     public void setCorrelationKeyRef(CorrelationKey value) {
         this.correlationKeyRef = value;
@@ -249,26 +249,26 @@ public class SubConversation extends ConversationNode implements ContainerElemen
 
     public List<FlowElement> getFlowElement() {
         List<FlowElement> flowElements = new ArrayList<FlowElement>();
-        
+
         flowElements.addAll(getConversationNode());
         flowElements.addAll(getParticipantRef());
         flowElements.addAll(getArtifact());
         flowElements.addAll(getConversationLink());
         flowElements.addAll(getMessageFlow());
         flowElements.addAll(getAssociation());
-        
+
         return flowElements;
     }
 
     public List<BaseElement> getCalledElements() {
         List<BaseElement> calledElements = new ArrayList<BaseElement>();
-        
+
         for(ConversationNode node : getConversationNode()) {
             if(node instanceof CallingElement) {
                 calledElements.addAll(((CallingElement) node).getCalledElements());
             }
         }
-        
+
         return calledElements;
     }
 

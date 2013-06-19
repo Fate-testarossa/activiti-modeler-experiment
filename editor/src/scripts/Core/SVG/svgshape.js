@@ -72,7 +72,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
         this.anchorRight = false;
         this.anchorTop = false;
         this.anchorBottom = false;
-        
+
         //attributes of path elements of edge objects
         this.allowDockers = true;
         this.resizeMarkerMid = false;
@@ -91,7 +91,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
         /**initialize position and size*/
         if(ORYX.Editor.checkClassType(this.element, SVGRectElement) || ORYX.Editor.checkClassType(this.element, SVGImageElement)) {
             this.type = "Rect";
-            
+
             var xAttr = this.element.getAttributeNS(null, "x");
             if(xAttr) {
                 this.oldX = parseFloat(xAttr);
@@ -119,7 +119,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 
         } else if(ORYX.Editor.checkClassType(this.element, SVGCircleElement)) {
             this.type = "Circle";
-            
+
             var cx = undefined;
             var cy = undefined;
             //var r = undefined;
@@ -150,7 +150,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 
         } else if(ORYX.Editor.checkClassType(this.element, SVGEllipseElement)) {
             this.type = "Ellipse";
-            
+
             var cx = undefined;
             var cy = undefined;
             //var rx = undefined;
@@ -186,7 +186,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 
         } else if(ORYX.Editor.checkClassType(this.element, SVGLineElement)) {
             this.type = "Line";
-            
+
             var x1 = undefined;
             var y1 = undefined;
             var x2 = undefined;
@@ -222,7 +222,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 
         } else if(ORYX.Editor.checkClassType(this.element, SVGPolylineElement) || ORYX.Editor.checkClassType(this.element, SVGPolygonElement)) {
             this.type = "Polyline";
-            
+
             var pointsArray = [];
             if (this.element.points&&this.element.points.numberOfItems){
                 for(var i=0, size=this.element.points.numberOfItems; i<size; i++){
@@ -239,7 +239,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                     throw "Missing attribute in element " + this.element;
                 }
             }
-            
+
 
             if(pointsArray && pointsArray.length && pointsArray.length > 1) {
                 var minX = parseFloat(pointsArray[0]);
@@ -265,11 +265,11 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 
         } else if(ORYX.Editor.checkClassType(this.element, SVGPathElement)) {
             this.type = "Path";
-            
+
             this.editPathParser = new PathParser();
             this.editPathHandler = new ORYX.Core.SVG.EditPathHandler();
             this.editPathParser.setHandler(this.editPathHandler);
-        
+
             var parser = new PathParser();
             var handler = new ORYX.Core.SVG.MinMaxPathHandler();
             parser.setHandler(handler);
@@ -311,7 +311,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
         if(anchorAttr) {
             anchorAttr = anchorAttr.replace("/,/g", " ");
             var anchors = anchorAttr.split(" ").without("");
-            
+
             for(var i = 0; i < anchors.length; i++) {
                 switch(anchors[i].toLowerCase()) {
                     case "left":
@@ -329,28 +329,28 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                 }
             }
         }
-        
+
         //allowDockers and resizeMarkerMid
         if(ORYX.Editor.checkClassType(this.element, SVGPathElement)) {
-            var allowDockersAttr = this.element.getAttributeNS(NAMESPACE_ORYX, "allowDockers"); 
+            var allowDockersAttr = this.element.getAttributeNS(NAMESPACE_ORYX, "allowDockers");
             if(allowDockersAttr) {
                 if(allowDockersAttr.toLowerCase() === "no") {
-                    this.allowDockers = false; 
+                    this.allowDockers = false;
                 } else {
                     this.allowDockers = true;
                 }
             }
-            
-            var resizeMarkerMidAttr = this.element.getAttributeNS(NAMESPACE_ORYX, "resizeMarker-mid"); 
+
+            var resizeMarkerMidAttr = this.element.getAttributeNS(NAMESPACE_ORYX, "resizeMarker-mid");
             if(resizeMarkerMidAttr) {
                 if(resizeMarkerMidAttr.toLowerCase() === "yes") {
-                    this.resizeMarkerMid = true; 
+                    this.resizeMarkerMid = true;
                 } else {
                     this.resizeMarkerMid = false;
                 }
             }
-        }    
-            
+        }
+
         this.x = this.oldX;
         this.y = this.oldY;
         this.width = this.oldWidth;
@@ -361,7 +361,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
      * Writes the changed values into the SVG element.
      */
     update: function() {
-        
+
         if(this.x !== this.oldX || this.y !== this.oldY || this.width !== this.oldWidth || this.height !== this.oldHeight) {
             switch(this.type) {
                 case "Rect":
@@ -378,7 +378,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
 //                    } else {
                          this.radiusX = ((this.width < this.height) ? this.width : this.height)/2.0;
                     //}
-    
+
                     this.element.setAttributeNS(null, "cx", this.x + this.width/2.0);
                     this.element.setAttributeNS(null, "cy", this.y + this.height/2.0);
                     this.element.setAttributeNS(null, "r", this.radiusX);
@@ -386,7 +386,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                 case "Ellipse":
                     this.radiusX = this.width/2;
                     this.radiusY = this.height/2;
-    
+
                     this.element.setAttributeNS(null, "cx", this.x + this.radiusX);
                     this.element.setAttributeNS(null, "cy", this.y + this.radiusY);
                     this.element.setAttributeNS(null, "rx", this.radiusX);
@@ -395,13 +395,13 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                 case "Line":
                     if(this.x !== this.oldX)
                         this.element.setAttributeNS(null, "x1", this.x);
-                        
+
                     if(this.y !== this.oldY)
                         this.element.setAttributeNS(null, "y1", this.y);
-                        
+
                     if(this.x !== this.oldX || this.width !== this.oldWidth)
                         this.element.setAttributeNS(null, "x2", this.x + this.width);
-                    
+
                     if(this.y !== this.oldY || this.height !== this.oldHeight)
                         this.element.setAttributeNS(null, "y2", this.y + this.height);
                     break;
@@ -409,13 +409,13 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                     var points = this.element.getAttributeNS(null, "points");
                     if(points) {
                         points = points.replace(/,/g, " ").split(" ").without("");
-    
+
                         if(points && points.length && points.length > 1) {
-    
+
                             //TODO what if oldWidth == 0?
                             var widthDelta = (this.oldWidth === 0) ? 0 : this.width / this.oldWidth;
                             var heightDelta = (this.oldHeight === 0) ? 0 : this.height / this.oldHeight;
-    
+
                             var updatedPoints = "";
                             for(var i = 0; i < points.length; i++) {
                                 var x = (parseFloat(points[i])-this.oldX)*widthDelta + this.x;
@@ -436,11 +436,11 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                     //TODO what if oldWidth == 0?
                     var widthDelta = (this.oldWidth === 0) ? 0 : this.width / this.oldWidth;
                     var heightDelta = (this.oldHeight === 0) ? 0 : this.height / this.oldHeight;
-    
+
                     //use path parser to edit each point of the path
                     this.editPathHandler.init(this.x, this.y, this.oldX, this.oldY, widthDelta, heightDelta);
                     this.editPathParser.parsePath(this.element);
-    
+
                     //change d attribute of path
                     this.element.setAttributeNS(null, "d", this.editPathHandler.d);
                     break;
@@ -451,12 +451,12 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
             this.oldWidth = this.width;
             this.oldHeight = this.height;
         }
-        
+
         // Remove cached variables
         delete this.visible;
         delete this.handler;
     },
-    
+
     isPointIncluded: function(pointX, pointY) {
 
         // Check if there are the right arguments and if the node is visible
@@ -480,28 +480,28 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                 return ORYX.Core.Math.isPointInEllipse(pointX, pointY, this.x + this.width/2.0, this.y + this.height/2.0, this.radiusX, this.radiusX);
                 break;
             case "Ellipse":
-                return ORYX.Core.Math.isPointInEllipse(pointX, pointY, this.x + this.radiusX, this.y + this.radiusY, this.radiusX, this.radiusY);            
+                return ORYX.Core.Math.isPointInEllipse(pointX, pointY, this.x + this.radiusX, this.y + this.radiusY, this.radiusX, this.radiusY);
                 break;
             case "Line":
                 return ORYX.Core.Math.isPointInLine(pointX, pointY, this.x, this.y, this.x + this.width, this.y + this.height);
                 break;
             case "Polyline":
                 var points = this.element.getAttributeNS(null, "points");
-    
+
                 if(points) {
                     points = points.replace(/,/g , " ").split(" ").without("");
-    
+
                     points = points.collect(function(n) {
                         return parseFloat(n);
                     });
-                    
+
                     return ORYX.Core.Math.isPointInPolygone(pointX, pointY, points);
                 } else {
                     return false;
                 }
                 break;
             case "Path":
-                
+
                 // Cache Path handler
                 if (!this.handler) {
                     var parser = new PathParser();
@@ -509,7 +509,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                     parser.setHandler(this.handler);
                     parser.parsePath(this.element);
                 }
-                
+
                 return ORYX.Core.Math.isPointInPolygone(pointX, pointY, this.handler.points);
 
                 break;
@@ -524,20 +524,20 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
      * @return boolean
      */
     isVisible: function(elem) {
-        
+
         if (this.visible !== undefined){
             return this.visible;
         }
-            
+
         if (!elem) {
             elem = this.element;
         }
 
         var hasOwnerSVG = false;
-        try { 
+        try {
             hasOwnerSVG = !!elem.ownerSVGElement;
         } catch(e){}
-        
+
         // Is SVG context
         if ( hasOwnerSVG ) {
             // IF G-Element
@@ -558,7 +558,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
                 var attr = elem.getAttributeNS(null, "display");
                 if(!attr)
                     this.visible = this.isVisible(elem.parentNode);
-                else if (attr == "none") 
+                else if (attr == "none")
                     this.visible = false;
                 else
                     this.visible = true;
@@ -566,7 +566,7 @@ ORYX.Core.SVG.SVGShape = Clazz.extend({
         } else {
             this.visible = true;
         }
-        
+
         return this.visible;
     },
 

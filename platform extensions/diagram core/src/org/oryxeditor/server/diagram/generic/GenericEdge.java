@@ -8,7 +8,7 @@ import org.oryxeditor.server.diagram.Point;
 
 /**
  * Represents an edge element in a diagram.
- * 
+ *
  * @author Philipp Maschke, Robert Gurol
  *
  * @param <S> the actual type of shape to be used (must inherit from {@link GenericShape}); calls to {@link #getChildShapesReadOnly()}, ... will return this type
@@ -31,8 +31,8 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
     /* getters & setters */
     /**
      * Returns the source of this shape; usually a node.<br>
-     * 
-     * 
+     *
+     *
      * @return the source shape of this shape
      */
     public S getSource() {
@@ -44,9 +44,9 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
      * The source is also set as an incoming shape of this Edge.</br>
      * If there is a current source, it is replaced and also removed from the
      * incoming shapes of this edge.
-     * 
+     *
      * @param shape
-     * 
+     *
      * @deprecated Use {@link #connectToASource(GenericShape)} instead
      */
     public void setSourceAndUpdateIncomings(S shape) {
@@ -61,7 +61,7 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
 
     /**
      * Gives the target of shape, which defined another associated shape
-     * 
+     *
      * @return the target shape
      */
     public S getTarget() {
@@ -73,13 +73,13 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
      * The target is also set as an outgoing shape of this Edge. <br/>
      * If there is a current target, it is replaced and also removed from the
      * outgoing shapes of this edge.
-     * 
+     *
      * @param target
      *            the target shape to set
-     *            
+     *
      * @deprecated Use {@link #connectToATarget(GenericShape)} instead
      */
-    public void setTargetAndUpdateOutgoings(S target) {        
+    public void setTargetAndUpdateOutgoings(S target) {
         if (this.getTarget() != null) {
             this.removeOutgoing(this.getTarget());
         }
@@ -88,31 +88,31 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
             this.addOutgoing(target);
     }
 
-    
+
     /**
      * Connects to a source, updates the source's outgoing shapes as well.
      * Disconnects from the previous source first, as
      * {@link #disconnectFromSource()} would.
-     * 
+     *
      * @param newSource
      *            the shape to connect to
      */
     public void connectToASource(S newSource) {
         if (this.source != null)
             this.removeIncomingAndUpdateItsOutgoings(this.source);
-        
+
         this.source = newSource;
-        
+
         if(newSource != null)
             this.addIncomingAndUpdateItsOutgoings(newSource);
     }
 
-    
+
     /**
      * Disconnects the Edge from its source, updates the source's outgoing
      * shapes as well. If there is no source (source equals null), nothing is
      * done.
-     * 
+     *
      * @return true if it has actually disconnected
      */
     public boolean disconnectFromSource() {
@@ -125,30 +125,30 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
         return true;
     }
 
-    
+
     /**
      * Connects to a target, updates the target's incoming shapes as well.
      * Disconnects from the previous target first, as
      * {@link #disconnectFromTarget()} would.
-     * 
+     *
      * @param s
      *            the shape to connect to
      */
-    public void connectToATarget(S newTarget) {        
+    public void connectToATarget(S newTarget) {
         if (this.target != null)
             this.removeOutgoingAndUpdateItsIncomings(this.target);
-        
+
         this.target = newTarget;
-        
+
         if(newTarget != null)
             this.addOutgoingAndUpdateItsIncomings(newTarget);
     }
 
-    
+
     /**
      * Disconnects the Edge from its target, updates the target's incoming
      * shapes as well.
-     * 
+     *
      * @return true if it has actually disconnected
      */
     public boolean disconnectFromTarget() {
@@ -160,8 +160,8 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
 
         return true;
     }
-    
-    
+
+
     /**
      * Add p as new last docker; updates the edge's bounds.
      * @param p
@@ -171,10 +171,10 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
         super.addDocker(p);
         this.updateBounds();
     }
-    
+
     /**
      * Add p as docker at a given position; updates the edge's bounds.
-     * 
+     *
      * @param p
      * @param position
      */
@@ -183,14 +183,14 @@ public abstract class GenericEdge<S extends GenericShape<S,D>, D extends Generic
         super.addDocker(p, position);
         this.updateBounds();
     }
-    
+
     @Override
     public void setDockers(List<Point> dockers) {
         super.setDockers(dockers);
         this.updateBounds();
     }
-    
-    
+
+
     protected void updateBounds() {
         double maxX = Integer.MIN_VALUE;
         double maxY = Integer.MIN_VALUE;

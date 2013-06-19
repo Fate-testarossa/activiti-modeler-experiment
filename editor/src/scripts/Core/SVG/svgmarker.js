@@ -82,7 +82,7 @@ ORYX.Core.SVG.SVGMarker = Clazz.extend({
         }
 
         this.id = this.element.getAttributeNS(null, "id");
-        
+
         //init svg marker attributes
         var refXValue = this.element.getAttributeNS(null, "refX");
         if(refXValue) {
@@ -202,6 +202,6 @@ ORYX.Core.SVG.SVGMarker = Clazz.extend({
         this.oldMarkerWidth = this.markerWidth;
         this.oldMarkerHeight = this.markerHeight;
     },
-    
+
     toString: function() { return (this.element) ? "SVGMarker " + this.element.id : "SVGMarker " + this.element;}
  });

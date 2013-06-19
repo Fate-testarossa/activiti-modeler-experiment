@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2010
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,9 +39,9 @@ import de.hpi.bpmn2_0.model.BaseElement;
 
 /**
  * <p>Java class for tOutputSet complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tOutputSet">
  *   &lt;complexContent>
@@ -57,8 +57,8 @@ import de.hpi.bpmn2_0.model.BaseElement;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -89,25 +89,25 @@ public class OutputSet
 
     /**
      * Gets the value of the dataOutputRefs property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the dataOutputRefs property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataOutputRefs().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataOutput}
-     * 
-     * 
+     *
+     *
      */
     public List<DataOutput> getDataOutputRefs() {
         if (dataOutputRefs == null) {
@@ -118,25 +118,25 @@ public class OutputSet
 
     /**
      * Gets the value of the optionalOutputRefs property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the optionalOutputRefs property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getOptionalOutputRefs().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataOutput}
-     * 
-     * 
+     *
+     *
      */
     public List<DataOutput> getOptionalOutputRefs() {
         if (optionalOutputRefs == null) {
@@ -147,25 +147,25 @@ public class OutputSet
 
     /**
      * Gets the value of the whileExecutingOutputRefs property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the whileExecutingOutputRefs property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getWhileExecutingOutputRefs().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataOutput}
-     * 
-     * 
+     *
+     *
      */
     public List<DataOutput> getWhileExecutingOutputRefs() {
         if (whileExecutingOutputRefs == null) {
@@ -176,25 +176,25 @@ public class OutputSet
 
     /**
      * Gets the value of the inputSetRefs property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the inputSetRefs property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getInputSetRefs().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link InputSet}
-     * 
-     * 
+     *
+     *
      */
     public List<InputSet> getInputSetRefs() {
         if (inputSetRefs == null) {
@@ -205,11 +205,11 @@ public class OutputSet
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
@@ -217,11 +217,11 @@ public class OutputSet
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;

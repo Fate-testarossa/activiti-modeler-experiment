@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2010
  * Signavio, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,9 +37,9 @@ import de.hpi.bpmn2_0.model.activity.resource.Rendering;
 
 /**
  * <p>Java class for tGlobalUserTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tGlobalUserTask">
  *   &lt;complexContent>
@@ -53,8 +53,8 @@ import de.hpi.bpmn2_0.model.activity.resource.Rendering;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tGlobalUserTask", propOrder = {
@@ -67,36 +67,36 @@ public class GlobalUserTask
  public GlobalUserTask() {
   super();
  }
- 
+
  public GlobalUserTask(GlobalTask gt) {
   super(gt);
  }
- 
+
     protected List<Rendering> rendering;
     @XmlAttribute(name = "implementation")
     protected UserTaskImplementation implementation;
 
     /**
      * Gets the value of the rendering property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the rendering property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRendering().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Rendering }
-     * 
-     * 
+     *
+     *
      */
     public List<Rendering> getRendering() {
         if (rendering == null) {
@@ -107,11 +107,11 @@ public class GlobalUserTask
 
     /**
      * Gets the value of the implementation property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link UserTaskImplementation }
-     *     
+     *
      */
     public UserTaskImplementation getImplementation() {
             return implementation;
@@ -119,11 +119,11 @@ public class GlobalUserTask
 
     /**
      * Sets the value of the implementation property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link UserTaskImplementation }
-     *     
+     *
      */
     public void setImplementation(UserTaskImplementation value) {
         this.implementation = value;

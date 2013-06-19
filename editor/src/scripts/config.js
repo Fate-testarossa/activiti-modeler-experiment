@@ -43,7 +43,7 @@ ORYX.CONFIG.SHOW_GRIDLINE =             false;
     /* Editor-Mode */
 ORYX.CONFIG.MODE_READONLY =                "readonly";
 ORYX.CONFIG.MODE_FULLSCREEN =            "fullscreen";
-ORYX.CONFIG.WINDOW_HEIGHT =             400;    
+ORYX.CONFIG.WINDOW_HEIGHT =             400;
 ORYX.CONFIG.PREVENT_LOADINGMASK_AT_READY = false;
 
     /* Plugins */
@@ -57,7 +57,7 @@ ORYX.CONFIG.NAMESPACE_ORYX =            "http://www.b3mn.org/oryx";
 ORYX.CONFIG.NAMESPACE_SVG =                "http://www.w3.org/2000/svg";
 
     /* UI */
-ORYX.CONFIG.CANVAS_WIDTH =                1485; 
+ORYX.CONFIG.CANVAS_WIDTH =                1485;
 ORYX.CONFIG.CANVAS_HEIGHT =                1050;
 ORYX.CONFIG.CANVAS_RESIZE_INTERVAL =    300;
 ORYX.CONFIG.SELECTED_AREA_PADDING =        4;
@@ -74,7 +74,7 @@ ORYX.CONFIG.OFFSET_EDGE_LABEL_TOP =        8;
 ORYX.CONFIG.OFFSET_EDGE_LABEL_BOTTOM =    8;
 ORYX.CONFIG.OFFSET_EDGE_BOUNDS =        5;
 ORYX.CONFIG.COPY_MOVE_OFFSET =            30;
-    
+
 ORYX.CONFIG.BORDER_OFFSET =                14;
 
 ORYX.CONFIG.MAX_NUM_SHAPES_NO_GROUP    =    12;
@@ -107,7 +107,7 @@ ORYX.CONFIG.TYPE_TEXT =                    "text";
 ORYX.CONFIG.TYPE_EPC_FREQ =             "epcfrequency";
 ORYX.CONFIG.TYPE_GLOSSARY_LINK =        "glossarylink";
 
-    
+
     /* Vertical line distance of multiline labels */
 ORYX.CONFIG.LABEL_LINE_DISTANCE =        2;
 ORYX.CONFIG.LABEL_DEFAULT_LINE_HEIGHT =    12;
@@ -136,7 +136,7 @@ ORYX.CONFIG.EVENT_KEYDOWN =                "keydown";
 ORYX.CONFIG.EVENT_KEYUP =                "keyup";
 
 ORYX.CONFIG.EVENT_LOADED =                "editorloaded";
-    
+
 ORYX.CONFIG.EVENT_EXECUTE_COMMANDS =        "executeCommands";
 ORYX.CONFIG.EVENT_STENCIL_SET_LOADED =        "stencilSetLoaded";
 ORYX.CONFIG.EVENT_SELECTION_CHANGED =        "selectionchanged";
@@ -175,19 +175,19 @@ ORYX.CONFIG.EVENT_LAYOUT =                     "layout.dolayout";
 ORYX.CONFIG.EVENT_GLOSSARY_LINK_EDIT =         "glossary.link.edit";
 ORYX.CONFIG.EVENT_GLOSSARY_SHOW =            "glossary.show.info";
 ORYX.CONFIG.EVENT_GLOSSARY_NEW =            "glossary.show.new";
-ORYX.CONFIG.EVENT_DOCKERDRAG =                 "dragTheDocker";    
-    
+ORYX.CONFIG.EVENT_DOCKERDRAG =                 "dragTheDocker";
+
 ORYX.CONFIG.EVENT_SHOW_PROPERTYWINDOW =        "propertywindow.show";
 ORYX.CONFIG.EVENT_ABOUT_TO_SAVE = "file.aboutToSave";
-    
+
     /* Selection Shapes Highlights */
 ORYX.CONFIG.SELECTION_HIGHLIGHT_SIZE =                5;
 ORYX.CONFIG.SELECTION_HIGHLIGHT_COLOR =                "#4444FF";
 ORYX.CONFIG.SELECTION_HIGHLIGHT_COLOR2 =            "#9999FF";
-    
+
 ORYX.CONFIG.SELECTION_HIGHLIGHT_STYLE_CORNER =         "corner";
 ORYX.CONFIG.SELECTION_HIGHLIGHT_STYLE_RECTANGLE =     "rectangle";
-    
+
 ORYX.CONFIG.SELECTION_VALID_COLOR =                    "#00FF00";
 ORYX.CONFIG.SELECTION_INVALID_COLOR =                "#FF0000";
 
@@ -195,7 +195,7 @@ ORYX.CONFIG.SELECTION_INVALID_COLOR =                "#FF0000";
 ORYX.CONFIG.DOCKER_DOCKED_COLOR =        "#00FF00";
 ORYX.CONFIG.DOCKER_UNDOCKED_COLOR =        "#FF0000";
 ORYX.CONFIG.DOCKER_SNAP_OFFSET =        10;
-        
+
     /* Copy & Paste */
 ORYX.CONFIG.EDIT_OFFSET_PASTE =            10;
 
@@ -219,7 +219,7 @@ ORYX.CONFIG.KEY_Code_top =                38;
 ORYX.CONFIG.KEY_Code_bottom =            40;
 
 /* Supported Meta Keys */
-    
+
 ORYX.CONFIG.META_KEY_META_CTRL =         "metactrl";
 ORYX.CONFIG.META_KEY_ALT =                 "alt";
 ORYX.CONFIG.META_KEY_SHIFT =             "shift";

@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2010
  * Signavio, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,9 +35,9 @@ import de.hpi.bpmn2_0.model.BaseElement;
 
 /**
  * <p>Java class for tParticipantAssociation complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tParticipantAssociation">
  *   &lt;complexContent>
@@ -51,8 +51,8 @@ import de.hpi.bpmn2_0.model.BaseElement;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tParticipantAssociation", propOrder = {
@@ -70,11 +70,11 @@ public class ParticipantAssociation
 
     /**
      * Gets the value of the innerParticipantRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getInnerParticipantRef() {
         return innerParticipantRef;
@@ -82,11 +82,11 @@ public class ParticipantAssociation
 
     /**
      * Sets the value of the innerParticipantRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setInnerParticipantRef(QName value) {
         this.innerParticipantRef = value;
@@ -94,11 +94,11 @@ public class ParticipantAssociation
 
     /**
      * Gets the value of the outerParticipantRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getOuterParticipantRef() {
         return outerParticipantRef;
@@ -106,11 +106,11 @@ public class ParticipantAssociation
 
     /**
      * Sets the value of the outerParticipantRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setOuterParticipantRef(QName value) {
         this.outerParticipantRef = value;

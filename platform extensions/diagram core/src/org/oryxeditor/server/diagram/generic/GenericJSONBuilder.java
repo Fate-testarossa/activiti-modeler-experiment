@@ -15,11 +15,11 @@ import org.oryxeditor.server.diagram.label.LabelStyle;
 
 /**
  * Parses a given GenericDiagram into a JSONObject
- * 
+ *
  * @author Philipp Maschke
  */
 public class GenericJSONBuilder {
-    
+
     /**
      * Parses the given diagram object into a JSON object
      * @param diagram
@@ -29,18 +29,18 @@ public class GenericJSONBuilder {
     public static <S extends GenericShape<S,D>, D extends GenericDiagram<S,D>> JSONObject parseModel(GenericDiagram<S,D> diagram) throws JSONException {
         return (new GenericJSONBuilder()).parseModelInternal(diagram);
     }
-    
+
 
     public <S extends GenericShape<S,D>, D extends GenericDiagram<S,D>> JSONObject parse(GenericDiagram<S,D> diagram) throws JSONException {
         return parseModelInternal(diagram);
     }
-    
-    
+
+
     protected <S extends GenericShape<S,D>, D extends GenericDiagram<S,D>> JSONObject parseModelInternal(GenericDiagram<S,D> diagram) throws JSONException {//<S,D,?,?>
         JSONObject json = new JSONObject();
-        
+
 //        try {
-            
+
             json.put("resourceId",         diagram.getResourceId().toString());
             json.put("properties",         parseProperties(diagram));
             json.put("stencil",         parseStencil(diagram.getStencilId()));
@@ -51,31 +51,31 @@ public class GenericJSONBuilder {
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-        
+
         return json;
     }
-    
-    
+
+
     /**
      * Delivers the correct JSON Object for the stencilId
-     * 
+     *
      * @param stencilId
      * @return
      * @throws JSONException
      */
     protected JSONObject parseStencil(String stencilId) throws JSONException {
         JSONObject stencilObject = new JSONObject();
-        
+
         stencilObject.put("id", stencilId);
-        
+
         return stencilObject;
     }
-    
-    
+
+
     /**
      * Parses all child Shapes recursively and adds them to the correct
      * JSON Object
-     * 
+     *
      * @param childShapes
      * @return
      * @throws JSONException
@@ -83,21 +83,21 @@ public class GenericJSONBuilder {
     protected <S extends GenericShape<S,?>> JSONArray parseChildShapesRecursive(List<S> childShapes) throws JSONException {
         if(childShapes != null) {
             JSONArray childShapesArray = new JSONArray();
-            
+
             for(S childShape : childShapes) {
                 JSONObject childShapeObject = parseShape(childShape);
                 childShapesArray.put(childShapeObject);
             }
-            
+
             return childShapesArray;
         }
-        
+
         return new JSONArray();
     }
-    
-    
+
+
     protected <S extends GenericShape<S,?>> JSONObject parseShape(S childShape) throws JSONException {
-        JSONObject shapeJson = new JSONObject();                
+        JSONObject shapeJson = new JSONObject();
         shapeJson.put("resourceId",     childShape.getResourceId().toString());
         shapeJson.put("properties",     parseProperties(childShape));
         shapeJson.put("stencil",     parseStencil(childShape.getStencilId()));
@@ -107,20 +107,20 @@ public class GenericJSONBuilder {
         shapeJson.put("dockers",     parseDockers(childShape.getDockersReadOnly()));
         shapeJson.put("labels",         parseLabelSettings(childShape.getLabelSettings()));
         if(childShape instanceof GenericEdge){
-            if(((GenericEdge<S,?>)childShape).getTarget() != null) 
+            if(((GenericEdge<S,?>)childShape).getTarget() != null)
                 shapeJson.put("target", parseTarget(((GenericEdge<S,?>)childShape).getTarget()));
         }
-        
+
         return shapeJson;
     }
 
 
     protected JSONArray parseLabelSettings(Collection<LabelSettings> labelSettings) throws JSONException {
         JSONArray jsonLabels = new JSONArray();
-        
+
         for (LabelSettings label: labelSettings){
             JSONObject jsonLabel = new JSONObject();
-            
+
             if (label.getPosition() != null){
                 jsonLabel.put("x", label.getPosition().getX());
                 jsonLabel.put("y", label.getPosition().getY());
@@ -149,7 +149,7 @@ public class GenericJSONBuilder {
             if (label.getOrientation() != null){
                 jsonLabel.put("orientation", label.getOrientation().toString());
             }
-                
+
             if (label.getAnchors().contains(Anchor.TOP)){
                 jsonLabel.put("top", true);
             }
@@ -162,45 +162,45 @@ public class GenericJSONBuilder {
             if (label.getAnchors().contains(Anchor.LEFT)){
                 jsonLabel.put("left", true);
             }
-            
+
             if (label.getStyle() != null)
                 jsonLabel.put("styles", parseLabelStyle(label.getStyle()));
-            
+
             jsonLabels.put(jsonLabel);
         }
         return jsonLabels;
     }
 
-    
+
     protected JSONObject parseLabelStyle(LabelStyle style) throws JSONException {
         JSONObject jsonStyle = new JSONObject();
-        
+
         if (style.getFontFamily() != null){
             jsonStyle.put("family", style.getFontFamily());
         }
-        
+
         if (style.getFontSize() != null){
             jsonStyle.put("size", style.getFontSize());
         }
-        
+
         if (style.isBold()){
             jsonStyle.put("bold", true);
         }
-        
+
         if (style.isItalic()){
             jsonStyle.put("italic", true);
         }
-        
+
         if (style.getFill() != null){
             jsonStyle.put("fill", "#" + Integer.toHexString(style.getFill().getRGB()).substring(2));
         }
         return jsonStyle;
     }
 
-    
+
     /**
      * Delivers the correct JSON Object for the target
-     * 
+     *
      * @param target
      * @return
      * @throws JSONException
@@ -210,11 +210,11 @@ public class GenericJSONBuilder {
         targetObject.put("resourceId", target.getResourceId().toString());
         return targetObject;
     }
-    
-    
+
+
     /**
      * Delivers the correct JSON Object for the dockers
-     * 
+     *
      * @param dockers
      * @return
      * @throws JSONException
@@ -235,14 +235,14 @@ public class GenericJSONBuilder {
             }
             return dockersArray;
         }
-        
+
         return new JSONArray();
     }
-    
-    
+
+
     /**
      * Delivers the correct JSON Object for outgoings
-     * 
+     *
      * @param outgoings
      * @return
      * @throws JSONException
@@ -250,24 +250,24 @@ public class GenericJSONBuilder {
     protected <S extends GenericShape<S,?>> JSONArray parseOutgoings(List<S> outgoings) throws JSONException {
         if(outgoings != null) {
             JSONArray outgoingsArray = new JSONArray();
-            
+
             for(S outgoing : outgoings) {
                 JSONObject outgoingObject = new JSONObject();
-                
+
                 outgoingObject.put("resourceId", outgoing.getResourceId().toString());
                 outgoingsArray.put(outgoingObject);
             }
-                
+
             return outgoingsArray;
         }
-        
+
         return new JSONArray();
     }
-    
-    
+
+
     /**
      * Delivers the correct JSON Object for properties
-     * 
+     *
      * @param properties
      * @return
      * @throws JSONException
@@ -275,42 +275,42 @@ public class GenericJSONBuilder {
     protected JSONObject parseProperties(GenericShape<?, ?> shape) throws JSONException {
         if(shape != null) {
             JSONObject propertiesObject = new JSONObject();
-            
+
             for (String name: shape.getPropertyNames()){
                 Object value = shape.getPropertyObject(name);
                 if (value instanceof Float)
                     value = ((Float)value).doubleValue();
-                
+
                 propertiesObject.put(name, value);
             }
-            
+
             return propertiesObject;
-        }else        
+        }else
             return new JSONObject();
     }
-    
+
     /**
      * Delivers the correct JSON Object for the Stencilset Extensions
-     * 
+     *
      * @param extensions
      * @return
      */
     protected JSONArray parseStencilSetExtensions(List<String> extensions) {
         if(extensions != null) {
             JSONArray extensionsArray = new JSONArray();
-            
-            for(String extension : extensions) 
+
+            for(String extension : extensions)
                 extensionsArray.put(extension.toString());
-            
+
             return extensionsArray;
         }
-        
+
         return new JSONArray();
     }
-    
+
     /**
      * Delivers the correct JSON Object for the Stencilset
-     * 
+     *
      * @param stencilSetRef
      * @return
      * @throws JSONException
@@ -318,21 +318,21 @@ public class GenericJSONBuilder {
     protected JSONObject parseStencilSet(StencilSetReference stencilSetRef) throws JSONException {
         if(stencilSetRef != null) {
             JSONObject stencilSetObject = new JSONObject();
-            
+
 //            stencilSetObject.put("uri", stencilSetRef.getUri().toString());
 //            stencilSetObject.put("namespace", stencilSetRef.getNamespace().toString());
-            
+
             stencilSetObject.put("url", stencilSetRef.getUrl() != null? stencilSetRef.getUrl().toString() : null);
             stencilSetObject.put("namespace", stencilSetRef.getNamespace() != null ? stencilSetRef.getNamespace().toString() : null);
             return stencilSetObject;
         }
-        
+
         return new JSONObject();
     }
-    
+
     /**
      * Delivers the correct JSON Object for the Bounds
-     * 
+     *
      * @param bounds
      * @return
      * @throws JSONException
@@ -341,24 +341,24 @@ public class GenericJSONBuilder {
         JSONObject boundsObject    = new JSONObject();
         JSONObject lowerRight     = new JSONObject();
         JSONObject upperLeft      = new JSONObject();
-        
-        if(bounds != null) {                    
+
+        if(bounds != null) {
             lowerRight.put("x", bounds.getLowerRight().getX().doubleValue());
             lowerRight.put("y", bounds.getLowerRight().getY().doubleValue());
-            
+
             upperLeft.put("x", bounds.getUpperLeft().getX().doubleValue());
             upperLeft.put("y", bounds.getUpperLeft().getY().doubleValue());
         }else{
             lowerRight.put("x", "null");
             lowerRight.put("y", "null");
-            
+
             upperLeft.put("x", "null");
             upperLeft.put("y", "null");
         }
-        
+
         boundsObject.put("lowerRight", lowerRight);
         boundsObject.put("upperLeft", upperLeft);
-        
+
         return boundsObject;
     }
 }

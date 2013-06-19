@@ -2,17 +2,17 @@
 
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,11 +42,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tConversationNode complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tConversationNode">
  *   &lt;complexContent>
@@ -59,8 +59,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tConversationNode", propOrder = { "participantRef",
@@ -78,7 +78,7 @@ public abstract class ConversationNode extends FlowNode implements
 
  @XmlTransient
  public List<String> participantsIds;
- 
+
  /*
   * Constructors
   */
@@ -86,10 +86,10 @@ public abstract class ConversationNode extends FlowNode implements
  public ConversationNode() {
   super();
  }
- 
+
  public ConversationNode(ConversationNode node) {
   super(node);
-  
+
  }
 
  /**
@@ -99,47 +99,47 @@ public abstract class ConversationNode extends FlowNode implements
     public boolean isElementWithFixedSize() {
   return true;
  }
-    
+
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
      return 33.5;
     }
-    
+
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
      return 29.0;
     }
-    
+
  public void acceptVisitor(Visitor v){
   v.visitConversationNode(this);
  }
 
  /**
   * Gets the value of the participantRef property.
-  * 
+  *
   * <p>
   * This accessor method returns a reference to the live list, not a
   * snapshot. Therefore any modification you make to the returned list will
   * be present inside the JAXB object. This is why there is not a
   * <CODE>set</CODE> method for the participantRef property.
-  * 
+  *
   * <p>
   * For example, to add a new item, do as follows:
-  * 
+  *
   * <pre>
   * getParticipantRef().add(newItem);
   * </pre>
-  * 
-  * 
+  *
+  *
   * <p>
   * Objects of the following type(s) are allowed in the list
   * {@link Participant }
-  * 
-  * 
+  *
+  *
   */
  public List<Participant> getParticipantRef() {
   if (participantRef == null) {

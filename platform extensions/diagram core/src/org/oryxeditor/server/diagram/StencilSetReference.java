@@ -11,8 +11,8 @@ public class StencilSetReference {
 
     String url;
     String namespace;
-    
-    
+
+
     public StencilSetReference(String namespace) {
         this(namespace, null);
     }
@@ -20,11 +20,11 @@ public class StencilSetReference {
         this.namespace = namespace;
         this.url = url;
     }
-    
+
     public String getNamespace() {
         return namespace;
     }
-    
+
     public void setNamespace(String namespace) {
         this.namespace = namespace;
     }

@@ -55,14 +55,14 @@ ORYX.Plugins.AddDocker = Clazz.extend({
             'toggle': true,
             'minShape': 0,
             'maxShape': 0});
-        
+
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_MOUSEDOWN, this.handleMouseDown.bind(this));
     },
-    
+
     enableAddDocker: function(button, pressed) {
         //FIXME This should be done while construct, but this isn't possible right now!
         this.addDockerButton = button;
-        
+
         // Unpress deleteDockerButton
         if(pressed && this.deleteDockerButton)
             this.deleteDockerButton.toggle(false);
@@ -70,23 +70,23 @@ ORYX.Plugins.AddDocker = Clazz.extend({
     enableDeleteDocker: function(button, pressed) {
         //FIXME This should be done while construct, but this isn't possible right now!
         this.deleteDockerButton = button;
-        
+
         // Unpress addDockerButton
         if(pressed && this.addDockerButton)
             this.addDockerButton.toggle(false);
     },
-    
+
     enabledAdd: function(){
         return this.addDockerButton ? this.addDockerButton.pressed : false;
     },
     enabledDelete: function(){
         return this.deleteDockerButton ? this.deleteDockerButton.pressed : false;
     },
-    
+
     /**
      * MouseDown Handler
      *
-     */    
+     */
     handleMouseDown: function(event, uiObj) {
         if (this.enabledAdd() && uiObj instanceof ORYX.Core.Edge) {
             this.newDockerCommand({
@@ -106,7 +106,7 @@ ORYX.Plugins.AddDocker = Clazz.extend({
             this.deleteDockerButton.toggle(false);
         }
     },
-    
+
     // Options: edge (required), position (required if add), docker (required if delete)
     newDockerCommand: function(options){
         if(!options.edge)
@@ -154,9 +154,9 @@ ORYX.Plugins.AddDocker = Clazz.extend({
                 this.facade.updateSelection();
             }
         })
-        
+
         var command = new commandClass(this.enabledAdd(), this.enabledDelete(), options.edge, options.docker, options.position, this.facade);
-        
+
         this.facade.executeCommands([command]);
     }
 });

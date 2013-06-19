@@ -6,7 +6,7 @@ import org.oryxeditor.server.diagram.generic.GenericDiagram;
 /**
  * Simple extension of {@link GenericDiagram} to allow for easier usage without having to use generics.
  * Does not add or change any functionality
- * 
+ *
  * @author Philipp Maschke
  *
  */

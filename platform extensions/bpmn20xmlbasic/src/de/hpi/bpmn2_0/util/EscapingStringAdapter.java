@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author Sven Wagner-Boysen
- * 
+ *
  *         Removes XML-invalid string sequences.
- * 
+ *
  */
 public class EscapingStringAdapter extends XmlAdapter<String, String> {
 
@@ -34,7 +34,7 @@ public class EscapingStringAdapter extends XmlAdapter<String, String> {
     /**
      * Deletes all illegal characters in the given string. If no illegal characters were
      * found, no copy is made and the given string is returned.
-     * 
+     *
      * @param string
      * @return
      */
@@ -42,7 +42,7 @@ public class EscapingStringAdapter extends XmlAdapter<String, String> {
         if(string == null) {
             return string;
         }
-        
+
         StringBuffer copyBuffer = null;
         boolean copied = false;
         for (int i = 0; i < string.length(); i++) {
@@ -59,7 +59,7 @@ public class EscapingStringAdapter extends XmlAdapter<String, String> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
      */
@@ -70,7 +70,7 @@ public class EscapingStringAdapter extends XmlAdapter<String, String> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
      */

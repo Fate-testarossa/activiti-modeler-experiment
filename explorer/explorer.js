@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2009 - Signavio GmbH
  *
- * 
- * 
+ *
+ *
  *
  * Ext JS (http://extjs.com/) is used under the terms of the Open Source LGPL 3.0
  * license.

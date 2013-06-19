@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,24 +45,24 @@ public abstract class AbstractInfoHandler extends AbstractHandler {
     public AbstractInfoHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     /**
      * Get general information about an SBO
      */
     @Override
     public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-        
+
         JSONObject res = new JSONObject();
         try {
-            
+
             // Set generic info attributes
             res.put("privilegeInheritanceBlocked", sbo.isPrivilegeInheritanceBlocked());
             res.put("deleted", sbo.isDeleted());
-            
+
         } catch (JSONException e) {
             throw new JSONRequestException(e);
         }
-        
+
         return res;
     }
 
@@ -75,24 +75,24 @@ public abstract class AbstractInfoHandler extends AbstractHandler {
 
         try {
             boolean deleted = data.getBoolean("deleted");
-            
+
             if(sbo.isDeleted() != deleted) {
                 sbo.setDeleted(deleted);
             }
         } catch (JSONException e) {
             //do nothing, because we do not force a client to always send this information back to the server
         }
-        
+
         try {
             boolean privInheritanceBlocked = data.getBoolean("privilegeInheritanceBlocked");
-            
+
             if(sbo.isPrivilegeInheritanceBlocked() != privInheritanceBlocked) {
                 sbo.setPrivilegeInheritanceBlocked(privInheritanceBlocked);
             }
         } catch (JSONException e) {
             //do nothing, because we do not force a client to always send this information back to the server
         }
-        
+
         return getRepresentation(sbo, params, token);
     }
 }

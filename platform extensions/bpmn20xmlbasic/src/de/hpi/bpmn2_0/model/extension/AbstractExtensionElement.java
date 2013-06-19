@@ -11,7 +11,7 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioType;
 
 /**
  * Abstract BPMN 2.0 extension element
- * 
+ *
  * @author Sven Wagner-Boysen
  *
  */
@@ -23,5 +23,5 @@ import de.hpi.bpmn2_0.model.extension.signavio.SignavioType;
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractExtensionElement {
- 
+
 }

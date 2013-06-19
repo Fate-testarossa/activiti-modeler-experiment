@@ -12,7 +12,7 @@ public class StencilSetUtil {
         Node node = doc.getDocumentElement();
         if (node == null || !node.getNodeName().equals("rdf:RDF"))
             return null;
-        
+
         node = node.getFirstChild();
         while (node != null) {
             Node typeChild = getChild(node, "rdf:type");
@@ -41,14 +41,14 @@ public class StencilSetUtil {
 //            return node.getFirstChild().getNodeValue();
 //        return null;
 //    }
-    
+
     private String getAttributeValue(Node node, String attribute) {
         if (node.getAttributes() != null){ // text nodes have no attributes
             Node item = node.getAttributes().getNamedItem(attribute);
             if (item != null)
                 return item.getNodeValue();
         }
-        
+
         return null;
     }
 
@@ -56,7 +56,7 @@ public class StencilSetUtil {
         if (n == null)
             return null;
         for (Node node=n.getFirstChild(); node != null; node=node.getNextSibling())
-            if (node.getNodeName().indexOf(name) >= 0) 
+            if (node.getNodeName().indexOf(name) >= 0)
                 return node;
         return null;
     }

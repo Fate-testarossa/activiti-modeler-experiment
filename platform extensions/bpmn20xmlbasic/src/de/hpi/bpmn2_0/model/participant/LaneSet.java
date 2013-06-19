@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,9 +45,9 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 
 /**
  * <p>Java class for tLaneSet complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tLaneSet">
  *   &lt;complexContent>
@@ -59,8 +59,8 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -72,29 +72,29 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 public class LaneSet
     extends BaseElement
 {
-    
+
     @XmlElementRef(type = Lane.class)
     protected List<Lane> lanes;
-    
+
 //    @XmlIDREF
 //    @XmlAttribute
     @XmlTransient
     protected Lane parentLane;
-    
+
 //    @XmlIDREF
 //    @XmlAttribute
     @XmlTransient
     protected Process process;
-    
+
     @XmlAttribute
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected String name;
-    
+
     @XmlTransient
     public String _processType;
     @XmlTransient
     public String _isClosed;
-    
+
     public void addChild(BaseElement child) {
         if(child instanceof Lane) {
             Lane lane = (Lane) child;
@@ -102,7 +102,7 @@ public class LaneSet
             lane.setLaneSet(this);
         }
     }
-    
+
 //    /**
 //     * Creates the lane compartment including all sub lane compartment for this
 //     * lane set.
@@ -111,22 +111,22 @@ public class LaneSet
 //        LaneCompartment laneComp = new LaneCompartment();
 //        laneComp.setId(Lane)
 //    }
-//    
+//
     /**
-     * 
+     *
      * @return All {@link FlowElement} that are contained in the {@link LaneSet}
      */
     public List<FlowElement> getChildFlowElements() {
         ArrayList<FlowElement> deepestFlowElements = new ArrayList<FlowElement>();
-        List<Lane> lanes = this.getDeepestLanes(this.getLanes()); 
-        
+        List<Lane> lanes = this.getDeepestLanes(this.getLanes());
+
         for(Lane lane : lanes) {
             deepestFlowElements.addAll(lane.getFlowNodeRef());
         }
-        
+
         return deepestFlowElements;
     }
-    
+
     /**
      * Retrieve the deepest child lanes in a lane set
      * @param lanes
@@ -137,7 +137,7 @@ public class LaneSet
         if(lanes == null)
             return laneList;
         for(Lane lane : lanes) {
-            if(lane.childLaneSet == null) 
+            if(lane.childLaneSet == null)
                 /* Deepest lane in lane tree */
                 laneList.add(lane);
             else if(lane.getChildLaneSet(false).lanes != null && lane.getChildLaneSet(false).getLanes().size() > 0) {
@@ -148,10 +148,10 @@ public class LaneSet
         }
         return laneList;
     }
-    
+
     /**
      * Returns all contained child lane and their children.
-     * 
+     *
      * @return
      */
     public List<Lane> getAllLanes() {
@@ -160,10 +160,10 @@ public class LaneSet
             laneList.add(lane);
             laneList.addAll(lane.getLaneList());
         }
-        
+
         return laneList;
     }
-    
+
     /**
      * Removes the child element from the underling lanes and child lane sets.
      * @param child
@@ -176,55 +176,55 @@ public class LaneSet
             }
         }
     }
-    
+
 //    /**
-//     * Basic method for the conversion of BPMN2.0 to the editor's internal format. 
+//     * Basic method for the conversion of BPMN2.0 to the editor's internal format.
 //     * {@see BaseElement#toShape(BPMN2DiagramConverter)}
 //     * @param converterForShapeCoordinateLookup an instance of {@link BPMN2DiagramConverter}, offering several lookup methods needed for the conversion.
 //     */
 //      public Shape toShape(BPMN2DiagramConverter converterForShapeCoordinateLookup) {
 //            Shape shape = super.toShape(converterForShapeCoordinateLookup);
-//            
+//
 //            // This should not work...? according to the standard, a laneset contains lanes, it is just a container and no graphical element.
 //            // > Well, thus it never shows up as a BPMNShape anyway... :D
-//            shape.setStencil(new StencilType("Pool"));       
-//            
+//            shape.setStencil(new StencilType("Pool"));
+//
 //            List<FlowElement> x = this.getChildFlowElements();
 //            ArrayList<Shape> children = new ArrayList<Shape>();
 //            for(FlowElement f : x){
 //                children.add(new Shape(f.getId()));
 //            }
 //            shape.setChildShapes(children);
-//            
+//
 //            this.getParentLane().addChild(this);
 //            //this.getPool();
-//            
+//
 //            return shape;
 //      }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the lane property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the lane property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getLane().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Lane }
-     * 
-     * 
+     *
+     *
      */
     @ChildElements
     public List<Lane> getLanes() {

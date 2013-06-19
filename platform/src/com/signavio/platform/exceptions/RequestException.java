@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 /**
- * 
+ *
  */
 package com.signavio.platform.exceptions;
 
@@ -30,11 +30,11 @@ package com.signavio.platform.exceptions;
  */
 public class RequestException extends RuntimeException {
 
-    
+
     private String errorCode;
     private String[] params;
     private int httpStatusCode = 500;
-    
+
     /**
      * @param errorCode
      */
@@ -51,7 +51,7 @@ public class RequestException extends RuntimeException {
         super("RequestException Error Code: " + errorCode, cause);
         this.errorCode = errorCode;
     }
-    
+
     /**
      * @param errorCode
      */
@@ -70,7 +70,7 @@ public class RequestException extends RuntimeException {
         this.errorCode = errorCode;
         this.params = params;
     }
-    
+
     public RequestException(String errorCode, int httpStatusCode,
             String[] params) {
         super("RequestException Error Code: " + errorCode);
@@ -78,7 +78,7 @@ public class RequestException extends RuntimeException {
         this.httpStatusCode = httpStatusCode;
         this.params = params;
     }
-    
+
     public RequestException(String errorCode, Throwable cause, int httpStatusCode,
             String[] params) {
         super("RequestException Error Code: " + errorCode, cause);
@@ -86,13 +86,13 @@ public class RequestException extends RuntimeException {
         this.httpStatusCode = httpStatusCode;
         this.params = params;
     }
-    
+
     public RequestException(String errorCode, int httpStatusCode) {
         super("RequestException Error Code: " + errorCode);
         this.errorCode = errorCode;
         this.httpStatusCode = httpStatusCode;
     }
-    
+
     public RequestException(String errorCode, Throwable cause, int httpStatusCode) {
         super("RequestException Error Code: " + errorCode, cause);
         this.errorCode = errorCode;
@@ -102,11 +102,11 @@ public class RequestException extends RuntimeException {
     public String getErrorCode() {
         return errorCode;
     }
-    
+
     public String[] getParams() {
         return params;
     }
-    
+
     public int getHttpStatusCode() {
         return httpStatusCode;
     }

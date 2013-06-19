@@ -69,7 +69,7 @@ public class BPMN2_0XMLModelType extends SignavioModelType {
             throw new IllegalStateException("Cannot save BPMN2.0 XML", e);
         }
     }
-    
+
     @Override
     public boolean acceptUsageForTypeName(String namespace) {
         for(String ns : this.getClass().getAnnotation(ModelTypeRequiredNamespaces.class).namespaces()) {
@@ -79,7 +79,7 @@ public class BPMN2_0XMLModelType extends SignavioModelType {
         }
         return false;
     }
-    
+
     @Override
     public File storeModel(String path, String id, String name, String description,
             String type, String jsonRep, String svgRep) {
@@ -116,7 +116,7 @@ public class BPMN2_0XMLModelType extends SignavioModelType {
             return false;
         }
     }
-    
+
     @Override
     public void deleteFile(String parentPath, String name) {
         super.deleteFile(parentPath, name);

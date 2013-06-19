@@ -2,7 +2,7 @@
  * Copyright (c) 2009
  *
  * Willi Tscheschner
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
@@ -40,32 +40,32 @@ if (!Signavio.Helper) {
 
 
 new function(){
-    
+
     var mask;
-    
-    
+
+
     Signavio.Plugins.Utils.getFFVersion = function(){
         try {
             return Number(window.navigator.userAgent.match("Firefox.([0-9]+[\.][0-9]+)")[1]) || 0 ;
         } catch(e){
             return 0;
-        }    
+        }
     }
-    
-    
+
+
     /**
      * Shows an overlay of signavio
      */
     Signavio.Helper.ShowMask = function(force, parent){
-        
+
         if (!force && ORYX.CONFIG.PREVENT_LOADINGMASK_AT_READY === true){
             return;
-        }        
-        
+        }
+
         if (mask){
             return;
         }
-        
+
         var s     = "background:white;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;z-index:100000;"
         var ss     = "left:50%;margin-left:-200px;margin-top:-90px;position:absolute;top:50%;display:none;width:391px;"
         var sversion     = "color:#ad0f5b;padding-right:10px;font-family:tahoma,arial,san-serif;font-size:12px;";
@@ -76,7 +76,7 @@ new function(){
 
         // Define the parent
         parent = (parent ? Ext.get(parent) : null) || Ext.getBody();
-        
+
         if (parent !== Ext.getBody()){
             parent.setStyle("position", "relative")
         }
@@ -98,16 +98,16 @@ new function(){
         mask.first().show({duration:0.3});
 
     }
-            
-    // When body is loaded, show overlay        
+
+    // When body is loaded, show overlay
     Ext.onReady(Signavio.Helper.ShowMask);
-    
+
     /**
      * Hides the overlay
      */
     Signavio.Helper.HideMask = function(){
         window.setTimeout(function(){
-            if (mask){            
+            if (mask){
                 mask.first().hide({duration:0.4, remove:true,  block:true});
                 mask.hide({duration:0.3, remove:true,  block :true});
                 delete mask;
@@ -115,19 +115,19 @@ new function(){
 
         }.bind(this), 2000)
     }
-            
+
     Signavio.Plugins.Loading = {
-    
+
         facade: undefined,
         construct: function(facade) {
             this.facade = facade;
-            
+
             this.facade.registerOnEvent(ORYX.CONFIG.EVENT_LOADED, Signavio.Helper.HideMask);
-            
+
             /**
              * Overwrite the toJSON method in the Canvas
              * to set the correct stencilset namespace.
-             * 
+             *
              */
             var me = this;
             new function(){
@@ -138,13 +138,13 @@ new function(){
                     var json = toJSON.call(this);
                     // Check for replace stencil set namespace
                     json.stencilset.namespace = me.facade.getModelMetaData().model.stencilset.namespace;
-                    
+
                     return json;
                 }
             }()
         }
     }
-    
+
     Signavio.Plugins.Loading = Clazz.extend(Signavio.Plugins.Loading);
 
     /**
@@ -155,16 +155,16 @@ new function(){
      */
     ORYX.Editor.provideId = function() {
         var res = [], hex = '0123456789ABCDEF';
-    
+
         for (var i = 0; i < 36; i++) res[i] = Math.floor(Math.random()*0x10);
-    
+
         res[14] = 4;
         res[19] = (res[19] & 0x3) | 0x8;
-    
+
         for (var i = 0; i < 36; i++) res[i] = hex[res[i]];
-    
+
         res[8] = res[13] = res[18] = res[23] = '-';
-    
+
         return "sid-" + res.join('');
     };
 
@@ -174,62 +174,62 @@ new function(){
 
 /**
  * Ext specific extension
- * 
- * 
- * 
+ *
+ *
+ *
  */
 new function(){
-    
+
     /**
      * Implementation of an Ext-LinkButton
-     * 
-     * 
+     *
+     *
      */
     Ext.LinkButton = Ext.extend(Ext.BoxComponent, {
 
         // On Click Handler
         click: null,
-        
-        // Image url 
+
+        // Image url
         image: null,
-        
-        // Image style (only if an image url is setted) 
+
+        // Image style (only if an image url is setted)
         imageStyle: null,
 
-        toggle:false, 
-        
+        toggle:false,
+
         toggleStyle:null,
 
         selected:false,
-        
+
         href:false,
 
-        el: null, 
-        
+        el: null,
+
         // private
         onRender : function(ct, position){
-                    
-            if( this.el == null ){    
+
+            if( this.el == null ){
 
                 this.el = document.createElement('a');
 
                 if (this.tabIndex)
                     this.el.setAttribute("tabindex", this.tabIndex)
-                
+
                 this.el.id = this.getId();
                 this.el.className = this.cls||"x-link-button";
-                
+
                 if( !this.disabled )
                     this.el.href = this.href ? this.href : "#" + this.text;
 
                 if( !this.disabled ){
                     Element.observe( this.el, 'click', this.onClick.bind(this));
                 }
-        
+
                 if( this.image ){
                     this.el.innerHTML = '<img src="' + this.image + '" title="' + this.text + '"' + ( this.imageStyle ? ' style="' + this.imageStyle + '"/>': '/>')
                 } else {
-                    this.el.innerHTML = this.text ? Ext.util.Format.htmlEncode(this.text) : (this.html || '');    
+                    this.el.innerHTML = this.text ? Ext.util.Format.htmlEncode(this.text) : (this.html || '');
                 }
 
                 if(this.forId){
@@ -241,11 +241,11 @@ new function(){
             Ext.LinkButton.superclass.onRender.call(this, ct, position);
 
         },
-        
+
         onClick: function(e){
-            
+
             if( this.disabled ){ Event.stop(e); return; }
-            
+
             // Toggle the button
             if( this.toggle ){
                 this.selected = !this.selected;
@@ -260,13 +260,13 @@ new function(){
                 }
             }
 
-            
+
             if( this.click instanceof Function )
-                this.click.apply(this.click, [this, e]); 
-             
+                this.click.apply(this.click, [this, e]);
+
             Event.stop(e)
         },
-        
+
         setText: function(t, encode){
             this.text = t;
             if(this.rendered){
@@ -274,29 +274,29 @@ new function(){
             }
             return this;
         },
-        
+
         _setStyle: function(node, style){
             if( Ext.isIE ){
-                node.style.setAttribute('cssText', style );    
+                node.style.setAttribute('cssText', style );
             } else {
-                node.setAttribute('style', style );    
+                node.setAttribute('style', style );
             }
         }
     });
 
     Ext.reg('linkbutton', Ext.LinkButton);
-    
+
 }();
 
 
 /**
  * Helper Methods
- * 
+ *
  */
 
 new function(){
-    
-    
+
+
     Signavio.Helper.RecordReader = function(meta){
         meta = meta || {};
         this.rels = meta.rels || this.rels;
@@ -305,7 +305,7 @@ new function(){
     Ext.extend(Signavio.Helper.RecordReader, Ext.data.JsonReader, {
 
         rels: ["gitem"],
-        
+
         read : function(response){
             var json = response.responseText;
             var o = eval("("+json+")");
@@ -317,7 +317,7 @@ new function(){
             o.each(function(rec){
                 if (this.rels.include(rec.rel)) {
                     records.push(new Record(rec));
-                } 
+                }
                 if (rec.rel == "info" && rec.rep.size){
                     total = rec.rep.size;
                 }
@@ -329,9 +329,9 @@ new function(){
             }
         }
     })
-    
-    
-    
+
+
+
     /**
      * Creates a new record, including 'rel', 'href', and 'rep' attributes
      * @param {String} rel
@@ -339,7 +339,7 @@ new function(){
      * @param {Object} rep
      */
     Signavio.Helper.createRecord = function(rel, href, rep){
-                    
+
         var Rec = Ext.data.Record.create(["rel", "href", "rep"]);
 
         var record = new Rec({
@@ -347,8 +347,8 @@ new function(){
             href: href,
             rep    : rep
         });
-        
+
         return record;
-    }    
+    }
 }()
 

@@ -65,13 +65,13 @@ import de.hpi.bpmn2_0.model.participant.Lane;
 import de.hpi.bpmn2_0.model.participant.Participant;
 
 public interface Visitor {
-    
+
     public void visitDiagramElement(DiagramElement that);
-    
+
     public void visitBpmnEdge(BPMNEdge that);
-    
-    public void visitBpmnShape(BPMNShape that);    
-    
+
+    public void visitBpmnShape(BPMNShape that);
+
     public void visitAbstractDataObject(AbstractDataObject that);
 
     public void visitActivity(Activity that);
@@ -91,7 +91,7 @@ public interface Visitor {
     public void visitCallActivity(CallActivity that);
 
     public void visitCallChoreography(CallChoreography that);
-    
+
     public void visitCallConversation(CallConversation that);
 
     public void visitCatchEvent(CatchEvent that);
@@ -115,7 +115,7 @@ public interface Visitor {
     public void visitDataInputAssociation(DataInputAssociation that);
 
     public void visitDataObject(DataObject that);
-    
+
     public void visitDataObjectReference(DataObjectReference that);
 
     public void visitDataOutput(DataOutput that);
@@ -145,7 +145,7 @@ public interface Visitor {
     public void visitGroup(Group that);
 
     public void visitImplicitThrowEvent(ImplicitThrowEvent that);
-    
+
     public void visitInclusiveGateway(InclusiveGateway that);
 
     public void visitIntermediateCatchEvent(IntermediateCatchEvent that);

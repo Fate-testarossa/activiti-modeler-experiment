@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,38 +48,38 @@ public class SearchHandler extends BasisHandler {
     }
 
     @Override
-    public <T extends FsSecureBusinessObject> 
-        void doGet(javax.servlet.http.HttpServletRequest req, javax.servlet.http.HttpServletResponse res, 
+    public <T extends FsSecureBusinessObject>
+        void doGet(javax.servlet.http.HttpServletRequest req, javax.servlet.http.HttpServletResponse res,
                 FsAccessToken token, T sbo) {
-        
+
         String searchTerm = getParameter(req, "q");
         if (searchTerm == null) {
             throw new RequestException("search_term_is_missing");
         }
         JSONArray jsonResult = new JSONArray();
-        List<FsSecureBusinessObject> businessObjects= FsEntityManager.getTenantManagerInstance(  
+        List<FsSecureBusinessObject> businessObjects= FsEntityManager.getTenantManagerInstance(
                 FsEntityManager.class, token.getTenantId(), token).searchWarehouse(searchTerm);
-        
+
         for (FsSecureBusinessObject object : businessObjects) {
-            
+
             AbstractHandler info = null;
-            
+
             if (object instanceof FsModel) {
                 // Get the information handler from model
                 info = new com.signavio.warehouse.model.handler.InfoHandler(this.getServletContext());
-            } 
-            else if (object instanceof FsDirectory) {                
+            }
+            else if (object instanceof FsDirectory) {
                 // Get the information handler from directory
                 info = new com.signavio.warehouse.directory.handler.InfoHandler(this.getServletContext());
             }
-            
-            // Get the annotation from the model 
+
+            // Get the annotation from the model
             HandlerConfiguration ann = Platform.getInstance().getHandlerDirectory().get(info.getClass().getName()).getContextClass().getAnnotation(HandlerConfiguration.class);
             // Add the representation of a model
             jsonResult.put(this.generateResource(ann.rel(), ann.uri() + "/" + object.getId(), info.getRepresentation(object, null, token)));
 
         }
-        
+
         try {
             res.getWriter().write(jsonResult.toString());
         } catch (IOException e) {

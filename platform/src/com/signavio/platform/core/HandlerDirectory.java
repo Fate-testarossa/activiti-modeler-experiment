@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,7 +45,7 @@ import com.signavio.platform.handler.BasisHandler;
  *
  */
 public class HandlerDirectory extends HashMap<String, HandlerEntry> implements Directory {
-    
+
     /**
      * Define private variables
      */
@@ -61,16 +61,16 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
     public static HandlerDirectory getInstance(){
         return Platform.getInstance().getHandlerDirectory();
     }
-    
+
     public HandlerDirectory(ServletContext sc) {
         super();
-        
+
         this.servletContext = sc;
     }
-    
+
     /**
      * Get all Handlers from a particular context
-     * @param context 
+     * @param context
      * @return
      */
     public Collection<HandlerEntry> getAllHandlerByContext(Class<? extends BasisHandler> context){
@@ -88,7 +88,7 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
     }
 
     /**
-     * Get all BasisHandler for a particular URI 
+     * Get all BasisHandler for a particular URI
      * @param uri
      * @return
      */
@@ -132,9 +132,9 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
         }
         return null;
     }
-    
+
     /**
-     * Get all list of all classes within a package, 
+     * Get all list of all classes within a package,
      * including all child packages
      * @param pckgname
      * @return
@@ -162,7 +162,7 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
         } catch (IOException ioex) {
             throw new ClassNotFoundException("IOException was thrown when trying to get all resources for " + pckgname);
         }
- 
+
         ArrayList<Class<? extends AbstractHandler>> classes = new ArrayList<Class<? extends AbstractHandler>>();
         // For every directory identified capture all the .class files
         for (File directory : directories) {
@@ -179,7 +179,7 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
                         if( AbstractHandler.class.isAssignableFrom(cls) ){
                             classes.add( (Class<? extends AbstractHandler>) cls );
                         }
-                    } else if( file.isDirectory() ) { 
+                    } else if( file.isDirectory() ) {
                         // Add recursive all child packages
                         List<Class<? extends AbstractHandler>> childPackages = HandlerDirectory.getClassesByPackageName( pckgname + '.' + file.getName() );
                         classes.addAll( childPackages );
@@ -191,7 +191,7 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
         }
         return classes;
     }
-    
+
     public void registerHandlersOfPackage(String packageName) {
         // Try to get all Handler Classes and instantiate the HandlerEntries with it
         try {
@@ -202,17 +202,17 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
                 {
                     continue;
                 }
-                
+
                 // Create a new HandlerEntry with the given classifier
                 HandlerEntry he = new HandlerEntry(cls);
-                
+
                 // If there is no handler class, something
                 // might be wrong, --> continue.
                 if( he.getHandlerClass() == null )
                 {
                     continue;
                 }
-                
+
                 // Try to instantiate the Handler
                 Constructor co = cls.getConstructor(ServletContext.class);
                 he.setHandlerInstance( (AbstractHandler)(co.newInstance( this.servletContext )) );
@@ -240,13 +240,13 @@ public class HandlerDirectory extends HashMap<String, HandlerEntry> implements D
         this.registerHandlersOfPackage("com.signavio.warehouse.search.handler");
     }
 
-    
+
     public void start() {
         registerHandlers();
     }
 
     public void stop() {
         // TODO Auto-generated method stub
-        
+
     }
 }

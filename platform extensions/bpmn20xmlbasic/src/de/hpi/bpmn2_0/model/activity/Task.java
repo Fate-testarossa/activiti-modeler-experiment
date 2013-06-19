@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2009
  * Philipp Giese, Sven Wagner-Boysen
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,9 +42,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tTask">
  *   &lt;complexContent>
@@ -53,8 +53,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -71,30 +71,30 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 public class Task
     extends Activity
 {
- 
+
  /**
   * Default constructor
   */
  public Task() {
-  
+
  }
- 
+
  /**
   * Copy constructor
-  * 
+  *
   * @param task
   *   The {@link Task} to copy
   */
  public Task(Task task) {
   super(task);
  }
- 
- 
- 
+
+
+
  public void acceptVisitor(Visitor v){
   v.visitTask(this);
  }
- 
+
  public GlobalTask getAsGlobalTask() {
   GlobalTask gt = new GlobalTask();
   gt.getDocumentation().addAll(this.getDocumentation());
@@ -102,7 +102,7 @@ public class Task
   gt.setIoSpecification(this.getIoSpecification());
   gt.setLane(this.getLane());
   gt.setName(this.getName());
-  
+
   return gt;
  }
 }

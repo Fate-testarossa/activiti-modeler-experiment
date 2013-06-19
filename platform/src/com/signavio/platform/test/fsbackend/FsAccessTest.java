@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2009, Signavio GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,41 +45,41 @@ import com.signavio.warehouse.model.business.FsModel;
 
 
 public class FsAccessTest {
-    
-    
+
+
     @Test
     public void scriptTest() {
 
 
     }
-    
-    
+
+
 //    @Test
     public void buildStructure() throws TenantInActiveException, AccountInActiveException, PrincipalException, IncorrectPasswordException, TenantException{
-        
+
         // ROOT Level
         FsAccessToken token = FsSecurityManager.createToken("root", "root", null);
         FsRootObject root = FsRootObject.getRootObject(token);
         FsAccountManager accountManager = root.getAccountManager();
         FsTenantManager tenantManager = root.getTenantManager();
-        
+
         Assert.assertEquals(accountManager.getChildren(FsAccount.class).size(), 1);
         Assert.assertEquals(tenantManager.getChildren(FsTenant.class).size(), 1);
-        
+
         // Tenant Level
         FsTenant onlyTenant = tenantManager.getChildren(FsTenant.class).iterator().next();
-        
+
         FsRoleManager roleManagerForTenant = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, onlyTenant, token);
         FsEntityManager entityManagerForTenant = FsEntityManager.getTenantManagerInstance(FsEntityManager.class, onlyTenant, token);
-        
+
         Assert.assertEquals(roleManagerForTenant.getChildren(FsUser.class).size(), 1);
-        
+
         // Test Users and Groups..
         FsUser onlyUser = roleManagerForTenant.getChildren(FsUser.class).iterator().next();
 
         // Test Entities..
         FsDirectory d = entityManagerForTenant.getTenantRootDirectory();
-        
+
         System.out.println("First Iteration:\n----------------");
         visitDir(d);
 //        String uuidOfModel = "";
@@ -90,16 +90,16 @@ public class FsAccessTest {
 //                c.setName("BXX");
 //            }
 //        }
-//        
+//
 //        Model loadedModel =  SecurityManager.getInstance().loadObject(Model.class, uuidOfModel, token);
 //        loadedModel.setDescription("DESCRIPTION NEW");
 //        loadedModel.setName("NAME X");
-//        
+//
 //        System.out.println("\nSecond Iteration:\n----------------");
 //        visitDir(d);
-        
+
     }
-    
+
     private void visitDir(FsDirectory d) {
         System.out.println("Children of "+ d.getName()+ " :");
         for (FsModel m : d.getChildModels()){

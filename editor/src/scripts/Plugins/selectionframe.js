@@ -53,7 +53,7 @@ if(!ORYX.Plugins)
         if( uiObj instanceof ORYX.Core.Canvas ) {
             // Calculate the Offset
             var scrollNode = uiObj.rootNode.parentNode.parentNode;
-                        
+
             var a = this.facade.getCanvas().node.getScreenCTM();
             this.offsetPosition = {
                 x: a.e,
@@ -65,16 +65,16 @@ if(!ORYX.Plugins)
             // Reset the size
             this.resize({width:0, height:0});
             this.moveCallback = this.handleMouseMove.bind(this);
-        
+
             // Register Mouse-Move Event
             document.documentElement.addEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
 
             this.offsetScroll        = {x:scrollNode.scrollLeft,y:scrollNode.scrollTop};
-            
+
             // Show the Frame
             this.show();
-            
-            
+
+
 
         }
 
@@ -88,8 +88,8 @@ if(!ORYX.Plugins)
             this.hide();
 
             // Unregister Mouse-Move
-            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);            
-        
+            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
+
             this.moveCallback = undefined;
 
             var corrSVG = this.facade.getCanvas().node.getScreenCTM();
@@ -133,9 +133,9 @@ if(!ORYX.Plugins)
         }
 
         var scrollNode     = this.facade.getCanvas().rootNode.parentNode.parentNode;
-        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft; 
+        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft;
         size.height     -= this.offsetScroll.y - scrollNode.scrollTop;
-                        
+
         // Set the size
         this.resize(size);
 
@@ -162,7 +162,7 @@ if(!ORYX.Plugins)
         // Calculate the negative offset
         this.setPos(this.position);
         this.size = Object.clone(size);
-        
+
         if(size.width < 0) {
             this.node.style.left = (this.position.x + size.width) + "px";
             size.width = - size.width;

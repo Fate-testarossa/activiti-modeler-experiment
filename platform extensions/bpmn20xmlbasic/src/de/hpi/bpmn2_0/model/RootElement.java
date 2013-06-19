@@ -14,9 +14,9 @@ import de.hpi.bpmn2_0.model.misc.Signal;
 
 /**
  * <p>Java class for tRootElement complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tRootElement">
  *   &lt;complexContent>
@@ -25,8 +25,8 @@ import de.hpi.bpmn2_0.model.misc.Signal;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -53,9 +53,9 @@ import de.hpi.bpmn2_0.model.misc.Signal;
 public abstract class RootElement
     extends BaseElement
 {
- 
+
  public RootElement() {}
- 
+
  public RootElement(RootElement rootElement) {
   super(rootElement);
  }
