@@ -1,26 +1,20 @@
-/**
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.choreography;
 
 import java.util.ArrayList;
@@ -100,22 +94,22 @@ public class SubChoreography
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
 
     public void addChild(BaseElement child) {
-     if(child instanceof Participant) {
-      this.getParticipantRef().add((Participant) child);
-      if(((Participant) child).isInitiating()) {
-       this.setInitiatingParticipantRef((Participant) child);
-      }
-     } else if(child instanceof Artifact) {
-      this.getArtifact().add((Artifact) child);
-      ((Artifact) child).setSubChoreography(this);
-     } else if(child instanceof FlowElement) {
-      this.getFlowElement().add((FlowElement) child);
-     }
+        if(child instanceof Participant) {
+            this.getParticipantRef().add((Participant) child);
+            if(((Participant) child).isInitiating()) {
+                this.setInitiatingParticipantRef((Participant) child);
+            }
+        } else if(child instanceof Artifact) {
+            this.getArtifact().add((Artifact) child);
+            ((Artifact) child).setSubChoreography(this);
+        } else if(child instanceof FlowElement) {
+            this.getFlowElement().add((FlowElement) child);
+        }
 
-     /* Set parent relation */
-     if(child instanceof FlowElement) {
-      ((FlowElement) child).setSubChoreography(this);
-     }
+        /* Set parent relation */
+        if(child instanceof FlowElement) {
+            ((FlowElement) child).setSubChoreography(this);
+        }
     }
 
 
@@ -128,84 +122,84 @@ public class SubChoreography
      */
     public void setParticipantsAndMessageFlows(Choreography choreography, Map<String,BPMNElement> bpmnElements, Diagram2BpmnConverter converter) {
 
-     List<Message> messagesToRemove = new ArrayList<Message>();
-     List<Association> associationsToRemove = new ArrayList<Association>();
+        List<Message> messagesToRemove = new ArrayList<Message>();
+        List<Association> associationsToRemove = new ArrayList<Association>();
 
-     /* Handle child subchoreographies and tasks */
-     for(FlowElement flowEl : this.getFlowElement()) {
-      if(flowEl instanceof Association) {
-    Association association = (Association) flowEl;
+        /* Handle child subchoreographies and tasks */
+        for(FlowElement flowEl : this.getFlowElement()) {
+            if(flowEl instanceof Association) {
+                Association association = (Association) flowEl;
 
-    /* Check whether the association depicts a message to the
-     * choreography activity */
-    if((association.getSourceRef() instanceof ChoreographyActivity
-      && association.getTargetRef() instanceof Message)
-      || (association.getSourceRef() instanceof Message
-        && association.getTargetRef() instanceof ChoreographyActivity)) {
-     converter.handleMessageAssociationOnChoreographyActivity(association);
-    }
-   }
+                /* Check whether the association depicts a message to the
+                 * choreography activity */
+                if((association.getSourceRef() instanceof ChoreographyActivity
+                        && association.getTargetRef() instanceof Message)
+                        || (association.getSourceRef() instanceof Message
+                                && association.getTargetRef() instanceof ChoreographyActivity)) {
+                    converter.handleMessageAssociationOnChoreographyActivity(association);
+                }
+            }
 
-      /* Remove message objects */
-      if(flowEl instanceof Message) {
-       messagesToRemove.add((Message) flowEl);
-       Association msgAssociation = ((Message) flowEl).getDataConnectingAssociation();
-       if(msgAssociation != null) {
-        associationsToRemove.add(msgAssociation);
-       }
-      }
+            /* Remove message objects */
+            if(flowEl instanceof Message) {
+                messagesToRemove.add((Message) flowEl);
+                Association msgAssociation = ((Message) flowEl).getDataConnectingAssociation();
+                if(msgAssociation != null) {
+                    associationsToRemove.add(msgAssociation);
+                }
+            }
 
-      /* Add participants of child elements */
-      if(flowEl instanceof ChoreographyActivity) {
-       choreography.getParticipant().addAll(((ChoreographyActivity) flowEl).getParticipantRef());
-      }
+            /* Add participants of child elements */
+            if(flowEl instanceof ChoreographyActivity) {
+                choreography.getParticipant().addAll(((ChoreographyActivity) flowEl).getParticipantRef());
+            }
 
-      /* MessageFlows of choreography task */
-      if(flowEl instanceof ChoreographyTask) {
-       ((ChoreographyTask) flowEl).createMessageFlows(choreography);
-      }
+            /* MessageFlows of choreography task */
+            if(flowEl instanceof ChoreographyTask) {
+                ((ChoreographyTask) flowEl).createMessageFlows(choreography);
+            }
 
-      /* Subchoreography */
-      else if(flowEl instanceof SubChoreography) {
-       ((SubChoreography) flowEl).setParticipantsAndMessageFlows(choreography, bpmnElements, converter);
-      }
-     }
+            /* Subchoreography */
+            else if(flowEl instanceof SubChoreography) {
+                ((SubChoreography) flowEl).setParticipantsAndMessageFlows(choreography, bpmnElements, converter);
+            }
+        }
 
-     this.getFlowElement().removeAll(messagesToRemove);
-     for(Association msgAssociation : associationsToRemove) {
-      bpmnElements.remove(msgAssociation.getId());
-     }
-     this.getFlowElement().removeAll(associationsToRemove);
+        this.getFlowElement().removeAll(messagesToRemove);
+        for(Association msgAssociation : associationsToRemove) {
+            bpmnElements.remove(msgAssociation.getId());
+        }
+        this.getFlowElement().removeAll(associationsToRemove);
     }
 
     public List<String> getIdsOfDiagramElements() {
-     List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<String>();
 
-     /* FlowElements except edges */
-     for(FlowElement flowEl : this.getFlowElement()) {
-      if(!(flowEl instanceof Edge)) {
-       idList.add(flowEl.getId());
-      }
+        /* FlowElements except edges */
+        for(FlowElement flowEl : this.getFlowElement()) {
+            if(!(flowEl instanceof Edge)) {
+                idList.add(flowEl.getId());
+            }
 
-      /* Insert participant band elements */
-      if(flowEl instanceof ChoreographyActivity) {
-       for(Participant participant : ((ChoreographyActivity) flowEl).getParticipantRef()) {
-        idList.add(participant.getId());
-       }
-      }
+            /* Insert participant band elements */
+            if(flowEl instanceof ChoreographyActivity) {
+                for(Participant participant : ((ChoreographyActivity) flowEl).getParticipantRef()) {
+                    idList.add(participant.getId());
+                }
+            }
 
-      /* Child SubChoreographis */
-      if(flowEl instanceof SubChoreography) {
-       idList.addAll(((SubChoreography) flowEl).getIdsOfDiagramElements());
-      }
-     }
+            /* Child SubChoreographis */
+            if(flowEl instanceof SubChoreography) {
+                idList.addAll(((SubChoreography) flowEl).getIdsOfDiagramElements());
+            }
+        }
 
-     /* Artifacts */
-     for(Artifact artifact : getArtifact()) {
-      idList.add(artifact.getId());
-     }
+        /* Artifacts */
+        for(Artifact artifact : getArtifact()) {
+            idList.add(artifact.getId());
+        }
 
-     return idList;
+        return idList;
     }
 
     /**
@@ -214,36 +208,36 @@ public class SubChoreography
      * @return
      */
     public List<SubChoreography> getSubChoreographies() {
-     List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
+        List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
 
-     for(FlowElement flowEle : getFlowElement()) {
-      /* Subchoreography */
-      if(flowEle instanceof SubChoreography) {
-       subchoreographies.add((SubChoreography) flowEle);
-       subchoreographies.addAll(((SubChoreography) flowEle).getSubChoreographies());
-      }
-     }
+        for(FlowElement flowEle : getFlowElement()) {
+            /* Subchoreography */
+            if(flowEle instanceof SubChoreography) {
+                subchoreographies.add((SubChoreography) flowEle);
+                subchoreographies.addAll(((SubChoreography) flowEle).getSubChoreographies());
+            }
+        }
 
-     return subchoreographies;
+        return subchoreographies;
     }
 
     public List<Edge> getChildEdges() {
-  List<Edge> edgeList = new ArrayList<Edge>();
+        List<Edge> edgeList = new ArrayList<Edge>();
 
-  for(FlowElement fe : this.getFlowElement()) {
-   if(fe instanceof Edge) {
-    edgeList.add((Edge) fe);
-   } else if(fe instanceof ContainerElement) {
-    edgeList.addAll(((ContainerElement) fe).getChildEdges());
-   }
-  }
+        for(FlowElement fe : this.getFlowElement()) {
+            if(fe instanceof Edge) {
+                edgeList.add((Edge) fe);
+            } else if(fe instanceof ContainerElement) {
+                edgeList.addAll(((ContainerElement) fe).getChildEdges());
+            }
+        }
 
-  return edgeList;
- }
+        return edgeList;
+    }
 
- public void acceptVisitor(Visitor v){
-  v.visitSubChoreography(this);
- }
+    public void acceptVisitor(Visitor v){
+        v.visitSubChoreography(this);
+    }
 
     /* Getter & Setter */
 
@@ -340,22 +334,22 @@ public class SubChoreography
 
 
 
- public List<DiagramElement> _getDiagramElements() {
-  return _diagramElements;
- }
+    public List<DiagramElement> _getDiagramElements() {
+        return _diagramElements;
+    }
 
 
 
- public List<BaseElement> getCalledElements() {
-  List<BaseElement> calledElements = new ArrayList<BaseElement>();
+    public List<BaseElement> getCalledElements() {
+        List<BaseElement> calledElements = new ArrayList<BaseElement>();
 
-  for(FlowElement flowEl : getFlowElement()) {
-   if(flowEl instanceof CallingElement) {
-    calledElements.addAll(((CallingElement) flowEl).getCalledElements());
-   }
-  }
+        for(FlowElement flowEl : getFlowElement()) {
+            if(flowEl instanceof CallingElement) {
+                calledElements.addAll(((CallingElement) flowEl).getCalledElements());
+            }
+        }
 
-  return calledElements;
- }
+        return calledElements;
+    }
 
 }

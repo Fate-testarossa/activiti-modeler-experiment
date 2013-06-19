@@ -1,27 +1,20 @@
-/**
-
- * Copyright (c) 2009
- * Philipp Giese, Sven Wagner-Boysen
+/*******************************************************************************
+ * Signavio Core Components
+ * Copyright (C) 2012  Signavio GmbH
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package de.hpi.bpmn2_0.model.conversation;
 
 import java.util.ArrayList;
@@ -64,87 +57,87 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tConversationNode", propOrder = { "participantRef",
-  "messageFlowRef", "correlationKey" })
+        "messageFlowRef", "correlationKey" })
 @XmlSeeAlso({ CallConversation.class, SubConversation.class, Conversation.class })
 public abstract class ConversationNode extends FlowNode implements
-  ConversationElement {
+        ConversationElement {
 
- @XmlIDREF
- protected List<MessageFlow> messageFlowRef;
- protected List<CorrelationKey> correlationKey;
+    @XmlIDREF
+    protected List<MessageFlow> messageFlowRef;
+    protected List<CorrelationKey> correlationKey;
 
- @XmlIDREF
- protected List<Participant> participantRef;
+    @XmlIDREF
+    protected List<Participant> participantRef;
 
- @XmlTransient
- public List<String> participantsIds;
+    @XmlTransient
+    public List<String> participantsIds;
 
- /*
-  * Constructors
-  */
+    /*
+     * Constructors
+     */
 
- public ConversationNode() {
-  super();
- }
+    public ConversationNode() {
+        super();
+    }
 
- public ConversationNode(ConversationNode node) {
-  super(node);
+    public ConversationNode(ConversationNode node) {
+        super(node);
 
- }
+    }
 
- /**
-  * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
-  */
+    /**
+     * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
+     */
     // @Override
     public boolean isElementWithFixedSize() {
-  return true;
- }
+        return true;
+    }
 
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
-     return 33.5;
+        return 33.5;
     }
 
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
-     return 29.0;
+        return 29.0;
     }
 
- public void acceptVisitor(Visitor v){
-  v.visitConversationNode(this);
- }
+    public void acceptVisitor(Visitor v){
+        v.visitConversationNode(this);
+    }
 
- /**
-  * Gets the value of the participantRef property.
-  *
-  * <p>
-  * This accessor method returns a reference to the live list, not a
-  * snapshot. Therefore any modification you make to the returned list will
-  * be present inside the JAXB object. This is why there is not a
-  * <CODE>set</CODE> method for the participantRef property.
-  *
-  * <p>
-  * For example, to add a new item, do as follows:
-  *
-  * <pre>
-  * getParticipantRef().add(newItem);
-  * </pre>
-  *
-  *
-  * <p>
-  * Objects of the following type(s) are allowed in the list
-  * {@link Participant }
-  *
-  *
-  */
- public List<Participant> getParticipantRef() {
-  if (participantRef == null) {
-   participantRef = new ArrayList<Participant>();
-  }
-  return this.participantRef;
- }
+    /**
+     * Gets the value of the participantRef property.
+     *
+     * <p>
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the participantRef property.
+     *
+     * <p>
+     * For example, to add a new item, do as follows:
+     *
+     * <pre>
+     * getParticipantRef().add(newItem);
+     * </pre>
+     *
+     *
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Participant }
+     *
+     *
+     */
+    public List<Participant> getParticipantRef() {
+        if (participantRef == null) {
+            participantRef = new ArrayList<Participant>();
+        }
+        return this.participantRef;
+    }
 }
