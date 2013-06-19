@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -45,19 +45,19 @@ public class SSCompressor {
 
     /**
      * @param args
-     * @throws Exception 
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        
+
         if(args.length < 1)
             throw new Exception("Missing argument! Usage: java SSCompressor <SSDirectory>");
-        
+
         //get stencil set directory from arguments
         String ssDirString = args[0];
-        
+
         //get stencil set configuration file
-        File ssConf = new File(ssDirString + "/stencilsets.json"); 
-        
+        File ssConf = new File(ssDirString + "/stencilsets.json");
+
         if(!ssConf.exists())
             throw new Exception("File " + ssDirString + "/stencilsets.json does not exist.");
 
@@ -65,63 +65,63 @@ public class SSCompressor {
         StringBuffer jsonObjStr = readFile(ssConf);
 
         JSONArray jsonObj = new JSONArray(jsonObjStr.toString());
-        
+
         //iterate all stencil set configurations
         for(int i = 0; i < jsonObj.length(); i++) {
             JSONObject ssObj = jsonObj.getJSONObject(i);
-            
+
             /*
              * StencilsSet has to build out of existing stencil set and extension..
              */
             if (ssObj.has("basestencilset") && ssObj.has("extensionstointegrate")){
-                
+
                 if (ssObj.has("uri")) {
                     String ssUri = ssObj.getString("uri");
                     File ssFile = new File(ssDirString + ssUri);
-                    
+
                     if (ssFile.exists()){
                         throw new Exception("The stencil set (" + ssDirString + ssUri + ") that should be created does already exist.");
                     }
-                    
+
                     ssFile  = createFile(ssDirString, ssUri);
-                    
+
                     File baseSsFile = getStencilSet(ssObj.getString("basestencilset"), ssConf, ssDirString);
                     JSONObject BaseSsJson = new JSONObject( readFile(baseSsFile).toString() );
                     copyDataFromDirectory(baseSsFile.getParentFile(), ssFile.getParentFile());
-                    
+
                     JSONArray extensions = ssObj.getJSONArray("extensionstointegrate");
                     List<JSONObject> extensionsJson = new ArrayList<JSONObject>();
                     for (int j = 0; j < extensions.length(); j++) {
                         File extensionFile = getStencilSetExtension(
-                                extensions.getString(j), 
-                                new File(ssDirString + File.separator + "extensions" + File.separator + "extensions.json"), 
+                                extensions.getString(j),
+                                new File(ssDirString + File.separator + "extensions" + File.separator + "extensions.json"),
                                 ssDirString + File.separator + "extensions" + File.separator );
                         copyDataFromDirectory(extensionFile.getParentFile(), ssFile.getParentFile());
                         extensionsJson.add(new JSONObject( readFile(extensionFile).toString() ));
-                        
+
                     }
-                    
+
                     JSONObject jsonSS = createJsonFor(ssObj, BaseSsJson, extensionsJson);
                     writeFile(ssFile, jsonSS.toString() );
-                    
+
                 }
-                
-                
-                
+
+
+
             } else if (ssObj.has("extensionstointegrate")){
                 String ssUri = ssObj.getString("uri");
-                
+
                 File ssFile = new File(ssDirString + ssUri);
-                
+
                 if(!ssFile.exists())
                     throw new Exception("Stencil set " + ssDirString + ssUri + " that is referenced in stencil set configuration file does not exist.");
-                
+
                 JSONArray extensions = ssObj.getJSONArray("extensionstointegrate");
                 JSONObject ssJson = new JSONObject( readFile(ssFile).toString() );
                 for (int j = 0; j < extensions.length(); j++) {
                     File extensionFile = getStencilSetExtension(
-                            extensions.getString(j), 
-                            new File(ssDirString + File.separator + "extensions" + File.separator + "extensions.json"), 
+                            extensions.getString(j),
+                            new File(ssDirString + File.separator + "extensions" + File.separator + "extensions.json"),
                             ssDirString + File.separator + "extensions" + File.separator );
                     copyDataFromDirectory(extensionFile.getParentFile(), ssFile.getParentFile());
                     JSONObject extension = new JSONObject( readFile(extensionFile).toString() );
@@ -129,62 +129,62 @@ public class SSCompressor {
                         merge(ssJson, extension);
                     } else {
                         System.out.println("[Warning] could not merge "  + ssJson.getString("namespace") + " with extension " + extension.getString("namespace"));
-                        
+
                     }
-                    
+
                 }
                 writeFile(ssFile, ssJson.toString());
             }
-            
-            
+
+
             //get stencil set location
             if(ssObj.has("uri")) {
                 String ssUri = ssObj.getString("uri");
-                
+
                 File ssFile = new File(ssDirString + ssUri);
-                
+
                 if(!ssFile.exists())
                     throw new Exception("Stencil set " + ssDirString + ssUri + " that is referenced in stencil set configuration file does not exist.");
-                
+
                 String ssDir = ssFile.getParent();
-                
+
                 //read stencil set file
                 StringBuffer ssString = readFile(ssFile);
-                
+
                 // store copy of original stencilset file (w/o SVG includes) with postfix '-nosvg'
                 int pIdx = ssUri.lastIndexOf('.');
                 File ssNoSvgFile = new File(ssDirString + ssUri.substring(0, pIdx) + "-nosvg" + ssUri.substring(pIdx));
                 writeFile(ssNoSvgFile, ssString.toString());
-                
+
                 //***include svg files***
-                
+
                 //get view property
                 Pattern pattern = Pattern.compile("[\"\']view[\"\']\\s*:\\s*[\"\']\\S+?[\"\']");
-                
+
                 Matcher matcher = pattern.matcher(ssString);
-                
+
                 StringBuffer tempSS = new StringBuffer();
-                
+
                 int lastIndex = 0;
-                
+
                 //iterate all view properties
                 while(matcher.find()) {
                     tempSS.append(ssString.substring(lastIndex, matcher.start()));
-                    
+
                     lastIndex = matcher.end();
-                    
+
                     //get svg file name
                     String filename = matcher.group().replaceFirst("[\"\']view[\"\']\\s*:\\s*[\"\']", "");
                     filename = filename.substring(0, filename.length()-1);
-                    
+
                     //get svg file
                     File svgFile = new File(ssDir + "/view/" + filename);
-                    
+
                     if(!svgFile.exists())
                         throw new Exception("SVG File " + svgFile.getPath() + " does not exists!. Compressing stencil sets aborted!");
-                    
+
                     StringBuffer svgString = readFile(svgFile);
-                    
+
                     //check, if svgString is a valid xml file
                     /*try {
                         DocumentBuilderFactory builder = DocumentBuilderFactory.newInstance();
@@ -193,61 +193,61 @@ public class SSCompressor {
                     } catch(Exception e) {
                         throw new Exception("File " + svgFile.getCanonicalPath() + " is not a valid XML file: " + e.getMessage());
                     }*/
-                    
-                    
+
+
                     //append file content to output json file (replacing existing json file)
                     tempSS.append("\"view\":\"");
                     tempSS.append(svgString.toString().replaceAll("[\\t\\n\\x0B\\f\\r]", " ").replaceAll("\"", "\\\\\""));
                     //newSS.append(filename);
                     tempSS.append("\"");
                 }
-                
+
                 tempSS.append(ssString.substring(lastIndex));
                 //***end include svg files***
-                
+
                 /*
                  * BAD IDEA, BECAUSE IT INCREASES THROUGHPUT
-                
+
                 //***include png files
                 //get icon property
                 pattern = Pattern.compile("[\"\']icon[\"\']\\s*:\\s*[\"\']\\S+[\"\']");
-                
+
                 matcher = pattern.matcher(tempSS);
-                
+
                 StringBuffer finalSS = new StringBuffer();
-                
+
                 lastIndex = 0;
-                
+
                 //iterate all icon properties
                 while(matcher.find()) {
                     finalSS.append(tempSS.substring(lastIndex, matcher.start()));
-                    
+
                     lastIndex = matcher.end();
-                    
+
                     //get icon file name
                     String filename = matcher.group().replaceFirst("[\"\']icon[\"\']\\s*:\\s*[\"\']", "");
                     filename = filename.substring(0, filename.length()-1);
-                    
+
                     //get icon file
                     File pngFile = new File(ssDir + "/icons/" + filename);
-                    
+
                     if(!pngFile.exists())
                         throw new Exception("SVG File " + pngFile.getPath() + " does not exists!. Compressing stencil sets aborted!");
-                    
+
                     StringBuffer pngString = readFile(pngFile);
-                    
+
                     //append file content to output json file (replacing existing json file)
                     finalSS.append("\"icon\":\"javascript:");
                     finalSS.append(encodeBase64(pngString.toString()));
                     finalSS.append("\"");
                 }
-                
+
                 finalSS.append(tempSS.substring(lastIndex));
                 //***end include png files
                 */
                 //write compressed stencil set file
                 writeFile(ssFile, tempSS.toString());
-                
+
                 System.out.println("Compressed stencil set file " + ssFile.getCanonicalPath());
             }
         }
@@ -263,36 +263,36 @@ public class SSCompressor {
 
         String thisLine = "";
         BufferedReader myInput = new BufferedReader(new InputStreamReader(fin));
-        
-        while ((thisLine = myInput.readLine()) != null) {  
+
+        while ((thisLine = myInput.readLine()) != null) {
             result.append(thisLine);
             result.append("\n");
         }
-        
+
         myInput.close();
         fin.close();
-        
+
         return result;
     }
-    
+
     private static void writeFile(File file, String text) throws Exception {
         FileOutputStream fos =  new FileOutputStream(file);
-        
+
         BufferedWriter myOutput = new BufferedWriter(new OutputStreamWriter(fos));
-        
+
         myOutput.write(text);
         myOutput.flush();
-        
+
         myOutput.close();
         fos.close();
     }
-    
+
     /*private static String encodeBase64(String text) {
         byte[] encoded = Base64.encodeBase64(text.getBytes());
-        
+
         return new String(encoded);
     }*/
-    
+
     private static JSONObject createJsonFor(JSONObject newStencilSetData, JSONObject baseStencilSetData, List<JSONObject> extensions) throws JSONException {
         JSONObject result = new JSONObject();
         if (newStencilSetData.has("title")) result.put("title", newStencilSetData.getString("title"));
@@ -300,37 +300,37 @@ public class SSCompressor {
         if (newStencilSetData.has("namespace")) result.put("namespace", newStencilSetData.getString("namespace"));
         if (newStencilSetData.has("description")) result.put("description", newStencilSetData.getString("description"));
         if (newStencilSetData.has("description_de")) result.put("description_de", newStencilSetData.getString("description_de"));
-        
-        if (baseStencilSetData.has("propertyPackages")) 
+
+        if (baseStencilSetData.has("propertyPackages"))
             result.put("propertyPackages", baseStencilSetData.getJSONArray("propertyPackages") );
-        if (baseStencilSetData.has("stencils")) 
+        if (baseStencilSetData.has("stencils"))
             result.put("stencils", baseStencilSetData.getJSONArray("stencils") );
-        if (baseStencilSetData.has("rules")) 
+        if (baseStencilSetData.has("rules"))
             result.put("rules", baseStencilSetData.getJSONObject("rules") );
-        
+
         for (JSONObject extension : extensions) {
             if (baseStencilSetData.getString("namespace").equals(extension.getString("extends"))) {
                 merge(result, extension);
             } else {
                 System.out.println("[Warning] could not merge "  + baseStencilSetData.getString("namespace") + " with extension " + extension.getString("namespace"));
-                
+
             }
         }
-        
+
         return result;
     }
 
     /**
      * This method merges the stencil set with an extension according to the
      * rules used in oryx/editor/client/scripts/Core/StencilSet/stencilset.js.
-     * 
+     *
      * This means, that the following steps are executed:
      *  - load new stencils
      *  - load additional properties
      *  - remove stencil properties
      *  - remove stencils
      * in this specific order!
-     * 
+     *
      * As this strict order cannot be used here (due to the missing JSONArray.remove()
      * method), another order was choosen that produces the same outcome
      * as the original one (by additional check).
@@ -338,13 +338,13 @@ public class SSCompressor {
     private static void merge(JSONObject ssObj, JSONObject sseObj) throws JSONException {
         JSONArray existingStencils = ssObj.getJSONArray("stencils");
         JSONArray newStencilArray = new JSONArray();
-        
-        
-        JSONArray stencilsToBeAdded = getStencilsToBeAdded(sseObj); 
+
+
+        JSONArray stencilsToBeAdded = getStencilsToBeAdded(sseObj);
         Map<String, List<JSONObject>> propertiesToBeAdded = getPropertiesToBeAdded(sseObj);
         Map<String, Set<String>> propertiesToBeRemoved = getPropertiesToBeRemoved(sseObj);
         Set<String> stencilsToBeRemoved = getStencilsToBeRemoved(sseObj);
-        
+
         // Add stencils
         for (int i = 0; i < stencilsToBeAdded.length(); i++) {
             JSONObject stencil = stencilsToBeAdded.getJSONObject(i);
@@ -362,7 +362,7 @@ public class SSCompressor {
                     for (int j = 0; j < rolesOfStencilArray.length(); j++) {
                         rolesOfStencil.add(rolesOfStencilArray.getString(j));
                     }
-                } 
+                }
                 rolesOfStencil.add(stencilId);
                 JSONArray existingProperties;
                 if (stencil.has("properties")) {
@@ -416,7 +416,7 @@ public class SSCompressor {
             return new JSONArray();
         }
     }
-    
+
     private static Map<String, List<JSONObject>> getPropertiesToBeAdded(JSONObject sseObj) throws JSONException {
         Map<String, List<JSONObject>> result = new HashMap<String, List<JSONObject>>();
         if (sseObj.has("properties")){
@@ -440,7 +440,7 @@ public class SSCompressor {
                     }
                 }
             }
-        
+
         }
         return result;
     }
@@ -473,7 +473,7 @@ public class SSCompressor {
         }
         return result;
     }
-    
+
 
 
 
@@ -490,7 +490,7 @@ public class SSCompressor {
             }
         }
     }
-    
+
     public static void copyFile(File in, File out) throws IOException {
         FileChannel inChannel = new FileInputStream(in).getChannel();
         FileChannel outChannel = new FileOutputStream(out).getChannel();
@@ -515,9 +515,9 @@ public class SSCompressor {
         f.createNewFile();
         return f;
     }
-    
+
     private static File getStencilSet(String namespace, File ssConf, String ssDirString) {
-        
+
         try {
             StringBuffer jsonObjStr = readFile(ssConf);
             JSONArray jsonObj = new JSONArray(jsonObjStr.toString());
@@ -536,11 +536,11 @@ public class SSCompressor {
             throw new IllegalArgumentException("Cannot find stencilset with namespace " + namespace + " in " + ssConf.getAbsolutePath() );
         }
         throw new IllegalArgumentException("Cannot find stencilset with namespace " + namespace + " in " + ssConf.getAbsolutePath() );
-        
+
     }
-    
+
     private static File getStencilSetExtension(String namespace, File sseConf, String sseDirString) {
-        
+
         try {
             StringBuffer jsonObjStr = readFile(sseConf);
             JSONObject jsonObj = new JSONObject(jsonObjStr.toString());
@@ -558,7 +558,7 @@ public class SSCompressor {
             throw new IllegalArgumentException("Cannot find stencilset extension with namespace " + namespace + " in " + sseConf.getAbsolutePath() );
         }
         throw new IllegalArgumentException("Cannot find stencilset extension with namespace " + namespace + " in " + sseConf.getAbsolutePath() );
-        
+
     }
 
 

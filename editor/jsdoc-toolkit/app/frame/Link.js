@@ -9,7 +9,7 @@ function Link() {
     this.innerName = "";
     this.classLink = false;
     this.targetName = "";
-    
+
     this.target = function(targetName) {
         if (defined(targetName)) this.targetName = targetName;
         return this;
@@ -38,7 +38,7 @@ function Link() {
         if (defined(file)) this.file = file;
         return this;
     }
-    
+
     this.toString = function() {
         var linkString;
         var thisLink = this;
@@ -77,7 +77,7 @@ Link.symbolNameToLinkName = function(symbol) {
     var linker = "";
     if (symbol.isStatic) linker = ".";
     else if (symbol.isInner) linker = "-";
-    
+
     return Link.hashPrefix+linker+symbol.name;
 }
 
@@ -90,10 +90,10 @@ Link.prototype._makeSymbolLink = function(alias) {
 
     // is it an internal link?
     if (alias.charAt(0) == "#") var linkPath = alias;
-    
+
     // if there is no symbol by that name just return the name unaltered
     else if (!linkTo) return this.text || alias;
-    
+
     // it's a symbol in another file
     else {
 
@@ -113,22 +113,22 @@ Link.prototype._makeSymbolLink = function(alias) {
         }
         linkPath = linkBase + linkPath
     }
-    
+
     var linkText = this.text || alias;
-    
+
     var link = {linkPath: linkPath, linkText: linkText};
-    
+
     if (typeof JSDOC.PluginManager != "undefined") {
         JSDOC.PluginManager.run("onSymbolLink", link);
     }
-    
+
     return "<a href=\""+link.linkPath+"\""+target+">"+link.linkText+"</a>";
 }
 
 /** Create a link to a source file. */
 Link.prototype._makeSrcLink = function(srcFilePath) {
     var target = (this.targetName)? " target=\""+this.targetName+"\"" : "";
-        
+
     // transform filepath into a filename
     var srcFile = srcFilePath.replace(/\.\.?[\\\/]/g, "").replace(/[:\\\/]/g, "_");
     var outFilePath = Link.base + publish.conf.srcDir + srcFile + publish.conf.ext;
@@ -140,7 +140,7 @@ Link.prototype._makeSrcLink = function(srcFilePath) {
 /** Create a link to a source file. */
 Link.prototype._makeFileLink = function(filePath) {
     var target = (this.targetName)? " target=\""+this.targetName+"\"" : "";
-        
+
     var outFilePath =  Link.base + filePath;
 
     if (!this.text) this.text = filePath;

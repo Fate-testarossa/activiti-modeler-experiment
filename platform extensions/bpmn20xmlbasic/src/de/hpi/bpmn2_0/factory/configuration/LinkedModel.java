@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -28,10 +28,10 @@ import org.oryxeditor.server.diagram.basic.BasicDiagramBuilder;
 import org.oryxeditor.server.diagram.generic.GenericDiagram;
 
 /**
- * A LinkedModel contains the JSON representation of the diagram, custom 
+ * A LinkedModel contains the JSON representation of the diagram, custom
  * defined attributes and models linked to this model.
- * 
- * 
+ *
+ *
  * @author Sven Wagner-Boysen
  *
  */
@@ -39,13 +39,13 @@ public class LinkedModel {
     /*
      * Attributes
      */
-    
+
     private Map<String, LinkedModel> linkedModels;
     private Map<String, Set<String>> metaData;
     private GenericDiagram diagram;
     private String id;
-    
-    
+
+
     @SuppressWarnings("unchecked")
     public LinkedModel(Map<String, Object> modelMetaData) {
         if(modelMetaData.get("modelJSON") != null && modelMetaData.get("modelJSON") instanceof String) {
@@ -55,23 +55,23 @@ public class LinkedModel {
             } catch (JSONException e) {
                 diagram = new BasicDiagram("");
             }
-            
+
             setDiagram(diagram);
         }
-        
+
         if(modelMetaData.get("metaData") != null && modelMetaData.get("metaData") instanceof Map<?, ?>) {
             getMetaData().putAll((Map<? extends String, ? extends Set<String>>) modelMetaData.get("metaData"));
         }
-        
+
         if(modelMetaData.get("linkedModels") != null && modelMetaData.get("linkedModels") instanceof List<?>) {
             extractLinkedModels((List<Map<String, Object>>) modelMetaData.get("linkedModels"));
         }
-        
+
         if(modelMetaData.get("id") != null && modelMetaData.get("id") instanceof String) {
             setId((String) modelMetaData.get("id"));
         }
     }
-    
+
     private void extractLinkedModels(List<Map<String, Object>> linkedModelsList) {
         for(Map<String, Object> linkedModelMap : linkedModelsList) {
             LinkedModel model = new LinkedModel(linkedModelMap);
@@ -81,16 +81,16 @@ public class LinkedModel {
 
 
     /* Getter & Setter */
-    
+
     public Map<String, LinkedModel> getLinkedModels() {
         if(linkedModels == null) {
             linkedModels = new HashMap<String, LinkedModel>();
         }
         return linkedModels;
     }
-    
-    
-    
+
+
+
     public Map<String, Set<String>> getMetaData() {
         if(metaData == null) {
             metaData = new HashMap<String, Set<String>>();

@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -29,9 +29,9 @@ import de.hpi.bpmn2_0.model.choreography.Choreography;
 
 /**
  * <p>Java class for tGlobalChoreographyTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tGlobalChoreographyTask">
  *   &lt;complexContent>
@@ -42,8 +42,8 @@ import de.hpi.bpmn2_0.model.choreography.Choreography;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -57,11 +57,11 @@ public class GlobalChoreographyTask
 
     /**
      * Gets the value of the initiatingParticipantRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getInitiatingParticipantRef() {
         return initiatingParticipantRef;
@@ -69,11 +69,11 @@ public class GlobalChoreographyTask
 
     /**
      * Sets the value of the initiatingParticipantRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setInitiatingParticipantRef(QName value) {
         this.initiatingParticipantRef = value;

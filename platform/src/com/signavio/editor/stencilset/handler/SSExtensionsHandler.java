@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -43,14 +43,14 @@ public class SSExtensionsHandler extends BasisHandler {
 
     public SSExtensionsHandler(ServletContext servletContext) {
         super(servletContext);
-        
-        EDITOR_URL_PREFIX = Platform.getInstance().getPlatformProperties().getEditorUri() + "/"; 
+
+        EDITOR_URL_PREFIX = Platform.getInstance().getPlatformProperties().getEditorUri() + "/";
     }
 
     /**
      * Returns a JSON file that contains information about the available stencil
      * set extensions for the user's profile
-     * 
+     *
      * @throws Exception
      */
     @Override

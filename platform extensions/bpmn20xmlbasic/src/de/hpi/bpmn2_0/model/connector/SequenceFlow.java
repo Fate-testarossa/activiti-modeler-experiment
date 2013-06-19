@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -37,11 +37,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tSequenceFlow complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tSequenceFlow">
  *   &lt;complexContent>
@@ -56,16 +56,16 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(name = "sequenceFlow")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tSequenceFlow", propOrder = { "conditionExpression" })
 public class SequenceFlow extends Edge {
-    
+
     /* Attributes */
-    
+
     @XmlElement(name = "conditionExpression")
     protected Expression conditionExpression;
     @XmlAttribute
@@ -75,20 +75,20 @@ public class SequenceFlow extends Edge {
     private boolean isDefaultSequenceFlow;
 
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
     public SequenceFlow() {}
-    
+
     /**
      * Copy constructor
-     * 
+     *
      * @param seqFlow
      */
     public SequenceFlow(SequenceFlow seqFlow) {
         super(seqFlow);
-        
+
         this.setConditionExpression(seqFlow.getConditionExpression());
         this.setIsImmediate(seqFlow.isImmediate);
         this.setDefaultSequenceFlow(seqFlow.isDefaultSequenceFlow());
@@ -140,7 +140,7 @@ public class SequenceFlow extends Edge {
     /**
      * Retrieves the undirected data associations connected to the sequence
      * flow.
-     * 
+     *
      * @return List of {@link DataAssociation}
      */
     private List<DataAssociation> getUndirectedDataAssociations() {
@@ -168,14 +168,14 @@ public class SequenceFlow extends Edge {
     public void acceptVisitor(Visitor v){
         v.visitSequenceFlow(this);
     }
-    
+
     /* Getter & Setter */
 
     /**
      * Gets the value of the conditionExpression property.
-     * 
+     *
      * @return possible object is {@link Expression }
-     * 
+     *
      */
     public Expression getConditionExpression() {
         return conditionExpression;
@@ -183,10 +183,10 @@ public class SequenceFlow extends Edge {
 
     /**
      * Sets the value of the conditionExpression property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Expression }
-     * 
+     *
      */
     public void setConditionExpression(Expression value) {
         this.conditionExpression = value;
@@ -194,9 +194,9 @@ public class SequenceFlow extends Edge {
 
     /**
      * Gets the value of the isImmediate property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public boolean isIsImmediate() {
         if (isImmediate == null) {
@@ -208,10 +208,10 @@ public class SequenceFlow extends Edge {
 
     /**
      * Sets the value of the isImmediate property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setIsImmediate(Boolean value) {
         this.isImmediate = value;

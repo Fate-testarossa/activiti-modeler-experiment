@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -28,15 +28,15 @@ import com.signavio.warehouse.model.business.FsModel;
 
 /**
  * Implementation of a model revision in the file accessing Oryx backend.
- * 
+ *
  * @author Stefan Krumnow
  *
  */
 public class FsModelRevision extends FsSecureBusinessObject {
-    
+
     public static final String ID_PREFIX = "head-revision-of-";
     FsModel parentModel;
-    
+
     public FsModelRevision(FsModel parentModel) {
         super();
         this.parentModel = parentModel;
@@ -45,9 +45,9 @@ public class FsModelRevision extends FsSecureBusinessObject {
     public String getAuthor() {
         return FsUser.getDummy().getFullName();
     }
-    
-    public void setAuthor(String id) { 
-        return ; 
+
+    public void setAuthor(String id) {
+        return ;
     }
 
     public String getComment() {
@@ -65,20 +65,20 @@ public class FsModelRevision extends FsSecureBusinessObject {
     public FsModelRepresentationInfo getRepresentation(RepresentationType type) {
         return parentModel.getRepresentation(type);
     }
-    
+
     public FsModelRepresentationInfo createRepresentation(RepresentationType type, byte[] content) {
         return parentModel.createRepresentation(type, content);
     }
-    
+
     public FsComment getCommentObj() {
         return new FsComment(this);
     }
 
 
     /*
-     * 
-     * INTERFACE COMPLIANCE METHODS 
-     * 
+     *
+     * INTERFACE COMPLIANCE METHODS
+     *
      */
 
     @Override
@@ -90,7 +90,7 @@ public class FsModelRevision extends FsSecureBusinessObject {
             return super.getChildren(type);
         }
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {

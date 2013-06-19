@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,30 +27,30 @@ import com.signavio.platform.tenant.business.FsTenant;
 public abstract class FsSecureBusinessObject {
 
     protected static final String emptyString = "";
-    
+
     @SuppressWarnings("unchecked")
     protected static final Set emptySet = new HashSet();
     @SuppressWarnings("unchecked")
     protected static final List emptyList = new ArrayList();
-    
+
     private boolean privilegeInheritanceBlocked = false;
     private boolean deleted = false;
-    
+
     public FsSecureBusinessObject(){
         // empty - for now
     }
-    
+
     public abstract String getId();
 
-    
+
     public FsTenant getTenant(){
         return FsTenant.getSingleton();
     }
-    
+
     public FsAccessToken getAccessToken(){
         return FsAccessToken.getDummy();
     }
-    
+
 
     public void    setDeleted(boolean bool){
         deleted = bool;
@@ -59,19 +59,19 @@ public abstract class FsSecureBusinessObject {
     public boolean isDeleted(){
         return deleted;
     }
-    
+
     public void    setPrivilegeInheritanceBlocked(boolean bool){
         privilegeInheritanceBlocked = bool;
     }
-    
+
     public boolean isPrivilegeInheritanceBlocked(){
         return privilegeInheritanceBlocked;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public Set<String> getGainedPrivileges(FsSecureBusinessObject object) { 
+    public Set<String> getGainedPrivileges(FsSecureBusinessObject object) {
         // ISSUE: Would full set be better?
-        return emptySet; 
+        return emptySet;
     }
 
     // ISSUE: Uncomment these methods in order to get to know needed implementations..
@@ -87,5 +87,5 @@ public abstract class FsSecureBusinessObject {
     public <T extends FsSecureBusinessObject> Set<T> removeChild(T Child){
         throw new UnsupportedOperationException("Not supported by this sub-type of SecureBusinessObject");
     }
-    
+
 }

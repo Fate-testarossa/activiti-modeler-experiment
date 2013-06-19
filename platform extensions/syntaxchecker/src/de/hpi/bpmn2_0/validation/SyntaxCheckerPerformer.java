@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -46,7 +46,7 @@ public class SyntaxCheckerPerformer {
 //            else if (type.equals("epc.json"))
 //                checker = getCheckerEPC(document);
 //        }
-//        
+//
 //        if(checker == null) {//try eRDF
 //            try {
 //                NamedNodeMap map = XPathAPI.selectSingleNode(document, "//a[@rel='oryx-stencilset']").getAttributes();
@@ -66,22 +66,22 @@ public class SyntaxCheckerPerformer {
 //            writer.print(checker.getErrorsAsJson().toString());
 //        }
 //    }
-    
+
     public JSONObject processDocument(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws JSONException, BpmnConverterException {
 //        GenericDiagram diagram = DiagramBuilder.parseJson(jsonDocument);
-        
+
         //TODO: validate edges that are not in the java object model
 //        ArrayList<Shape> edges = this.getEdgesFromDiagram(diagram.getChildShapes());
-        
+
         String type = diagram.getStencilsetRef().getNamespace();
         SyntaxChecker checker = null;
-        
+
         if(type != null && (type.equals("http://b3mn.org/stencilset/bpmn2.0#") ||
                 type.equals("http://b3mn.org/stencilset/bpmn2.0choreography#") ||
                 type.equals("http://b3mn.org/stencilset/bpmn2.0conversation#"))) {
             checker = getCheckerBPMN2(diagram, factoryClasses);
         }
-        
+
         if (checker == null) {
             return new JSONObject();
         } else {
@@ -89,13 +89,13 @@ public class SyntaxCheckerPerformer {
             return checker.getErrorsAsJson();
         }
     }
-    
+
 //    private ArrayList<Shape> getEdgesFromDiagram(ArrayList<Shape> shapes) {
 //        ArrayList<Shape> edges = new ArrayList<Shape>();
-//        
+//
 //        for(Shape shape : shapes) {
 //            String sid = shape.getStencilId();
-//            
+//
 //            if(sid.equals("SequenceFlow")
 //                    || sid.equals("MessageFlow")
 //                    || sid.equals("Association_Undirected")
@@ -105,15 +105,15 @@ public class SyntaxCheckerPerformer {
 //            } else if(shape.getChildShapes().size() > 0) {
 //                edges.addAll(this.getEdgesFromDiagram(shape.getChildShapes()));
 //            }
-//            
+//
 //        }
-//        
+//
 //        return edges;
 //    }
-    
+
     protected SyntaxChecker getCheckerBPMN2(GenericDiagram diagram, List<Class<? extends AbstractBpmnFactory>> factoryClasses) throws BpmnConverterException {
         Diagram2BpmnConverter converter = new Diagram2BpmnConverter(diagram, factoryClasses, false);
-        
+
         Definitions defs = converter.getDefinitionsFromDiagram();
         return new BPMN2SyntaxChecker(defs);
     }

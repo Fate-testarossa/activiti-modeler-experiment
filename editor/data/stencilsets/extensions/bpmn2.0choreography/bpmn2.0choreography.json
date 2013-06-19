@@ -32,7 +32,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : true,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -180,7 +180,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : true,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -342,7 +342,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : true,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -488,7 +488,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : false,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -582,7 +582,7 @@
                                 "roundedOnTop"
                             ]
                         }
-                    ]    
+                    ]
                 },
                 {
                     "id":"color",
@@ -616,7 +616,7 @@
                     "refToView":["roundedOnTop", "roundedOnBottom", "roundedBgRect"],
                     "fill":false,
                     "stroke":true
-                }    
+                }
             ],
             "roles" : [
                 "ChoreographyElement"

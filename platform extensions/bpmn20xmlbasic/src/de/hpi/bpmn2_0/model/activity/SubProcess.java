@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -56,11 +56,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tSubProcess complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tSubProcess">
  *   &lt;complexContent>
@@ -74,8 +74,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -118,7 +118,7 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Remove the child element from the sub process.
-     * 
+     *
      * @param child
      *            Child element to remove.
      */
@@ -130,7 +130,7 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Retrieve all subprocesses and child subprocesses recursively.
-     * 
+     *
      * @return A flat list of the contained subprocesses.
      */
     public List<SubProcess> getSubprocessList() {
@@ -145,10 +145,10 @@ public class SubProcess extends Activity implements ContainerElement,
 
         return subprocesses;
     }
-    
+
     public List<Edge> getChildEdges() {
         List<Edge> edgeList = new ArrayList<Edge>();
-        
+
         for(FlowElement fe : this.getFlowElement()) {
             if(fe instanceof Edge) {
                 edgeList.add((Edge) fe);
@@ -156,7 +156,7 @@ public class SubProcess extends Activity implements ContainerElement,
                 edgeList.addAll(((ContainerElement) fe).getChildEdges());
             }
         }
-        
+
         return edgeList;
     }
 
@@ -168,21 +168,21 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Gets the value of the flowElement property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the flowElement property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getFlowElement().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link ManualTask }{@code >}
@@ -215,8 +215,8 @@ public class SubProcess extends Activity implements ContainerElement,
      * {@link TImplicitThrowEvent }{@code >} {@link JAXBElement }{@code <}
      * {@link ParallelGateway }{@code >} {@link JAXBElement }{@code <}
      * {@link TTask }{@code >}
-     * 
-     * 
+     *
+     *
      */
     @ChildElements
     public List<FlowElement> getFlowElement() {
@@ -228,29 +228,29 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Gets the value of the artifact property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the artifact property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getArtifact().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Artifact }{@code >} {@link JAXBElement }
      * {@code <}{@link Association }{@code >} {@link JAXBElement }{@code <}
      * {@link TGroup }{@code >} {@link JAXBElement }{@code <}
      * {@link TextAnnotation }{@code >}
-     * 
-     * 
+     *
+     *
      */
     @ChildElements
     public List<Artifact> getArtifact() {
@@ -262,9 +262,9 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Gets the value of the triggeredByEvent property.
-     * 
+     *
      * @return possible object is {@link Boolean }
-     * 
+     *
      */
     public boolean isTriggeredByEvent() {
         if (triggeredByEvent == null) {
@@ -276,10 +276,10 @@ public class SubProcess extends Activity implements ContainerElement,
 
     /**
      * Sets the value of the triggeredByEvent property.
-     * 
+     *
      * @param value
      *            allowed object is {@link Boolean }
-     * 
+     *
      */
     public void setTriggeredByEvent(Boolean value) {
         this.triggeredByEvent = value;

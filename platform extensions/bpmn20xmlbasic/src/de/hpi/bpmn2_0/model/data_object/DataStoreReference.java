@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -31,9 +31,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * A DataStoreReference provides a reference to a globally defined
  * {@link DataObject}.
- * 
+ *
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -52,25 +52,25 @@ public class DataStoreReference extends AbstractDataObject {
     public boolean isElementWithFixedSize() {
         return true;
     }
-    
+
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
         return 63.001;
     }
-    
+
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
         return 61.173;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitDataStoreReference(this);
     }
-    
+
     public void setProcess(Process process) {
         super.setProcess(process);
         if (this.dataStoreRef != null)
@@ -82,9 +82,9 @@ public class DataStoreReference extends AbstractDataObject {
 
     /**
      * Gets the value of the dataStoreRef property.
-     * 
+     *
      * @return possible object is {@link DataStore }
-     * 
+     *
      */
     public DataStore getDataStoreRef() {
         return dataStoreRef;
@@ -92,9 +92,9 @@ public class DataStoreReference extends AbstractDataObject {
 
     /**
      * Sets the value of the dataStoreRef property.
-     * 
+     *
      * @return possible object is {@link DataStore }
-     * 
+     *
      */
     public void setDataStoreRef(DataStore dataStoreRef) {
         this.dataStoreRef = dataStoreRef;

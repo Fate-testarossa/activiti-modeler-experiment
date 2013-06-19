@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -91,15 +91,15 @@ import de.hpi.bpmn2_0.transformation.Diagram2BpmnConverter;
 public abstract class AbstractBpmnFactory {
 
     private static List<Class<? extends AbstractBpmnFactory>> factoryClasses = new ArrayList<Class<? extends AbstractBpmnFactory>>();
-    
+
     /**
      * Manual initialization of factory classes list. Is there a pattern for automatic initialization
      * except reading the jar file?
      */
     static {
-        
+
         /* Standard BPMN 2.0 */
-        
+
         factoryClasses.add(AbstractActivityFactory.class);
         factoryClasses.add(SubprocessFactory.class);
         factoryClasses.add(TaskFactory.class);
@@ -127,24 +127,24 @@ public abstract class AbstractBpmnFactory {
         factoryClasses.add(StartEventFactory.class);
         factoryClasses.add(TextannotationFactory.class);
     }
-    
+
     public static List<Class<? extends AbstractBpmnFactory>> getFactoryClasses() {
         List<Class<? extends AbstractBpmnFactory>> factories = new ArrayList<Class<? extends AbstractBpmnFactory>>(factoryClasses);
-        
+
         Constants c = Diagram2BpmnConverter.getConstants();
         if(c == null) {
             return factories;
         }
-        
+
         factories.addAll(c.getAdditionalFactoryClasses());
-        
-        
+
+
         return factories;
     }
-    
+
     /**
      * Creates a process element based on a {@link GenericShape}.
-     * 
+     *
      * @param shape
      *            The resource shape
      * @return The constructed process element.
@@ -154,7 +154,7 @@ public abstract class AbstractBpmnFactory {
 
     /**
      * Creates a diagram element based on a {@link GenericShape}.
-     * 
+     *
      * @param shape
      *            The resource shape
      * @return The constructed diagram element.
@@ -163,7 +163,7 @@ public abstract class AbstractBpmnFactory {
 
     /**
      * Creates BPMNElement that contains DiagramElement and ProcessElement
-     * 
+     *
      * @param shape
      *            The resource shape.
      * @return The constructed BPMN element.
@@ -174,7 +174,7 @@ public abstract class AbstractBpmnFactory {
     /**
      * Sets attributes of a {@link BaseElement} that are common for all
      * elements.
-     * 
+     *
      * @param element
      *            The BPMN 2.0 element
      * @param shape
@@ -182,25 +182,25 @@ public abstract class AbstractBpmnFactory {
      */
     protected void setCommonAttributes(BaseElement element, GenericShape shape) {
         element.setId(shape.getResourceId());
-        
+
         /* Documentation */
         String documentation = shape.getProperty("documentation");
         if (documentation != null && !(documentation.length() == 0) && element.getDocumentation().size() == 0)
             element.getDocumentation().add(new Documentation(documentation));
-        
+
         /* Common FlowElement attributes */
         if(element instanceof FlowElement) {
-            
+
             /* Auditing */
             String auditing = shape.getProperty("auditing");
             if (auditing != null && !(auditing.length() == 0))
                 ((FlowElement) element).setAuditing(new Auditing(auditing));
-            
+
             /* Monitoring */
             String monitoring = shape.getProperty("monitoring");
             if (monitoring != null && !(monitoring.length() == 0))
                 ((FlowElement) element).setMonitoring(new Monitoring(monitoring));
-            
+
             /* Name */
             String name = shape.getProperty("name");
             if(name != null && !(name.length() == 0)) {
@@ -211,7 +211,7 @@ public abstract class AbstractBpmnFactory {
 
     /**
      * Sets common fields for the visual representation.
-     * 
+     *
      * @param diaElement
      *            The BPMN 2.0 diagram element
      * @param shape
@@ -237,7 +237,7 @@ public abstract class AbstractBpmnFactory {
                         shape);
                 /* Invoke generalized method to set common element attributes */
                 this.setCommonAttributes(createdElement, shape);
-                
+
                 return createdElement;
             }
         }
@@ -257,13 +257,13 @@ public abstract class AbstractBpmnFactory {
             if (property != null
                     && Arrays.asList(property.value()).contains(
                             shape.getProperty(property.name()))) {
-                
+
                 /* Create element */
                 BaseElement createdElement = (BaseElement) method.invoke(this,
                         shape);
                 /* Invoke generalized method to set common element attributes */
                 this.setCommonAttributes(createdElement, shape);
-                
+
                 return createdElement;
             }
         }
@@ -271,77 +271,77 @@ public abstract class AbstractBpmnFactory {
         throw new BpmnConverterException("Creator method for shape with id "
                 + shape.getStencilId() + " not found");
     }
-    
-    
+
+
     public BPMNElement createBpmnElement(GenericShape shape, Configuration configuration) throws BpmnConverterException {
         BPMNElement bpmnElement = createBpmnElement(shape, new BPMNElement(null, null, null));
-        
+
         if(bpmnElement != null && bpmnElement.getNode() != null) {
             bpmnElement.getNode()._diagramElement = bpmnElement.getShape();
-            
+
             setCustomAttributes(shape, bpmnElement.getNode(), configuration.getMetaData());
-            
+
             // handle external extension elements like from Activiti
 //            try {
 //                reinsertExternalExtensionElements(shape, bpmnElement);
 //            } catch (Exception e) {
-//                
+//
 //            }
-            
+
             // Apply processid from shape used for round tripping if existing
             if(bpmnElement.getNode() instanceof FlowElement) {
                 ((FlowElement) bpmnElement.getNode()).setProcessid(shape.getProperty("processid"));
             }
         }
-        
+
         return bpmnElement;
     }
-    
+
     private void setCustomAttributes(GenericShape shape, BaseElement node, Map<String, Set<String>> metaData) {
-        if(shape == null || node == null || metaData == null) 
+        if(shape == null || node == null || metaData == null)
             return;
-        
+
         Set<String> attributeNames = metaData.get(shape.getStencilId());
         if(attributeNames == null) {
             return;
         }
-        
+
         ExtensionElements extElements = node.getOrCreateExtensionElements();
-        
+
         Iterator<String> iterator = attributeNames.iterator();
         while(iterator.hasNext()) {
             String attributeKey = iterator.next();
             String attributeValue = shape.getProperty(attributeKey);
-            
+
             /* Avoid undefined Signavio meta attributes */
             if(attributeValue == null) {
                 continue;
             }
-            
+
             SignavioMetaData sigMetaData = new SignavioMetaData(attributeKey, attributeValue);
-            
+
             extElements.getAny().add(sigMetaData);
         }
     }
-    
+
     /**
-     * Checks if the shapes has content in the externalextensionelements 
+     * Checks if the shapes has content in the externalextensionelements
      * property and writes those XML Elements back to the extension elements
      * part of each element.
-     * 
+     *
      * @param shape
      * @param el
-     * @throws ParserConfigurationException 
-     * @throws IOException 
-     * @throws SAXException 
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     protected void reinsertExternalExtensionElements(GenericShape shape, BPMNElement el) throws ParserConfigurationException, SAXException, IOException {
         reinsertOtherAttributes(shape, el);
-        
+
         String exElXml = shape.getProperty("externalextensionelements");
-        if(exElXml == null || exElXml.length() == 0) 
+        if(exElXml == null || exElXml.length() == 0)
             return;
-        
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -350,7 +350,7 @@ public abstract class AbstractBpmnFactory {
         if(!exDoc.getFirstChild().getNodeName().equals("external")) {
             return;
         }
-        
+
         Node n = exDoc.getFirstChild().getFirstChild();
         while(n != null) {
             if(n instanceof Element) {
@@ -359,12 +359,12 @@ public abstract class AbstractBpmnFactory {
             }
             n = n.getNextSibling();
         }
-        
+
     }
-    
+
     /**
      * Parse attributes being intended for export under other namespace.
-     * 
+     *
      * @param shape
      * @param el
      */
@@ -373,7 +373,7 @@ public abstract class AbstractBpmnFactory {
         if(otherAttrStr == null || otherAttrStr.length() == 0) {
             return;
         }
-        
+
         // process as json array containing json objects
         try {
             JSONArray a = new JSONArray(otherAttrStr);
@@ -383,46 +383,46 @@ public abstract class AbstractBpmnFactory {
                 String ns = o.optString("ns");
                 String prefix = o.optString("prefix");
                 String value = o.optString("value");
-                
+
                 if((localpart != null || ns != null || prefix != null)
                         && value != null) {
                     el.getNode().getOtherAttributes().put(new QName((ns != null ? ns : ""), (localpart != null ? localpart : ""), (prefix != null ? prefix : "")), value);
                 }
             }
-            
+
         } catch (JSONException e) {
         }
     }
-    
+
     private void findNamespaceURIs(Element element, BPMNElement el) {
 //        Map<String,String> nsMapping = new HashMap<String, String>();
-        
-        if(element.getPrefix() != null && element.getPrefix().length() > 0 
-                && element.getNamespaceURI() != null 
+
+        if(element.getPrefix() != null && element.getPrefix().length() > 0
+                && element.getNamespaceURI() != null
                 && element.getNamespaceURI().length() > 0) {
-            
+
             el.getExternalNamespaceDefinitions().put(element.getNamespaceURI(), element.getPrefix());
-            
+
             // remove local ns definition
             element.removeAttribute("xmlns:" + element.getPrefix());
             element.getAttribute("xmlns:" + element.getPrefix());
-            
+
         }
-        
+
 //        return nsMapping;
     }
-    
+
     protected void setLabelPositionInfo(GenericShape<?,?> shape, BaseElement node) {
         if(shape == null || node == null || shape.getLabelSettings().isEmpty()) {
             return;
         }
-        
+
         ExtensionElements extElements = node.getOrCreateExtensionElements();
-        
+
         for(LabelSettings settings : shape.getLabelSettings()) {
             SignavioLabel label = new SignavioLabel(settings.getSettingsMap());
             extElements.getAny().add(label);
         }
     }
-    
+
 }

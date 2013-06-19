@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -42,9 +42,9 @@ import org.oryxeditor.server.diagram.util.NumberUtil;
  *                 <li> the end point of the vector points to the corner of the text's bounding box as defined by {@link #getOrientation()}
  *             </ul>
  * </ul>
- * 
+ *
  * The rest of the data not mentioned above is applied independently of the positioning mode
- * 
+ *
  * @author philipp.maschke
  *
  */
@@ -61,18 +61,18 @@ public class LabelSettings {
     private Integer from;
     private Integer to;
     private LabelStyle style;
-    
+
     public LabelSettings(){
-        
+
     }
-    
+
     public LabelSettings(Map<String, String> labelMap){
         this();
         Double double1 = NumberUtil.createDouble(labelMap.get("x"));
         Double double2 = NumberUtil.createDouble(labelMap.get("y"));
         if (double1 != null && double2 != null)
             position = new Point(double1, double2);
-        
+
         distance = NumberUtil.createFloat(labelMap.get("distance"));
         reference = labelMap.get("ref");
         from = NumberUtil.createInt(labelMap.get("from"));
@@ -95,11 +95,11 @@ public class LabelSettings {
             anchors.addAnchor(Anchor.BOTTOM);
         if (Boolean.getBoolean(labelMap.get("left")))
             anchors.addAnchor(Anchor.LEFT);
-        
+
         //TODO style
     }
-    
-    
+
+
     /**
      * Horizontal alignment of the text, relative to its position
      * @return
@@ -114,7 +114,7 @@ public class LabelSettings {
     public void setAlignHorizontal(HorizontalAlign alignHorizontal) {
         this.alignHorizontal = alignHorizontal;
     }
-    
+
     /**
      * Vertical alignment of the text, relative to its position
      * @return
@@ -129,7 +129,7 @@ public class LabelSettings {
     public void setAlignVertical(VerticalAlign alignVertical) {
         this.alignVertical = alignVertical;
     }
-    
+
     /**
      * Layout anchors that determine to which side(s) of the parent shape the label will have a fixed distance
      * @return
@@ -144,7 +144,7 @@ public class LabelSettings {
     public void setAnchors(Anchors anchors) {
         this.anchors = anchors;
     }
-    
+
     /**
      * General position along an edge that this label should have
      * @return
@@ -159,7 +159,7 @@ public class LabelSettings {
     public void setEdgePos(EdgePosition edgePos) {
         this.edgePos = edgePos;
     }
-    
+
     /**
      * Which corner of the label should be placed at the reference point
      * @return
@@ -174,9 +174,9 @@ public class LabelSettings {
     public void setOrientation(LabelOrientation orientation) {
         this.orientation = orientation;
     }
-    
+
     /**
-     * Depending on the mode of positioning this is either the final text position or 
+     * Depending on the mode of positioning this is either the final text position or
      * the reference point along the edge that this label belongs to
      * @return
      */
@@ -184,14 +184,14 @@ public class LabelSettings {
         return position;
     }
     /**
-     * Depending on the mode of positioning this is either the final text position or 
+     * Depending on the mode of positioning this is either the final text position or
      * the reference point along the edge that this label belongs to
      * @param position
      */
     public void setPosition(Point position) {
         this.position = position;
     }
-    
+
     /**
      * Distance between the reference point and the actual text position
      * @return
@@ -206,7 +206,7 @@ public class LabelSettings {
     public void setDistance(Float distance) {
         this.distance = distance;
     }
-    
+
     /**
      * Id of the label that should be repositioned
      * @return
@@ -221,7 +221,7 @@ public class LabelSettings {
     public void setReference(String reference) {
         this.reference = reference;
     }
-    
+
     /**
      * Index of the edge docker, which marks the beginning of the segment where the reference point is situated
      * @return
@@ -236,7 +236,7 @@ public class LabelSettings {
     public void setFrom(Integer from) {
         this.from = from;
     }
-    
+
     /**
      * Index of the edge docker, which marks the end of the segment where the reference point is situated
      * @return
@@ -251,7 +251,7 @@ public class LabelSettings {
     public void setTo(Integer to) {
         this.to = to;
     }
-    
+
     /**
      * Style settings for this label
      * @param style
@@ -266,8 +266,8 @@ public class LabelSettings {
     public LabelStyle getStyle() {
         return style;
     }
-    
-    
+
+
     /**
      * Whether there are any settings for positioning. Returns true if at least one of the following is not null:
      * <ul>
@@ -278,52 +278,52 @@ public class LabelSettings {
      * <li> from
      * <li> to
      * </ul>
-     * 
+     *
      * @return
      */
     public boolean hasPositioningInfo(){
-        return getDistance() != null || getEdgePos() != null || getFrom() != null || 
+        return getDistance() != null || getEdgePos() != null || getFrom() != null ||
             getOrientation() != null || getPosition() != null || getTo() != null;
     }
-    
-    
+
+
     public Map<String,String> getSettingsMap(){
         Map<String,String> map = new HashMap<String, String>();
-        
+
         if (position != null){
             map.put("x", position.getX().toString());
             map.put("y", position.getY().toString());
         }
         if (distance != null)
             map.put("distance", distance.toString());
-        
+
         if (reference != null)
         map.put("ref", reference);
-        
+
         if (from != null)
         map.put("from", from.toString());
-        
+
         if (to != null)
         map.put("to", to.toString());
-        
+
         if (alignHorizontal != null)
         map.put("align", alignHorizontal.toString());
-        
+
         if (alignVertical != null)
         map.put("valign", alignVertical.toString());
-        
+
         if (edgePos != null)
         map.put("edge", edgePos.toString());
-        
+
         if (orientation != null)
         map.put("orientation", orientation.toString());
-        
+
         if (anchors != null)
         map.put("left", String.valueOf(anchors.contains(Anchor.LEFT)));
         map.put("top", String.valueOf(anchors.contains(Anchor.TOP)));
         map.put("right", String.valueOf(anchors.contains(Anchor.RIGHT)));
         map.put("bottom", String.valueOf(anchors.contains(Anchor.BOTTOM)));
-        
+
         return map;
     }
 }

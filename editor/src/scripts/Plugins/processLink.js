@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -21,8 +21,8 @@ if(!ORYX.Plugins)
 
 /**
  * Supports EPCs by offering a syntax check and export and import ability..
- * 
- * 
+ *
+ *
  */
 ORYX.Plugins.ProcessLink = Clazz.extend({
 
@@ -30,57 +30,57 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
 
     /**
      * Offers the plugin functionality:
-     * 
+     *
      */
     construct: function(facade) {
 
         this.facade = facade;
-        
+
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_PROPERTY_CHANGED, this.propertyChanged.bind(this) );
-        
+
     },
 
 
     /**
-     * 
+     *
      * @param {Object} option
      */
     propertyChanged: function( option, node){
 
         if( option.name !== "oryx-refuri" || !node instanceof ORYX.Core.Node ){ return }
-        
-        
+
+
         if( option.value && option.value.length > 0 && option.value != "undefined"){
-            
+
             this.show( node, option.value );
-                    
+
         } else {
 
             this.hide( node );
 
-        }                
+        }
 
     },
-    
+
     /**
      * Shows the Link for a particular shape with a specific url
-     * 
+     *
      * @param {Object} shape
      * @param {Object} url
      */
     show: function( shape, url){
 
-        
+
         // Generate the svg-representation of a link
         var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,
                     [ 'a',
                         {'target': '_blank'},
-                        ['path', 
+                        ['path',
                             { "stroke-width": 1.0, "stroke":"#00DD00", "fill": "#00AA00", "d":  "M3,3 l0,-2.5 l7.5,0 l0,-2.5 l7.5,4.5 l-7.5,3.5 l0,-2.5 l-8,0", "line-captions": "round"}
                         ]
                     ]);
 
-        var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,        
+        var link  = ORYX.Editor.graft("http://www.w3.org/2000/svg", null ,
                         [ 'a',
                             {'target': '_blank'},
                             ['path', { "style": "fill:#92BFFC;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72", "d": "M0 1.44 L0 15.05 L11.91 15.05 L11.91 5.98 L7.37 1.44 L0 1.44 Z"}],
@@ -89,7 +89,7 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
                         ]);
 
     /*
-     * 
+     *
      *                     [ 'a',
                         {'target': '_blank'},
                         ['path', { "style": "fill:none;stroke-width:0.5px; stroke:#000000", "d": "M7,4 l0,2"}],
@@ -102,25 +102,25 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
                         ['rect', { "style": "fill:none;stroke:none;pointer-events:all", "width": 14, "height": 16, "x": 0, "y": 0}]
                     ]);
      */
-        
+
         // Set the link with the special namespace
         link.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", url);
-        
-        
-        // Shows the link in the overlay                    
+
+
+        // Shows the link in the overlay
         this.facade.raiseEvent({
                     type:             ORYX.CONFIG.EVENT_OVERLAY_SHOW,
                     id:             "arissupport.urlref_" + shape.id,
                     shapes:         [shape],
                     node:            link,
                     nodePosition:    "SE"
-                });    
-                            
-    },    
+                });
+
+    },
 
     /**
      * Hides the Link for a particular shape
-     * 
+     *
      * @param {Object} shape
      */
     hide: function( shape ){
@@ -128,7 +128,7 @@ ORYX.Plugins.ProcessLink = Clazz.extend({
         this.facade.raiseEvent({
                     type:             ORYX.CONFIG.EVENT_OVERLAY_HIDE,
                     id:             "arissupport.urlref_" + shape.id
-                });    
-                            
-    }        
+                });
+
+    }
 });

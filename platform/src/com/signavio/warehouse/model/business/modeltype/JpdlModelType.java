@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -44,12 +44,12 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 @ModelTypeFileExtension(fileExtension=".jpdl.xml")
 @ModelTypeRequiredNamespaces(namespaces={"http://b3mn.org/stencilset/jbpm4#"})
 public class JpdlModelType implements ModelType {
-    
+
     private static final byte[] SVG_DUMMY_REPRESENTATION = "<svg xmlns=\"http://www.w3.org/2000/svg\" />".getBytes();
     private static final byte[] PNG_DUMMY_REPRESENTATION = new byte[0];
-    
+
     private static String MODEL_TYPE = "BPMN 1.2 / jBPM Stencils";
-    
+
     public String getFileExtension() {
         return this.getClass().getAnnotation(ModelTypeFileExtension.class).fileExtension();
     }
@@ -57,7 +57,7 @@ public class JpdlModelType implements ModelType {
     public String getDescriptionFromModelFile(String path) {
         return FileSystemUtil.readXmlNodeChildFromFile("/process/@description", path, null);
     }
-    
+
     public String getTypeStringFromModelFile(String path) {
         return MODEL_TYPE;
     }
@@ -72,12 +72,12 @@ public class JpdlModelType implements ModelType {
 
     public byte[] getRepresentationInfoFromModelFile(RepresentationType type, String path) {
         if (RepresentationType.JSON == type){
-            
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             try {
                 DocumentBuilder builder = factory.newDocumentBuilder();
-                Document jpdlDoc = builder.parse(new File(path));    
+                Document jpdlDoc = builder.parse(new File(path));
                 String result = JpdlToJson.transform(jpdlDoc);
                 return result.getBytes("utf-8");
             } catch (ParserConfigurationException e) {
@@ -96,7 +96,7 @@ public class JpdlModelType implements ModelType {
         //System.out.println("Failed to return reprensentation of type " + type);
         return null;
     }
-    
+
     public void storeRepresentationInfoToModelFile(RepresentationType type, byte[] content, String path) {
         if (RepresentationType.JSON == type){
             File f = new File(path);
@@ -104,7 +104,7 @@ public class JpdlModelType implements ModelType {
             name = name.substring(0, name.length() - this.getClass().getAnnotation(ModelTypeFileExtension.class).fileExtension().length());
             try {
                 String result = getNewModelString(new String(content, "utf-8"), name, getDescriptionFromModelFile(path));
-              
+
                   // Write to file
                   FileWriter fw = new FileWriter(f);
                   fw.write(result);
@@ -118,7 +118,7 @@ public class JpdlModelType implements ModelType {
                 throw new RuntimeException("Saving failed.");
             }
 
-        } 
+        }
         //else {
         //    System.out.println("Imitated creation of reprensentation of type " + type);
         //}
@@ -136,9 +136,9 @@ public class JpdlModelType implements ModelType {
     private String getInitialModelString(String id, String name, String description, String type, String jsonRep, String svgRep) {
         return getNewModelString(jsonRep, name, description);
     }
-    
-    
-    private String getNewModelString(String json, String processName, String description) {        
+
+
+    private String getNewModelString(String json, String processName, String description) {
         try {
             JSONObject jsonObj = new JSONObject(json);
             if (description != null && !(description.length() == 0)){

@@ -41,7 +41,7 @@
 
         </jar>
     </target>
-    
+
     <!-- Copy Java libraries, if the lib property is defined. -->
     <target name="com.signavio.extension.copy2Platform.lib" if="lib">
         <copy todir="${platform-lib}">

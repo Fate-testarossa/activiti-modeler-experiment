@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -55,19 +55,19 @@ Clazz.extend = function(def) {
     var classDef = function() {
         if (arguments[0] !== Clazz) { this.construct.apply(this, arguments); }
     };
-    
+
     var proto = new this(Clazz);
     var superClass = this.prototype;
-    
+
     for (var n in def) {
-        var item = def[n];                        
+        var item = def[n];
         if (item instanceof Function) item.$ = superClass;
         proto[n] = item;
     }
 
     classDef.prototype = proto;
-    
-    //Give this new class the same static extend method    
-    classDef.extend = this.extend;        
+
+    //Give this new class the same static extend method
+    classDef.extend = this.extend;
     return classDef;
 };

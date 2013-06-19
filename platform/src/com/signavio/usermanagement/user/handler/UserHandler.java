@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -67,26 +67,26 @@ public class UserHandler extends BasisHandler {
         // Return all users from the tenants
         return getAllUsers(token);
     }
-    
+
     /**
      * Returns the representation of all available users
      * @return
      */
     private Object getAllUsers(FsAccessToken token) {
         JSONArray a = new JSONArray();
-            
+
         InfoHandler ih = new InfoHandler(this.getServletContext());
         HandlerConfiguration hc = this.getHandlerConfiguration();
-        
+
         FsRoleManager manager = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, token.getTenantId(), token);
         Set<FsUser> users = manager.getChildren(FsUser.class);
-        
-        for( FsUser user : users){    
+
+        for( FsUser user : users){
             // Generate the resource for every principal, includes the information from the info handler
             a.put( this.generateResource(hc.rel(), hc.uri() + "/" + user.getId(), ih.getRepresentation(user, null, token) ) );
         }
-        
+
         return a;
     }
-    
+
 }

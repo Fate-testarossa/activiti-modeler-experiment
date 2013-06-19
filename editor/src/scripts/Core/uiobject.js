@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -33,30 +33,30 @@ ORYX.Core.UIObject = {
     /**
      * Constructor of the UIObject class.
      */
-    construct: function(options) {    
-        
+    construct: function(options) {
+
         this.isChanged = true;            //Flag, if UIObject has been changed since last update.
         this.isResized = true;
         this.isVisible = true;            //Flag, if UIObject's display attribute is set to 'inherit' or 'none'
         this.isSelectable = false;        //Flag, if UIObject is selectable.
         this.isResizable = false;        //Flag, if UIObject is resizable.
         this.isMovable = false;            //Flag, if UIObject is movable.
-        
+
         this.id = ORYX.Editor.provideId();    //get unique id
         this.parent = undefined;        //parent is defined, if this object is added to another uiObject.
         this.node = undefined;            //this is a reference to the SVG representation, either locally or in DOM.
         this.children = [];                //array for all add uiObjects
-        
+
         this.bounds = new ORYX.Core.Bounds();        //bounds with undefined values
 
         this._changedCallback = this._changed.bind(this);    //callback reference for calling _changed
         this.bounds.registerCallback(this._changedCallback);    //set callback in bounds
-        
+
         if(options && options.eventHandlerCallback) {
             this.eventHandlerCallback = options.eventHandlerCallback;
         }
     },
-    
+
     /**
      * Sets isChanged flag to true. Callback for the bounds object.
      */
@@ -65,7 +65,7 @@ ORYX.Core.UIObject = {
         if(this.bounds == bounds)
             this.isResized = isResized || this.isResized;
     },
-    
+
     /**
      * If something changed, this method calls the refresh method that must be implemented by subclasses.
      */
@@ -73,28 +73,28 @@ ORYX.Core.UIObject = {
         if(this.isChanged) {
             this.refresh();
             this.isChanged = false;
-            
+
             //call update of all children
             this.children.each(function(value) {
                 value.update();
             });
         }
     },
-    
+
     /**
      * Is called in update method, if isChanged is set to true. Sub classes should call the super class method.
      */
     refresh: function() {
-        
+
     },
-    
+
     /**
      * @return {Array} Array of all child UIObjects.
      */
     getChildren: function() {
         return this.children.clone();
     },
-    
+
     /**
      * @return {Array} Array of all parent UIObjects.
      */
@@ -107,11 +107,11 @@ ORYX.Core.UIObject = {
         }
         return parents;
     },
-    
+
     /**
      * Returns TRUE if the given parent is one of the UIObjects parents or the UIObject themselves, otherwise FALSE.
      * @param {UIObject} parent
-     * @return {Boolean} 
+     * @return {Boolean}
      */
     isParent: function(parent){
         var cparent = this;
@@ -123,19 +123,19 @@ ORYX.Core.UIObject = {
         }
         return false;
     },
-    
+
     /**
      * @return {String} Id of this UIObject
      */
     getId: function() {
         return this.id;
     },
-    
+
     /**
      * Method for accessing child uiObjects by id.
      * @param {String} id
      * @param {Boolean} deep
-     * 
+     *
      * @return {UIObject} If found, it returns the UIObject with id.
      */
     getChildById: function(id, deep) {
@@ -152,7 +152,7 @@ ORYX.Core.UIObject = {
             }
         });
     },
-    
+
     /**
      * Adds an UIObject to this UIObject and sets the parent of the
      * added UIObject. It is also added to the SVG representation of this
@@ -166,16 +166,16 @@ ORYX.Core.UIObject = {
             if(uiObject.parent) {
                 uiObject.remove(uiObject);
             }
-            
+
             //add uiObject to children
             this.children.push(uiObject);
-            
+
             //set parent reference
             uiObject.parent = this;
-            
+
             //add uiObject.node to this.node
             uiObject.node = this.node.appendChild(uiObject.node);
-            
+
             //register callback to get informed, if child is changed
             uiObject.bounds.registerCallback(this._changedCallback);
 
@@ -184,7 +184,7 @@ ORYX.Core.UIObject = {
             ORYX.Log.info("add: ORYX.Core.UIObject is already a child of this object.");
         }
     },
-    
+
     /**
      * Removes UIObject from this UIObject. The SVG representation will also
      * be removed from this UIObject's SVG representation.
@@ -195,21 +195,21 @@ ORYX.Core.UIObject = {
         if (this.children.member(uiObject)) {
             //remove uiObject from children
             this.children = this._uiObjects.without(uiObject);
-            
+
             //delete parent reference of uiObject
             uiObject.parent = undefined;
-            
+
             //delete uiObject.node from this.node
             uiObject.node = this.node.removeChild(uiObject.node);
-            
+
             //unregister callback to get informed, if child is changed
             uiObject.bounds.unregisterCallback(this._changedCallback);
         } else {
             ORYX.Log.info("remove: ORYX.Core.UIObject is not a child of this object.");
         }
-        
+
     },
-    
+
     /**
      * Calculates absolute bounds of this UIObject.
      */
@@ -229,9 +229,9 @@ ORYX.Core.UIObject = {
      */
     absoluteXY: function() {
         if(this.parent) {
-            var pXY = this.parent.absoluteXY();        
+            var pXY = this.parent.absoluteXY();
             return {x: pXY.x + this.bounds.upperLeft().x , y: pXY.y + this.bounds.upperLeft().y};
-            
+
         } else {
             return {x: this.bounds.upperLeft().x , y: this.bounds.upperLeft().y};
         }
@@ -242,14 +242,14 @@ ORYX.Core.UIObject = {
      */
     absoluteCenterXY: function() {
         if(this.parent) {
-            var pXY = this.parent.absoluteXY();        
+            var pXY = this.parent.absoluteXY();
             return {x: pXY.x + this.bounds.center().x , y: pXY.y + this.bounds.center().y};
-            
+
         } else {
             return {x: this.bounds.center().x , y: this.bounds.center().y};
         }
     },
-    
+
     /**
      * Hides this UIObject and all its children.
      */
@@ -257,10 +257,10 @@ ORYX.Core.UIObject = {
         this.node.setAttributeNS(null, 'display', 'none');
         this.isVisible = false;
         this.children.each(function(uiObj) {
-            uiObj.hide();    
+            uiObj.hide();
         });
     },
-    
+
     /**
      * Enables visibility of this UIObject and all its children.
      */
@@ -268,28 +268,28 @@ ORYX.Core.UIObject = {
         this.node.setAttributeNS(null, 'display', 'inherit');
         this.isVisible = true;
         this.children.each(function(uiObj) {
-            uiObj.show();    
-        });        
+            uiObj.show();
+        });
     },
-    
+
     addEventHandlers: function(node) {
-        
+
         node.addEventListener(ORYX.CONFIG.EVENT_MOUSEDOWN, this._delegateEvent.bind(this), false);
-        node.addEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this._delegateEvent.bind(this), false);    
+        node.addEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this._delegateEvent.bind(this), false);
         node.addEventListener(ORYX.CONFIG.EVENT_MOUSEUP, this._delegateEvent.bind(this), false);
         node.addEventListener(ORYX.CONFIG.EVENT_MOUSEOVER, this._delegateEvent.bind(this), false);
         node.addEventListener(ORYX.CONFIG.EVENT_MOUSEOUT, this._delegateEvent.bind(this), false);
         node.addEventListener('click', this._delegateEvent.bind(this), false);
         node.addEventListener(ORYX.CONFIG.EVENT_DBLCLICK, this._delegateEvent.bind(this), false);
-            
+
     },
-        
+
     _delegateEvent: function(event) {
         if(this.eventHandlerCallback) {
             this.eventHandlerCallback(event, this);
         }
     },
-    
+
     toString: function() { return "UIObject " + this.id }
  };
  ORYX.Core.UIObject = Clazz.extend(ORYX.Core.UIObject);

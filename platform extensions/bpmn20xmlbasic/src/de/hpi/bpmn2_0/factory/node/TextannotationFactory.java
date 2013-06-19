@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -26,7 +26,7 @@ import de.hpi.bpmn2_0.model.artifacts.TextAnnotation;
 
 /**
  * Factor to create {@link TextAnnotation}
- * 
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
  *
@@ -43,19 +43,19 @@ public class TextannotationFactory extends AbstractShapeFactory {
         TextAnnotation text = new TextAnnotation();
         this.setCommonAttributes(text, shape);
         text.setId(shape.getResourceId());
-        
+
         /* Text */
         String textAttr = shape.getProperty("text");
         if(textAttr != null && !(textAttr.length() == 0)) {
             text.setText(textAttr);
         }
-        
+
         /* Text Format */
         String textFormat = shape.getProperty("textformat");
         if(textFormat != null && !(textFormat.length() == 0)) {
             text.setTextFormat(textFormat);
         }
-        
+
         return text;
     }
 

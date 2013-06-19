@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -38,9 +38,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCallActivity complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCallActivity">
  *   &lt;complexContent>
@@ -50,8 +50,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -63,31 +63,31 @@ public class CallActivity
     public CallActivity() {
         super();
     }
-    
+
     public CallActivity(Task t) {
         super(t);
     }
-    
+
     @XmlTransient
     private List<FlowElement> processElements;
-    
+
     /*
      * The diagram and process element of a linked subprocess
      */
     @XmlTransient
     public BPMNDiagram _diagramElement;
-    
+
     @XmlAttribute
     @XmlIDREF
     protected CallableElement calledElement;
 
     /**
      * Gets the value of the calledElement property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link CallableElement }
-     *     
+     *
      */
     public CallableElement getCalledElement() {
         return calledElement;
@@ -95,33 +95,33 @@ public class CallActivity
 
     /**
      * Sets the value of the calledElement property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link CallableElement }
-     *     
+     *
      */
     public void setCalledElement(CallableElement value) {
         this.calledElement = value;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitCallActivity(this);
     }
-    
+
     public List<BaseElement> getCalledElements() {
         List<BaseElement> calledElements = new ArrayList<BaseElement>();
-        
+
         if(getCalledElement() != null) {
             calledElements.add(getCalledElement());
         }
-        
+
         return calledElements;
     }
-    
+
     /**
-     * Overrides the general addChild method to collect elements of a call 
-     * activity expanded sub process. 
+     * Overrides the general addChild method to collect elements of a call
+     * activity expanded sub process.
      */
     public void addChild(BaseElement el) {
         if(el instanceof FlowElement) {
@@ -130,7 +130,7 @@ public class CallActivity
     }
 
     /* Getter & Setter */
-    
+
     /**
      * !!! Only for usages during the BPMN 2.0 Export process.
      * Returns the elements the expanded subprocess called be this call activity.
@@ -139,7 +139,7 @@ public class CallActivity
         if(this.processElements == null) {
             this.processElements = new ArrayList<FlowElement>();
         }
-        
+
         return this.processElements;
     }
 }

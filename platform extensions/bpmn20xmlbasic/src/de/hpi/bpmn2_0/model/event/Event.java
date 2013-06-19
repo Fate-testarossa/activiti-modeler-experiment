@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -38,9 +38,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tEvent complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tEvent">
  *   &lt;complexContent>
@@ -49,8 +49,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tEvent")
@@ -74,33 +74,33 @@ public abstract class Event
         @XmlElementRef(type = TerminateEventDefinition.class)
     })
     List<EventDefinition> eventDefinition;
-    
+
     @XmlElement
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     String eventDefinitionRef;
-    
+
     @XmlElementRef
     protected List<PropertyListItem> additionalProperties;
-    
+
     /* Constructors */
-    
+
     public Event() {}
-    
+
     public Event(Event event) {
         super(event);
         this.getEventDefinition().addAll(event.getEventDefinition());
         this.setEventDefinitionRef(event.getEventDefinitionRef());
-        
+
         if(event.getAdditionalProperties().size() > 0) {
             this.getAdditionalProperties().addAll(event.getAdditionalProperties());
         }
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitEvent(this);
     }
-    
-    
+
+
     /**
      * Helper for the import, see {@link FlowElement#isElementWithFixedSize().
      */
@@ -108,23 +108,23 @@ public abstract class Event
     public boolean isElementWithFixedSize() {
         return true;
     }
-    
+
     /**
      * For the fixed-size shape, return the fixed width.
      */
     public double getStandardWidth(){
         return 28.0;
     }
-    
+
     /**
      * For the fixed-size shape, return the fixed height.
      */
     public double getStandardHeight(){
         return 28.0;
     }
-    
+
     /**
-     * 
+     *
      * @param type
      *         The {@link EventDefinition} type.
      * @return
@@ -138,36 +138,36 @@ public abstract class Event
         }
         return null;
     }
-    
+
     public boolean isSignalEvent() {
         return getEventDefinitionOfType(SignalEventDefinition.class) != null;
     }
-    
+
     /* Getter & Setter */
-    
+
     public List<PropertyListItem> getAdditionalProperties() {
         if(additionalProperties == null) {
             additionalProperties = new ArrayList<PropertyListItem>();
         }
         return additionalProperties;
     }
-    
+
     /**
      * Gets the value of the eventDefinition property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the eventDefinition property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEventDefinition().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link CompensateEventDefinition }
@@ -181,7 +181,7 @@ public abstract class Event
      * {@link TEscalationEventDefinition }
      * {@link SignalEventDefinition }
      * {@link TTerminateEventDefinition }
-     * 
+     *
      * @return the eventDefinition
      */
     public List<EventDefinition> getEventDefinition() {

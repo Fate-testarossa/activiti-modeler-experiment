@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -35,7 +35,7 @@ public class HandlerEntry {
     protected Class<? extends BasisHandler> contextClass = null;
     protected Class<? extends AbstractHandler> handlerClass = null;
     protected AbstractHandler handlerInstance = null;
-    
+
     /**
      * Get the specifies URI for the given Handler
      * @return The URI
@@ -51,7 +51,7 @@ public class HandlerEntry {
     public String getRel() {
         return rel;
     }
-    
+
     /**
      * Checks if the Handler has a context class
      * @return A bool whether it has a context class or not
@@ -67,7 +67,7 @@ public class HandlerEntry {
     public Class<? extends BasisHandler> getContextClass() {
         return this.contextClass;
     }
-    
+
     /**
      * Get the instance of the Handler
      * @return Instance of the Handler
@@ -75,7 +75,7 @@ public class HandlerEntry {
     public AbstractHandler getHandlerInstance() {
         return handlerInstance;
     }
-    
+
     /**
      * Set the instance for the Handler class
      * @param handler Given instance of the Handler
@@ -83,7 +83,7 @@ public class HandlerEntry {
     public void setHandlerInstance(AbstractHandler handler) {
         this.handlerInstance = handler;
     }
-    
+
     /**
      * Get the classifier of the Handler
      * @return Class of Handler
@@ -91,7 +91,7 @@ public class HandlerEntry {
     public Class<? extends AbstractHandler> getHandlerClass() {
         return handlerClass;
     }
-    
+
     /**
      * Flag, if the handler is only accessible for admins.
      * @return True, if the handler is only accessible for admins.
@@ -99,7 +99,7 @@ public class HandlerEntry {
     public boolean isAdminHandler() {
         return this.isAdminHandler;
     }
-    
+
     /**
      * Create a HandlerEntry with a given class name
      * @param className Class name of the Handler
@@ -111,7 +111,7 @@ public class HandlerEntry {
         Class<? extends AbstractHandler> handlerClass = (Class<? extends AbstractHandler>) Class.forName(className);
         init(handlerClass);
     }
-    
+
     /**
      * Create a HandlerEntry with a given class of type AbstractHandler
      * @param handlerClass Classifier of the Handler
@@ -122,7 +122,7 @@ public class HandlerEntry {
     public HandlerEntry(Class<? extends AbstractHandler> handlerClass) throws ClassNotFoundException, SecurityException, NoSuchMethodException {
         init(handlerClass);
     }
-    
+
     @SuppressWarnings("unchecked")
     private void init(Class<? extends AbstractHandler> handlerClass) throws ClassNotFoundException, SecurityException, NoSuchMethodException {
         // Checks if the class type has an annotation
@@ -139,7 +139,7 @@ public class HandlerEntry {
             // If there is an context setted, create context class
             if(annotation.context() != BasisHandler.class) {
                 this.contextClass = annotation.context();
-            } 
-        } 
+            }
+        }
     }
 }

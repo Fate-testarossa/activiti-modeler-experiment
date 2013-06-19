@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -29,20 +29,20 @@ import com.signavio.warehouse.model.business.FsModel;
 
 /**
  * Implementation of an Comment for file system accessing Oryx.
- * 
+ *
  * @author Stefan Krumnow
  *
  */
 public class FsComment extends FsSecureBusinessObject {
-    
+
     public static final String ID_PREFIX = "comment-of-";
-    
+
     String revisionId;
-    
+
     public static FsComment createComment(FsModelRevision revision, Object ... params) {
         return new FsComment(revision);
     }
-    
+
     public FsComment(FsModelRevision parentRevision) {
         revisionId = parentRevision.getId();
     }
@@ -51,11 +51,11 @@ public class FsComment extends FsSecureBusinessObject {
     public String getDescription() { return emptyString; }
     public String getAuthorName() { return emptyString; }
     public String getResourceId() { return emptyString; }
-    
+
     public Date getCreated() { return null; }
 
     public FsUser getUser() { return FsUser.getDummy(); }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
@@ -73,7 +73,7 @@ public class FsComment extends FsSecureBusinessObject {
             return super.getParents(businessObjectClass);
         }
     }
-    
+
     @Override
     public String getId() {
         return ID_PREFIX + revisionId;

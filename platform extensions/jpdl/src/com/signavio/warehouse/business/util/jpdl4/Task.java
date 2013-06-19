@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -31,7 +31,7 @@ public class Task extends Node {
     private String candidateGroups;
     private String candidateUsers;
     private String swimlane;
-    
+
     public Task(JSONObject task) {
 
         this.name = JsonToJpdl.getAttribute(task, "name");
@@ -45,7 +45,7 @@ public class Task extends Node {
         this.outgoings = JsonToJpdl.getOutgoings(task);
 
     }
-    
+
     public Task(org.w3c.dom.Node task) {
         this.uuid = "oryx_" + UUID.randomUUID().toString();
         NamedNodeMap attributes = task.getAttributes();
@@ -105,7 +105,7 @@ public class Task extends Node {
         if (candidateUsers != null && candidateUsers.length() > 0) {
             jpdl.write(JsonToJpdl.transformAttribute("candidate-users",
                     candidateUsers));
-        } 
+        }
         if (swimlane != null) {
             jpdl.write(JsonToJpdl.transformAttribute("swimlane", swimlane));
         }

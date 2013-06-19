@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -30,7 +30,7 @@ import de.hpi.bpmn2_0.model.data_object.Message;
 
 /**
  * Factory that creates {@link MessageFlow}
- * 
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
  *
@@ -42,19 +42,19 @@ public class MessageFlowFactory extends AbstractEdgesFactory {
     public BPMNElement createBpmnElement(GenericShape shape, BPMNElement parent)
             throws BpmnConverterException {
         BPMNElement element = super.createBpmnElement(shape, parent);
-        
+
         for(GenericShape child : ((GenericShape<?,?>)shape).getChildShapesReadOnly()) {
             if(child.getStencilId().equals("Message")) {
                 Message m = new Message();
-                
+
                 /* Name value */
                 String name = child.getProperty("name");
                 if(name != null && name.length() > 0) {
                     m.setName(name);
                 }
-                
+
                 ((MessageFlow) element.getNode()).setMessageRef(m);
-                
+
                 /* Initiating */
                 String initiating = shape.getProperty("initiating");
                 if(initiating != null && initiating.equals("false")) {
@@ -64,10 +64,10 @@ public class MessageFlowFactory extends AbstractEdgesFactory {
                 }
             }
         }
-        
+
         return element;
     }
-    
+
     /* (non-Javadoc)
      * @see de.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.oryxeditor.server.diagram.Shape)
      */
@@ -78,7 +78,7 @@ public class MessageFlowFactory extends AbstractEdgesFactory {
         this.setCommonAttributes(msgFlow, shape);
         msgFlow.setId(shape.getResourceId());
         msgFlow.setName(shape.getProperty("name"));
-        
+
         return msgFlow;
     }
 

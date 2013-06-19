@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -62,41 +62,41 @@ public class DirectoryHandler extends BasisHandler {
     public Object getRepresentation(Object params, FsAccessToken token){
         return getRootDirectories(token);
     }
-    
+
     /**
      * Get the specific representation for directory, includes child entries.
      */
     @Override
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-        
+
         JSONArray rep = (JSONArray) super.getRepresentation(sbo, params, token);
-            
+
         FsDirectory directory = (FsDirectory) sbo;
-        
+
         for (FsDirectory childDir : directory.getChildDirectories()) {
             rep.put( this.getDirectoryInfo(childDir));
         }
-        
+
         for (FsModel childModel : directory.getChildModels()) {
             JSONObject jModel = this.getModelInfo(childModel);
             if(jModel != null) {
                 rep.put( this.getModelInfo(childModel));
             }
         }
-        
+
         return rep;
     }
-    
+
     /**
      * Get all resources for the root directories
      * @return
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     private JSONArray getRootDirectories(FsAccessToken token) {
-        
+
         JSONArray j = new JSONArray();
-        
+
         FsEntityManager entitiyManager = FsEntityManager.getTenantManagerInstance(FsEntityManager.class, token.getTenantId(), token);
         // user public folder
         j.put( getDirectoryInfo(entitiyManager.getTenantRootDirectory(), "public"));
@@ -105,8 +105,8 @@ public class DirectoryHandler extends BasisHandler {
 //        j.put( getDirectoryInfo(u.getChildren(PrivateDirectory.class).iterator().next(), "private"));
         // user trash folder
 //        j.put( getDirectoryInfo(u.getChildren(Trash.class).iterator().next(), "trash"));
-        
-        
+
+
         return j;
     }
 
@@ -114,19 +114,19 @@ public class DirectoryHandler extends BasisHandler {
      * Get the whole information for a specific directory.
      * @param dir
      * @return
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     public JSONObject getModelInfo( FsModel model ) {
-            
+
         // Get the information handler from model
         com.signavio.warehouse.model.handler.InfoHandler in = new com.signavio.warehouse.model.handler.InfoHandler(this.getServletContext());
-        // Get the annotation from the model 
+        // Get the annotation from the model
         HandlerConfiguration modelCA = Platform.getInstance().getHandlerDirectory().get(in.getClass().getName()).getContextClass().getAnnotation(HandlerConfiguration.class);
 
         return this.generateResource(modelCA.rel(), modelCA.uri() + "/" + model.getId(), in.getRepresentation(model, null, model.getAccessToken()));
     }
-    
-    
+
+
     public JSONObject getDirectoryInfo( FsDirectory dir) {
         return this.getDirectoryInfo(dir, null);
     }
@@ -134,13 +134,13 @@ public class DirectoryHandler extends BasisHandler {
      * Get the whole information for a specific directory.
      * @param dir
      * @return
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     public JSONObject getDirectoryInfo( FsDirectory dir, String directorytype) {
-        
+
         HandlerConfiguration hc = this.getHandlerConfiguration();
         JSONObject rep = getDirectoryRep(dir);
-        
+
         if (directorytype != null){
             try {
                 rep.put("type", directorytype);
@@ -148,30 +148,30 @@ public class DirectoryHandler extends BasisHandler {
         }
         return this.generateResource(hc.rel(), hc.uri() + "/" + dir.getId(), rep);
     }
-    
+
     /**
      * Get a specific representation for a particular directory.
      * Right now, the InfoHandler is used for that.
      * @param dir
      * @return
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     private JSONObject getDirectoryRep( FsDirectory dir) {
-    
+
         return (JSONObject) new InfoHandler(this.getServletContext()).getRepresentation( dir , null, dir.getAccessToken());
-    
+
     }
-    
+
     @HandlerMethodActivation
     @Override
     public  <T extends FsSecureBusinessObject> void deleteRepresentation(T sbo, Object params, FsAccessToken token) {
         FsDirectory dir = (FsDirectory) sbo;
-        
+
 //        dir.getParentDirectory().removeChildDirectory(dir);
 //        dir.delete();
         FsSecurityManager.getInstance().deleteObject(dir, token);
     }
-    
+
     /**
      * Expects a param "parent" that contains the id of the new parent.
      */
@@ -184,41 +184,41 @@ public class DirectoryHandler extends BasisHandler {
             String pId = obj.get("parent").toString();
             pId = pId.replace("/directory/", "");
             FsDirectory parent = (FsDirectory) FsSecurityManager.getInstance().loadObject(pId, token);
-            
+
             parent.addChildDirectory(dir);
         } catch (JSONException e) {
             throw new JSONRequestException(e);
         }
         return getDirectoryInfo(dir);
     }
-    
+
     /**
      * Creates a new directory.
-     * Params: parent, title 
-     * @throws InvalidIdentifierException 
+     * Params: parent, title
+     * @throws InvalidIdentifierException
      */
     @Override
     @HandlerMethodActivation
     public Object postRepresentation(Object params, FsAccessToken token) {
         JSONObject jsonParams = (JSONObject) params;
-        
+
         String parentId;
         String title;
         try {
             parentId = jsonParams.getString("parent");
             parentId = parentId.replace("/directory/", "");
-            
+
             title = jsonParams.getString("name");
         } catch (JSONException e) {
             throw new JSONRequestException(e);
         }
-        
+
         FsDirectory parent = (FsDirectory) FsSecurityManager.getInstance().loadObject(parentId, token);
         FsDirectory newDir = FsSecurityManager.getInstance().createObject(FsDirectory.class, parent, token, title);
         newDir.setName(title);
         //parent.addChildDirectory(newDir);
-        
+
         return getDirectoryInfo(newDir);
-        
+
     }
 }

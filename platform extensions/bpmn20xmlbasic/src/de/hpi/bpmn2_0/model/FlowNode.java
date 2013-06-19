@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -45,11 +45,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for tFlowNode complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name=&quot;tFlowNode&quot;&gt;
  *   &lt;complexContent&gt;
@@ -62,8 +62,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tFlowNode")
@@ -94,23 +94,23 @@ public abstract class FlowNode extends FlowElement {
 
     /**
      * Copy constructor
-     * 
+     *
      * @param flowNode
      *            The {@link FlowNode} to copy
      */
     public FlowNode(FlowNode flowNode) {
         super(flowNode);
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitBaseElement(this);
     }
 
     /**
      * Convenience method to retrieve all incoming {@link SequenceFlow}
-     * 
+     *
      * Changes to that list have no influence to the result other callers get.
-     * 
+     *
      * @return The list of {@link SequenceFlow}
      */
     public List<SequenceFlow> getIncomingSequenceFlows() {
@@ -129,7 +129,7 @@ public abstract class FlowNode extends FlowElement {
     /**
      * The {@link Marshaller} invokes this method right before marshaling to
      * XML. Add sequenceflow to the reference list.
-     * 
+     *
      * @param marshaller
      *            The marshaling context
      */
@@ -151,9 +151,9 @@ public abstract class FlowNode extends FlowElement {
 
     /**
      * Convenience method to retrieve all outgoing {@link SequenceFlow}
-     * 
+     *
      * Changes to that list have no influence to the result other callers get.
-     * 
+     *
      * @return The list of {@link SequenceFlow}
      */
     public List<SequenceFlow> getOutgoingSequenceFlows() {

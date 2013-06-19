@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -29,38 +29,38 @@ import com.signavio.usermanagement.user.business.FsUser;
 
 /**
  * Implementation of an Account.
- * 
+ *
  * @author Stefan Krumnow
  *
  */
 public class FsAccount extends FsSecureBusinessObject {
-    
+
     private static final FsAccount DUMMY;
     public static final String ID_OF_DUMMY = "account-object";
     private static final Set<FsAccount> DUMMY_SET;
-    
+
 
     static {
         DUMMY = new FsAccount();
         DUMMY_SET = new HashSet<FsAccount>(1);
         DUMMY_SET.add(DUMMY);
     }
-    
+
     public static FsAccount getDummy() {
         return DUMMY;
     }
     public static Set<FsAccount> getDummySet() {
         return DUMMY_SET;
     }
-    
+
     public static FsAccount getAccountByPrincipal(String principal, FsAccessToken rootToken) {
         return getDummy();
     }
-    
+
     public FsAccount() {
-        
+
     }
-    
+
     public String getFullName() { return emptyString; }
     public String getFirstName() { return emptyString; }
     public String getLastName() { return emptyString; }
@@ -74,16 +74,16 @@ public class FsAccount extends FsSecureBusinessObject {
     public String getPhone()  { return emptyString; }
     public String getLanguageCode() { return emptyString; }
     public String getCountryCode() { return emptyString; }
-    
+
     public boolean isActive() { return true; }
     public boolean isValidated() { return true; }
     public boolean isAcceptNewsletter() { return false; }
-    
+
     public FsAccountInfo getAccountInfo() { return FsAccountInfo.getDummy(); }
-    
+
     public FsSecureBusinessSubject getUserObject(FsTenant tenant) { return FsUser.getDummy(); }
     public Set<? extends FsSecureBusinessSubject> getUserObjects() {return FsUser.getDummySet();}
-    
+
     public void setFirstName(String s) { return ; }
     public void setLastName(String s) { return ; }
     public void setTitle(String s) { return ; }
@@ -99,14 +99,14 @@ public class FsAccount extends FsSecureBusinessObject {
     public void setCountry(String trim)  { return ; }
     public void setCompany(String trim)  { return ; }
     public void setPhone(String trim) { return ; }
-    
+
     public void sendResetPasswordMail() { return ; }
     public void resetPassword(String secureId, String password) { return ; }
 
     public boolean validate(String validationKey) { return true; }
 
-    
-    
+
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
@@ -116,7 +116,7 @@ public class FsAccount extends FsSecureBusinessObject {
             return super.getChildren(type);
         }
     }
-    
+
     @Override
     public String getId() {
         return ID_OF_DUMMY;

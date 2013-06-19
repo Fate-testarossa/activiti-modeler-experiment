@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -40,19 +40,19 @@ public class JsonHandler extends AbstractRevisionExportHandler {
     public JsonHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     @Override
     @HandlerMethodActivation
     public  <T extends FsSecureBusinessObject> byte[] doExport(T sbo, Object params){
         FsModelRevision rev = (FsModelRevision) sbo;
-        
+
         FsModelRepresentationInfo rep = rev.getRepresentation(RepresentationType.JSON);
-        
+
         if(rep == null) {
             throw new RequestException("warehouse.noJSONRepresentationAvailable");
         } else {
-            
-              
+
+
              try {
                  JSONObject p = (JSONObject) params;
                  if (p.has("jsonp")){
@@ -61,16 +61,16 @@ public class JsonHandler extends AbstractRevisionExportHandler {
                  } else {
                      return rep.getContent();
                  }
-                
-                
+
+
             } catch (JSONException e) {
                 return rep.getContent();
             } catch (UnsupportedEncodingException e) {
                 throw new IllegalStateException("Could not read data", e);
             }
-              
 
-              
+
+
         }
     }
 }

@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -34,11 +34,11 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * <p>
  * Java class for BPMNEdge complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="BPMNEdge">
  *   &lt;complexContent>
@@ -55,8 +55,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(name = "BPMNEdge")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -89,9 +89,9 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Gets the value of the bpmnLabel property.
-     * 
+     *
      * @return possible object is {@link BPMNLabel }
-     * 
+     *
      */
     public BPMNLabel getBPMNLabel() {
         return bpmnLabel;
@@ -99,10 +99,10 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Sets the value of the bpmnLabel property.
-     * 
+     *
      * @param value
      *            allowed object is {@link BPMNLabel }
-     * 
+     *
      */
     public void setBPMNLabel(BPMNLabel value) {
         this.bpmnLabel = value;
@@ -110,9 +110,9 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Gets the value of the bpmnElement property.
-     * 
+     *
      * @return possible object is {@link BaseElement }
-     * 
+     *
      */
     public BaseElement getBpmnElement() {
         return bpmnElement;
@@ -120,10 +120,10 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Sets the value of the bpmnElement property.
-     * 
+     *
      * @param value
      *            allowed object is {@link BaseElement }
-     * 
+     *
      */
     public void setBpmnElement(BaseElement value) {
         this.bpmnElement = value;
@@ -131,9 +131,9 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Gets the value of the sourceElement property.
-     * 
+     *
      * @return possible object is {@link DiagramElement }
-     * 
+     *
      */
     public DiagramElement getSourceElement() {
         return sourceElement;
@@ -141,10 +141,10 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Sets the value of the sourceElement property.
-     * 
+     *
      * @param value
      *            allowed object is {@link DiagramElement }
-     * 
+     *
      */
     public void setSourceElement(DiagramElement value) {
         this.sourceElement = value;
@@ -152,9 +152,9 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Gets the value of the targetElement property.
-     * 
+     *
      * @return possible object is {@link DiagramElement }
-     * 
+     *
      */
     public DiagramElement getTargetElement() {
         return targetElement;
@@ -162,10 +162,10 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Sets the value of the targetElement property.
-     * 
+     *
      * @param value
      *            allowed object is {@link DiagramElement }
-     * 
+     *
      */
     public void setTargetElement(DiagramElement value) {
         this.targetElement = value;
@@ -173,9 +173,9 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Gets the value of the messageVisibleKind property.
-     * 
+     *
      * @return possible object is {@link MessageVisibleKind }
-     * 
+     *
      */
     public MessageVisibleKind getMessageVisibleKind() {
         return messageVisibleKind;
@@ -183,10 +183,10 @@ public class BPMNEdge extends LabeledEdge {
 
     /**
      * Sets the value of the messageVisibleKind property.
-     * 
+     *
      * @param value
      *            allowed object is {@link MessageVisibleKind }
-     * 
+     *
      */
     public void setMessageVisibleKind(MessageVisibleKind value) {
         this.messageVisibleKind = value;

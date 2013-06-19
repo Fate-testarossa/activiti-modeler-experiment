@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -32,9 +32,9 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 
 /**
  * <p>Java class for tTextAnnotation complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tTextAnnotation">
  *   &lt;complexContent>
@@ -46,8 +46,8 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -69,12 +69,12 @@ public class TextAnnotation
     public void acceptVisitor(Visitor v){
         v.visitTextAnnotation(this);
     }
-    
+
     /**
      * The {@link Marshaller} invokes this method right before marshaling to
      * XML. It secures that the name attribute is removed from the text annotation
      * element.
-     * 
+     *
      * @param marshaller
      *            The marshaling context
      */
@@ -86,14 +86,14 @@ public class TextAnnotation
     }
 
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the text property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getText() {
         return text;
@@ -109,11 +109,11 @@ public class TextAnnotation
 
     /**
      * Sets the value of the text property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setText(String value) {
         this.text = value;

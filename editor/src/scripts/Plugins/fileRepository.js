@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -19,19 +19,19 @@
 
 if (!ORYX.Plugins) {
     ORYX.Plugins = {};
-}  
+}
 
 if (!ORYX.Config) {
     ORYX.Config = {};
 }
 
-ORYX.Config.SignavioFileRepositoryModelHandler = "/signavio/p/model/"; 
+ORYX.Config.SignavioFileRepositoryModelHandler = "/signavio/p/model/";
 
 ORYX.Plugins.FileRepositorySave = Clazz.extend({
-    
+
     facade: undefined,
     modelUri: window.location.hash.substring(1).strip() || undefined,
-    
+
     construct: function(facade){
         this.facade = facade;
 
@@ -45,7 +45,7 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
             'minShape': 0,
             'maxShape': 0
         });
-        
+
         this.facade.offer({
             'name': ORYX.I18N.Save.saveAs,
             'functionality': this.save.bind(this, true),
@@ -56,14 +56,14 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
             'minShape': 0,
             'maxShape': 0
         });
-        
+
 
         // ask before closing the window
-        this.changeDifference = 0;        
+        this.changeDifference = 0;
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_UNDO_EXECUTE, function(){ this.changeDifference++; });
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_EXECUTE_COMMANDS, function(){this.changeDifference++; });
         this.facade.registerOnEvent(ORYX.CONFIG.EVENT_UNDO_ROLLBACK, function(){this.changeDifference--; });
-        
+
         window.onbeforeunload = function(){
             if (this.changeDifference > 0){
                 return ORYX.I18N.Save.unsavedData;
@@ -74,7 +74,7 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
     saveAs: function(){
         return this.save(true);
     },
-    
+
     save: function(_saveAs) {
         // saveAs requires to save it as a new file
         // save first time requires to save it as a new file
@@ -82,7 +82,7 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
 
         var svgDOM = DataManager.serialize(this.facade.getCanvas().getSVGRepresentation(true));
         var serializedDOM = Ext.encode(this.facade.getJSON());
-        
+
         var modelData = {
             name: "New Process",
             description: "",
@@ -93,24 +93,24 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
             svg_xml: svgDOM,
             type: this.facade.getStencilSets().values()[0].namespace()
         };
-        
+
         // try to load available information
         if (this.modelUri) {
             var request = new Ajax.Request(ORYX.Config.SignavioFileRepositoryModelHandler + this.modelUri.replace(/^\/?/,"") + "/info", {
                 method: "GET",
                 asynchronous: false
             });
-            
+
             if (!request.transport || !request.transport.status == 200) {
                 Ext.Msg.show({
                    title: "Unable to load model data",
                    msg: "The model does not seem to exist anymore or the model storage is unavailable. Remove the model-id (everything behind #) and try again.",
                    buttons: Ext.MessageBox.OK
                 });
-                
+
                 return false;
             }
-            
+
             var data = request.transport.responseText.evalJSON();
             ["name", "description", "comment", "parent", "type"].each(function(key) {
                 modelData[key] = data[key] || modelData[key];
@@ -125,19 +125,19 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
                    msg: "The model does not semm to be saved yet, however I can't find a parent diractory. Thus the model cannot be saved at all. My bad. :( \n PS: Your best shot is to try to export the model, create a new one, import andh hope for the best.",
                    buttons: Ext.MessageBox.OK
                 });
-                
+
                 return false;
             }
             modelData.parent = parent;
         }
-        
-            
+
+
         if (!_saveAs) {
             this.submit(modelData, false);
             return true;
         }
-            
-        var form = new Ext.XTemplate(        
+
+        var form = new Ext.XTemplate(
             '<form class="oryx_repository_edit_model" action="#" id="edit_model" onsubmit="return false;">',
                 '<fieldset>',
                     '<p class="description">' + ORYX.I18N.Save.dialogDesciption + '</p>',
@@ -157,18 +157,18 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
             modal:    true,
             bodyStyle: 'background:#FFFFFF',
             html:     form.apply(modelData),
-            
+
             buttons:[
                 {
                     text: ORYX.I18N.Save.saveBtn,
                     handler: function(){
-                    
-                        modelData.name = $("edit_model_title").value.strip(); 
+
+                        modelData.name = $("edit_model_title").value.strip();
                         modelData.description = $("edit_model_summary").value.strip()
 
                         this.submit(modelData, true);
                         win.close();
-                        
+
                     }.bind(this)
                 },{
                     text: ORYX.I18N.Save.close,
@@ -178,25 +178,25 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
                 }
             ],
             listeners: {
-                close: function(){                    
+                close: function(){
                     win.close();
                 }
             }
         });
-    
+
         win.show();
-        
+
         return true;
-    
+
     },
-    
+
     submit: function(params, _saveAs) {
-        
+
         this.facade.raiseEvent({
             type: ORYX.CONFIG.EVENT_LOADING_ENABLE,
             text: ORYX.I18N.Save.saving
         });
-        
+
         if (_saveAs) {
             new Ajax.Request(ORYX.Config.SignavioFileRepositoryModelHandler, {
                 method: "POST",
@@ -206,14 +206,14 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
                     this.modelUri = transport.responseText.evalJSON()["href"].replace(/^\/?(model)?\/?/,"");
                     location.hash =  this.modelUri;
                     this.changeDifference = 0;
-                    
+
                     this.facade.raiseEvent({
                         type:ORYX.CONFIG.EVENT_LOADING_STATUS,
                         text:ORYX.I18N.Save.saved
                     });
-                    
-                    
-                    
+
+
+
                 }.bind(this),
                 onFailure: function failure(){
                     alert("fail");
@@ -223,18 +223,18 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
                 }.bind(this)
             });
         }
-        else {            
+        else {
             new Ajax.Request(ORYX.Config.SignavioFileRepositoryModelHandler + this.modelUri, {
                 method: "PUT",
                 parameters: params,
                 asynchronous: true,
                 onSuccess: function success(transport){
-                    this.changeDifference = 0;                    
+                    this.changeDifference = 0;
                     this.facade.raiseEvent({
                         type:ORYX.CONFIG.EVENT_LOADING_STATUS,
                         text:ORYX.I18N.Save.saved
                     });
-                    
+
                 }.bind(this),
                 onFailure: function failure(){
                     alert("fail");
@@ -249,7 +249,7 @@ ORYX.Plugins.FileRepositorySave = Clazz.extend({
 
 onOryxResourcesLoaded = function () {
     if (location.hash.slice(1).length == 0 || location.hash.slice(1).indexOf('new')!=-1) {
-        var stencilset = ORYX.Utils.getParamFromUrl('stencilset') 
+        var stencilset = ORYX.Utils.getParamFromUrl('stencilset')
             ? ORYX.Utils.getParamFromUrl('stencilset')
             : 'stencilsets/bpmn1.1/bpmn1.1.json';
 

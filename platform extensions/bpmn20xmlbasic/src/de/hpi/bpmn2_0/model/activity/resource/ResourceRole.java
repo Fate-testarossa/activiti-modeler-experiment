@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -33,9 +33,9 @@ import de.hpi.bpmn2_0.model.BaseElement;
 
 /**
  * <p>Java class for tResourceRole complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tResourceRole">
  *   &lt;complexContent>
@@ -53,8 +53,8 @@ import de.hpi.bpmn2_0.model.BaseElement;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -78,11 +78,11 @@ public class ResourceRole
 
     /**
      * Gets the value of the resourceRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getResourceRef() {
         return resourceRef;
@@ -90,11 +90,11 @@ public class ResourceRole
 
     /**
      * Sets the value of the resourceRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setResourceRef(QName value) {
         this.resourceRef = value;
@@ -102,25 +102,25 @@ public class ResourceRole
 
     /**
      * Gets the value of the resourceParameterBinding property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the resourceParameterBinding property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getResourceParameterBinding().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ResourceParameterBinding }
-     * 
-     * 
+     *
+     *
      */
     public List<ResourceParameterBinding> getResourceParameterBinding() {
         if (resourceParameterBinding == null) {
@@ -131,11 +131,11 @@ public class ResourceRole
 
     /**
      * Gets the value of the resourceAssignmentExpression property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link ResourceAssignmentExpression }
-     *     
+     *
      */
     public ResourceAssignmentExpression getResourceAssignmentExpression() {
         return resourceAssignmentExpression;
@@ -143,11 +143,11 @@ public class ResourceRole
 
     /**
      * Sets the value of the resourceAssignmentExpression property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link ResourceAssignmentExpression }
-     *     
+     *
      */
     public void setResourceAssignmentExpression(ResourceAssignmentExpression value) {
         this.resourceAssignmentExpression = value;
@@ -155,11 +155,11 @@ public class ResourceRole
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getName() {
         return name;
@@ -167,11 +167,11 @@ public class ResourceRole
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setName(String value) {
         this.name = value;

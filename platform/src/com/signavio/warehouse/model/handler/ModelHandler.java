@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -56,45 +56,45 @@ public class ModelHandler extends BasisHandler {
         super(servletContext);
     }
 
-    
+
     @Override
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
         FsModel model = (FsModel) sbo;
-        
+
         //get revisions
         Set<FsModelRevision> revs = model.getRevisions();
         if(revs.size() == 0) {
             throw new RequestException("model.noRevisionsFound");
         }
-        
+
         //get json representation of superclass
         JSONArray superRep = (JSONArray) super.getRepresentation(sbo, params, token);
-        
+
         if(superRep == null) {
             throw new RequestException("model.failedToPopulateModelData");
         }
-        
+
         //add json representation of revisions
         for(FsModelRevision rev : revs) {
             superRep.put(this.getRevisionInfo(rev));
         }
-        
+
         return superRep;
     }
-    
-    
+
+
     /**
      * Get the whole information for a revision.
      * @param dir
      * @return
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     public JSONObject getRevisionInfo( FsModelRevision rev ) {
-            
+
         // Get the information handler for the revision
         com.signavio.warehouse.revision.handler.InfoHandler in = new com.signavio.warehouse.revision.handler.InfoHandler(this.getServletContext());
-        // Get the annotation from the hander 
+        // Get the annotation from the hander
         HandlerConfiguration revConf = Platform.getInstance().getHandlerDirectory().get(in.getClass().getName()).getContextClass().getAnnotation(HandlerConfiguration.class);
 
         return this.generateResource(revConf.rel(), revConf.uri() + "/" + rev.getId(), in.getRepresentation(rev, null, rev.getAccessToken()));
@@ -109,23 +109,23 @@ public class ModelHandler extends BasisHandler {
     @Override
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
-        JSONObject jParams = (JSONObject) params;    
+        JSONObject jParams = (JSONObject) params;
         FsModel model = (FsModel) sbo;
-        
+
         //set parent
         try {
             String parentId = jParams.getString("parent");
-            
+
             parentId = parentId.replace("/directory/", "");
             FsDirectory dir = FsSecurityManager.getInstance().loadObject(FsDirectory.class, parentId, token);
-            
+
             dir.addChildModel(model);
         } catch (JSONException e) {
             throw new RequestException("invalid_request_missing_parameter", e);
         } catch (UnsupportedEncodingException e) {
             throw new RequestException("unsupported.encoding", e);
         }
-        
+
         String name, description, jsonRep, svgRep, comment;
         try {
              name = jParams.getString("name");
@@ -133,11 +133,11 @@ public class ModelHandler extends BasisHandler {
              jsonRep = jParams.getString("json_xml");
              svgRep = jParams.getString("svg_xml");
              comment = jParams.getString("comment");
-             
+
              model.setName(name);
              model.setDescription(description);
-             model.createRevision(jsonRep, svgRep, comment);    
-             
+             model.createRevision(jsonRep, svgRep, comment);
+
              if(jParams.has("id")) {
                  String id = jParams.getString("id");
                  this.getServletContext().setAttribute(id, model.getId());
@@ -150,28 +150,28 @@ public class ModelHandler extends BasisHandler {
         } catch (UnsupportedEncodingException e) {
             throw new RequestException("unsupportedEncoding", e);
         }
-        
+
         return getRepresentation(model, params, token);
-    }    
-    
+    }
+
     /**
      * Creates a new model.
      * Params: parent, name, description, type, comment, json, svg
      * Optional params: id
-     * @throws InvalidIdentifierException 
+     * @throws InvalidIdentifierException
      */
     @Override
     @HandlerMethodActivation
     public Object postRepresentation(Object params, FsAccessToken token) {
         JSONObject jsonParams = (JSONObject) params;
-        
+
         String id=null, copy=null,parentId, name, description, type, comment, jsonRep, svgRep;
         FsDirectory parent;
         try {
             parentId = jsonParams.getString("parent");
             parentId = parentId.replace("/directory/", "");
             parent = FsSecurityManager.getInstance().loadObject(FsDirectory.class, parentId, token);
-            
+
             if(jsonParams.has("copy")&&jsonParams.has("id")) {
                 //create a copy of the model identified by id
                 String mId = jsonParams.getString("id").replace("/model/", "");
@@ -189,22 +189,22 @@ public class ModelHandler extends BasisHandler {
                 comment = jsonParams.getString("comment");
                 jsonRep = jsonParams.getString("json_xml");
                 svgRep = jsonParams.getString("svg_xml");
-                
+
                 if(jsonParams.has("id")) {
                     id = jsonParams.getString("id");
                 }
             }
-            
-            
+
+
         } catch (JSONException e) {
             throw new RequestException("invalid_request_missing_parameter ", e);
         } catch (UnsupportedEncodingException e) {
             throw new RequestException("unsupported_encoding ", e);
         }
-        
+
         FsModel model;
-        
-        try { 
+
+        try {
             if(id == null) {
                 model = parent.createModel(name, description, type, jsonRep, svgRep, comment);
             } else {
@@ -216,7 +216,7 @@ public class ModelHandler extends BasisHandler {
         }
         return getModelInfo(model);
     }
-    
+
     /**
      * Deletes a model
      */
@@ -224,20 +224,20 @@ public class ModelHandler extends BasisHandler {
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> void deleteRepresentation(T sbo, Object params, FsAccessToken token) {
         FsModel model = (FsModel) sbo;
-        
+
         FsSecurityManager.getInstance().deleteObject(model, token);
-    }    
-    
+    }
+
     public JSONObject getModelInfo(FsModel model) {
-        
+
         HandlerConfiguration hc = this.getHandlerConfiguration();
-    
+
         return this.generateResource(hc.rel(), hc.uri() + "/" + model.getId(), getModelRep(model));
     }
-    
+
     private JSONObject getModelRep( FsModel model) {
-        
+
         return (JSONObject) new InfoHandler(this.getServletContext()).getRepresentation( model , null, model.getAccessToken());
-    
+
     }
 }

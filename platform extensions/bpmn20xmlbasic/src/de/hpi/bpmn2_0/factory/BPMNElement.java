@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -42,10 +42,10 @@ public class BPMNElement {
         this.node = node;
         this.id = id;
     }
-    
+
     /**
      * Adds a {@link BPMNElement} as child to the current {@link BPMNElement}
-     * 
+     *
      * @param child
      *         The child element
      */
@@ -56,15 +56,15 @@ public class BPMNElement {
                 child.getNode().setLane(this.getNode().getLane());
             }
             this.getNode().addChild(child.getNode());
-            
+
             /* Special handling of choreography activities */
-            if(this.getNode() instanceof ChoreographyActivity 
-                    && child.getShape() != null 
-                    && child.getShape() instanceof BPMNShape 
+            if(this.getNode() instanceof ChoreographyActivity
+                    && child.getShape() != null
+                    && child.getShape() instanceof BPMNShape
                     && child.getNode() instanceof Participant) {
                 ((BPMNShape) child.getShape()).setChoreographyActivityShape((BPMNShape) this.getShape());
             }
-            
+
             /* Set attributes of participant band kind of choreography activities */
             if(getNode() instanceof ChoreographyActivity && child.getNode() instanceof Participant) {
                 /* Retrieve bounds of the activity */
@@ -72,15 +72,15 @@ public class BPMNElement {
                 Bounds participantBounds = ((BPMNShape) child.getShape()).getBounds();
                 BPMNShape participantShape = (BPMNShape) child.getShape();
                 Participant participant = (Participant) child.getNode();
-                
+
                 /* Top participant with rounded corners */
                 if(actBounds.getY() == participantBounds.getY()) {
                     if(participant.isInitiating())
                         participantShape.setParticipantBandKind(ParticipantBandKind.TOP_INITIATING);
                     else
                         participantShape.setParticipantBandKind(ParticipantBandKind.TOP_NON_INITIATING);
-                } 
-                
+                }
+
                 /* Bottom participant with rounded corners */
                 else if(actBounds.getY() + actBounds.getHeight() == participantBounds.getY() + participantBounds.getHeight()) {
                     if(participant.isInitiating())
@@ -88,7 +88,7 @@ public class BPMNElement {
                     else
                         participantShape.setParticipantBandKind(ParticipantBandKind.BOTTOM_NON_INITIATING);
                 }
-                
+
                 /* Middle participant */
                 else {
                     if(participant.isInitiating())
@@ -99,9 +99,9 @@ public class BPMNElement {
             }
         }
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * @return the id
      */
@@ -115,7 +115,7 @@ public class BPMNElement {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public DiagramElement getShape() {
         return shape;
     }

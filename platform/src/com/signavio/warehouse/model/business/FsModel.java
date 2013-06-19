@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -41,42 +41,42 @@ import com.signavio.warehouse.revision.business.RepresentationType;
 
 /**
  * Implementation of a model in the file accessing Oryx backend.
- * 
+ *
  * @author Stefan Krumnow
  *
  */
 public class FsModel extends FsSecureBusinessObject {
-    
+
     private String pathPrefix;
     private String name;
     private String fileExtension;
-    
+
     /**
      * Constructor
-     * 
+     *
      * Constructs a new model object for an EXISTING filesystem model.
-     *  
+     *
      * @param parentDirectory
      * @param name
      * @param uuid
      */
     public FsModel(String pathPrefix, String name, String fileExtension){
-        
+
         this.pathPrefix = pathPrefix;
         this.name = name;
         this.fileExtension = fileExtension;
-        
+
         String path = getPath();
         if (FileSystemUtil.isFileDirectory(path)){
             throw new IllegalStateException("Path does not point to a file.");
         } else if ( ! FileSystemUtil.isFileExistent(path) || ! FileSystemUtil.isFileAccessible(path )){
             throw new IllegalStateException("Model can not be accessed");
         }
-        
+
     }
-    
+
     public FsModel(String fullName){
-        
+
         if (FileSystemUtil.isFileDirectory(fullName)){
             throw new IllegalStateException("Path does not point to a file.");
         } else if (fullName.contains(File.separator)){
@@ -89,24 +89,24 @@ public class FsModel extends FsSecureBusinessObject {
         } else {
             throw new IllegalStateException("Path does not point to a model.");
         }
-        
+
         String path = getPath();
         if ( ! FileSystemUtil.isFileExistent(path) || ! FileSystemUtil.isFileAccessible(path )){
             throw new IllegalStateException("Model can not be accessed.");
         }
-        
+
     }
-    
+
     public void setName(String name) throws UnsupportedEncodingException, JSONException {
         name = FileSystemUtil.getCleanFileName(name);
         if (name.equals(this.name)) {
             return ;
         }
-        
+
         FsModelRevision rev = getHeadRevision();
         GenericDiagram diagram = BasicDiagramBuilder.parseJson(new String(rev.getRepresentation(RepresentationType.JSON).getContent(), "utf8"));
         String namespace = diagram.getStencilsetRef().getNamespace();
-        
+
         if (ModelTypeManager.getInstance().getModelType(namespace).renameFile(getParentDirectory().getPath(), this.name, name)){
             this.name = name;
         } else {
@@ -117,23 +117,23 @@ public class FsModel extends FsSecureBusinessObject {
     public String getName() {
         return name;
     }
-    
+
     public void setDescription(String description) {
         ModelTypeManager.getInstance().getModelType(this.fileExtension).storeDescriptionToModelFile(description, getPath());
     }
-    
+
     public String getDescription() {
         return ModelTypeManager.getInstance().getModelType(this.fileExtension).getDescriptionFromModelFile(getPath());
     }
-    
+
     public void setType(String type) {
         ModelTypeManager.getInstance().getModelType(this.fileExtension).storeTypeStringToModelFile(type, getPath());
     }
-    
+
     public String getType() {
         return ModelTypeManager.getInstance().getModelType(this.fileExtension).getTypeStringFromModelFile(getPath());
     }
-    
+
     public Date getCreationDate() {
         return new Date();
     }
@@ -160,7 +160,7 @@ public class FsModel extends FsSecureBusinessObject {
         }
         return new FsDirectory(pathPrefix);
     }
-    
+
     public void createRevision(String jsonRep, String svgRep, String comment) {
         GenericDiagram diagram;
         try {
@@ -171,22 +171,22 @@ public class FsModel extends FsSecureBusinessObject {
         String namespace = diagram.getStencilsetRef().getNamespace();
         ModelTypeManager.getInstance().getModelType(namespace).storeRevisionToModelFile(jsonRep, svgRep, getPath());
     }
-    
+
     public FsModelRepresentationInfo getRepresentation(RepresentationType type) {
-        
+
         byte [] resultingInfo = ModelTypeManager.getInstance().getModelType(this.fileExtension).getRepresentationInfoFromModelFile(type, getPath());
         if (resultingInfo != null) {
             return new FsModelRepresentationInfo(resultingInfo);
         }
         return null;
-        
+
     }
 
     public FsModelRepresentationInfo createRepresentation(RepresentationType type, byte[] content) {
         ModelTypeManager.getInstance().getModelType(this.fileExtension).storeRepresentationInfoToModelFile(type, content, getPath());
         return getRepresentation(type);
     }
-    
+
     public void delete() {
         FsModelRevision rev = getHeadRevision();
         GenericDiagram diagram;
@@ -198,24 +198,24 @@ public class FsModel extends FsSecureBusinessObject {
             throw new RuntimeException("Deleting model failed.", e);
         }
         String namespace = diagram.getStencilsetRef().getNamespace();
-        
+
         ModelTypeManager.getInstance().getModelType(namespace).deleteFile(getParentDirectory().getPath(), this.name);
     }
-    
+
     /*
-     * 
+     *
      * Private Functions
-     * 
+     *
      */
-    
+
     private String getPath(){
         return pathPrefix + File.separator + name + fileExtension;
     }
-    
+
     public void moveTo(FsDirectory newParent) throws UnsupportedEncodingException, JSONException {
-        
+
         FsDirectory parent = getParentDirectory();
-        
+
         if (newParent.equals(parent)) {
             return ;
         }
@@ -223,19 +223,19 @@ public class FsModel extends FsSecureBusinessObject {
         FsModelRevision rev = getHeadRevision();
         GenericDiagram diagram = BasicDiagramBuilder.parseJson(new String(rev.getRepresentation(RepresentationType.JSON).getContent(), "utf8"));
         String namespace = diagram.getStencilsetRef().getNamespace();
-        
+
         if (!ModelTypeManager.getInstance().getModelType(namespace).renameFile("", parent.getPath() + File.separator + this.name, newParent.getPath() + File.separator + this.name)){
             throw new IllegalArgumentException("Cannot move model");
         }
     }
-    
-    
+
+
     /*
-     * 
-     * INTERFACE COMPLIANCE METHODS 
-     * 
+     *
+     * INTERFACE COMPLIANCE METHODS
+     *
      */
-    
+
     @Override
     public boolean equals(Object o){
         if (o instanceof FsModel){
@@ -244,7 +244,7 @@ public class FsModel extends FsSecureBusinessObject {
         }
         return false;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
@@ -254,7 +254,7 @@ public class FsModel extends FsSecureBusinessObject {
             return super.getChildren(type);
         }
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
@@ -271,7 +271,7 @@ public class FsModel extends FsSecureBusinessObject {
             return super.getParents(businessObjectClass);
         }
     }
-    
+
     public Set<FsModelRevision> getRevisions() {
         Set<FsModelRevision> result = new HashSet<FsModelRevision>(1);
         result.add(getHeadRevision());
@@ -288,7 +288,7 @@ public class FsModel extends FsSecureBusinessObject {
         path = path.replace(File.separator, ";");
         return path;
     }
-    
+
     public List<FsDirectory> getParentDirectories() {
         List<FsDirectory> parents = new ArrayList<FsDirectory>();
         FsDirectory parent = getParentDirectory();

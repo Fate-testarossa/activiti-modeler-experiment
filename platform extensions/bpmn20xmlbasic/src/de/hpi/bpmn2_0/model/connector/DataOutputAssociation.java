@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -30,9 +30,9 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * <p>Java class for tDataOutputAssociation complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tDataOutputAssociation">
  *   &lt;complexContent>
@@ -45,8 +45,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -60,7 +60,7 @@ public class DataOutputAssociation
     public DataOutputAssociation() {
         super();
     }
-    
+
     /**
      * Constructor creates an data input association base on a data association.
      * @param dataAssociation
@@ -72,17 +72,17 @@ public class DataOutputAssociation
         this.transformation = dataAssociation.getTransformation();
         this.process = dataAssociation.getProcess();
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitDataOutputAssociation(this);
     }
-    
+
     @XmlTransient
     public FlowElement getSourceRef() {
         if(parent != null) {
             return parent;
         }
-        
+
         return super.getSourceRef();
     }
 }

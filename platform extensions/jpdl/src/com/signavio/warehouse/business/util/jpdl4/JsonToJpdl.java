@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -54,7 +54,7 @@ public class JsonToJpdl {
             // Collect all children for direct access
             for (int i = 0; i < processElements.length(); i++) {
                 JSONObject currentElement = processElements.getJSONObject(i);
-                
+
                 String name = currentElement.getJSONObject("properties").getString("name");
                 if (name.length() == 0 || uniqueNames.contains(name)) {
                     String newName = name;
@@ -67,8 +67,8 @@ public class JsonToJpdl {
                 } else {
                     uniqueNames.add(name);
                 }
-                
-                
+
+
                 this.children.put(currentElement.getString("resourceId"),
                         currentElement);
             }
@@ -89,19 +89,19 @@ public class JsonToJpdl {
                 } catch (NumberFormatException e) {
                     return name + "_1";
                 }
-                
+
             } else {
                 return name + "_1";
             }
         }
-        
+
     }
 
     public String transform() throws InvalidModelException {
         // trigger for transformation
-        
+
         // Check if model is of type BPMN 1.2 + jBPM OR of the jbpm4 stencilsset
-        
+
         boolean start = false;
         try {
             String ns = this.processData.getJSONObject("stencilset").getString("namespace");
@@ -120,7 +120,7 @@ public class JsonToJpdl {
         } catch (JSONException e) {
             // nothing
         }
-        
+
         if (start) {
             Process process = new Process(this.processData);
             return process.toJpdl();
@@ -134,9 +134,9 @@ public class JsonToJpdl {
             return "";
         if (value.equals(""))
             return "";
-        
+
         value = StringEscapeUtils.escapeXml(value);
-        
+
         StringWriter jpdl = new StringWriter();
 
         jpdl.write(" ");
@@ -155,7 +155,7 @@ public class JsonToJpdl {
                     + " is missing.");
 
         value = StringEscapeUtils.escapeXml(value);
-        
+
         StringWriter jpdl = new StringWriter();
 
         jpdl.write(" ");
@@ -210,7 +210,7 @@ public class JsonToJpdl {
     public JSONObject getChild(String childId) {
         return children.get(childId);
     }
-    
-    
+
+
 
 }

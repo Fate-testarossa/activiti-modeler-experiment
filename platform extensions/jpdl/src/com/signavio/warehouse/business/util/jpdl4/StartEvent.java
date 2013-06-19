@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -32,20 +32,20 @@ public class StartEvent extends Node {
         this.name = JsonToJpdl.getAttribute(startEvent, "name");
         this.bounds = JsonToJpdl.getBounds(startEvent);
         this.outgoings = JsonToJpdl.getOutgoings(startEvent);
-        
+
         this.bounds.setUlx(this.bounds.getUlx() - 9);
         this.bounds.setUly(this.bounds.getUly() - 9);
         this.bounds.setWidth(48);
         this.bounds.setHeight(48);
-        
+
     }
-    
+
     public StartEvent(org.w3c.dom.Node startEvent) {
         this.uuid = "oryx_" + UUID.randomUUID().toString();
         NamedNodeMap attributes = startEvent.getAttributes();
         this.name = JpdlToJson.getAttribute(attributes, "name");
         this.bounds = JpdlToJson.getBounds(attributes.getNamedItem("g"));
-        
+
         this.bounds.setUlx(this.bounds.getUlx() + 9);
         this.bounds.setUly(this.bounds.getUly() + 9);
         this.bounds.setWidth(30);

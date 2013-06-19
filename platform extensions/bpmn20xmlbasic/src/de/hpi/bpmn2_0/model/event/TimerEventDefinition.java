@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,9 +27,9 @@ import de.hpi.bpmn2_0.model.Expression;
 
 /**
  * <p>Java class for tTimerEventDefinition complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tTimerEventDefinition">
  *   &lt;complexContent>
@@ -42,8 +42,8 @@ import de.hpi.bpmn2_0.model.Expression;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -57,13 +57,13 @@ public class TimerEventDefinition
 {
 
     /* Attributes */
-    
+
     protected Expression timeDate;
     protected Expression timeCycle;
     protected Expression timeDuration;
-    
+
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
@@ -71,25 +71,25 @@ public class TimerEventDefinition
 
     /**
      * Copy constructor based on {@link TimerEventDefinition}
-     * 
+     *
      * @param timerEventDefinition
      */
     public TimerEventDefinition(TimerEventDefinition timerEventDefinition) {
         super(timerEventDefinition);
-        
+
         this.setTimeDate(timerEventDefinition.getTimeDate());
         this.setTimeCycle(timerEventDefinition.getTimeCycle());
     }
-    
+
     /* Getter & Setter */
 
     /**
      * Gets the value of the timeDate property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Expression }
-     *     
+     *
      */
     public Expression getTimeDate() {
         return timeDate;
@@ -97,11 +97,11 @@ public class TimerEventDefinition
 
     /**
      * Sets the value of the timeDate property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Expression }
-     *     
+     *
      */
     public void setTimeDate(Expression value) {
         this.timeDate = value;
@@ -109,11 +109,11 @@ public class TimerEventDefinition
 
     /**
      * Gets the value of the timeCycle property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Expression }
-     *     
+     *
      */
     public Expression getTimeCycle() {
         return timeCycle;
@@ -121,11 +121,11 @@ public class TimerEventDefinition
 
     /**
      * Sets the value of the timeCycle property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Expression }
-     *     
+     *
      */
     public void setTimeCycle(Expression value) {
         this.timeCycle = value;

@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -42,7 +42,7 @@ public class FsPlatformInstanceImpl implements PlatformInstance {
     private HandlerDirectory handlerManger;
     private ServletContext servletContext;
     private FsPlatformPropertiesImpl platformProperties;
-    
+
     public void bootInstance(Object... parameters) {
         if (parameters.length < 1 || (parameters.length >= 1 && !(parameters[0] instanceof ServletContext))) {
             throw new InitializationException("Boot of servlet container PlatformInstance failed, because ServletContext parameter is missing.");
@@ -51,13 +51,13 @@ public class FsPlatformInstanceImpl implements PlatformInstance {
         this.servletContext = (ServletContext) parameters[0];
 
         this.platformProperties = new FsPlatformPropertiesImpl(servletContext);
-        
+
         FsRootDirectory.createInstance(this.platformProperties.getRootDirectoryPath());
         ModelTypeManager.createInstance();
-        
+
         this.handlerManger = new HandlerDirectory(servletContext);
         this.handlerManger.start();
-    
+
         FsAccessToken token = null;
         try {
             token = FsSecurityManager.createToken("root", "root", null);
@@ -68,20 +68,20 @@ public class FsPlatformInstanceImpl implements PlatformInstance {
         @SuppressWarnings("unused")
         FsAccountManager accountManager = root.getAccountManager();
         FsTenantManager tenantManager = root.getTenantManager();
-        
+
         FsTenant onlyTenant = tenantManager.getChildren(FsTenant.class).iterator().next();
         @SuppressWarnings("unused")
         FsRoleManager roleManagerForTenant = FsRoleManager.getTenantManagerInstance(FsRoleManager.class, onlyTenant, token);
         FsEntityManager entityManagerForTenant = FsEntityManager.getTenantManagerInstance(FsEntityManager.class, onlyTenant, token);
         @SuppressWarnings("unused")
         FsDirectory rootDir = entityManagerForTenant.getTenantRootDirectory();
-        
+
 
 
     }
-    
+
     public void shutdownInstance() {
-        
+
     }
 
     public File getFile(String path) {

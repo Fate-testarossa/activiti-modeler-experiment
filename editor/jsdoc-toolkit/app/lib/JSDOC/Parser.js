@@ -13,7 +13,7 @@ JSDOC.Parser = {
         treatUnderscoredAsPrivate: true, // factory: true
         explain:                   false // factory: false
     },
-    
+
     addSymbol: function(symbol) {
         // if a symbol alias is documented more than once the last one with the user docs wins
         if (JSDOC.Parser.symbols.hasSymbol(symbol.alias)) {
@@ -27,7 +27,7 @@ JSDOC.Parser = {
                 }
             }
         }
-        
+
         // we don't document anonymous things
         if (JSDOC.Parser.conf.ignoreAnonymous && symbol.name.match(/\$anonymous\b/)) return;
 
@@ -35,15 +35,15 @@ JSDOC.Parser = {
         if (JSDOC.Parser.conf.treatUnderscoredAsPrivate && symbol.name.match(/[.#-]_[^.#-]+$/)) {
             if (!symbol.comment.getTag("public").length > 0) symbol.isPrivate = true;
         }
-        
+
         // -p flag is required to document private things
         if (!JSDOC.opt.p && symbol.isPrivate) return; // issue #161 fixed by mcbain.asm
-        
+
         // ignored things are not documented, this doesn't cascade
         if (symbol.isIgnored) return;
         JSDOC.Parser.symbols.addSymbol(symbol);
     },
-    
+
     addBuiltin: function(name) {
         var builtin = new JSDOC.Symbol(name, [], "CONSTRUCTOR", new JSDOC.DocComment(""));
         builtin.isNamespace = true;
@@ -52,15 +52,15 @@ JSDOC.Parser = {
         JSDOC.Parser.addSymbol(builtin);
         return builtin;
     },
-    
+
     init: function() {
         JSDOC.Parser.symbols = new JSDOC.SymbolSet();
         JSDOC.Parser.walker = new JSDOC.Walker();
     },
-    
+
     finish: function() {
-        JSDOC.Parser.symbols.relate();        
-        
+        JSDOC.Parser.symbols.relate();
+
         // make a litle report about what was found
         if (JSDOC.Parser.conf.explain) {
             var symbols = JSDOC.Parser.symbols.toArray();
@@ -81,27 +81,27 @@ JSDOC.Parser = {
 JSDOC.Parser.parse = function(/**JSDOC.TokenStream*/ts, /**String*/srcFile) {
     JSDOC.Symbol.srcFile = (srcFile || "");
     JSDOC.DocComment.shared = ""; // shared comments don't cross file boundaries
-    
+
     if (!JSDOC.Parser.walker) JSDOC.Parser.init();
     JSDOC.Parser.walker.walk(ts); // adds to our symbols
-    
+
     // filter symbols by option
     for (var p = JSDOC.Parser.symbols._index.first(); p; p = JSDOC.Parser.symbols._index.next()) {
         var symbol = p.value;
-        
+
         if (!symbol) continue;
-        
+
         if (symbol.is("FILE") || symbol.is("GLOBAL")) {
             continue;
         }
         else if (!JSDOC.opt.a && !symbol.comment.isUserComment) {
             JSDOC.Parser.symbols.deleteSymbol(symbol.alias);
         }
-        
+
         if (/#$/.test(symbol.alias)) { // we don't document prototypes
             JSDOC.Parser.symbols.deleteSymbol(symbol.alias);
         }
     }
-    
+
     return JSDOC.Parser.symbols.toArray();
 }

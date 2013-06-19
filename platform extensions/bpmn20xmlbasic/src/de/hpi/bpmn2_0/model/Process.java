@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -73,9 +73,9 @@ import de.hpi.bpmn2_0.model.participant.LaneSet;
 
 /**
  * <p>Java class for tProcess complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tProcess">
  *   &lt;complexContent>
@@ -96,8 +96,8 @@ import de.hpi.bpmn2_0.model.participant.LaneSet;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement(name = "process")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -125,7 +125,7 @@ public class Process
 //        @XmlElementRef(type = EndEvent.class),
 //        @XmlElementRef(type = IntermediateThrowEvent.class),
 //        @XmlElementRef(type = IntermediateCatchEvent.class),
-//        
+//
 //        /* Activities */
 //        @XmlElementRef(type = Task.class),
 //        @XmlElementRef(type = ReceiveTask.class),
@@ -136,22 +136,22 @@ public class Process
 //        @XmlElementRef(type = UserTask.class),
 //        @XmlElementRef(type = BusinessRuleTask.class),
 //        @XmlElementRef(type = SubProcess.class),
-//        
+//
 //        /* Gateways */
 //        @XmlElementRef(type = ExclusiveGateway.class),
 //        @XmlElementRef(type = ParallelGateway.class),
 //        @XmlElementRef(type = ComplexGateway.class),
 //        @XmlElementRef(type = EventBasedGateway.class),
 //        @XmlElementRef(type = InclusiveGateway.class),
-//        
+//
 //        /* Edges */
 //        @XmlElementRef(type = SequenceFlow.class),
-//        
+//
 //        /* Artifacts / Data elements */
 //        @XmlElementRef(type = DataObject.class),
 //        @XmlElementRef(type = TextAnnotation.class),
 //        @XmlElementRef(type = ITSystem.class),
-//        
+//
 //        /* Partner */
 //        @XmlElementRef(type = Participant.class)
 //    })
@@ -168,10 +168,10 @@ public class Process
     protected boolean isExecutable;
     @XmlAttribute
     protected QName definitionalCollaborationRef;
-    
+
     @XmlElement(type = LaneSet.class)
     protected List<LaneSet> laneSet;
-    
+
     /**
      * Adds the child to the process's flow elements if possible.
      */
@@ -179,30 +179,30 @@ public class Process
         if(child instanceof Artifact) {
             this.getArtifact().add((Artifact) child);
         }
-        
+
         else if(child instanceof FlowElement) {
             this.getFlowElement().add((FlowElement) child);
         }
-        
+
         if(child instanceof FlowElement) {
             ((FlowElement) child).setProcess(this);
         }
     }
-    
+
     /**
      * Remove the child element from the process.
-     * 
+     *
      * @param child
      *         Child element to remove.
      */
     public void removeChild(BaseElement child) {
         this.getArtifact().remove(child);
-        
+
         this.getFlowElement().remove(child);
-        
+
         removeFromLaneSet(child);
     }
-    
+
     /**
      * Remove the element recursively from the lane set.
      */
@@ -213,29 +213,29 @@ public class Process
             }
         }
     }
-    
-    
+
+
     /**
      * Determines whether the process contains choreograhy elements.
-     * @return 
-     *         {@code true} if a {@link ChoreographyActivity} is contained 
+     * @return
+     *         {@code true} if a {@link ChoreographyActivity} is contained
      *         <br />
      *         {@code false} otherwise.
      */
     public boolean isChoreographyProcess() {
         for(FlowElement flowEle : this.getFlowElement()) {
-            if(flowEle instanceof ChoreographyActivity) 
+            if(flowEle instanceof ChoreographyActivity)
                 return true;
         }
-        
+
         return false;
     }
-    
+
     public List<FlowElement> getFlowElementsForChoreography() {
         ArrayList<FlowElement> elements = new ArrayList<FlowElement>();
         for(FlowElement flowEle : this.getFlowElement()) {
             elements.add(flowEle);
-            
+
             /* Retrieve by associations connected messages */
             for(Edge e : flowEle.getOutgoing()) {
                 if(e.getTargetRef() instanceof Message) {
@@ -243,7 +243,7 @@ public class Process
                     elements.add(e.getTargetRef());
                 }
             }
-            
+
             for(Edge e : flowEle.getIncoming()) {
                 if(e.getSourceRef() instanceof Message) {
                     elements.add(e);
@@ -251,19 +251,19 @@ public class Process
                 }
             }
         }
-        
+
         return elements;
     }
-    
+
     /**
      * Retrieve all subprocesses and child subprocesses recursively.
-     * 
+     *
      * @return
      *         A flat list of the contained subprocesses.
      */
     public List<SubProcess> getSubprocessList() {
         List<SubProcess> subprocesses = new ArrayList<SubProcess>();
-        
+
         for(FlowElement flowEle : getFlowElement()) {
             /* Process subprocess */
             if(flowEle instanceof SubProcess) {
@@ -271,69 +271,69 @@ public class Process
                 subprocesses.addAll(((SubProcess) flowEle).getSubprocessList());
             }
         }
-        
+
         return subprocesses;
     }
-    
+
     /**
      * Retrieves a list of subchoreographies contained in the process including
      * children.
-     * 
+     *
      * @return
      */
     public List<SubChoreography> getSubChoreographyList() {
         List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
-        
+
         for(FlowElement flowEle : getFlowElement()) {
             /* Subchoreography */
             if(flowEle instanceof SubChoreography) {
                 subchoreographies.add((SubChoreography) flowEle);
-                
+
             }
         }
-        
+
         return subchoreographies;
     }
-    
+
     /**
      * Returns a list of {@link Lane} participating in this process.
      * @return
      */
     public List<Lane> getAllLanes() {
         List<Lane> laneList = new ArrayList<Lane>();
-        
+
         if(this.getLaneSet() == null) {
             return laneList;
         }
-        
+
         for(LaneSet laneSet : getLaneSet()) {
             laneList.addAll(laneSet.getAllLanes());
         }
-        
+
         return laneList;
     }
-    
+
     public boolean hasId() {
         return this.getId() != null && this.getId().length() > 0;
     }
-    
+
     /* Getter & Setter */
-    
-    
+
+
     public List<LaneSet> getLaneSet() {
         if(this.laneSet == null) {
             this.laneSet = new ArrayList<LaneSet>();
         }
         return this.laneSet;
     }
-    
+
     /**
      * Gets the value of the auditing property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TAuditing }
-     *     
+     *
      */
 //    public TAuditing getAuditing() {
 //        return auditing;
@@ -341,11 +341,11 @@ public class Process
 
     /**
      * Sets the value of the auditing property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TAuditing }
-     *     
+     *
      */
 //    public void setAuditing(TAuditing value) {
 //        this.auditing = value;
@@ -353,11 +353,11 @@ public class Process
 
     /**
      * Gets the value of the monitoring property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TMonitoring }
-     *     
+     *
      */
 //    public TMonitoring getMonitoring() {
 //        return monitoring;
@@ -365,11 +365,11 @@ public class Process
 
     /**
      * Sets the value of the monitoring property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TMonitoring }
-     *     
+     *
      */
 //    public void setMonitoring(TMonitoring value) {
 //        this.monitoring = value;
@@ -377,25 +377,25 @@ public class Process
 
     /**
      * Gets the value of the property property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the property property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getProperty().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TProperty }
-     * 
-     * 
+     *
+     *
      */
 //    public List<TProperty> getProperty() {
 //        if (property == null) {
@@ -406,25 +406,25 @@ public class Process
 
     /**
      * Gets the value of the laneSet property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the laneSet property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getLaneSet().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link LaneSet }
-     * 
-     * 
+     *
+     *
      */
 //    public List<LaneSet> getLaneSet() {
 //        if (laneSet == null) {
@@ -435,20 +435,20 @@ public class Process
 
     /**
      * Gets the value of the flowElement property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the flowElement property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getFlowElement().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link ManualTask }{@code >}
@@ -482,8 +482,8 @@ public class Process
      * {@link JAXBElement }{@code <}{@link TImplicitThrowEvent }{@code >}
      * {@link JAXBElement }{@code <}{@link ParallelGateway }{@code >}
      * {@link JAXBElement }{@code <}{@link Task }{@code >}
-     * 
-     * 
+     *
+     *
      */
     @ChildElements
     public List<FlowElement> getFlowElement() {
@@ -495,28 +495,28 @@ public class Process
 
     /**
      * Gets the value of the artifact property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the artifact property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getArtifact().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Artifact }{@code >}
      * {@link JAXBElement }{@code <}{@link Association }{@code >}
      * {@link JAXBElement }{@code <}{@link Group }{@code >}
      * {@link JAXBElement }{@code <}{@link TextAnnotation }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Artifact> getArtifact() {
         if (artifact == null) {
@@ -527,25 +527,25 @@ public class Process
 
     /**
      * Gets the value of the supports property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the supports property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getSupports().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link QName }
-     * 
-     * 
+     *
+     *
      */
     public List<QName> getSupports() {
         if (supports == null) {
@@ -556,11 +556,11 @@ public class Process
 
     /**
      * Gets the value of the processType property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TProcessType }
-     *     
+     *
      */
 //    public TProcessType getProcessType() {
 //        if (processType == null) {
@@ -572,11 +572,11 @@ public class Process
 
     /**
      * Sets the value of the processType property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TProcessType }
-     *     
+     *
      */
 //    public void setProcessType(TProcessType value) {
 //        this.processType = value;
@@ -584,11 +584,11 @@ public class Process
 
     /**
      * Gets the value of the isClosed property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Boolean }
-     *     
+     *
      */
     public boolean isIsClosed() {
         if (isClosed == null) {
@@ -600,11 +600,11 @@ public class Process
 
     /**
      * Sets the value of the isClosed property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *     
+     *
      */
     public void setIsClosed(Boolean value) {
         this.isClosed = value;
@@ -620,11 +620,11 @@ public class Process
 
     /**
      * Gets the value of the definitionalCollaborationRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getDefinitionalCollaborationRef() {
         return definitionalCollaborationRef;
@@ -632,11 +632,11 @@ public class Process
 
     /**
      * Sets the value of the definitionalCollaborationRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setDefinitionalCollaborationRef(QName value) {
         this.definitionalCollaborationRef = value;
@@ -649,7 +649,7 @@ public class Process
         /* None as default value */
         if(this.processType == null)
             this.processType = ProcessType.NONE;
-        
+
         return processType;
     }
 

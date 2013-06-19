@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -42,9 +42,9 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * <p>Java class for tLane complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tLane">
  *   &lt;complexContent>
@@ -60,8 +60,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -76,43 +76,43 @@ public class Lane
 {
 
     protected BaseElement partitionElement;
-    
+
     @XmlIDREF
 //    @XmlElements({
 //        /* Events */
 //        @XmlElement(type = StartEvent.class),
 //        @XmlElement(type = EndEvent.class),
-//        
+//
 //        /* Activities */
 //        @XmlElement(type = Task.class),
-//        
+//
 //        /* Gateways */
 //        @XmlElement(type = ExclusiveGateway.class),
 //        @XmlElement(type = ParallelGateway.class),
-//        
+//
 //        /* Edges */
 //        @XmlElement(type = SequenceFlow.class),
-//        
+//
 //        /* Artifacts / Data elements */
 //        @XmlElement(type = DataObject.class),
 //        @XmlElement(type = TextAnnotation.class),
-//        
+//
 //        /* Partner */
 //        @XmlElement(type = Participant.class)
 //    })
     @XmlElement(type = FlowNode.class)
     protected List<FlowNode> flowNodeRef;
-    
+
     @XmlElement(type = LaneSet.class)
     protected LaneSet childLaneSet;
-    
+
 //    @XmlIDREF
 //    @XmlAttribute
 //    @XmlSchemaType(name = "IDREF")
 //    @XmlElementRef(type = LaneSet.class)
     @XmlTransient
     protected LaneSet laneSet;
-    
+
     @XmlAttribute
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -121,32 +121,32 @@ public class Lane
     /*
      * Constructor
      */
-    
+
     /**
      * Default constructor
      */
     public Lane() {
         super();
     }
-    
+
     /**
      * Copy constructor
-     * 
+     *
      * @param l
      *         template {@link Lane}
      */
     public Lane(Lane l) {
         super(l);
-        
+
         this.setPartitionElement(l.getPartitionElement());
         this.getFlowNodeRef().addAll(l.getFlowNodeRef());
         this.setChildLaneSet(l.childLaneSet);
         this.setLaneSet(l.getLaneSet());
         this.setPartitionElementRef(l.getPartitionElementRef());
     }
-    
+
     /* Methods */
-    
+
     /**
      * Retrieves all child lane.
      */
@@ -154,9 +154,9 @@ public class Lane
         List<Lane> laneList = new ArrayList<Lane>();
         if(getChildLaneSet(false) == null)
             return laneList;
-        
+
         laneList.addAll(getChildLaneSet(false).getAllLanes());
-        
+
         return laneList;
     }
 
@@ -171,20 +171,20 @@ public class Lane
             this.getFlowNodeRef().add((FlowNode) child);
         }
     }
- 
+
     public void acceptVisitor(Visitor v){
         v.visitLane(this);
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the partitionElement property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TBaseElement }
-     *     
+     *
      */
     public BaseElement getPartitionElement() {
         return partitionElement;
@@ -192,19 +192,19 @@ public class Lane
 
     /**
      * Sets the value of the partitionElement property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TBaseElement }
-     *     
+     *
      */
     public void setPartitionElement(BaseElement value) {
         this.partitionElement = value;
     }
 
     /**
-     * 
-     * Returns a LaneSet, containing sub-Lanes (even if it is only one). Not to be confused with {@link #getLane()}, which returns the <b> containing </b> lane. 
+     *
+     * Returns a LaneSet, containing sub-Lanes (even if it is only one). Not to be confused with {@link #getLane()}, which returns the <b> containing </b> lane.
      * @return the laneSet
      */
     public LaneSet getLaneSet() {
@@ -220,25 +220,25 @@ public class Lane
 
     /**
      * Gets the value of the flowElementRef property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the flowElementRef property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getFlowElementRef().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     *
+     *
      */
     @ChildElements
     public List<FlowNode> getFlowNodeRef() {
@@ -250,13 +250,13 @@ public class Lane
 
     /**
      * Gets the value of the childLaneSet property.
-     * 
+     *
      * If createIfMissing is set to true, an childLaneSet is created on demand.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link LaneSet }
-     *     
+     *
      */
     @ChildElements
     public LaneSet getChildLaneSet(boolean createIfMissing) {
@@ -270,11 +270,11 @@ public class Lane
 
     /**
      * Sets the value of the childLaneSet property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link LaneSet }
-     *     
+     *
      */
     public void setChildLaneSet(LaneSet value) {
         this.childLaneSet = value;
@@ -282,11 +282,11 @@ public class Lane
 
     /**
      * Gets the value of the partitionElementRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Object }
-     *     
+     *
      */
     public Object getPartitionElementRef() {
         return partitionElementRef;
@@ -294,11 +294,11 @@ public class Lane
 
     /**
      * Sets the value of the partitionElementRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Object }
-     *     
+     *
      */
     public void setPartitionElementRef(Object value) {
         this.partitionElementRef = value;

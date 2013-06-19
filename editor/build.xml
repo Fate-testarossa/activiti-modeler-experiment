@@ -140,9 +140,9 @@
             <arg file="${build}/stencilsets" />
         </java>
     </target>
-    
+
     <target name="com.signavio.editor.build" depends="com.signavio.editor.clean, com.signavio.editor.copy.staticressources, com.signavio.editor.js.concat, com.signavio.editor.js.compress, com.signavio.editor.build.stencilsets">
-            
+
     </target>
 
     <target name='com.signavio.editor.web'>
@@ -158,5 +158,5 @@
             <fileset dir="${build}" />
         </war>
     </target>
-    
+
 </project>

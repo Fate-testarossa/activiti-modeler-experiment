@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -47,40 +47,40 @@ public class InfoHandler extends AbstractInfoHandler {
     public InfoHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     /**
      * Get all information out from a particular model
      */
     @Override
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token) {
-        
+
         JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
-        
+
         try {
-            
+
             FsDirectory  directory= (FsDirectory) sbo;
-            
+
             res.put("name", directory.getName());
             res.put("description", directory.getDescription());
             res.put("created", directory.getCreationDate().toString());
-            
+
             FsDirectory originalDirectory = null;
-            
-            
+
+
             originalDirectory = directory.getParentDirectory();
-            
+
             // Set folder
             if (originalDirectory != null){
                 res.put("parent", "/directory/" + originalDirectory.getId());
             }
-            
+
             if(directory instanceof FsRootDirectory) {
                 res.put("type", "public");
             }
-            
+
         } catch (JSONException e) {}
-        
+
         return res;
     }
 
@@ -91,18 +91,18 @@ public class InfoHandler extends AbstractInfoHandler {
     @Override
     public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
         super.putRepresentation(sbo, params, token);
-        
+
         JSONObject data = (JSONObject) params;
-        
+
         FsDirectory dir = (FsDirectory) sbo;
-        
+
         try {
             dir.setName(data.getString("name"));
             dir.setDescription(data.getString("description"));
         } catch (JSONException e) {
             throw new JSONRequestException(e);
         }
-        
+
         return getRepresentation(sbo, params, token);
     }
 }

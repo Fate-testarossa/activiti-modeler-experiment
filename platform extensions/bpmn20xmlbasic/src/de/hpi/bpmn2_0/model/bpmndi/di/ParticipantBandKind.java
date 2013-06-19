@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for ParticipantBandKind.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
+ *
  */
 @XmlType(name = "ParticipantBandKind")
 @XmlEnum
@@ -75,10 +75,10 @@ public enum ParticipantBandKind {
         }
         throw new IllegalArgumentException(v);
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      * @return boolean stating whether the participant is initiating
      */
     public boolean isInitiating(){
@@ -92,7 +92,7 @@ public enum ParticipantBandKind {
             default: return false;
         }
     }
-    
+
     public boolean isBottom(){
         switch(this){
             case BOTTOM_INITIATING: {return true;}
@@ -100,7 +100,7 @@ public enum ParticipantBandKind {
             default: return false;
         }
     }
-    
+
     public boolean isTop(){
         switch(this){
             case TOP_INITIATING: {return true;}

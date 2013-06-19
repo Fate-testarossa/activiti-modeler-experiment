@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -22,7 +22,7 @@
 if(!ORYX) {var ORYX = {};}
 if(!ORYX.Core) {ORYX.Core = {};}
 if(!ORYX.Core.Math) {ORYX.Core.Math = {};}
-    
+
 /**
  * Calculate the middle point between two given points
  * @param {x:double, y:double} point1
@@ -35,12 +35,12 @@ ORYX.Core.Math.midPoint = function(point1, point2) {
                 y: (point1.y + point2.y) / 2.0
             }
 }
-            
+
 /**
  * Returns a TRUE if the point is over a line (defined by
  * point1 and point 2). In Addition a threshold can be set,
  * which defines the weight of those line.
- * 
+ *
  * @param {int} pointX - Point X
  * @param {int} pointY - Point Y
  * @param {int} lPoint1X - Line first Point X
@@ -53,7 +53,7 @@ ORYX.Core.Math.midPoint = function(point1, point2) {
 ORYX.Core.Math.isPointInLine = function (pointX, pointY, lPoint1X, lPoint1Y, lPoint2X, lPoint2Y, offset) {
 
     offset = offset ? Math.abs(offset) : 1;
-    
+
     // Check if the edge is vertical
     if(Math.abs(lPoint1X-lPoint2X)<=offset && Math.abs(pointX-lPoint1X)<=offset && pointY-Math.max(lPoint1Y, lPoint2Y)<=offset && Math.min(lPoint1Y, lPoint2Y)-pointY<=offset) {
         return true
@@ -71,28 +71,28 @@ ORYX.Core.Math.isPointInLine = function (pointX, pointY, lPoint1X, lPoint1Y, lPo
     if(pointY > Math.max(lPoint1Y, lPoint2Y) || pointY < Math.min(lPoint1Y, lPoint2Y)) {
         return false
     }
-            
+
     var s = (lPoint1Y - lPoint2Y) / (lPoint1X - lPoint2X);
-    
+
     return     Math.abs(pointY - ((s * pointX) + lPoint1Y - s * lPoint1X)) < offset
 }
 
 /**
  * Get a boolean if the point is in the polygone
- * 
+ *
  */
 ORYX.Core.Math.isPointInEllipse = function (pointX, pointY, cx, cy, rx, ry) {
 
     if(cx === undefined || cy === undefined || rx === undefined || ry === undefined) {
         throw "ORYX.Core.Math.isPointInEllipse needs a ellipse with these properties: x, y, radiusX, radiusY"
-    } 
-    
+    }
+
     var tx = (pointX - cx) / rx;
     var ty = (pointY - cy) / ry;
-    
+
     return tx * tx + ty * ty < 1.0;
 }
-    
+
 /**
  * Get a boolean if the point is in the polygone
  * @param {int} pointX
@@ -104,18 +104,18 @@ ORYX.Core.Math.isPointInPolygone = function(pointX, pointY, polygone){
     if (arguments.length < 3) {
         throw "ORYX.Core.Math.isPointInPolygone needs two arguments"
     }
-    
+
     var lastIndex = polygone.length-1;
-    
+
     if (polygone[0] !== polygone[lastIndex - 1] || polygone[1] !== polygone[lastIndex]) {
         polygone.push(polygone[0]);
         polygone.push(polygone[1]);
     }
-    
+
     var crossings = 0;
 
     var x1, y1, x2, y2, d;
-    
+
     for (var i = 0; i < polygone.length - 3; ) {
         x1=polygone[i];
         y1=polygone[++i];
@@ -135,9 +135,9 @@ ORYX.Core.Math.isPointInPolygone = function(pointX, pointY, polygone){
 }
 
 /**
- *    Calculates the distance between a point and a line. It is also testable, if 
+ *    Calculates the distance between a point and a line. It is also testable, if
  *  the distance orthogonal to the line, matches the segment of the line.
- *  
+ *
  *  @param {float} lineP1
  *      The starting point of the line segment
  *  @param {float} lineP2
@@ -148,27 +148,27 @@ ORYX.Core.Math.isPointInPolygone = function(pointX, pointY, polygone){
  *      Flag to signal if only the segment of the line shell be evaluated.
  */
 ORYX.Core.Math.distancePointLinie = function(
-                                    lineP1, 
-                                    lineP2, 
-                                    point, 
+                                    lineP1,
+                                    lineP2,
+                                    point,
                                     toSegmentOnly) {
-    
-    var intersectionPoint = 
-                ORYX.Core.Math.getPointOfIntersectionPointLine(lineP1, 
-                                                                lineP2, 
-                                                                point, 
+
+    var intersectionPoint =
+                ORYX.Core.Math.getPointOfIntersectionPointLine(lineP1,
+                                                                lineP2,
+                                                                point,
                                                                 toSegmentOnly);
-    
+
     if(!intersectionPoint) {
         return null;
     }
-    
+
     return ORYX.Core.Math.getDistancePointToPoint(point, intersectionPoint);
 };
 
 /**
  * Calculates the distance between two points.
- * 
+ *
  * @param {point} point1
  * @param {point} point2
  */
@@ -178,7 +178,7 @@ ORYX.Core.Math.getDistancePointToPoint = function(point1, point2) {
 
 /**
  * Calculates the relative distance of a point which is between two other points.
- * 
+ *
  * @param {point} between1
  * @param {point} between2
  * @param {point} point
@@ -192,13 +192,13 @@ ORYX.Core.Math.getDistanceBetweenTwoPoints = function(between1, between2, point)
 /**
  * Returns true, if the point is of the left hand
  * side of the regarding the line.
- * 
+ *
  * @param {point} lineP1 Line first point
  * @param {point} lineP2 Line second point
  * @param {point} point
  */
 ORYX.Core.Math.pointIsLeftOfLine = function(lineP1, lineP2, point){
-    
+
     var vec1 = ORYX.Core.Math.getVector(lineP1, lineP2);
     var vec2 = ORYX.Core.Math.getVector(lineP1, point);
     // if the cross produkt is more than 0
@@ -207,20 +207,20 @@ ORYX.Core.Math.pointIsLeftOfLine = function(lineP1, lineP2, point){
 
 /**
  * Calculates the a point which is relatively between two other points.
- * 
+ *
  * @param {point} point1
  * @param {point} point2
  * @param {number} relative Relative which is between 0 and 1
  */
 ORYX.Core.Math.getPointBetweenTwoPoints = function(point1, point2, relative) {
     relative = Math.max(Math.min(relative || 0, 1), 0);
-    
+
     if (relative === 0){
         return point1;
     } else if (relative === 1){
         return point2;
     }
-    
+
     return {
         x: point1.x + ((point2.x - point1.x) * relative),
         y: point1.y + ((point2.y - point1.y) * relative)
@@ -242,20 +242,20 @@ ORYX.Core.Math.getVector = function(point1, point2){
 }
 
 /**
- * Returns the an identity vector of the given vector, 
+ * Returns the an identity vector of the given vector,
  * which has the length ot one.
  *
  * @param {point} vector
- * or 
+ * or
  * @param {point} point1
  * @param {point} point2
  */
 ORYX.Core.Math.getIdentityVector = function(vector){
-    
+
     if (arguments.length == 2){
         vector = ORYX.Core.Math.getVector(arguments[0], arguments[1]);
     }
-    
+
     var length = Math.sqrt((vector.x*vector.x)+(vector.y*vector.y))
     return {
         x: vector.x / (length || 1),
@@ -276,7 +276,7 @@ ORYX.Core.Math.getOrthogonalIdentityVector = function(point1, point2){
 /**
  * Returns the intersection point of a line and a point that defines a line
  * orthogonal to the given line.
- * 
+ *
  *  @param {float} lineP1
  *      The starting point of the line segment
  *  @param {float} lineP2
@@ -287,42 +287,42 @@ ORYX.Core.Math.getOrthogonalIdentityVector = function(point1, point2){
  *      Flag to signal if only the segment of the line shell be evaluated.
  */
 ORYX.Core.Math.getPointOfIntersectionPointLine = function(
-                                                    lineP1, 
-                                                    lineP2, 
-                                                    point, 
+                                                    lineP1,
+                                                    lineP2,
+                                                    point,
                                                     onSegmentOnly) {
 
-    /* 
+    /*
      * [P3 - P1 - u(P2 - P1)] dot (P2 - P1) = 0
      * u =((x3-x1)(x2-x1)+(y3-y1)(y2-y1))/(p2-p1)²
      */
-    var denominator = Math.pow(lineP2.x - lineP1.x, 2) 
+    var denominator = Math.pow(lineP2.x - lineP1.x, 2)
                         + Math.pow(lineP2.y - lineP1.y, 2);
     if(denominator == 0) {
         return undefined;
     }
-    
-    var u = ((point.x - lineP1.x) * (lineP2.x - lineP1.x)  
+
+    var u = ((point.x - lineP1.x) * (lineP2.x - lineP1.x)
             + (point.y - lineP1.y) * (lineP2.y - lineP1.y))
             / denominator;
-            
+
     if(onSegmentOnly) {
         if (!(0 <= u && u <= 1)) {
             return undefined;
         }
     }
-    
+
     pointOfIntersection = new Object();
     pointOfIntersection.x = lineP1.x + u * (lineP2.x - lineP1.x);
-    pointOfIntersection.y = lineP1.y + u * (lineP2.y - lineP1.y);    
-    
-    return pointOfIntersection;                                                
+    pointOfIntersection.y = lineP1.y + u * (lineP2.y - lineP1.y);
+
+    return pointOfIntersection;
 };
 
 /**
  * Translated the point with the given matrix.
  * @param {Point} point
- * @param {Matrix} matrix 
+ * @param {Matrix} matrix
  * @return {Object} Includes x, y
  */
 ORYX.Core.Math.getTranslatedPoint = function(point, matrix){
@@ -367,7 +367,7 @@ ORYX.Core.Math.getDeterminant = function(m){
 }
 
 /**
- * Returns the bounding box of the given node. Translates the 
+ * Returns the bounding box of the given node. Translates the
  * origin bounding box with the tranlation matrix.
  * @param {SVGElement} node
  * @return {Object} Includes x, y, width, height
@@ -379,7 +379,7 @@ ORYX.Core.Math.getTranslatedBoundingBox = function(node){
     var ll = ORYX.Core.Math.getTranslatedPoint({x:bb.x, y:bb.y+bb.height}, matrix);
     var ur = ORYX.Core.Math.getTranslatedPoint({x:bb.x+bb.width, y:bb.y}, matrix);
     var lr = ORYX.Core.Math.getTranslatedPoint({x:bb.x+bb.width, y:bb.y+bb.height}, matrix);
-    
+
     var minPoint = {
         x: Math.min(ul.x, ll.x, ur.x, lr.x),
         y: Math.min(ul.y, ll.y, ur.y, lr.y)
@@ -410,7 +410,7 @@ ORYX.Core.Math.getAngle = function(p1, p2){
     var angle = Math.asin(Math.sqrt(Math.pow(p1.y-p2.y, 2))
                 /(Math.sqrt(Math.pow(p2.x-p1.x, 2)+Math.pow(p1.y-p2.y, 2))))
                 *180/Math.PI;
-    
+
     if(p2.x >= p1.x && p2.y <= p1.y)
         return angle;
     else if(p2.x < p1.x && p2.y <= p1.y)
@@ -426,9 +426,9 @@ ORYX.Core.Math.getAngle = function(p1, p2){
  * Implementation of the cohen-sutherland algorithm
  */
 new function(){
-    
+
     var RIGHT = 2, TOP = 8,  BOTTOM = 4, LEFT = 1;
-    
+
      function computeOutCode (x, y, xmin, ymin, xmax, ymax) {
         var code = 0;
         if (y > ymax)
@@ -441,7 +441,7 @@ new function(){
             code |= LEFT;
         return code;
     }
-    
+
     /**
      * Returns TRUE if the rectangle is over the edge and has intersection points or includes it
      * @param {Object} x1 Point A of the line
@@ -456,11 +456,11 @@ new function(){
     ORYX.Core.Math.isRectOverLine = function(x1, y1, x2, y2, xmin, ymin, xmax, ymax){
         return !!ORYX.Core.Math.clipLineOnRect.apply(ORYX.Core.Math, arguments);
     }
-    
+
     /**
-     * Returns the clipped line on the given rectangle. If there is 
+     * Returns the clipped line on the given rectangle. If there is
      * no intersection, it will return NULL.
-     *  
+     *
      * @param {Object} x1 Point A of the line
      * @param {Object} y1
      * @param {Object} x2 Point B of the line
@@ -474,11 +474,11 @@ new function(){
         //Outcodes for P0, P1, and whatever point lies outside the clip rectangle
         var outcode0, outcode1, outcodeOut, hhh = 0;
         var accept = false, done = false;
- 
+
         //compute outcodes
         outcode0 = computeOutCode(x1, y1, xmin, ymin, xmax, ymax);
         outcode1 = computeOutCode(x2, y2, xmin, ymin, xmax, ymax);
- 
+
         do {
             if ((outcode0 | outcode1) == 0 ){
                 accept = true;
@@ -506,7 +506,7 @@ new function(){
                     y = y1 + (y2 - y1) * (xmin - x1)/(x2 - x1);
                     x = xmin;
                 }
-                
+
                 //Now we move outside point to intersection point to clip
                 //and get ready for next pass.
                 if (outcodeOut == outcode0) {
@@ -521,7 +521,7 @@ new function(){
             }
             hhh ++;
         } while (done  != true && hhh < 5000);
- 
+
         if(accept) {
             return {a:{x:x1, y:y1}, b:{x:x2, y:y2}};
         }

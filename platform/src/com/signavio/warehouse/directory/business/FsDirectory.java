@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -41,28 +41,28 @@ import com.signavio.warehouse.model.business.ModelTypeManager;
 
 /**
  * Implementation of a directory in the file accessing Oryx backend.
- * 
+ *
  *  TODO : Auto renameof new model, directory ?
- * 
+ *
  * @author Stefan Krumnow
  *
  */
 public class FsDirectory extends FsSecureBusinessObject {
-        
+
     // Members
     protected String path;
 //    private String name;
-    
+
     /**
      * Constructor
-     * 
+     *
      * Constructs a new directory object for an EXISTING filesystem directory.
-     * 
+     *
      * @param parentDirectory
      * @param name
      */
     public FsDirectory(String path) {
-        
+
         if (!FileSystemUtil.isFileDirectory(path)){
             throw new IllegalStateException("Path does not point to a directory.");
         } else if ( ! FileSystemUtil.isFileExistent(path) || ! FileSystemUtil.isFileAccessible(path)){
@@ -70,21 +70,21 @@ public class FsDirectory extends FsSecureBusinessObject {
         }
 
         this.path = path;
-        
+
     }
-    
+
     public String getName() {
         return getDirName();
     }
-    
+
     public String getDescription() {
         return "";
     }
-    
+
     public Date getCreationDate() {
         return new Date();
     }
-    
+
     public void setName(String name) {
         name = FileSystemUtil.getCleanFileName(name);
         if (name.equals(getName())) {
@@ -97,16 +97,16 @@ public class FsDirectory extends FsSecureBusinessObject {
             throw new IllegalArgumentException("Cannot rename directory");
         }
     }
-    
+
     public void setDescription(String description) {
         return ;
     }
-    
+
     public void setCreationDate() {
         return ;
     }
 
-    
+
     public Set<FsDirectory> getChildDirectories(){
         Set<FsDirectory> childDirectories = new HashSet<FsDirectory>();
         File[] children = FileSystemUtil.getFileChildren(getPath(), null);
@@ -120,8 +120,8 @@ public class FsDirectory extends FsSecureBusinessObject {
         }
         return childDirectories;
     }
-    
-    
+
+
     public Set<FsModel> getChildModels() {
         Set<FsModel> childModels = new HashSet<FsModel>();
         File[] children = FileSystemUtil.getFileChildren(getPath(), ModelTypeManager.getInstance().getFilenameFilter());
@@ -148,16 +148,16 @@ public class FsDirectory extends FsSecureBusinessObject {
         }
         return new FsDirectory(getPathPrefix());
     }
-    
+
 
     public void addChildDirectory(FsDirectory dir) {
-        dir.moveTo(this);    
+        dir.moveTo(this);
     }
-    
+
     public FsDirectory createDirectory(String name, String description) {
-        
+
         name = FileSystemUtil.getCleanFileName(name);
-        
+
         String path = getPath() + File.separator + name;
         File f = new File (path);
         if (f.exists()) {
@@ -180,31 +180,31 @@ public class FsDirectory extends FsSecureBusinessObject {
     }
 
     public FsModel createModel(String id, String name, String description, String type, String jsonRep, String svgRep, String comment) {
-        
+
         name = FileSystemUtil.getCleanFileName(name);
-        
+
         String namespace;
         try {
             GenericDiagram diagram = BasicDiagramBuilder.parseJson(jsonRep);
-            
+
             namespace = diagram.getStencilsetRef().getNamespace();
         } catch (JSONException e) {
             throw new IllegalStateException("Could not create new model", e);
         }
-        
+
         ModelType modelType = ModelTypeManager.getInstance().getModelType(namespace);
-        
+
         String path = getPath() + File.separator + name + modelType.getFileExtension();
         File f = new File (path);
         if (f.exists()) {
             throw new IllegalArgumentException("Name already exists.");
         }
-        
+
         modelType.storeModel(path, id, namespace, description, type, jsonRep, svgRep);
 
         return new FsModel(getPath(), name, modelType.getFileExtension());
     }
-    
+
     public void delete() {
         for (FsModel child : getChildModels()) {
             child.delete();
@@ -214,9 +214,9 @@ public class FsDirectory extends FsSecureBusinessObject {
         }
         FileSystemUtil.deleteFileOrDirectory(getPath());
     }
-    
-    
-    public void search(final String searchTerm, List<FsSecureBusinessObject> result) {    
+
+
+    public void search(final String searchTerm, List<FsSecureBusinessObject> result) {
         // Find Models
         FilenameFilter modelFilter = new FilenameFilter(){
 
@@ -237,7 +237,7 @@ public class FsDirectory extends FsSecureBusinessObject {
                 }
             }
         }
-        
+
         // Find Directories
         FilenameFilter dirFilter = new FilenameFilter(){
             public boolean accept(File dir, String name) {
@@ -252,32 +252,32 @@ public class FsDirectory extends FsSecureBusinessObject {
                 }
             }
         }
-        
+
         // Visit Child Directories
         for (FsDirectory child : getChildDirectories()){
             child.search(searchTerm, result);
         }
     }
-    
+
     /*
-     * 
+     *
      * Private Functions
-     * 
+     *
      */
 
     public String getPath(){
         return path;
     }
-    
+
     private String getDirName(){
         if (path.contains(File.separator)){
             int i = path.lastIndexOf(File.separator);
             return path.substring(i+1);
         } else {
             throw new IllegalStateException("Path cannot be resolved.");
-        }    
+        }
     }
-    
+
     private String getPathPrefix() {
         if (path.contains(File.separator)){
             int i = path.lastIndexOf(File.separator);
@@ -286,7 +286,7 @@ public class FsDirectory extends FsSecureBusinessObject {
             throw new IllegalStateException("Path cannot be resolved.");
         }
     }
-    
+
     private void moveTo(FsDirectory newParent) {
         if (newParent.equals(getParentDirectory())) {
             return ;
@@ -296,14 +296,14 @@ public class FsDirectory extends FsSecureBusinessObject {
             throw new IllegalArgumentException("Cannot move directory");
         }
     }
-    
-    
+
+
     /*
-     * 
-     * INTERFACE COMPLIANCE METHODS 
-     * 
+     *
+     * INTERFACE COMPLIANCE METHODS
+     *
      */
-    
+
     @Override
     public boolean equals(Object o){
         if (o instanceof FsDirectory){
@@ -312,11 +312,11 @@ public class FsDirectory extends FsSecureBusinessObject {
         }
         return false;
     }
-    
+
     public Set<FsDirectory> getChildDirectoriesByPrivileges(Set<String> privileges) {
         return getChildDirectories();
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getChildren(Class<T> type) {
@@ -328,7 +328,7 @@ public class FsDirectory extends FsSecureBusinessObject {
             return super.getChildren(type);
         }
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T extends FsSecureBusinessObject> Set<T> getParents(Class<T> businessObjectClass) {
@@ -345,7 +345,7 @@ public class FsDirectory extends FsSecureBusinessObject {
             return super.getParents(businessObjectClass);
         }
     }
-    
+
     @Override
     public String getId() {
         String path = getPath();
@@ -356,7 +356,7 @@ public class FsDirectory extends FsSecureBusinessObject {
         path = path.replace(File.separator, ";");
         return path;
     }
-    
+
     public List<FsDirectory> getParentDirectories() {
         List<FsDirectory> parents = new ArrayList<FsDirectory>();
         FsDirectory parent = getParentDirectory();
@@ -367,6 +367,6 @@ public class FsDirectory extends FsSecureBusinessObject {
         return parents;
     }
 
-    
+
 }
 

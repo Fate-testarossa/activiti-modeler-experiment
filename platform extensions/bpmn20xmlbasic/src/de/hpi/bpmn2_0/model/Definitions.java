@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -62,11 +62,11 @@ import de.hpi.diagram.SignavioUUID;
 /**
  * <p>
  * Java class for tDefinitions complex type.
- * 
+ *
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tDefinitions">
  *   &lt;complexContent>
@@ -86,8 +86,8 @@ import de.hpi.diagram.SignavioUUID;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "definitions")
@@ -96,7 +96,7 @@ import de.hpi.diagram.SignavioUUID;
         "targetNamespace",
         "expressionLanguage",
         "typeLanguage",
-        "rootElement", 
+        "rootElement",
         "diagram"
 })
 public class Definitions {
@@ -104,7 +104,7 @@ public class Definitions {
     // @XmlElement(name = "import")
     // protected List<TImport> _import;
      protected List<Extension> extension;
-    
+
     @XmlElementRefs( { @XmlElementRef(type = Process.class),
             @XmlElementRef(type = Choreography.class),
             @XmlElementRef(type = Collaboration.class),
@@ -112,17 +112,17 @@ public class Definitions {
             @XmlElementRef(type = Signal.class),
             @XmlElementRef(type = Message.class)})
     protected List<BaseElement> rootElement;
-    
+
     @XmlElementRef
     protected List<BPMNDiagram> diagram;
     // protected List<TRelationship> relationship;
-    
+
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
-    
+
     @XmlAttribute
     protected String name;
 
@@ -133,14 +133,14 @@ public class Definitions {
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String expressionLanguage;
-    
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String typeLanguage;
-    
+
     @XmlAttribute(name = "exporter")
     protected String exporter;
-    
+
     @XmlAttribute(name = "exporterVersion")
     protected String exporterVersion;
 
@@ -149,17 +149,17 @@ public class Definitions {
 
     @XmlTransient
     private Map<String, String> namespaces;
-    
+
     @XmlTransient
     public List<String> unusedNamespaceDeclarations;
-    
+
     @XmlTransient
     public Map<String,String> externalNSDefs;
 
     /**
-     * The {@link Marshaller} invokes this method right before marshaling to 
+     * The {@link Marshaller} invokes this method right before marshaling to
      * XML. The namespace are added as attributes to the definitions element.
-     * @param marshaller 
+     * @param marshaller
      *         The marshaling context
      */
     public void beforeMarshal(Marshaller marshaller) {
@@ -169,36 +169,36 @@ public class Definitions {
                     this.getNamespaces().get(prefix));
         }
     }
-    
+
 //    public void afterMarshal(Marshaller source) {
-//        
-//        
-//        
+//
+//
+//
 //    }
 
     /* Getter & Setter */
 
     /**
      * Gets the value of the import property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the import property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getImport().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list {@link TImport }
-     * 
-     * 
+     *
+     *
      */
     // public List<TImport> getImport() {
     // if (_import == null) {
@@ -209,26 +209,26 @@ public class Definitions {
 
     /**
      * Gets the value of the extension property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the extension property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getExtension().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TExtension }
-     * 
-     * 
+     *
+     *
      */
      public List<Extension> getExtension() {
      if (extension == null) {
@@ -239,21 +239,21 @@ public class Definitions {
 
     /**
      * Gets the value of the rootElement property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the rootElement property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getRootElement().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link TMessageEventDefinition }{@code >}
@@ -291,8 +291,8 @@ public class Definitions {
      * {@code >} {@link JAXBElement }{@code <}{@link TTerminateEventDefinition }
      * {@code >} {@link JAXBElement }{@code <}{@link TGlobalChoreographyTask }
      * {@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<BaseElement> getRootElement() {
         if (rootElement == null) {
@@ -303,7 +303,7 @@ public class Definitions {
 
     /**
      * This Method return a List containing all edges within the diagram
-     * 
+     *
      * @return List<Edge>
      */
     public List<Edge> getEdges() {
@@ -323,7 +323,7 @@ public class Definitions {
                     if (flowElement instanceof Edge) {
                         edges.add((Edge) flowElement);
                     }
-                    
+
                     // Consider edges in container elements
                     if(flowElement instanceof ContainerElement) {
                         edges.addAll(((ContainerElement) flowElement).getChildEdges());
@@ -343,7 +343,7 @@ public class Definitions {
                     if (flowElement instanceof Edge) {
                         edges.add((Edge) flowElement);
                     }
-                    
+
                     // Consider edges in container elemetns
                     if(flowElement instanceof ContainerElement) {
                         edges.addAll(((ContainerElement) flowElement).getChildEdges());
@@ -357,25 +357,25 @@ public class Definitions {
 
     /**
      * Gets the value of the diagram property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the diagram property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getDiagram().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link BpmnDiagram }
-     * 
+     *
      */
     public List<BPMNDiagram> getDiagram() {
         if (diagram == null) {
@@ -383,10 +383,10 @@ public class Definitions {
         }
         return this.diagram;
     }
-    
+
     /**
      * Returns the first {@link BPMNPlane} or creates one if none exists.
-     * 
+     *
      * @return
      */
     public BPMNPlane getFirstPlane() {
@@ -395,37 +395,37 @@ public class Definitions {
             diagram.setId(SignavioUUID.generate());
             this.getDiagram().add(diagram);
         }
-        
+
         BPMNDiagram diagram = this.getDiagram().get(0);
         if(diagram.getBPMNPlane() == null) {
             diagram.setBPMNPlane(new BPMNPlane());
         }
-        
+
         return diagram.getBPMNPlane();
     }
 
     /**
      * Gets the value of the relationship property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list, not a
      * snapshot. Therefore any modification you make to the returned list will
      * be present inside the JAXB object. This is why there is not a
      * <CODE>set</CODE> method for the relationship property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getRelationship().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link TRelationship }
-     * 
-     * 
+     *
+     *
      */
     // public List<TRelationship> getRelationship() {
     // if (relationship == null) {
@@ -436,9 +436,9 @@ public class Definitions {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return possible object is {@link String }
-     * 
+     *
      */
     public String getId() {
         return id;
@@ -446,10 +446,10 @@ public class Definitions {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
      *            allowed object is {@link String }
-     * 
+     *
      */
     public void setId(String value) {
         this.id = value;
@@ -465,9 +465,9 @@ public class Definitions {
 
     /**
      * Gets the value of the targetNamespace property.
-     * 
+     *
      * @return possible object is {@link String }
-     * 
+     *
      */
     public String getTargetNamespace() {
         return targetNamespace;
@@ -475,10 +475,10 @@ public class Definitions {
 
     /**
      * Sets the value of the targetNamespace property.
-     * 
+     *
      * @param value
      *            allowed object is {@link String }
-     * 
+     *
      */
     public void setTargetNamespace(String value) {
         this.targetNamespace = value;
@@ -486,9 +486,9 @@ public class Definitions {
 
     /**
      * Gets the value of the expressionLanguage property.
-     * 
+     *
      * @return possible object is {@link String }
-     * 
+     *
      */
     public String getExpressionLanguage() {
         if (expressionLanguage == null) {
@@ -500,10 +500,10 @@ public class Definitions {
 
     /**
      * Sets the value of the expressionLanguage property.
-     * 
+     *
      * @param value
      *            allowed object is {@link String }
-     * 
+     *
      */
     public void setExpressionLanguage(String value) {
         this.expressionLanguage = value;
@@ -511,9 +511,9 @@ public class Definitions {
 
     /**
      * Gets the value of the typeLanguage property.
-     * 
+     *
      * @return possible object is {@link String }
-     * 
+     *
      */
     public String getTypeLanguage() {
         if (typeLanguage == null) {
@@ -525,10 +525,10 @@ public class Definitions {
 
     /**
      * Sets the value of the typeLanguage property.
-     * 
+     *
      * @param value
      *            allowed object is {@link String }
-     * 
+     *
      */
     public void setTypeLanguage(String value) {
         this.typeLanguage = value;
@@ -553,15 +553,15 @@ public class Definitions {
     /**
      * Gets a map that contains attributes that aren't bound to any typed
      * property on this class.
-     * 
+     *
      * <p>
      * the map is keyed by the name of the attribute and the value is the string
      * value of the attribute.
-     * 
+     *
      * the map returned by this method is live, and you can add new attribute by
      * updating the map directly. Because of this design, there's no setter.
-     * 
-     * 
+     *
+     *
      * @return always non-null
      */
     public Map<QName, String> getOtherAttributes() {
@@ -571,7 +571,7 @@ public class Definitions {
     /**
      * The namespaces property contains an arbitrary set of namespace prefixes
      * their related URLs referenced inside the diagram.
-     * 
+     *
      * @return the namespaces property. always non-null
      */
     public Map<String, String> getNamespaces() {

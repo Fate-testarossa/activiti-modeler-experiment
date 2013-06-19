@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -30,7 +30,7 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * Represents all types of edges in a BPMN 2.0 process.
- * 
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
  *
@@ -45,22 +45,22 @@ import de.hpi.bpmn2_0.transformation.Visitor;
     DataOutputAssociation.class
 })
 public abstract class Edge extends FlowElement {
-    
+
     @XmlAttribute
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     public FlowElement sourceRef;
-    
+
     @XmlAttribute
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     public FlowElement targetRef;
-    
+
     public Edge() {}
-    
+
     public Edge(Edge edge) {
         super(edge);
-        
+
         this.setSourceRef(edge.getSourceRef());
         this.setTargetRef(edge.getTargetRef());
     }
@@ -71,36 +71,36 @@ public abstract class Edge extends FlowElement {
      */
     public boolean sourceAndTargetContainedInSamePool(){
         /* Ensure that both source and target are connected */
-        if(this.getSourceRef() == null || this.getTargetRef() == null) 
+        if(this.getSourceRef() == null || this.getTargetRef() == null)
             return false;
-        
-        return !(this.getSourceRef() instanceof FlowNode && 
-                this.getTargetRef() instanceof FlowNode && 
+
+        return !(this.getSourceRef() instanceof FlowNode &&
+                this.getTargetRef() instanceof FlowNode &&
                 ((FlowNode)this.getTargetRef()).getPool() != ((FlowNode)this.getSourceRef()).getPool());
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitEdge(this);
     }
-    
+
     /* Getters */
-    
+
     /**
      * @return the sourceRef
      */
     public FlowElement getSourceRef() {
         return sourceRef;
     }
-    
+
     /**
      * @return the targetRef
      */
     public FlowElement getTargetRef() {
         return targetRef;
     }
-    
+
     /* Setters */
-    
+
     /**
      * @param sourceRef the sourceRef to set
      */

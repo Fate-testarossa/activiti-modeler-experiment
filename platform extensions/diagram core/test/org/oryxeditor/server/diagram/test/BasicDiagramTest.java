@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -59,13 +59,13 @@ public class BasicDiagramTest extends BasicShapeTest{
         diagram2 = BasicDiagramBuilder.parseJson(new JSONObject(diagram2String));
     }
 
-    
+
     @Test
     public void testGetStencilsetRef() {
         StencilSetReference ssr = new StencilSetReference("aNamespace");
-        
+
         diagram2.setStencilsetRef(ssr);
-        
+
         assertEquals(ssr, diagram2.getStencilsetRef());
     }
 
@@ -76,7 +76,7 @@ public class BasicDiagramTest extends BasicShapeTest{
 
     @Test
     public void testGetSsextensions() {
-        testSetSsextensions();    
+        testSetSsextensions();
     }
 
     @Test
@@ -85,7 +85,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         l.add("someSSExtension");
         l.add("anotherSSExtension");
         diagram2.setSsextensions(l);
-        
+
         assertEquals(l, diagram2.getSsextensions());
     }
 
@@ -95,16 +95,16 @@ public class BasicDiagramTest extends BasicShapeTest{
         l.add("someSSExtension");
         l.add("anotherSSExtension");
         diagram2.setSsextensions(l);
-        
+
         assertEquals(l, diagram2.getSsextensions());
-        
+
         String s = "yetAnotherOne";
         diagram2.addSsextension(s);
-        
+
         assertEquals(3, diagram2.getSsextensions().size());
         assertTrue(diagram2.getSsextensions().contains(s));
     }
-    
+
 
 
 //    @Test
@@ -115,24 +115,24 @@ public class BasicDiagramTest extends BasicShapeTest{
 //    @Test
 //    public void testSetAllShapes() {
 //        BasicDiagram d = new BasicDiagram("aDiagram");
-//        
+//
 //        assertNotNull(d.getAllShapes());
-//        
+//
 //        d = new BasicDiagram("aDiagram");
-//        
+//
 //        Shape shape2 = new Node("shape2");
 //        Shape shape4 = new Node("shape4");
-//        
+//
 //        List<Shape> ls = new ArrayList<Shape>();
 //        ls.add(new Edge("shape1"));
 //        ls.add(shape2);
 //        ls.add(new Node("shape3"));
 //        ls.add(shape4);
 //        ls.add(new Edge("shape5"));
-//        
+//
 //        d.setAllShapes(ls);
-//        
-//        assertEquals(d.getAllShapes(), ls);        
+//
+//        assertEquals(d.getAllShapes(), ls);
 //    }
 
     @Test
@@ -142,38 +142,38 @@ public class BasicDiagramTest extends BasicShapeTest{
         l.add("shape1");
         l.add("shape4");
         l.add("shape6");
-        
+
         BasicShape shape2 = getBasicShapeOfRandomType("shape2");
         BasicShape shape4 = getBasicShapeOfRandomType("shape4");
 //        BasicShape shape6 = new BasicShape("shape6");
-        
+
         BasicDiagram d = new BasicDiagram("aDiagram");
         d.addChildShape(getBasicShapeOfRandomType("shape1"));
         d.addChildShape(shape2);
         d.addChildShape(getBasicShapeOfRandomType("shape3"));
         d.addChildShape(shape4);
         d.addChildShape(getBasicShapeOfRandomType("shape5"));
-        
+
         assertNotNull(d.getShapeById("shape1"));
         assertNotNull(d.getShapeById("shape2"));
         assertNotNull(d.getShapeById("shape3"));
         assertNotNull(d.getShapeById("shape4"));
         assertNotNull(d.getShapeById("shape5"));
         assertNull(d.getShapeById("shape6"));
-        
+
         assertEquals(null, d.getShapeById(""));
         assertEquals(null, d.getShapeById(null));
         assertEquals(null, d.getShapeById("canvas"));
         assertEquals(d, d.getShapeById("aDiagram"));
-        
+
         assertEquals(null, diagram.getShapeById(""));
         assertEquals(null, diagram.getShapeById(null));
         assertEquals(diagram, diagram.getShapeById("canvas"));
-        
+
         assertNull(diagram.getShapeById("shape1"));
         assertNull(diagram.getShapeById("shape4"));
         assertNull(diagram.getShapeById("shape6"));
-        
+
         assertNotNull(diagram.getShapeById("sid-CEE425D1-7ACE-4604-A5B7-D914D1619542")); // sequence flow
 
         assertNotNull(diagram.getShapeById("sid-A02B7A57-7B76-4D03-BAC9-D82C8E34464A")); // sequence flow
@@ -193,7 +193,7 @@ public class BasicDiagramTest extends BasicShapeTest{
 
     @Test
     public void testGetShapesByIds() {
-        
+
         BasicShape shape1 = new BasicNode("shape1");
         BasicShape shape1e = new BasicEdge("shape1");
         BasicShape shape2 = getBasicShapeOfRandomType("shape2");
@@ -201,14 +201,14 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape shape4 = getBasicShapeOfRandomType("shape4");
         BasicShape shape5 = getBasicShapeOfRandomType("shape5");
         BasicShape shape6 = getBasicShapeOfRandomType("shape6");
-        
+
         BasicDiagram d = new BasicDiagram("aDiagram");
         d.addChildShape(shape1e);
         d.addChildShape(shape2);
         d.addChildShape(shape3);
         d.addChildShape(shape4);
         d.addChildShape(shape5);
-        
+
         List<String> l = new ArrayList<String>();
         l.add("shape1");
         l.add("shape4");
@@ -219,7 +219,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertTrue(x.contains(shape4));
         assertFalse(x.contains(shape1));
         assertFalse(x.contains(shape6));
-        
+
         l.clear();
         l.add("");
         x = d.getShapesByIds(l);
@@ -229,32 +229,32 @@ public class BasicDiagramTest extends BasicShapeTest{
         l.add(null);
         x = d.getShapesByIds(l);
         assertEquals(0, x.size());
-        
+
         l.clear();
         l.add("canvas");
         x = d.getShapesByIds(l);
         assertEquals(0, x.size());
-        
+
         l.clear();
         l.add("shape1");
         l.add("shape4");
         l.add("shape6");
-        
+
         x = diagram.getShapesByIds(l);
         assertTrue(x.isEmpty());
-        
+
         x = diagram2.getShapesByIds(l);
         assertTrue(x.isEmpty());
-        
+
         l.clear();
         l.add("sid-DA57751D-29C1-4BF5-9036-89C127C8E8DF");
         x = diagram.getShapesByIds(l);
         assertEquals(x.size(), 1);
         assertEquals(x.get(0).getResourceId(), "sid-DA57751D-29C1-4BF5-9036-89C127C8E8DF");
-        
+
     }
-    
-    
+
+
     @Test
     public void testReorderListOfAllShapes(){
         BasicShape shape1 = getBasicShapeOfRandomType("shape1");
@@ -262,14 +262,14 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape shape3 = getBasicShapeOfRandomType("shape3");
         BasicShape shape4 = getBasicShapeOfRandomType("shape4");
         BasicShape shape5 = getBasicShapeOfRandomType("shape5");
-        
+
         BasicDiagram d = new BasicDiagram("aDiagram");
         d.addChildShape(shape1);
         d.addChildShape(shape2);
         d.addChildShape(shape3);
         d.addChildShape(shape4);
         d.addChildShape(shape5);
-        
+
         assertSame(shape1, d.getAllShapesReadOnly().get(0));
         assertSame(shape2, d.getAllShapesReadOnly().get(1));
         assertSame(shape3, d.getAllShapesReadOnly().get(2));
@@ -280,7 +280,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertSame(shape3, d.getChildShapesReadOnly().get(2));
         assertSame(shape4, d.getChildShapesReadOnly().get(3));
         assertSame(shape5, d.getChildShapesReadOnly().get(4));
-        
+
         //test happy case
         List<String> idsList = Arrays.asList(new String[]{"shape5", "shape3", "shape1", "shape2", "shape4"});
         d.reorderListOfAllShapes(idsList);
@@ -294,7 +294,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertSame(shape3, d.getChildShapesReadOnly().get(2));
         assertSame(shape4, d.getChildShapesReadOnly().get(3));
         assertSame(shape5, d.getChildShapesReadOnly().get(4));
-        
+
         //back to normal with additional strings
         idsList = Arrays.asList(new String[]{"shape1", "shape0", "shape2", null, "shape3", "", "shape4", "   ", "shape5"});
         d.reorderListOfAllShapes(idsList);
@@ -308,7 +308,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertSame(shape3, d.getChildShapesReadOnly().get(2));
         assertSame(shape4, d.getChildShapesReadOnly().get(3));
         assertSame(shape5, d.getChildShapesReadOnly().get(4));
-        
+
         //backwards
         idsList = Arrays.asList(new String[]{"blabla", "shape5", "shape4", "huiuiui", "shape3", "shape2", "shape6", "shape1"});
         d.reorderListOfAllShapes(idsList);
@@ -323,7 +323,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertSame(shape4, d.getChildShapesReadOnly().get(3));
         assertSame(shape5, d.getChildShapesReadOnly().get(4));
     }
-    
+
 
     @Test(expected=IllegalArgumentException.class)
     public void testReorderListOfAllShapesTooFew(){
@@ -332,19 +332,19 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape shape3 = getBasicShapeOfRandomType("shape3");
         BasicShape shape4 = getBasicShapeOfRandomType("shape4");
         BasicShape shape5 = getBasicShapeOfRandomType("shape5");
-        
+
         BasicDiagram d = new BasicDiagram("aDiagram");
         d.addChildShape(shape1);
         d.addChildShape(shape2);
         d.addChildShape(shape3);
         d.addChildShape(shape4);
         d.addChildShape(shape5);
-        
+
         List<String> idsList = Arrays.asList(new String[]{"shape5", "shape3", "shape1", "shape2"});
         d.reorderListOfAllShapes(idsList);
     }
-    
-    
+
+
     @Test(expected=IllegalArgumentException.class)
     public void testReorderListOfAllShapesNotAll(){
         BasicShape shape1 = getBasicShapeOfRandomType("shape1");
@@ -352,19 +352,19 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape shape3 = getBasicShapeOfRandomType("shape3");
         BasicShape shape4 = getBasicShapeOfRandomType("shape4");
         BasicShape shape5 = getBasicShapeOfRandomType("shape5");
-        
+
         BasicDiagram d = new BasicDiagram("aDiagram");
         d.addChildShape(shape1);
         d.addChildShape(shape2);
         d.addChildShape(shape3);
         d.addChildShape(shape4);
         d.addChildShape(shape5);
-        
+
         List<String> idsList = Arrays.asList(new String[]{"shape5", "shape3", "shape1", "shape2", null, "shape6"});
         d.reorderListOfAllShapes(idsList);
     }
-    
-    
+
+
     @Test
     public void testGetShapesAtPosition() {
         BasicDiagram d = new BasicDiagram("aDiagram");
@@ -380,10 +380,10 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicEdge e3 = new BasicEdge("e3");
         BasicEdge e4 = new BasicEdge("e4");
         BasicEdge e5 = new BasicEdge("e5");
-        
+
         List<String> idsList = Arrays.asList(new String[]{
                 "n1", "n2", "n3", "n4", "n5", "e1", "e2", "e3", "e4", "e5"});
-        
+
         d.addChildShape(n1);
         d.addChildShape(n2);
         d.addChildShape(n3);
@@ -393,7 +393,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         d.addChildShape(e2);
         d.addChildShape(e3);
         d.addChildShape(e4);
-        d.addChildShape(e5);        
+        d.addChildShape(e5);
 
         // n2, n4, e3, e5 shall be at point (10, 100)
 
@@ -434,7 +434,7 @@ public class BasicDiagramTest extends BasicShapeTest{
 
         Collections.shuffle(idsList);
         d.reorderListOfAllShapes(idsList);
-        
+
         List<BasicShape> x = d.getShapesAtPosition(new Point(10, 100));
 
         assertEquals(4, x.size());
@@ -442,8 +442,8 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertTrue(x.contains(n4));
         assertTrue(x.contains(e3));
         assertTrue(x.contains(e5));
-    
-        
+
+
     }
 
     @Test
@@ -457,18 +457,18 @@ public class BasicDiagramTest extends BasicShapeTest{
         d.setParent(parent);
         assertNull(d.getParent());
     }
-    
+
     @Test
     public void testSetParent() {
         testGetParent();
-    }    
+    }
 
 //    @Test
 //    public void testGetString() {
 //        // does not work... and, there's no point to it...
 ////        assertEquals(diagram.getString(), FileIO.readWholeFile(diagramJSON));
 //        throw new NotImplementedException();
-//        
+//
 //    }
 //
 //    @Test
@@ -499,7 +499,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         // has been tested there
         testGetDiagram();
     }
-    
+
     /**
      * Same as super.testAddChildShape, but without two diagrams (diagram + getShapeToTest)
      */
@@ -564,7 +564,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertFalse(parent.getAllShapesReadOnly().contains(child2));
         assertFalse(parent.getAllShapesReadOnly().contains(parent));
     }
-    
+
     /**
      * Absolute bounds always same to relative bounds, because diagrams can't have a parent!
      */
@@ -600,9 +600,9 @@ public class BasicDiagramTest extends BasicShapeTest{
 //        Bounds temp2 = son.getBounds().clone();
 //        temp2.moveBy(father.getAbsoluteBounds().getUpperLeft());
 
-        assertEquals(grandfather.getBounds().getUpperLeft().getX(), 
+        assertEquals(grandfather.getBounds().getUpperLeft().getX(),
                 grandfather.getAbsoluteBounds().getUpperLeft().getX(), delta);
-        assertEquals(grandfather.getBounds().getUpperLeft().getY(), 
+        assertEquals(grandfather.getBounds().getUpperLeft().getY(),
                 grandfather.getAbsoluteBounds().getUpperLeft().getY(), delta);
         assertEquals(grandfather.getBounds().getLowerRight().getX(),
                 grandfather.getAbsoluteBounds().getLowerRight().getX(), delta);
@@ -611,16 +611,16 @@ public class BasicDiagramTest extends BasicShapeTest{
 
         assertEquals(father.getBounds().getUpperLeft().getX(),
                 father.getAbsoluteBounds().getUpperLeft().getX(), delta);
-        assertEquals(father.getBounds().getUpperLeft().getY(), 
+        assertEquals(father.getBounds().getUpperLeft().getY(),
                 father.getAbsoluteBounds().getUpperLeft().getY(), delta);
         assertEquals(father.getBounds().getLowerRight().getX(),
                 father.getAbsoluteBounds().getLowerRight().getX(), delta);
         assertEquals(father.getBounds().getLowerRight().getY(),
                 father.getAbsoluteBounds().getLowerRight().getY(), delta);
-        
-        assertEquals(son.getBounds().getUpperLeft().getX(), 
+
+        assertEquals(son.getBounds().getUpperLeft().getX(),
                 son.getAbsoluteBounds().getUpperLeft().getX(), delta);
-        assertEquals(son.getBounds().getUpperLeft().getY(), 
+        assertEquals(son.getBounds().getUpperLeft().getY(),
                 son.getAbsoluteBounds().getUpperLeft().getY(), delta);
         assertEquals(son.getBounds().getLowerRight().getX(),
                 son.getAbsoluteBounds().getLowerRight().getX(), delta);
@@ -634,7 +634,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape s1 = new BasicDiagram("aShape");
         BasicShape s2 = getBasicShapeOfDifferentType("aShape");
         BasicShape s3 = new BasicDiagram("anotherShape");
-        BasicShape s4 = new BasicDiagram(null);        
+        BasicShape s4 = new BasicDiagram(null);
 
         assertTrue(s1.equals(s1));
         assertTrue(d1.equals(s1));
@@ -665,7 +665,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicShape son1 = getBasicShapeOfRandomType("Son1");
         BasicShape son2 = getBasicShapeOfRandomType("Son2");
         BasicShape son3 = getBasicShapeOfRandomType("Son3");
-        
+
         d.addChildShape(grandfather);
         grandfather.addChildShape(father);
         grandfather.addChildShape(father2);
@@ -673,7 +673,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         father.addChildShape(son1);
         father2.addChildShape(son3);
         father2.addChildShape(son2);
-        
+
         assertTrue(d.getDescendantShapesReadOnly().contains(grandfather));
         assertTrue(d.getDescendantShapesReadOnly().contains(father));
         assertTrue(d.getDescendantShapesReadOnly().contains(father2));
@@ -689,16 +689,16 @@ public class BasicDiagramTest extends BasicShapeTest{
         BasicDiagram d = new BasicDiagram("diagram");
         BasicShape grandfather = getBasicShapeOfRandomType("Grandfather");
         BasicShape father = getBasicShapeOfRandomType("Father");
-        
+
         grandfather.addChildShape(father);
         father.addChildShape(d);
-        
+
         assertFalse(d.getAncestorShapesReadOnly().contains(grandfather));
         assertFalse(d.getAncestorShapesReadOnly().contains(father));
         assertTrue(d.getAncestorShapesReadOnly().isEmpty());
     }
-    
-    
+
+
     @Override
     public void testRemoveAllChildShapes() {
         //preparation
@@ -717,29 +717,29 @@ public class BasicDiagramTest extends BasicShapeTest{
         assertTrue(parent.getChildShapesReadOnly().contains(child));
         assertTrue(parent.getChildShapesReadOnly().contains(child2));
         assertEquals(2, parent.getChildShapesReadOnly().size());
-        
+
         assertSame(child, grandChild.getParent());
         assertTrue(child.getChildShapesReadOnly().contains(grandChild));
         assertEquals(1, child.getChildShapesReadOnly().size());
-        
+
         assertTrue(parent.getAllShapesReadOnly().contains(child));
         assertTrue(parent.getAllShapesReadOnly().contains(child2));
         assertTrue(parent.getAllShapesReadOnly().contains(grandChild));
         assertFalse(parent.getAllShapesReadOnly().contains(parent));
-        
+
         parent.removeAllChildShapes();
-        
+
         //post-conditions
         assertNull(child.getParent());
         assertNull(child2.getParent());
         assertFalse(parent.getChildShapesReadOnly().contains(child));
         assertFalse(parent.getChildShapesReadOnly().contains(child2));
         assertEquals(0, parent.getChildShapesReadOnly().size());
-        
+
         assertNull(grandChild.getParent());
         assertFalse(child.getChildShapesReadOnly().contains(grandChild));
         assertEquals(0, parent.getChildShapesReadOnly().size());
-        
+
         assertFalse(parent.getAllShapesReadOnly().contains(child));
         assertFalse(parent.getAllShapesReadOnly().contains(child2));
         assertFalse(parent.getAllShapesReadOnly().contains(grandChild));
@@ -754,7 +754,7 @@ public class BasicDiagramTest extends BasicShapeTest{
 
     @Test
     public final void testGetString() {
-        
+
         fail("Not yet implemented"); // TODO
     }
 
@@ -769,7 +769,7 @@ public class BasicDiagramTest extends BasicShapeTest{
         parent.addChildShape(child);
         child.addChildShape(grandChild);
         parent.addChildShape(child2);
-        
+
         parent.getJSON();
         fail("Not yet implemented"); // TODO
     }
@@ -806,9 +806,9 @@ public class BasicDiagramTest extends BasicShapeTest{
         List<Point> dockers1 = new ArrayList<Point>();
         dockers1.add(new Point(b.getCenter()));
         testShape.setDockers(dockers1);
-        
+
         BasicShape testChild = new BasicNode(
-                "subshape", 
+                "subshape",
                 "SubShape");
         // relative to parent shape!
         Bounds b2 = new Bounds(new Point(10.1, 10.2), new Point(120.3, 120.4));
@@ -851,18 +851,18 @@ public class BasicDiagramTest extends BasicShapeTest{
         diagram = new BasicDiagram("");
         diagram.setStencilId("StencilRef");
         assertEquals("StencilRef", diagram.getQualifiedStencilId());
-        
+
         diagram = new BasicDiagram("");
         diagram.setStencilId("someStencilId");
         diagram.setStencilsetRef(new StencilSetReference("someStencilset"));
         assertEquals("someStencilset/someStencilId", diagram.getQualifiedStencilId());
-        
+
         diagram.setStencilsetRef(new StencilSetReference(""));
         assertEquals("/someStencilId", diagram.getQualifiedStencilId());
-        
+
         diagram.setStencilsetRef(new StencilSetReference(null));
         assertEquals("someStencilId", diagram.getQualifiedStencilId());
-        
+
         diagram.setStencilsetRef(null);
         assertEquals("someStencilId", diagram.getQualifiedStencilId());
     }

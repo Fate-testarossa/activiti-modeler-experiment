@@ -1,22 +1,22 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 /**
- * 
+ *
  */
 package com.signavio.platform.filters;
 
@@ -45,7 +45,7 @@ import com.signavio.platform.util.StringUtil;
 public class RequestExceptionFilter implements Filter {
 
     private ServletContext servletContext;
-    
+
     private void handleThrowable(Throwable t, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException  {
         t.printStackTrace();
         RequestException re = null;
@@ -54,7 +54,7 @@ public class RequestExceptionFilter implements Filter {
         } else if(t.getCause() instanceof RequestException) {
             re = (RequestException) t.getCause();
         }
-        
+
         if(re != null) {
             res.setStatus(re.getHttpStatusCode());
         } else if (t instanceof SecurityException || t.getCause() instanceof SecurityException) {
@@ -62,10 +62,10 @@ public class RequestExceptionFilter implements Filter {
         } else {
             res.setStatus(500);
         }
-        
-//        Properties translation = TranslationFactory.getTranslation(req); 
-        
-        // this is very dirty since it requires 
+
+//        Properties translation = TranslationFactory.getTranslation(req);
+
+        // this is very dirty since it requires
         String message = null;
         if(re != null) {
 //            message = translation.getProperty(re.getErrorCode());
@@ -75,12 +75,12 @@ public class RequestExceptionFilter implements Filter {
 //                message = translation.getProperty("unknownError") + " (" + re.getErrorCode() + ")";
             }
         }
-        
+
         if(message == null) {
 //            message = translation.getProperty("unknownError") + " (" + t.getLocalizedMessage() + ")";
         }
-        
-        if (req.getHeader("Accept").contains("application/json")) 
+
+        if (req.getHeader("Accept").contains("application/json"))
         {
             JSONObject errorObject = new JSONObject();
             try {
@@ -95,28 +95,28 @@ public class RequestExceptionFilter implements Filter {
             servletContext.getRequestDispatcher("/WEB-INF/jsp/error.jsp").include(req, res);
         }
     }
-    
+
     public void doFilter(ServletRequest req, ServletResponse res,
             FilterChain chain) throws IOException, ServletException {
-    
-        HttpServletRequest httpReq = (HttpServletRequest) req; 
+
+        HttpServletRequest httpReq = (HttpServletRequest) req;
         HttpServletResponse httpRes = (HttpServletResponse) res;
-        
+
         try {
             chain.doFilter(req, res);
-        } catch (Throwable t) {            
+        } catch (Throwable t) {
             handleThrowable(t, httpReq, httpRes);
         }
     }
-    
+
     public void destroy() {
         // TODO Auto-generated method stub
-        
+
     }
 
     public void init(FilterConfig arg0) throws ServletException {
         // TODO Auto-generated method stub
         this.servletContext = arg0.getServletContext();
-        
+
     }
 }

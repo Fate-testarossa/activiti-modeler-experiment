@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -32,9 +32,9 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
 
 /**
  * <p>Java class for tDataStore complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tDataStore">
  *   &lt;complexContent>
@@ -47,8 +47,8 @@ import de.hpi.bpmn2_0.util.EscapingStringAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -63,7 +63,7 @@ public class DataStore
 {
 
     protected DataState dataState;
-    
+
     @XmlAttribute
     @XmlJavaTypeAdapter(EscapingStringAdapter.class)
     protected String name;
@@ -71,10 +71,10 @@ public class DataStore
     protected int capacity;
     @XmlAttribute
     protected boolean isUnlimited;
-    
+
 //    /**
-//     * 
-//     * Basic method for the conversion of BPMN2.0 to the editor's internal format. 
+//     *
+//     * Basic method for the conversion of BPMN2.0 to the editor's internal format.
 //     * {@see BaseElement#toShape(BPMN2DiagramConverter)}
 //     * @param converterForShapeCoordinateLookup an instance of {@link BPMN2DiagramConverter}, offering several lookup methods needed for the conversion.
 //     */
@@ -82,14 +82,14 @@ public class DataStore
 //        Shape shape = super.toShape(converterForShapeCoordinateLookup);
 //
 //        shape.setStencil(new StencilType("DataStore"));
-//        
+//
 //        //shape.putProperty("", );
-//        
+//
 //        return shape;
-//    }    
-    
+//    }
+
     /* Getter & Setter */
-    
+
     public String getName() {
         return name;
     }
@@ -119,11 +119,11 @@ public class DataStore
 
     /**
      * Gets the value of the dataState property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link DataState }
-     *     
+     *
      */
     public DataState getDataState() {
         return dataState;
@@ -131,11 +131,11 @@ public class DataStore
 
     /**
      * Sets the value of the dataState property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link DataState }
-     *     
+     *
      */
     public void setDataState(DataState value) {
         this.dataState = value;
@@ -143,11 +143,11 @@ public class DataStore
 
     /**
      * Gets the value of the itemSubjectRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link QName }
-     *     
+     *
      */
     public QName getItemSubjectRef() {
         return itemSubjectRef;
@@ -155,11 +155,11 @@ public class DataStore
 
     /**
      * Sets the value of the itemSubjectRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link QName }
-     *     
+     *
      */
     public void setItemSubjectRef(QName value) {
         this.itemSubjectRef = value;

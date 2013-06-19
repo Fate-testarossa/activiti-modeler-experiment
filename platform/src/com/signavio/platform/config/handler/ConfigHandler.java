@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -40,27 +40,27 @@ public class ConfigHandler extends BasisHandler {
     public ConfigHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     @Override
     @HandlerMethodActivation
     public Object getRepresentation(Object params, FsAccessToken token){
-        
+
         JSONObject j = new JSONObject();
         JSONArray a = new JSONArray();
-        
+
         try {
             a.put("de");
             a.put("en_us");
             j.put("languages", a);
-            
+
             j.put("supportedBrowserEditor", Platform.getInstance().getPlatformProperties().getSupportedBrowserEditorRegExp());
-            
+
             // Write the current user
             FsUser u = FsSecurityManager.getInstance().loadObject(FsUser.class, token.getUserId(), token);
             FsTenant tenant = u.getTenant();
             j.put("user", "/user/" + u.getId());
             j.put("tenant", "/tenant/" + tenant.getId());
-            
+
             // Add owner
             FsUser owner = (FsUser) tenant.getOwner().getUserObject(tenant);
             j.put("owner", "/user/" + owner.getId());
@@ -69,9 +69,9 @@ public class ConfigHandler extends BasisHandler {
         } catch (Exception e) {
             throw new RequestException("config.exception", e);
         }
-        
+
         return j;
-        
+
     }
 
 }

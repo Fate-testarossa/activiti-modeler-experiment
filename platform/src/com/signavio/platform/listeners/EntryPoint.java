@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,20 +27,20 @@ import com.signavio.platform.core.PlatformInstance;
 import com.signavio.platform.core.impl.FsPlatformInstanceImpl;
 
 /**
- * This is the entry point for the application. 
+ * This is the entry point for the application.
  * System configuration is loaded here.
- * 
+ *
  * It is implemented as a ServletContextListener.
  * So, this is the first and the last code that is called when starting
  * the server.
- * 
+ *
  * @author nico
  *
  */
 public class EntryPoint implements ServletContextListener {
-    
+
     private final Logger logger = Logger.getLogger(EntryPoint.class);
-        
+
     public void contextDestroyed(ServletContextEvent sce) {
         logger.info("Destroying platform...");
         Platform.shutdownInstance();

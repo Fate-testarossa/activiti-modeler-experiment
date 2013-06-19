@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,9 +27,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tThrowEvent complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tThrowEvent">
  *   &lt;complexContent>
@@ -45,8 +45,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tThrowEvent", propOrder = {
@@ -66,9 +66,9 @@ public abstract class ThrowEvent
 {
 
     /* Constructors */
-    
+
     public ThrowEvent() {}
-    
+
     public ThrowEvent(ThrowEvent endEvent) {
         super(endEvent);
     }
@@ -83,28 +83,28 @@ public abstract class ThrowEvent
     public void acceptVisitor(Visitor v){
         v.visitThrowEvent(this);
     }
-    
+
     /**
      * Gets the value of the dataInput property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the dataInput property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataInput().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataInput }
-     * 
-     * 
+     *
+     *
      */
 //    public List<DataInput> getDataInput() {
 //        if (dataInput == null) {
@@ -115,25 +115,25 @@ public abstract class ThrowEvent
 
     /**
      * Gets the value of the dataInputAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the dataInputAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataInputAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataInputAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<DataInputAssociation> getDataInputAssociation() {
 //        if (dataInputAssociation == null) {
@@ -144,11 +144,11 @@ public abstract class ThrowEvent
 
     /**
      * Gets the value of the inputSet property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TInputSet }
-     *     
+     *
      */
 //    public TInputSet getInputSet() {
 //        return inputSet;
@@ -156,11 +156,11 @@ public abstract class ThrowEvent
 
     /**
      * Sets the value of the inputSet property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TInputSet }
-     *     
+     *
      */
 //    public void setInputSet(TInputSet value) {
 //        this.inputSet = value;
@@ -168,20 +168,20 @@ public abstract class ThrowEvent
 
     /**
      * Gets the value of the eventDefinition property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the eventDefinition property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEventDefinition().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link CompensateEventDefinition }{@code >}
@@ -195,8 +195,8 @@ public abstract class ThrowEvent
      * {@link JAXBElement }{@code <}{@link TEscalationEventDefinition }{@code >}
      * {@link JAXBElement }{@code <}{@link TSignalEventDefinition }{@code >}
      * {@link JAXBElement }{@code <}{@link TTerminateEventDefinition }{@code >}
-     * 
-     * 
+     *
+     *
      */
 //    public List<JAXBElement<? extends EventDefinition>> getEventDefinition() {
 //        if (eventDefinition == null) {
@@ -207,25 +207,25 @@ public abstract class ThrowEvent
 
     /**
      * Gets the value of the eventDefinitionRef property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the eventDefinitionRef property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getEventDefinitionRef().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link QName }
-     * 
-     * 
+     *
+     *
      */
 //    public List<QName> getEventDefinitionRef() {
 //        if (eventDefinitionRef == null) {

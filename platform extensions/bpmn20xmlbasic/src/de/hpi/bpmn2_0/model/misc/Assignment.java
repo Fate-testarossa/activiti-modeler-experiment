@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -29,9 +29,9 @@ import de.hpi.bpmn2_0.model.BaseElement;
 
 /**
  * <p>Java class for tAssignment complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tAssignment">
  *   &lt;complexContent>
@@ -45,8 +45,8 @@ import de.hpi.bpmn2_0.model.BaseElement;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tAssignment", propOrder = {
@@ -59,21 +59,21 @@ public class Assignment
 
     @XmlElement(required = true)
     protected String from;
-    
+
     @XmlElement(required = true)
     protected String to;
-    
+
     @XmlAttribute
     @XmlSchemaType(name = "anyURI")
     protected String language;
 
     /**
      * Gets the value of the from property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TBaseElementWithMixedContent }
-     *     
+     *
      */
     public String getFrom() {
         return from;
@@ -81,11 +81,11 @@ public class Assignment
 
     /**
      * Sets the value of the from property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TBaseElementWithMixedContent }
-     *     
+     *
      */
     public void setFrom(String value) {
         this.from = value;
@@ -93,11 +93,11 @@ public class Assignment
 
     /**
      * Gets the value of the to property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TBaseElementWithMixedContent }
-     *     
+     *
      */
     public String getTo() {
         return to;
@@ -105,11 +105,11 @@ public class Assignment
 
     /**
      * Sets the value of the to property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TBaseElementWithMixedContent }
-     *     
+     *
      */
     public void setTo(String value) {
         this.to = value;
@@ -117,11 +117,11 @@ public class Assignment
 
     /**
      * Gets the value of the language property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getLanguage() {
         return language;
@@ -129,11 +129,11 @@ public class Assignment
 
     /**
      * Sets the value of the language property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setLanguage(String value) {
         this.language = value;

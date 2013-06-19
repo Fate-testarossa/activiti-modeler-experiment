@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -27,20 +27,20 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 /**
  * This class summarizes {@link Gateway} that associate a default
  * {@link SequenceFlow}.
- * 
+ *
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 public abstract class GatewayWithDefaultFlow extends Gateway {
-    
+
     @XmlAttribute(name = "default")
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SequenceFlow defaultSequenceFlow;
-    
+
     /**
      * Determines the default {@link SequenceFlow}
-     * 
+     *
      * @return The default {@link SequenceFlow} or null
      */
     public SequenceFlow findDefaultSequenceFlow() {
@@ -51,24 +51,24 @@ public abstract class GatewayWithDefaultFlow extends Gateway {
                 return seqFlow;
             }
         }
-        
+
         return null;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitGatewayWithDefaultFlow(this);
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the default {@link SequenceFlow} of the {@link ExclusiveGateway} or
      * null if no default flow is set.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link SequenceFlow }
-     *     
+     *
      */
     public SequenceFlow getDefault() {
         return defaultSequenceFlow;
@@ -76,11 +76,11 @@ public abstract class GatewayWithDefaultFlow extends Gateway {
 
     /**
      * Sets default {@link SequenceFlow}.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link SequenceFlow }
-     *     
+     *
      */
     public void setDefault(SequenceFlow value) {
         this.defaultSequenceFlow = value;

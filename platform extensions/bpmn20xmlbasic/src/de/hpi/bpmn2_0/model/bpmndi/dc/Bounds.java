@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for Bounds complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="Bounds">
  *   &lt;complexContent>
@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Bounds")
@@ -58,7 +58,7 @@ public class Bounds {
 
     /**
      * Gets the value of the x property.
-     * 
+     *
      */
     public double getX() {
         return x;
@@ -66,7 +66,7 @@ public class Bounds {
 
     /**
      * Sets the value of the x property.
-     * 
+     *
      */
     public void setX(double value) {
         this.x = value;
@@ -74,7 +74,7 @@ public class Bounds {
 
     /**
      * Gets the value of the y property.
-     * 
+     *
      */
     public double getY() {
         return y;
@@ -82,7 +82,7 @@ public class Bounds {
 
     /**
      * Sets the value of the y property.
-     * 
+     *
      */
     public void setY(double value) {
         this.y = value;
@@ -90,7 +90,7 @@ public class Bounds {
 
     /**
      * Gets the value of the width property.
-     * 
+     *
      */
     public double getWidth() {
         return width;
@@ -98,7 +98,7 @@ public class Bounds {
 
     /**
      * Sets the value of the width property.
-     * 
+     *
      */
     public void setWidth(double value) {
         this.width = value;
@@ -106,7 +106,7 @@ public class Bounds {
 
     /**
      * Gets the value of the height property.
-     * 
+     *
      */
     public double getHeight() {
         return height;
@@ -114,7 +114,7 @@ public class Bounds {
 
     /**
      * Sets the value of the height property.
-     * 
+     *
      */
     public void setHeight(double value) {
         this.height = value;

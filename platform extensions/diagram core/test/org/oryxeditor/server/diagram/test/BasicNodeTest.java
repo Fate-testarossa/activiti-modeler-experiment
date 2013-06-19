@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -65,9 +65,9 @@ public class BasicNodeTest extends BasicShapeTest{
         List<Point> dockers1 = new ArrayList<Point>();
         dockers1.add(new Point(b.getCenter()));
         testShape.setDockers(dockers1);
-        
+
         BasicShape testChild = new BasicNode(
-                "subshape", 
+                "subshape",
                 "SubShape");
         // relative to parent shape!
         Bounds b2 = new Bounds(new Point(10.1, 10.2), new Point(120.3, 120.4));
@@ -91,8 +91,8 @@ public class BasicNodeTest extends BasicShapeTest{
 
         return testShape;
     }
-    
-    
+
+
     @Override
     public void testGetDockers() {
         Point p = new Point(456.321, 98907.3134);
@@ -104,19 +104,19 @@ public class BasicNodeTest extends BasicShapeTest{
         BasicNode node = new BasicNode("test");
         assertNotNull(node.getDockersReadOnly());
         assertTrue(node.getDockersReadOnly().isEmpty());
-        
+
         node.setDockers(null);
         assertNotNull(node.getDockersReadOnly());
         assertTrue(node.getDockersReadOnly().isEmpty());
-        
+
         node.setDockers(l);
         assertEquals(l, node.getDockersReadOnly());
-        
+
         l.clear();
         l.add(p2);
         node.setDockers(l);
         assertEquals(l, node.getDockersReadOnly());
-        
+
         l.clear();
         l.add(p);
         assertFalse(l.equals(node.getDockersReadOnly()));
@@ -126,7 +126,7 @@ public class BasicNodeTest extends BasicShapeTest{
     public void testSetDockers() {
         testGetDockers();
     }
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testSetDockersException(){
         Point p = new Point(456.321, 98907.3134);
@@ -135,7 +135,7 @@ public class BasicNodeTest extends BasicShapeTest{
         List<Point> l = new ArrayList<Point>();
         l.add(p);
         l.add(p2);
-        
+
         new BasicNode("test").setDockers(l);
     }
 
@@ -144,18 +144,18 @@ public class BasicNodeTest extends BasicShapeTest{
         BasicNode node = new BasicNode("test");
         Point p1 = new Point(1, 1);
         Point p2 = new Point(2, 2);
-        
+
         assertTrue(node.getDockersReadOnly().isEmpty());
         node.addDocker(p1);
         assertFalse(node.getDockersReadOnly().isEmpty());
         assertEquals(p1, node.getDockersReadOnly().get(0));
-        
+
         node.setDockers(null);
         assertTrue(node.getDockersReadOnly().isEmpty());
         node.addDocker(p2);
         assertEquals(p2, node.getDockersReadOnly().get(0));
     }
-    
+
     @Override
     public void testAddDocker4(){
         BasicNode node = new BasicNode("test");
@@ -163,26 +163,26 @@ public class BasicNodeTest extends BasicShapeTest{
         Point p2 = new Point(2, 2);
         node.addDocker(p1,0);
         assertEquals(p1, node.getDockersReadOnly().get(0));
-        
+
         node.setDockers(null);
         node.addDocker(p2,0);
         assertEquals(p2, node.getDockersReadOnly().get(0));
     }
 
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testAddDockerException1(){
         BasicNode node = new BasicNode("test");
         node.addDocker(new Point(1, 1));
-        
+
         node.addDocker(new Point(2, 2));
     }
-    
+
     @Test(expected=TooManyDockersException.class)
     public void testAddDockerException2(){
         BasicNode node = new BasicNode("test");
         node.addDocker(new Point(1, 1),0);
-        
+
         node.addDocker(new Point(2, 2),1);
     }
 }

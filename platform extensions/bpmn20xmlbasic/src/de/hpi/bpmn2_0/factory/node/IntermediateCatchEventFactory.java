@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -50,10 +50,10 @@ import de.hpi.diagram.SignavioUUID;
 
 /**
  * Factory to create intermediate catching Events
- * 
+ *
  * @author Philipp Giese
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 @StencilId( { "IntermediateMessageEventCatching", "IntermediateTimerEvent",
         "IntermediateEscalationEvent", "IntermediateConditionalEvent",
@@ -65,7 +65,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @seede.hpi.bpmn2_0.factory.AbstractBpmnFactory#createProcessElement(org.
      * oryxeditor.server.diagram.Shape)
      */
@@ -78,7 +78,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
             icEvent.setId(shape.getResourceId());
             icEvent.setName(shape.getProperty("name"));
 
-            
+
             icEvent.setCancelActivity(shape
                     .getProperty("boundarycancelactivity2"));
 
@@ -98,7 +98,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
     public IntermediateCatchEvent createCompensateEvent(GenericShape shape) {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
         CompensateEventDefinition compEvDef = new CompensateEventDefinition();
-        
+
         /* Activity Reference */
         String activityRef = shape.getProperty("activityref");
         if(activityRef != null && !(activityRef.length() == 0)) {
@@ -106,7 +106,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
             taskRef.setId(activityRef);
             compEvDef.setActivityRef(taskRef);
         }
-        
+
         /* Wait for Completion */
         String waitForCompletion = shape.getProperty("waitforcompletion");
         if(waitForCompletion != null && waitForCompletion.equals("false")) {
@@ -114,7 +114,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         } else {
             compEvDef.setWaitForCompletion(true);
         }
-        
+
         icEvent.getEventDefinition().add(compEvDef);
         return icEvent;
     }
@@ -124,28 +124,28 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
 
         TimerEventDefinition timerEvDef = new TimerEventDefinition();
-        
+
         /* Time Date */
         String timeDate = shape.getProperty("timedate");
         if(timeDate != null && !(timeDate.length() == 0)) {
             FormalExpression expr = new FormalExpression(timeDate);
             timerEvDef.setTimeDate(expr);
         }
-        
+
         /* Time Cycle */
         String timeCycle = shape.getProperty("timecycle");
         if(timeCycle != null && !(timeCycle.length() == 0)) {
             FormalExpression expr = new FormalExpression(timeCycle);
             timerEvDef.setTimeCycle(expr);
         }
-        
+
         /* Time Duration */
         String timeDuration = shape.getProperty("timeduration");
         if(timeDuration != null && !(timeDuration.length() == 0)) {
             FormalExpression expr = new FormalExpression(timeDuration);
             timerEvDef.setTimeDuration(expr);
         }
-        
+
         icEvent.getEventDefinition().add(timerEvDef);
 
         return icEvent;
@@ -156,8 +156,8 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
 
         MessageEventDefinition messageEvDef = new MessageEventDefinition();
-        
-        
+
+
         /* Message name */
         String messageName = shape.getProperty("messagename");
         if(messageName != null && !(messageName.length() == 0)) {
@@ -165,7 +165,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
             message.setName(messageName);
             messageEvDef.setMessageRef(message);
         }
-        
+
         /* Operation name */
         String operationName = shape.getProperty("operationname");
         if(operationName != null && !(operationName.length() == 0)) {
@@ -173,7 +173,7 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
             operation.setName(operationName);
             messageEvDef.setOperationRef(operation);
         }
-        
+
         icEvent.getEventDefinition().add(messageEvDef);
 
         return icEvent;
@@ -184,21 +184,21 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
 
         EscalationEventDefinition escalDef = new EscalationEventDefinition();
-        
+
         Escalation escalation = new Escalation();
-        
+
         /* Escalation name */
         String escalationName = shape.getProperty("escalationname");
         if(escalationName != null && !(escalationName.length() == 0)) {
             escalation.setName(escalationName);
         }
-        
+
         /* Escalation code */
         String escalationCode = shape.getProperty("escalationcode");
         if(escalationCode != null && !(escalationCode.length() == 0)) {
             escalation.setEscalationCode(escalationCode);
         }
-        
+
         escalDef.setEscalationRef(escalation);
         icEvent.getEventDefinition().add(escalDef);
 
@@ -231,14 +231,14 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         String name = shape.getProperty("name");
         if (name != null && !(name.length() == 0))
             linkDef.setName(name);
-        
+
         /* Set source reference */
         String sourceEntry = shape.getProperty("entry");
         if(sourceEntry != null && sourceEntry.length() != 0) {
             linkDef.getSource().add(sourceEntry);
         }
-        
-        
+
+
         icEvent.getEventDefinition().add(linkDef);
 
         return icEvent;
@@ -249,23 +249,23 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
 
         ErrorEventDefinition errorDef = new ErrorEventDefinition();
-        
+
         Error error = new Error();
-        
+
         /* Error name */
         String errorName = shape.getProperty("errorname");
         if(errorName != null && !(errorName.length() == 0)) {
             error.setName(errorName);
         }
-        
+
         /* Error code */
         String errorCode = shape.getProperty("errorcode");
         if(errorCode != null && !(errorCode.length() == 0)) {
             error.setErrorCode(errorCode);
         }
-        
+
         errorDef.setErrorRef(error);
-        
+
         icEvent.getEventDefinition().add(errorDef);
 
         return icEvent;
@@ -286,18 +286,18 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
 
         SignalEventDefinition signalDef = new SignalEventDefinition();
-        
+
         Signal signal = new Signal();
-        
+
         /* Signal ID */
         signal.setId(SignavioUUID.generate());
-        
+
         /* Signal name */
         String signalName = shape.getProperty("signalname");
         if(signalName != null && !(signalName.length() == 0)) {
             signal.setName(signalName);
         }
-        
+
         signalDef.setSignalRef(signal);
         icEvent.getEventDefinition().add(signalDef);
 
@@ -307,10 +307,10 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
     @StencilId("IntermediateMultipleEventCatching")
     public IntermediateCatchEvent createMultipleEvent(GenericShape shape) {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
-        
+
         icEvent.getEventDefinition().add(new CancelEventDefinition());
         icEvent.getEventDefinition().add(new TerminateEventDefinition());
-        
+
         icEvent.setParallelMultiple(false);
 
         return icEvent;
@@ -319,10 +319,10 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
     @StencilId("IntermediateParallelMultipleEventCatching")
     public IntermediateCatchEvent createParallelMultipleEvent(GenericShape shape) {
         IntermediateCatchEvent icEvent = new IntermediateCatchEvent();
-        
+
         icEvent.getEventDefinition().add(new CancelEventDefinition());
         icEvent.getEventDefinition().add(new TerminateEventDefinition());
-        
+
         icEvent.setParallelMultiple(true);
 
         return icEvent;
@@ -338,18 +338,18 @@ public class IntermediateCatchEventFactory extends AbstractShapeFactory {
         BoundaryEvent bEvent = new BoundaryEvent();
         bEvent.getEventDefinition().addAll(
                 ((Event) event.getNode()).getEventDefinition());
-        
+
         /* Special boundary event attributes */
         bEvent.setAttachedToRef((Activity) activity.getNode());
         bEvent.setCancelActivity(!((IntermediateCatchEvent) event.getNode())
                 .getCancelActivity().equalsIgnoreCase("false"));
-        
+
         // bEvent.setProcessRef(event.get);
         bEvent.setId(event.getNode().getId());
         bEvent.setName(((IntermediateCatchEvent) event.getNode()).getName());
         bEvent.setParallelMultiple(((IntermediateCatchEvent) event.getNode())
                 .isParallelMultiple());
-        
+
         IntermediateCatchEvent ice = (IntermediateCatchEvent) event.getNode();
         event.setNode(bEvent);
         if(event.getShape() instanceof BPMNShape) {

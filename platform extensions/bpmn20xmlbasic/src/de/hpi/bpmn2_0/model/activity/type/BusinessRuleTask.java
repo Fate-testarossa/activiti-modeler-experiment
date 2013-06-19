@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -32,9 +32,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tBusinessRuleTask complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tBusinessRuleTask">
  *   &lt;complexContent>
@@ -43,8 +43,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -54,17 +54,17 @@ public class BusinessRuleTask
 {
     @XmlAttribute
     BusinessRuleTaskImplementation implementation;
-    
+
     /* Constructors */
-    
+
     /**
      * Default constructor
      */
     public BusinessRuleTask() {    }
-    
+
     /**
      * Copy constructor
-     * 
+     *
      * @param brTask
      *         Template {@link BusinessRuleTask}
      */
@@ -72,22 +72,22 @@ public class BusinessRuleTask
         super(brTask);
         this.setImplementation(brTask.getImplementation());
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitBusinessRuleTask(this);
     }
-    
+
     public GlobalTask getAsGlobalTask() {
         GlobalBusinessRuleTask brGt = new GlobalBusinessRuleTask(super.getAsGlobalTask());
         brGt.setImplementation(this.getImplementation());
-        
+
         return brGt;
     }
-    
-    
+
+
 
     /* Getter & Setter */
-    
+
     /**
      * @return the implementation
      */

@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -144,8 +144,8 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
                 if (edge instanceof MessageFlow) {
                     FlowElement source = edge.getSourceRef();
                     FlowElement target = edge.getTargetRef();
-                    
-                    
+
+
 
                     /*
                      * Not in same process or sub process
@@ -501,16 +501,16 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     // addError(node, NODE_NOT_ALLOWED);
     // }
     // }
-    //    
+    //
     // private boolean checkForAllowedNode(FlowElement node, HashSet<String>
     // classes, boolean allowed) {
     // // If checking for allowed classes, empty classes means all are allowed
     // if(allowed && classes.size() == 0)
     // return true;
-    //        
+    //
     // boolean containedInClasses = false;
     // String nodeClassName = node.getClass().getSimpleName();
-    //    
+    //
     // for(String clazz : classes){
     // //TODO this doesn't checks for superclasses!!!
     // // better would be "node instanceof Class.forName(clazz)"
@@ -520,10 +520,10 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     // containedInClasses = (node instanceof Activity) &&
     // ((Activity)node).isMultipleInstance();
     // }
-    //            
+    //
     // if(containedInClasses) break;
     // }
-    //        
+    //
     // return containedInClasses == allowed;
     // }
 
@@ -594,12 +594,12 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
     private boolean hasOutgoingControlFlow(FlowNode node) {
         return node.getOutgoingSequenceFlows().size() > 0;
     }
-    
+
     /**
      * Checks whether the {@link FlowElement} has a correlating diagram element.
-     * 
+     *
      * @param element
-     * 
+     *
      * @return
      *         true if diagram element exists
      */
@@ -609,13 +609,13 @@ public class BPMN2SyntaxChecker extends AbstractSyntaxChecker {
                     && ((BPMNShape) diaEl).getBpmnElement().equals(element)) {
                 return true;
             }
-            
+
             if(diaEl instanceof BPMNEdge
                     && ((BPMNEdge) diaEl).getBpmnElement().equals(element)) {
                 return true;
             }
         }
-        
+
         return false;
     }
 

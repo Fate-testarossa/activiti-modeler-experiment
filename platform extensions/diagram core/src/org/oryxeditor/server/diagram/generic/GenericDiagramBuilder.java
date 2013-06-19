@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -52,8 +52,8 @@ import org.oryxeditor.server.diagram.label.VerticalAlign;
  * @param <S> the actual type of shape to be used (must inherit from {@link GenericShape}); calls to {@link GenericShape#getChildShapesReadOnly()}, ... will return this type
  * @param <D> the actual type of diagram to be used (must inherit from {@link GenericDiagram}); {@link GenericShape#getDiagram()} will return this type
  */
-public abstract class GenericDiagramBuilder 
-    <S extends GenericShape<S,D>, D extends GenericDiagram<S,D>, E extends GenericEdge<S, D>, N extends GenericNode<S, D>> 
+public abstract class GenericDiagramBuilder
+    <S extends GenericShape<S,D>, D extends GenericDiagram<S,D>, E extends GenericEdge<S, D>, N extends GenericNode<S, D>>
     implements ShapeFactory<S, D, E, N>{
 
     private static final Logger LOGGER = Logger.getLogger(GenericDiagramBuilder.class);
@@ -67,8 +67,8 @@ public abstract class GenericDiagramBuilder
         }
         return null;
     }
-    
-    
+
+
     protected String parseDiagramIdInternal(JSONObject json) throws JSONException, IllegalArgumentException {
         if (json == null)
             throw new IllegalArgumentException("JSON object is null");
@@ -78,11 +78,11 @@ public abstract class GenericDiagramBuilder
         }
         return id;
     }
-    
-    
+
+
     /**
      * Parses the json object to the diagram model, assumes that the json is hierarchical ordered
-     * 
+     *
      * @param json
      *            hierarchical JSON object representing a diagram
      * @return a diagram object with all shapes as defined in json
@@ -109,20 +109,20 @@ public abstract class GenericDiagramBuilder
         flatJSON.remove(id);
         D diagram = createNewDiagram(id);
         S diagramShape = (S) diagram;//only to reduce the number of warnings
-        
+
         parseStencilSet(json, diagram);
         parseSsextensions(json, diagram);
         parseStencil(json, diagramShape);//, diagram.getStencilsetRef());
         parseProperties(json, diagramShape);
         parseChildShapes(json, diagramShape, childsMap);
         parseBounds(json, diagramShape);
-        
+
         shapesMap.put(diagram.getResourceId(), diagramShape);
 
         //parse all shapes and add them to the map
         for (Map.Entry<String, JSONObject> entry : flatJSON.entrySet()) {
-            shapesMap.put(entry.getKey(), 
-                parseShape(entry.getKey(), entry.getValue(), 
+            shapesMap.put(entry.getKey(),
+                parseShape(entry.getKey(), entry.getValue(),
                     diagram, targetsMap, outgoingsMap, childsMap));
         }
 
@@ -135,11 +135,11 @@ public abstract class GenericDiagramBuilder
 
         return diagram;
     }
-    
-    
+
+
     /**
      * Set the child relation based on childMap's entries.
-     * 
+     *
      * @param shapesMap
      * @param childMap
      */
@@ -159,7 +159,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * Set the target relation based on targetMap's entries.
-     * 
+     *
      * @param shapesMap
      * @param targetMap
      */
@@ -179,7 +179,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * Set the outgoing relation based on outgoingMap's entries.
-     * 
+     *
      * @param shapesMap
      * @param outgoingMap
      */
@@ -191,7 +191,7 @@ public abstract class GenericDiagramBuilder
             S shape = shapesMap.get(outgoingsEntry.getKey());
             for (String outgoingId : outgoingsEntry.getValue()) {
                 S outgoingShape = shapesMap.get(outgoingId);
-                shape.addOutgoingAndUpdateItsIncomings(outgoingShape);    
+                shape.addOutgoingAndUpdateItsIncomings(outgoingShape);
             }
         }
 
@@ -212,7 +212,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * A source of an edge is the one incoming shape, that doesn't have that shape as target
-     * 
+     *
      * @param s
      * @return
      */
@@ -263,14 +263,14 @@ public abstract class GenericDiagramBuilder
 
     /**
      * Parse one resource to a shape object and add it to the shapes array
-     * 
+     *
      * @param resourceId
      * @param jsonShape
      * @param diagram
      * @param targetMap
      * @param outgoingMap
      * @param childMap
-     * 
+     *
      * @throws JSONException
      */
     protected S parseShape(String resourceId, JSONObject jsonShape,
@@ -301,10 +301,10 @@ public abstract class GenericDiagramBuilder
             parseTarget(jsonShape, (GenericEdge<S, D>) currentShape, targetMap);
         }
         parseLabels(jsonShape, currentShape);
-        
+
         //set the diagram, because will cause inconsistencies if skipped!
         currentShape.setDiagram(diagram);
-        
+
         return currentShape;
     }
 
@@ -389,7 +389,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * parse the stencil out of a JSONObject and set it to the current shape
-     * 
+     *
      * @param jsonShape
      * @param currentShape
      * @throws JSONException
@@ -412,7 +412,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * crates a StencilSet object and add it to the current diagram
-     * 
+     *
      * @param modelJSON
      * @param current
      * @throws JSONException
@@ -438,7 +438,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * Adds all JSON properties to the current shape. Preserves the data types of properties as found in the JSON.
-     * 
+     *
      * @param modelJSON
      * @param current
      * @throws JSONException
@@ -462,7 +462,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * adds all json extension to an diagram
-     * 
+     *
      * @param modelJSON
      * @param current
      * @throws JSONException
@@ -480,7 +480,7 @@ public abstract class GenericDiagramBuilder
     /**
      * Parse the outgoings of a json object and update the outgoingList, to be able to add all shape references to the
      * current shape later.
-     * 
+     *
      * @param jsonShape
      * @param currentShape
      * @param outgoingMap
@@ -506,7 +506,7 @@ public abstract class GenericDiagramBuilder
     /**
      * creates a shape list containing all child shapes and set it to the current shape new shape get added to the shape
      * array
-     * 
+     *
      * @param jsonShape
      * @param currentShape
      * @throws JSONException
@@ -516,7 +516,7 @@ public abstract class GenericDiagramBuilder
         if (jsonShape.has("childShapes")) {
             List<String> childShapes = new ArrayList<String>();
             JSONArray childShapeObject = jsonShape.getJSONArray("childShapes");
-            
+
             for (int i = 0; i < childShapeObject.length(); i++) {
                 childShapes.add(childShapeObject.getJSONObject(i).getString("resourceId"));
             }
@@ -529,7 +529,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * creates a point array of all dockers and add it to the current shape
-     * 
+     *
      * @param modelJSON
      * @param shapeId
      * @throws JSONException
@@ -566,7 +566,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * creates a bounds object with both point parsed from the json and set it to the current shape
-     * 
+     *
      * @param modelJSON
      * @param current
      * @throws JSONException
@@ -588,7 +588,7 @@ public abstract class GenericDiagramBuilder
 
     /**
      * Parse the target resource and update targetMap to be able to add it to the current shape later.
-     * 
+     *
      * @param jsonShape
      * @param currentEdge
      * @param targetMap
@@ -608,7 +608,7 @@ public abstract class GenericDiagramBuilder
     /**
      * Prepare a model JSON for analyze, resolves the hierarchical structure creates a HashMap which contains all
      * resourceIds as keys and for each key the JSONObject, all id are keys of this map
-     * 
+     *
      * @param object
      * @return a map; keys: all ressourceIds; values: all child JSONObjects
      * @throws JSONException

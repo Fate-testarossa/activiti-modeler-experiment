@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -45,18 +45,18 @@ public class JsonRdfTransformation {
         this.erdf = jsonToErdf(json);
         this.context = context;
     }
-    
+
     static protected boolean isJson(String content){
         return !content.startsWith("<");
     }
-    
+
     public String toString(){
         try {
             return erdfToRdf(this.erdf);
         } catch (TransformerException e) {}
         return "";
     }
-    
+
     private String erdfToRdf(String erdf) throws TransformerException{
         String serializedDOM = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
         "<html xmlns=\"http://www.w3.org/1999/xhtml\" " +
@@ -71,7 +71,7 @@ public class JsonRdfTransformation {
         "<link rel=\"schema.oryx\" href=\"http://oryx-editor.org/\" />" +
         "<link rel=\"schema.raziel\" href=\"http://raziel.org/\" />" +
         "</head><body>" + erdf + "</body></html>";
-        
+
         InputStream xsltStream = this.context.getResourceAsStream("/WEB-INF/xslt/extract-rdf.xsl");
         Source xsltSource = new StreamSource(xsltStream);
         Source erdfSource = new StreamSource(new StringReader(serializedDOM));
@@ -83,7 +83,7 @@ public class JsonRdfTransformation {
         trans.transform(erdfSource, new StreamResult(output));
         return output.toString();
     }
-    
+
     protected static String erdfToJson(String erdf, String serverUrl){
         return "";
         // TODO: Implement
@@ -105,7 +105,7 @@ public class JsonRdfTransformation {
         }
         return null;*/
     }
-    
+
     protected static String jsonToErdf(String json){
         return new JsonErdfTransformation(json).toString();
     }

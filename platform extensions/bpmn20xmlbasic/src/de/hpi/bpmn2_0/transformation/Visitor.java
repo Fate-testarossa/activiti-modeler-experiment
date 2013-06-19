@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -82,13 +82,13 @@ import de.hpi.bpmn2_0.model.participant.Lane;
 import de.hpi.bpmn2_0.model.participant.Participant;
 
 public interface Visitor {
-    
+
     public void visitDiagramElement(DiagramElement that);
-    
+
     public void visitBpmnEdge(BPMNEdge that);
-    
-    public void visitBpmnShape(BPMNShape that);    
-    
+
+    public void visitBpmnShape(BPMNShape that);
+
     public void visitAbstractDataObject(AbstractDataObject that);
 
     public void visitActivity(Activity that);
@@ -108,7 +108,7 @@ public interface Visitor {
     public void visitCallActivity(CallActivity that);
 
     public void visitCallChoreography(CallChoreography that);
-    
+
     public void visitCallConversation(CallConversation that);
 
     public void visitCatchEvent(CatchEvent that);
@@ -132,7 +132,7 @@ public interface Visitor {
     public void visitDataInputAssociation(DataInputAssociation that);
 
     public void visitDataObject(DataObject that);
-    
+
     public void visitDataObjectReference(DataObjectReference that);
 
     public void visitDataOutput(DataOutput that);
@@ -162,7 +162,7 @@ public interface Visitor {
     public void visitGroup(Group that);
 
     public void visitImplicitThrowEvent(ImplicitThrowEvent that);
-    
+
     public void visitInclusiveGateway(InclusiveGateway that);
 
     public void visitIntermediateCatchEvent(IntermediateCatchEvent that);

@@ -1,22 +1,22 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-if (!ORYX.Plugins) 
+if (!ORYX.Plugins)
     ORYX.Plugins = new Object();
 
 /**
@@ -27,7 +27,7 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
     construct: function(){
         // Call super class constructor
         arguments.callee.$.construct.apply(this, arguments);
-        
+
         this.facade.offer({
             'name': ORYX.I18N.JSONSupport.exp.name,
             'functionality': this.exportJSON.bind(this),
@@ -39,7 +39,7 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
             'minShape': 0,
             'maxShape': 0
         });
-        
+
         this.facade.offer({
             'name': ORYX.I18N.JSONSupport.imp.name,
             'functionality': this.showImportDialog.bind(this),
@@ -52,18 +52,18 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
             'maxShape': 0
         });
     },
-    
+
     exportJSON: function(){
         var json = this.facade.getSerializedJSON();
         this.openDownloadWindow(window.document.title + ".json", json);
     },
-    
+
     /**
      * Opens a upload dialog.
      *
      */
     showImportDialog: function(successCallback){
-    
+
         var form = new Ext.form.FormPanel({
             baseCls: 'x-plain',
             labelWidth: 50,
@@ -86,7 +86,7 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
                 anchor: '100% -63'
             }]
         });
-        
+
         // Create the panel
         var dialog = new Ext.Window({
             autoCreate: true,
@@ -105,18 +105,18 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
             buttons: [{
                 text: ORYX.I18N.JSONSupport.imp.btnImp,
                 handler: function(){
-                
+
                     var loadMask = new Ext.LoadMask(Ext.getBody(), {
                         msg: ORYX.I18N.JSONSupport.imp.progress
                     });
                     loadMask.show();
-                    
+
                     window.setTimeout(function(){
                         var json = form.items.items[2].getValue();
                         try {
                             this.facade.importJSON(json, true);
                             dialog.close();
-                        } 
+                        }
                         catch (error) {
                             Ext.Msg.alert(ORYX.I18N.JSONSupport.imp.syntaxError, error.message);
                         }
@@ -124,7 +124,7 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
                             loadMask.hide();
                         }
                     }.bind(this), 100);
-                    
+
                 }.bind(this)
             }, {
                 text: ORYX.I18N.JSONSupport.imp.btnClose,
@@ -133,16 +133,16 @@ ORYX.Plugins.JSONSupport = ORYX.Plugins.AbstractPlugin.extend({
                 }.bind(this)
             }]
         });
-        
+
         // Show the panel
         dialog.show();
-        
-        // Adds the change event handler to 
+
+        // Adds the change event handler to
         form.items.items[1].getEl().dom.addEventListener('change', function(evt){
             var text = evt.target.files[0].getAsText('UTF-8');
             form.items.items[2].setValue(text);
         }, true)
-        
+
     }
-    
+
 });

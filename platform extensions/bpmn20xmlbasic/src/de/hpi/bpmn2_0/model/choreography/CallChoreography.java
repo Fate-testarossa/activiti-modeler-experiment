@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -40,9 +40,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCallChoreography complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCallChoreography">
  *   &lt;complexContent>
@@ -56,8 +56,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -72,24 +72,24 @@ public class CallChoreography
     @XmlAttribute(name = "calledChoreographyRef")
     @XmlIDREF
     protected Choreography calledChoreographyRef;
-    
+
     @XmlTransient
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
-    
+
     /*
      * Constructors
      */
-    
+
     public CallChoreography() {
         super();
     }
-    
+
     public CallChoreography(ChoreographyActivity choreoAct) {
         super(choreoAct);
-        
+
         this.setStartQuantity(null);
         this.setCompletionQuantity(null);
-        
+
         if(choreoAct instanceof ChoreographyTask) {
             this.setCalledChoreographyRef(new GlobalChoreographyTask());
         }
@@ -97,12 +97,12 @@ public class CallChoreography
 
     public List<BaseElement> getCalledElements() {
         List<BaseElement> calledElements = new ArrayList<BaseElement>();
-        
+
         /* Global Task */
         if(calledChoreographyRef instanceof GlobalChoreographyTask) {
             calledElements.add(calledChoreographyRef);
-        } 
-        
+        }
+
         /* Calling a sub choreography */
         else if(calledChoreographyRef instanceof Choreography) {
             for(FlowElement flowEl : calledChoreographyRef.getFlowElement()) {
@@ -111,13 +111,13 @@ public class CallChoreography
                 }
             }
         }
-        
+
         return calledElements;
     }
-    
+
     public List<Edge> getChildEdges() {
         List<Edge> edgeList = new ArrayList<Edge>();
-        
+
         for(FlowElement fe : this.getFlowElement()) {
             if(fe instanceof Edge) {
                 edgeList.add((Edge) fe);
@@ -125,33 +125,33 @@ public class CallChoreography
                 edgeList.addAll(((ContainerElement) fe).getChildEdges());
             }
         }
-        
+
         return edgeList;
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the participantAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the participantAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getParticipantAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ParticipantAssociation }
-     * 
-     * 
+     *
+     *
      */
     public List<ParticipantAssociation> getParticipantAssociation() {
         if (participantAssociation == null) {
@@ -162,11 +162,11 @@ public class CallChoreography
 
     /**
      * Gets the value of the calledChoreographyRef property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Choreography }
-     *     
+     *
      */
     public Choreography getCalledChoreographyRef() {
         return calledChoreographyRef;
@@ -174,16 +174,16 @@ public class CallChoreography
 
     /**
      * Sets the value of the calledChoreographyRef property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Choreography }
-     *     
+     *
      */
     public void setCalledChoreographyRef(Choreography value) {
         this.calledChoreographyRef = value;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitCallChoreography(this);
     }
@@ -196,7 +196,7 @@ public class CallChoreography
         if(this.getCalledChoreographyRef() != null) {
             return this.getCalledChoreographyRef().getFlowElement();
         }
-        
+
         return new ArrayList<FlowElement>();
     }
 

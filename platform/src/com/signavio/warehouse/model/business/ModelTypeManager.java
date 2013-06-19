@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -38,7 +38,7 @@ import com.signavio.warehouse.model.business.modeltype.JpdlModelType;
 import com.signavio.warehouse.model.business.modeltype.SignavioModelType;
 
 public class ModelTypeManager {
-    
+
     private static ModelTypeManager SINGLETON;
 
     public static void createInstance() {
@@ -47,16 +47,16 @@ public class ModelTypeManager {
         }
         SINGLETON = new ModelTypeManager();
     }
-    
+
     public static ModelTypeManager getInstance() {
         return SINGLETON;
     }
-    
+
     private final Map<String, ModelType> extension2modelTypes;
     private final Set<ModelType> modelTypes = new HashSet<ModelType>();
     private final ModelType backfallModelType;
     private final FilenameFilter filter;
-    
+
     private ModelTypeManager(){
         extension2modelTypes = new HashMap<String, ModelType>();
         backfallModelType = new SignavioModelType();
@@ -74,8 +74,8 @@ public class ModelTypeManager {
         modelTypes.addAll(extension2modelTypes.values());
         modelTypes.add(new BPMN2_0XMLModelType());
     }
-    
-    
+
+
     public FilenameFilter getFilenameFilter(){
         return filter;
     }
@@ -92,14 +92,14 @@ public class ModelTypeManager {
         }
         return (result != null) ? result : backfallModelType;
     }
-    
+
 
 
     public static String[] splitNameAndExtension(String nameWithExtension) {
         int index;
         if (nameWithExtension.endsWith(SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
             index = nameWithExtension.length() - SignavioModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
-        } else 
+        } else
         if (nameWithExtension.endsWith(JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension())) {
             index = nameWithExtension.length() - JpdlModelType.class.getAnnotation(ModelTypeFileExtension.class).fileExtension().length();
         } else {

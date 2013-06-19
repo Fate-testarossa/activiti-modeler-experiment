@@ -29,7 +29,7 @@
                     "optional":true,
                     "length":"",
                     "wrapLines" : true,
-                    "refToView":"text_name"    
+                    "refToView":"text_name"
                 },
                 {
                     "id":"documentation",
@@ -466,7 +466,7 @@
             "propertyPackages": [
                 "baseAttributes",
                 "participantmultiplicity",
-                "bgColor", 
+                "bgColor",
                 "conversationNode"],
             "properties" :         [
                 {
@@ -506,9 +506,9 @@
                 "fromtoall"
             ]
         },
-        
+
         // Artifacts
-        
+
         {
             "type" :             "node",
             "id" :                 "Group",

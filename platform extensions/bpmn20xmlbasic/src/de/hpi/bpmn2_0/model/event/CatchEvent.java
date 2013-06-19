@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -28,9 +28,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tCatchEvent complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tCatchEvent">
  *   &lt;complexContent>
@@ -47,8 +47,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "tCatchEvent", propOrder = {
@@ -74,25 +74,25 @@ public abstract class CatchEvent
 
     /**
      * Gets the value of the dataOutput property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the dataOutput property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataOutput().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataOutput }
-     * 
-     * 
+     *
+     *
      */
 //    public List<DataOutput> getDataOutput() {
 //        if (dataOutput == null) {
@@ -103,25 +103,25 @@ public abstract class CatchEvent
 
     /**
      * Gets the value of the dataOutputAssociation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the dataOutputAssociation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataOutputAssociation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link DataOutputAssociation }
-     * 
-     * 
+     *
+     *
      */
 //    public List<DataOutputAssociation> getDataOutputAssociation() {
 //        if (dataOutputAssociation == null) {
@@ -132,11 +132,11 @@ public abstract class CatchEvent
 
     /**
      * Gets the value of the outputSet property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link TOutputSet }
-     *     
+     *
      */
 //    public TOutputSet getOutputSet() {
 //        return outputSet;
@@ -144,11 +144,11 @@ public abstract class CatchEvent
 
     /**
      * Sets the value of the outputSet property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link TOutputSet }
-     *     
+     *
      */
 //    public void setOutputSet(TOutputSet value) {
 //        this.outputSet = value;
@@ -157,11 +157,11 @@ public abstract class CatchEvent
 
     /**
      * Gets the value of the parallelMultiple property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Boolean }
-     *     
+     *
      */
     public boolean isParallelMultiple() {
         if (parallelMultiple == null) {
@@ -173,20 +173,20 @@ public abstract class CatchEvent
 
     /**
      * Sets the value of the parallelMultiple property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *     
+     *
      */
     public void setParallelMultiple(Boolean value) {
         this.parallelMultiple = value;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitCatchEvent(this);
     }
-    
-   
+
+
 
 }

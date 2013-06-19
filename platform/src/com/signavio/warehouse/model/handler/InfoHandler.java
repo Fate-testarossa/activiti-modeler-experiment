@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -51,25 +51,25 @@ public class InfoHandler extends AbstractInfoHandler {
     public InfoHandler(ServletContext servletContext) {
         super(servletContext);
     }
-    
+
     /**
      * Get all information out from a particular model
      */
     @Override
     @HandlerMethodActivation
     public  <T extends FsSecureBusinessObject> Object getRepresentation(T sbo, Object params, FsAccessToken token){
-        
+
         JSONObject res = (JSONObject) super.getRepresentation(sbo, params, token);
-        
+
         try {
-            
+
             FsModel model = (FsModel) sbo;
-            
+
             res.put("name", model.getName());
             res.put("description", model.getDescription());
             res.put("created", model.getCreationDate());
             res.put("type", model.getType());
-            
+
             FsModelRevision head = model.getHeadRevision();
             if (head != null) {
                 res.put("updated", head.getCreationDate());
@@ -78,20 +78,20 @@ public class InfoHandler extends AbstractInfoHandler {
                 res.put("comment", head.getComment());
                 res.put("revision", "/revision/" + head.getId());
             }
-            
+
             FsDirectory originalDirectory = null;
 
             originalDirectory = model.getParentDirectory();
-            
+
             // Set folder
             if (originalDirectory != null){
                 res.put("parent", "/directory/" + originalDirectory.getId());
             }
-            
+
         } catch (JSONException e) {
             throw new RequestException("warehouse.noValidModelInfo");
         }
-        
+
         return res;
     }
 
@@ -99,11 +99,11 @@ public class InfoHandler extends AbstractInfoHandler {
     @HandlerMethodActivation
     public <T extends FsSecureBusinessObject> Object putRepresentation(T sbo, Object params, FsAccessToken token) {
         super.putRepresentation(sbo, params, token);
-        
+
         JSONObject jParams = (JSONObject) params;
-        
+
         FsModel model = (FsModel) sbo;
-        
+
         try {
             model.setName(jParams.getString("name"));
             model.setDescription(jParams.getString("description"));
@@ -113,10 +113,10 @@ public class InfoHandler extends AbstractInfoHandler {
         } catch (UnsupportedEncodingException e) {
             throw new RequestException("unsupportedEncoding", e);
         }
-        
-        
+
+
         return getRepresentation(sbo, params, token);
     }
-    
+
 
 }

@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -28,7 +28,7 @@ import org.oryxeditor.server.diagram.generic.GenericShape;
 
 /**
  * @author Sven Wagner-Boysen
- * 
+ *
  */
 public class DiagramHelper {
 
@@ -53,7 +53,7 @@ public class DiagramHelper {
         return bounds;
     }
 
-    
+
     public static List<GenericEdge> getOutgoingEdges(GenericShape<?,?> shape){
         List<GenericEdge> list = new ArrayList<GenericEdge>();
         for (GenericShape outgoing: shape.getOutgoingsReadOnly()){
@@ -62,8 +62,8 @@ public class DiagramHelper {
         }
         return list;
     }
-    
-    
+
+
     public static List<GenericEdge> getIncomingEdges(GenericShape<?,?> shape){
         List<GenericEdge> list = new ArrayList<GenericEdge>();
         for (GenericShape incoming: shape.getIncomingsReadOnly()){
@@ -72,8 +72,8 @@ public class DiagramHelper {
         }
         return list;
     }
-    
-    
+
+
     public static List<GenericEdge> getAllEdges(GenericDiagram<?,?> diagram){
         List<GenericEdge> list = new ArrayList<GenericEdge>();
         for (GenericShape shape: diagram.getAllShapesReadOnly()){
@@ -82,8 +82,8 @@ public class DiagramHelper {
         }
         return list;
     }
-    
-    
+
+
     public static double calculateCenterDistance(
             de.hpi.bpmn2_0.model.bpmndi.dc.Bounds b1,
             de.hpi.bpmn2_0.model.bpmndi.dc.Bounds b2) {

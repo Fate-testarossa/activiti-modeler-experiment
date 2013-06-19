@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -56,9 +56,9 @@ import de.hpi.bpmn2_0.transformation.Visitor;
 
 /**
  * <p>Java class for tChoreographySubProcess complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="tChoreographySubProcess">
  *   &lt;complexContent>
@@ -71,8 +71,8 @@ import de.hpi.bpmn2_0.transformation.Visitor;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -86,13 +86,13 @@ public class SubChoreography
 
     @XmlElementRef(type = FlowElement.class)
     protected List<FlowElement> flowElement;
-    
+
     @XmlElementRef(type = Artifact.class)
     protected List<Artifact> artifact;
-    
+
     @XmlTransient
     public List<DiagramElement> _diagramElements = new ArrayList<DiagramElement>();
-    
+
     public void addChild(BaseElement child) {
         if(child instanceof Participant) {
             this.getParticipantRef().add((Participant) child);
@@ -105,41 +105,41 @@ public class SubChoreography
         } else if(child instanceof FlowElement) {
             this.getFlowElement().add((FlowElement) child);
         }
-        
+
         /* Set parent relation */
         if(child instanceof FlowElement) {
             ((FlowElement) child).setSubChoreography(this);
         }
     }
-    
-    
-    
+
+
+
     /**
      * Copies all participant references of sub-choreographies recursively to
      * the choreography and creates the message flow of the choreography tasks.
-     * 
+     *
      * @param choreography
      */
     public void setParticipantsAndMessageFlows(Choreography choreography, Map<String,BPMNElement> bpmnElements, Diagram2BpmnConverter converter) {
-        
+
         List<Message> messagesToRemove = new ArrayList<Message>();
         List<Association> associationsToRemove = new ArrayList<Association>();
-        
+
         /* Handle child subchoreographies and tasks */
         for(FlowElement flowEl : this.getFlowElement()) {
             if(flowEl instanceof Association) {
                 Association association = (Association) flowEl;
-                
+
                 /* Check whether the association depicts a message to the
                  * choreography activity */
-                if((association.getSourceRef() instanceof ChoreographyActivity 
+                if((association.getSourceRef() instanceof ChoreographyActivity
                         && association.getTargetRef() instanceof Message)
-                        || (association.getSourceRef() instanceof Message 
+                        || (association.getSourceRef() instanceof Message
                                 && association.getTargetRef() instanceof ChoreographyActivity)) {
                     converter.handleMessageAssociationOnChoreographyActivity(association);
                 }
             }
-            
+
             /* Remove message objects */
             if(flowEl instanceof Message) {
                 messagesToRemove.add((Message) flowEl);
@@ -148,68 +148,68 @@ public class SubChoreography
                     associationsToRemove.add(msgAssociation);
                 }
             }
-            
+
             /* Add participants of child elements */
             if(flowEl instanceof ChoreographyActivity) {
                 choreography.getParticipant().addAll(((ChoreographyActivity) flowEl).getParticipantRef());
             }
-            
+
             /* MessageFlows of choreography task */
             if(flowEl instanceof ChoreographyTask) {
                 ((ChoreographyTask) flowEl).createMessageFlows(choreography);
-            } 
-            
+            }
+
             /* Subchoreography */
             else if(flowEl instanceof SubChoreography) {
                 ((SubChoreography) flowEl).setParticipantsAndMessageFlows(choreography, bpmnElements, converter);
             }
         }
-        
+
         this.getFlowElement().removeAll(messagesToRemove);
         for(Association msgAssociation : associationsToRemove) {
             bpmnElements.remove(msgAssociation.getId());
         }
         this.getFlowElement().removeAll(associationsToRemove);
     }
-    
+
     public List<String> getIdsOfDiagramElements() {
         List<String> idList = new ArrayList<String>();
-        
+
         /* FlowElements except edges */
         for(FlowElement flowEl : this.getFlowElement()) {
             if(!(flowEl instanceof Edge)) {
                 idList.add(flowEl.getId());
             }
-            
+
             /* Insert participant band elements */
             if(flowEl instanceof ChoreographyActivity) {
                 for(Participant participant : ((ChoreographyActivity) flowEl).getParticipantRef()) {
                     idList.add(participant.getId());
                 }
             }
-            
+
             /* Child SubChoreographis */
             if(flowEl instanceof SubChoreography) {
                 idList.addAll(((SubChoreography) flowEl).getIdsOfDiagramElements());
             }
         }
-        
+
         /* Artifacts */
         for(Artifact artifact : getArtifact()) {
             idList.add(artifact.getId());
         }
-        
+
         return idList;
     }
-    
+
     /**
      * Retrieves {@link SubChoreography} recursively.
-     * 
+     *
      * @return
      */
     public List<SubChoreography> getSubChoreographies() {
         List<SubChoreography> subchoreographies = new ArrayList<SubChoreography>();
-        
+
         for(FlowElement flowEle : getFlowElement()) {
             /* Subchoreography */
             if(flowEle instanceof SubChoreography) {
@@ -217,13 +217,13 @@ public class SubChoreography
                 subchoreographies.addAll(((SubChoreography) flowEle).getSubChoreographies());
             }
         }
-        
+
         return subchoreographies;
     }
-    
+
     public List<Edge> getChildEdges() {
         List<Edge> edgeList = new ArrayList<Edge>();
-        
+
         for(FlowElement fe : this.getFlowElement()) {
             if(fe instanceof Edge) {
                 edgeList.add((Edge) fe);
@@ -231,32 +231,32 @@ public class SubChoreography
                 edgeList.addAll(((ContainerElement) fe).getChildEdges());
             }
         }
-        
+
         return edgeList;
     }
-    
+
     public void acceptVisitor(Visitor v){
         v.visitSubChoreography(this);
     }
-    
+
     /* Getter & Setter */
-    
+
     /**
      * Gets the value of the flowElement property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the flowElement property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getFlowElement().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link ManualTask }{@code >}
@@ -290,8 +290,8 @@ public class SubChoreography
      * {@link JAXBElement }{@code <}{@link TImplicitThrowEvent }{@code >}
      * {@link JAXBElement }{@code <}{@link TParallelGateway }{@code >}
      * {@link JAXBElement }{@code <}{@link TTask }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<FlowElement> getFlowElement() {
         if (flowElement == null) {
@@ -302,28 +302,28 @@ public class SubChoreography
 
     /**
      * Gets the value of the artifact property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the artifact property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getArtifact().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link TArtifact }{@code >}
      * {@link JAXBElement }{@code <}{@link TAssociation }{@code >}
      * {@link JAXBElement }{@code <}{@link TGroup }{@code >}
      * {@link JAXBElement }{@code <}{@link TTextAnnotation }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Artifact> getArtifact() {
         if (artifact == null) {
@@ -342,13 +342,13 @@ public class SubChoreography
 
     public List<BaseElement> getCalledElements() {
         List<BaseElement> calledElements = new ArrayList<BaseElement>();
-        
+
         for(FlowElement flowEl : getFlowElement()) {
             if(flowEl instanceof CallingElement) {
                 calledElements.addAll(((CallingElement) flowEl).getCalledElements());
             }
         }
-        
+
         return calledElements;
     }
 

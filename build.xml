@@ -101,7 +101,7 @@
                 <exclude name="**/*.xml" />
                 <exclude name="**/*.project" />
             </fileset>
-                
+
             <fileset dir="${build}">
             </fileset>
 
@@ -162,7 +162,7 @@
             </property>
         </ant>
     </target>
-    
+
     <target name="build-platform-war" depends="configure-applications">
         <mkdir dir="${target}" />
         <ant antfile="build.xml" target="com.signavio.platform.war" dir="${platform}" inheritall="false">
@@ -190,7 +190,7 @@
     <target name="build-and-deploy-api-to-tomcat" depends="build-api-war">
         <copy file="${target}/api.war" todir="${dir-tomcat-webapps}" />
     </target>
-        
+
     <target name="build-and-deploy-all-war-files-to-tomcat" depends="build-and-deploy-editor-to-tomcat, build-and-deploy-explorer-to-tomcat, build-and-deploy-libs-to-tomcat, build-and-deploy-platform-to-tomcat, build-and-deploy-api-to-tomcat">
     </target>
 </project>

@@ -1,33 +1,33 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-if (!ORYX.Plugins) 
+if (!ORYX.Plugins)
     ORYX.Plugins = new Object();
 
 ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
 
     facade: undefined,
-    
+
     construct: function(facade){
-    
+
         this.facade = facade;
         this.copyElements = [];
-        
+
         //this.facade.registerOnEvent(ORYX.CONFIG.EVENT_KEYDOWN, this.keyHandler.bind(this));
 
         // SELECT ALL
@@ -35,99 +35,99 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
         keyCodes: [{
                  metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                 keyCode: 65,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.selectAll.bind(this)
          });
-         
-        // MOVE LEFT SMALL        
+
+        // MOVE LEFT SMALL
         this.facade.offer({
         keyCodes: [{
                  metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                 keyCode: ORYX.CONFIG.KEY_CODE_LEFT,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_LEFT, false)
          });
-         
+
          // MOVE LEFT
          this.facade.offer({
          keyCodes: [{
                 keyCode: ORYX.CONFIG.KEY_CODE_LEFT,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_LEFT, true)
          });
-         
-        // MOVE RIGHT SMALL    
+
+        // MOVE RIGHT SMALL
          this.facade.offer({
          keyCodes: [{
                  metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                 keyCode: ORYX.CONFIG.KEY_CODE_RIGHT,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_RIGHT, false)
          });
-         
-        // MOVE RIGHT    
+
+        // MOVE RIGHT
          this.facade.offer({
          keyCodes: [{
                 keyCode: ORYX.CONFIG.KEY_CODE_RIGHT,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_RIGHT, true)
          });
-         
-        // MOVE UP SMALL    
+
+        // MOVE UP SMALL
          this.facade.offer({
          keyCodes: [{
                  metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                 keyCode: ORYX.CONFIG.KEY_CODE_UP,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_UP, false)
          });
-         
-        // MOVE UP    
+
+        // MOVE UP
          this.facade.offer({
          keyCodes: [{
                 keyCode: ORYX.CONFIG.KEY_CODE_UP,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_UP, true)
          });
-         
-        // MOVE DOWN SMALL    
+
+        // MOVE DOWN SMALL
          this.facade.offer({
          keyCodes: [{
                  metaKeys: [ORYX.CONFIG.META_KEY_META_CTRL],
                 keyCode: ORYX.CONFIG.KEY_CODE_DOWN,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_DOWN, false)
          });
-         
-        // MOVE DOWN    
+
+        // MOVE DOWN
          this.facade.offer({
          keyCodes: [{
                 keyCode: ORYX.CONFIG.KEY_CODE_DOWN,
-                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN 
+                keyAction: ORYX.CONFIG.KEY_ACTION_DOWN
             }
          ],
          functionality: this.move.bind(this, ORYX.CONFIG.KEY_CODE_DOWN, true)
          });
-         
-         
+
+
     },
-    
+
     /**
      * Select all shapes in the editor
      *
@@ -136,9 +136,9 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
         Event.stop(e.event);
         this.facade.setSelection(this.facade.getCanvas().getChildShapes(true))
     },
-    
+
     move: function(key, far, e) {
-        
+
         Event.stop(e.event);
 
         // calculate the distance to move the objects and get the selection.
@@ -146,7 +146,7 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
         var selection = this.facade.getSelection();
         var currentSelection = this.facade.getSelection();
         var p = {x: 0, y: 0};
-        
+
         // switch on the key pressed and populate the point to move by.
         switch(key) {
 
@@ -163,28 +163,28 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                 p.y = distance;
                 break;
         }
-        
+
         // move each shape in the selection by the point calculated and update it.
-        selection = selection.findAll(function(shape){ 
-            // Check if this shape is docked to an shape in the selection            
-            if(shape instanceof ORYX.Core.Node && shape.dockers.length == 1 && selection.include( shape.dockers.first().getDockedShape() )){ 
-                return false 
-            } 
-            
+        selection = selection.findAll(function(shape){
+            // Check if this shape is docked to an shape in the selection
+            if(shape instanceof ORYX.Core.Node && shape.dockers.length == 1 && selection.include( shape.dockers.first().getDockedShape() )){
+                return false
+            }
+
             // Check if any of the parent shape is included in the selection
-            var s = shape.parent; 
-            do{ 
-                if(selection.include(s)){ 
+            var s = shape.parent;
+            do{
+                if(selection.include(s)){
                     return false
                 }
-            }while(s = s.parent); 
-            
+            }while(s = s.parent);
+
             // Otherwise, return true
             return true;
-            
+
         });
-        
-        /* Edges must not be movable, if only edges are selected and at least 
+
+        /* Edges must not be movable, if only edges are selected and at least
          * one of them is docked.
          */
         var edgesMovable = true;
@@ -193,17 +193,17 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                 if(shape.isDocked()) {
                     edgesMovable = false;
                 }
-                return true;    
+                return true;
             }
             return false;
         });
-        
+
         if(onlyEdgesSelected && !edgesMovable) {
             /* Abort moving shapes */
             return;
         }
-        
-        selection = selection.map(function(shape){ 
+
+        selection = selection.map(function(shape){
             if( shape instanceof ORYX.Core.Node ){
                 /*if( shape.dockers.length == 1 ){
                     return shape.dockers.first()
@@ -211,9 +211,9 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                     return shape
                 //}
             } else if( shape instanceof ORYX.Core.Edge ) {
-                
+
                 var dockers = shape.dockers;
-                
+
                 if( selection.include( shape.dockers.first().getDockedShape() ) ){
                     dockers = dockers.without( shape.dockers.first() )
                 }
@@ -221,17 +221,17 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                 if( selection.include( shape.dockers.last().getDockedShape() ) ){
                     dockers = dockers.without( shape.dockers.last() )
                 }
-                
-                return dockers    
-                            
+
+                return dockers
+
             } else {
                 return null
             }
-        
+
         }).flatten().compact();
-        
+
         if (selection.size() > 0) {
-            
+
             //Stop moving at canvas borders
             var selectionBounds = [ this.facade.getCanvas().bounds.lowerRight().x,
                                     this.facade.getCanvas().bounds.lowerRight().y,
@@ -251,23 +251,23 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                 p.x = this.facade.getCanvas().bounds.lowerRight().x - selectionBounds[2];
             if(selectionBounds[3]+p.y > this.facade.getCanvas().bounds.lowerRight().y)
                 p.y = this.facade.getCanvas().bounds.lowerRight().y - selectionBounds[3];
-            
+
             if(p.x!=0 || p.y!=0) {
                 // Instantiate the moveCommand
                 var commands = [new ORYX.Core.Command.Move(selection, p, null, currentSelection, this)];
-                // Execute the commands            
+                // Execute the commands
                 this.facade.executeCommands(commands);
             }
-            
+
         }
     },
-    
+
     getUndockedCommant: function(shapes){
 
         var undockEdgeCommand = ORYX.Core.Command.extend({
             construct: function(moveShapes){
                 this.dockers = moveShapes.collect(function(shape){ return shape instanceof ORYX.Core.Controls.Docker ? {docker:shape, dockedShape:shape.getDockedShape(), refPoint:shape.referencePoint} : undefined }).compact();
-            },            
+            },
             execute: function(){
                 this.dockers.each(function(el){
                     el.docker.setDockedShape(undefined);
@@ -281,12 +281,12 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
                 })
             }
         });
-        
+
         command = new undockEdgeCommand( shapes );
-        command.execute();    
+        command.execute();
         return command;
     },
-    
+
 //    /**
 //     * The key handler for this plugin. Every action from the set of cut, copy,
 //     * paste and delete should be accessible trough simple keyboard shortcuts.
@@ -297,13 +297,13 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
 //     */
 //    keyHandler: function(event){
 //        //TODO document what event.which is.
-//        
+//
 //        ORYX.Log.debug("keysMove.js handles a keyEvent.");
-//        
+//
 //        // assure we have the current event.
-//        if (!event) 
+//        if (!event)
 //            event = window.event;
-//        
+//
 //        // get the currently pressed key and state of control key.
 //        var pressedKey = event.which || event.keyCode;
 //        var ctrlPressed = event.ctrlKey;
@@ -311,11 +311,11 @@ ORYX.Plugins.KeysMove = ORYX.Plugins.AbstractPlugin.extend({
 //        // if the key is one of the arrow keys, forward to move and return.
 //        if ([ORYX.CONFIG.KEY_CODE_LEFT, ORYX.CONFIG.KEY_CODE_RIGHT,
 //            ORYX.CONFIG.KEY_CODE_UP, ORYX.CONFIG.KEY_CODE_DOWN].include(pressedKey)) {
-//            
+//
 //            this.move(pressedKey, !ctrlPressed);
 //            return;
 //        }
-//        
+//
 //    }
-    
+
 });

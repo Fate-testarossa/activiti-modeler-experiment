@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Signavio Core Components
  * Copyright (C) 2012  Signavio GmbH
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -49,7 +49,7 @@ if(!ORYX.Plugins)
         if( uiObj instanceof ORYX.Core.Canvas ) {
             // Calculate the Offset
             var scrollNode = uiObj.rootNode.parentNode.parentNode;
-                        
+
             var a = this.facade.getCanvas().node.getScreenCTM();
             this.offsetPosition = {
                 x: a.e,
@@ -61,16 +61,16 @@ if(!ORYX.Plugins)
             // Reset the size
             this.resize({width:0, height:0});
             this.moveCallback = this.handleMouseMove.bind(this);
-        
+
             // Register Mouse-Move Event
             document.documentElement.addEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
 
             this.offsetScroll        = {x:scrollNode.scrollLeft,y:scrollNode.scrollTop};
-            
+
             // Show the Frame
             this.show();
-            
-            
+
+
 
         }
 
@@ -84,8 +84,8 @@ if(!ORYX.Plugins)
             this.hide();
 
             // Unregister Mouse-Move
-            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);            
-        
+            document.documentElement.removeEventListener(ORYX.CONFIG.EVENT_MOUSEMOVE, this.moveCallback, false);
+
             this.moveCallback = undefined;
 
             var corrSVG = this.facade.getCanvas().node.getScreenCTM();
@@ -129,9 +129,9 @@ if(!ORYX.Plugins)
         }
 
         var scrollNode     = this.facade.getCanvas().rootNode.parentNode.parentNode;
-        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft; 
+        size.width         -= this.offsetScroll.x - scrollNode.scrollLeft;
         size.height     -= this.offsetScroll.y - scrollNode.scrollTop;
-                        
+
         // Set the size
         this.resize(size);
 
@@ -158,7 +158,7 @@ if(!ORYX.Plugins)
         // Calculate the negative offset
         this.setPos(this.position);
         this.size = Object.clone(size);
-        
+
         if(size.width < 0) {
             this.node.style.left = (this.position.x + size.width) + "px";
             size.width = - size.width;
